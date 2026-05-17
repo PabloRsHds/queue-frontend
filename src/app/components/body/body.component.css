@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Cards Container */
+.cards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8rem 2rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 15%);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1e3a5f, #2d5a8e);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(30, 58, 95, 0.12);
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.card-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.card:nth-child(1) .card-icon { background: #dbeafe; }
+.card:nth-child(1) .card-icon svg { stroke: #2563eb; }
+.card:nth-child(2) .card-icon { background: #d1fae5; }
+.card:nth-child(2) .card-icon svg { stroke: #059669; }
+.card:nth-child(3) .card-icon { background: #fef3c7; }
+.card:nth-child(3) .card-icon svg { stroke: #d97706; }
+.card:nth-child(4) .card-icon { background: #ede9fe; }
+.card:nth-child(4) .card-icon svg { stroke: #7c3aed; }
+.card:nth-child(5) .card-icon { background: #fce7f3; }
+.card:nth-child(5) .card-icon svg { stroke: #db2777; }
+
+.card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.bottom-cards {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.bottom-cards .card {
+  flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+      padding: 0 1rem;
+  }
+
+  .header-left span {
+      font-size: 1.1rem;
+  }
+
+  .cards-container {
+      padding: 1.5rem 1rem;
+  }
+
+  .cards-grid {
+      grid-template-columns: 1fr;
+  }
+
+  .bottom-cards {
+      grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+      width: 260px;
+  }
+}
