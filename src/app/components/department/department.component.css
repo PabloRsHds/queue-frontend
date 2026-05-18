@@ -42,6 +42,27 @@
 .dept-modal-close:hover { background: rgba(255,255,255,0.3); }
 .dept-modal-close svg { width: 20px; height: 20px; stroke: #fff; }
 
+.dept-modal-register-department-container {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.dept-modal-register-department-close {
+    background: rgba(158, 213, 250, 0.3);
+    border: none;
+    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.dept-modal-register-department-close:hover { background: rgba(158, 213, 250, 0.3); }
+.dept-modal-register-department-close svg { width: 20px; height: 20px; stroke: #000000; }
+
 .dept-modal-body {
     display: flex; flex: 1; overflow: hidden;
 }
@@ -66,12 +87,12 @@
 .modal-sidebar-item svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 .modal-sidebar-item .badge {
     position: absolute; right: 14px; background: #2d5a8e; color: #fff;
-    font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+    font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 10px;
 }
 
 /* Right Content */
 .modal-content {
-    flex: 1; overflow-y: auto; padding: 2rem;
+    flex: 1; overflow-y: auto; padding: 3rem;
     background: #fff;
 }
 .modal-content::-webkit-scrollbar { width: 6px; }
@@ -83,7 +104,7 @@
     margin-bottom: 0.25rem;
 }
 
-.section-title.margim { margin-top: 50px; }
+.section-title.margim { margin-top: 20px; }
 
 .section-desc {
     font-size: 0.875rem; color: #6b7280; margin-bottom: 2rem;

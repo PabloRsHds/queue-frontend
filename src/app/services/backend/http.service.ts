@@ -1,15 +1,18 @@
-import { PageResponse } from './../../dtos/PageResponse';
+import { PageResponse } from '../../dtos/page/PageResponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseServiceManagementDto } from '../../dtos/ResponseServiceManagement';
-import { ResponseDepartmentDto } from '../../dtos/ResponseDepartmentDto';
-import { CreateDepartmentDto } from '../../dtos/CreateDepartmentDto';
-import { CreateServiceManagementDto } from '../../dtos/CreateServiceManagement';
-import { ResponseDepartmentsDto } from '../../dtos/ResponseDepartments';
-import { ResponseGetDepartmentDto } from '../../dtos/ResponseGetDepartment';
-import { UpdateDepartmentDto } from '../../dtos/UpdateDepartmentDto';
-import { ResponseUpdateDepartmentDto } from '../../dtos/ResponseUpdateDepartmentDto';
+import { ResponseServiceManagementDto } from '../../dtos/services/ResponseServiceManagementDto';
+import { ResponseDepartmentDto } from '../../dtos/department/ResponseDepartmentDto';
+import { CreateDepartmentDto } from '../../dtos/department/CreateDepartmentDto';
+import { CreateServiceManagementDto } from '../../dtos/services/CreateServiceManagementDto';
+import { ResponseDepartmentsDto } from '../../dtos/department/ResponseDepartments';
+import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepartment';
+import { UpdateDepartmentDto } from '../../dtos/department/UpdateDepartmentDto';
+import { ResponseUpdateDepartmentDto } from '../../dtos/department/ResponseUpdateDepartmentDto';
+import { UpdateServiceManagementDto } from '../../dtos/services/UpdateServiceManagementDto';
+import { ResponseUpdateServiceManagementDto } from '../../dtos/services/ResponseUpdateServiceManagementDto';
+import { ResponseServiceManagementsDto } from '../../dtos/services/ResponseServiceManagementsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
+  // Departments
   createDepartment(department: CreateDepartmentDto): Observable<ResponseDepartmentDto> {
     return this.http.post<ResponseDepartmentDto>('http://localhost:8080/departments', department);
   }
@@ -38,7 +42,16 @@ export class HttpService {
     return this.http.get<ResponseGetDepartmentDto>('http://localhost:8080/departments/' + departmentId);
   }
 
+  // Services
   public createServiceManagement(request: CreateServiceManagementDto): Observable<ResponseServiceManagementDto> {
     return this.http.post<ResponseServiceManagementDto>("http://localhost:8080/services", request);
+  }
+
+  public updateServiceManagement(request: UpdateServiceManagementDto): Observable<ResponseUpdateServiceManagementDto> {
+    return this.http.patch<ResponseUpdateServiceManagementDto>("http://localhost:8080/services", request);
+  }
+
+  public getAllServicesManagement(page: number, size: number, search?: string): Observable<PageResponse<ResponseServiceManagementsDto>> {
+    return this.http.get<PageResponse<ResponseServiceManagementsDto>>(`http://localhost:8080/services?page=${page}&size=${size}&search=${search}`);
   }
 }

@@ -1,18 +1,17 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
-import { ResponseDepartmentsDto } from '../../../dtos/department/ResponseDepartments';
-import { ResponseGetDepartmentDto } from '../../../dtos/department/ResponseGetDepartment';
+import { ResponseServiceManagementsDto } from '../../../dtos/services/ResponseServiceManagementsDto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DepartmentStateService {
+export class ServiceManagementService {
 
   private api = inject(HttpService);
 
   // ===== DATA =====
-  public departments = signal<ResponseDepartmentsDto[]>([]);
-  public selectedDepartment = signal<ResponseGetDepartmentDto | null>(null);
+  public departments = signal<ResponseServiceManagementsDto[]>([]);
+  public selectedDepartment = signal<ResponseServiceManagementsDto | null>(null);
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -39,7 +38,7 @@ export class DepartmentStateService {
 
   // ===== LOAD =====
   loadDepartments() {
-    this.api.getAllDepartments(this.page(), this.size, this.search()).subscribe({
+    this.api.getAllServicesManagement(this.page(), this.size, this.search()).subscribe({
       next: (res) => {
         this.departments.set(res.content);
         this.totalElements.set(res.totalElements);

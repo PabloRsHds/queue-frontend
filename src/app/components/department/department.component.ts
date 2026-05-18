@@ -1,5 +1,5 @@
 import { AppComponent } from './../../app.component';
-import { CreateServiceManagementDto } from './../../dtos/CreateServiceManagement';
+import { CreateServiceManagementDto } from '../../dtos/services/CreateServiceManagementDto';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
 import { HttpService } from '../../services/backend/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ResponseGetDepartmentDto } from '../../dtos/ResponseGetDepartment';
+import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepartment';
 
 @Component({
   selector: 'app-department',
@@ -42,7 +42,10 @@ export class DepartmentComponent {
   openModalDeleteDepartment = false;
   openModalUpdateDepartment = false;
 
-  currentSection: 'registro' | 'servico' | 'departamentos' = 'registro';
+  openRegisterDepartment = false;
+  openTableDeparments = false;
+
+  currentSection: 'departamento' | 'servico' | 'config' = 'departamento';
   showingDepartmentDetail = false;
   selectedDepartment = this.state.selectedDepartment;
 
@@ -57,6 +60,17 @@ export class DepartmentComponent {
   toastMessage = '';
 
   itemsPerPage = 4;
+
+  // =====
+
+  showButtonsForSectionDepartments() {
+
+    if (this.currentSection === 'departamento'
+          && this.openRegisterDepartment == false
+          && this.openTableDeparments == false) return true;
+
+    return false;
+  }
 
   // ===================== INIT =====================
   ngOnInit() {
@@ -126,7 +140,7 @@ export class DepartmentComponent {
   // ===================== MODAL =====================
   openModal(): void {
     this.isModalOpen = true;
-    this.switchSection('registro');
+    this.switchSection('departamento');
   }
 
   closeModal() {
@@ -135,7 +149,7 @@ export class DepartmentComponent {
     this.search.set('');
   }
 
-  switchSection(section: 'registro' | 'servico' | 'departamentos') {
+  switchSection(section: 'departamento' | 'servico' | 'config') {
     this.search.set('')
 
     this.currentSection = section;
@@ -144,8 +158,9 @@ export class DepartmentComponent {
 
   // ===================== UI =====================
   get modalTitle(): string {
-    if (this.currentSection === 'registro') return 'ICN Registro de Departamentos';
+    if (this.currentSection === 'departamento') return 'ICN Registro de Departamentos';
     if (this.currentSection === 'servico') return 'ICN Cadastro de Serviços';
+    if (this.currentSection === 'config') return 'ICN Configurações de Departamentos';
     if (this.showingDepartmentDetail) return 'ICN Detalhes do Departamento';
     return 'ICN Lista de Departamentos';
   }
@@ -163,7 +178,7 @@ export class DepartmentComponent {
         this.departmentForm.reset();
 
         this.snackBar.open('Departamento cadastrado com sucesso!', 'Fechar', {
-          duration: 3000,
+          duration: 3000
         });
       },
       error: () => {
@@ -186,7 +201,7 @@ export class DepartmentComponent {
         this.serviceForm.reset();
 
         this.snackBar.open('Serviço cadastrado com sucesso!', 'Fechar', {
-          duration: 3000,
+          duration: 3000
         });
       },
       error: () => {
@@ -211,7 +226,7 @@ export class DepartmentComponent {
         this.updateDepartmentForm.reset();
 
         this.snackBar.open('Departamento atualizado com sucesso!', 'Fechar', {
-          duration: 3000,
+          duration: 3000
         });
       },
       error: () => {
@@ -295,8 +310,11 @@ export class DepartmentComponent {
         this.state.loadDepartments();
         this.closeModalDeleteDepartment();
 
+        this.selectedDepartment.set(null);
+        this.department.set(null);
+
         this.snackBar.open('Departamento excluido com sucesso!', 'Fechar', {
-          duration: 3000,
+          duration: 3000
         });
       },
       error: () => {

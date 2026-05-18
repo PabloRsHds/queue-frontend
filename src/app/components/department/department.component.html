@@ -16,15 +16,16 @@
       <div class="modal-sidebar">
         <div
           class="modal-sidebar-item"
-          [class.active]="currentSection === 'registro'"
-          (click)="switchSection('registro')">
+          [class.active]="currentSection === 'departamento'"
+          (click)="switchSection('departamento')">
           <svg viewBox="0 0 24 24">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
             <line x1="16" y1="13" x2="8" y2="13"></line>
             <line x1="16" y1="17" x2="8" y2="17"></line>
           </svg>
-          Registro
+          Departameno
+          <span class="badge">{{ totalElements() }}</span>
         </div>
         <div
           class="modal-sidebar-item"
@@ -38,23 +39,36 @@
         </div>
         <div
           class="modal-sidebar-item"
-          [class.active]="currentSection === 'departamentos'"
-          (click)="switchSection('departamentos')">
+          [class.active]="currentSection === 'config'"
+          (click)="switchSection('config')">
           <svg viewBox="0 0 24 24">
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
             <line x1="8" y1="21" x2="16" y2="21"></line>
             <line x1="12" y1="17" x2="12" y2="21"></line>
           </svg>
-          Departamentos
-          <span class="badge">{{ totalElements() }}</span>
+          Config
         </div>
       </div>
 
       <!-- Right Content -->
       <div class="modal-content">
         <!-- Seção de Registro de Departamento -->
-        <ng-container *ngIf="currentSection === 'registro'">
-          <h1 class="section-title" [class.margim]="currentSection === 'registro'">Novo Departamento</h1>
+
+        <ng-container class="buttons-" *ngIf="showButtonsForSectionDepartments()">
+          <button class="btn-secondary" type="button" (click)="openRegisterDepartment = !openRegisterDepartment">Registrar Departamento</button>
+          <button class="btn-secondary" type="button" (click)="openTableDeparments = !openTableDeparments">Visualizar Departamentos</button>
+        </ng-container>
+
+        <ng-container *ngIf="currentSection === 'departamento' && openRegisterDepartment">
+          <div class="dept-modal-register-department-container">
+            <button class="dept-modal-register-department-close" aria-label="Fechar" (click)="openRegisterDepartment = false">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <h1 class="section-title" [class.margim]="currentSection === 'departamento'">Novo Departamento</h1>
           <p class="section-desc">Preencha os campos abaixo para cadastrar um novo departamento.</p>
 
           <form [formGroup]="departmentForm" (ngSubmit)="onSubmitDepartment()">
@@ -88,63 +102,16 @@
           </form>
         </ng-container>
 
-        <!-- Seção de Cadastro de Serviço -->
-        <ng-container *ngIf="currentSection === 'servico'">
-          <h1 class="section-title">Novo Serviço</h1>
-          <p class="section-desc">Associe um serviço a um departamento existente.</p>
-
-          <form [formGroup]="serviceForm" (ngSubmit)="onSubmitService()">
-            <div class="form-group">
-              <label class="form-label">Departamento *</label>
-              <select class="form-select" formControlName="departmentName" required>
-                <option value="">Selecione um departamento</option>
-                <option *ngFor="let dept of departments()">
-                  {{ dept.name }}
-                </option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Nome do Serviço *</label>
-              <input
-                type="text"
-                class="form-input"
-                formControlName="name"
-                placeholder="Ex: Entregar os documentos"
-                required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Código</label>
-              <input
-                type="text"
-                class="form-input"
-                formControlName="code"
-                placeholder="Ex: DCM">
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Descrição</label>
-              <textarea
-                class="form-textarea"
-                formControlName="description"
-                placeholder="Descrição do serviço..."></textarea>
-            </div>
-
-            <button type="submit" class="btn-primary" [disabled]="serviceForm.invalid">
-              <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                <polyline points="7 3 7 8 15 8"></polyline>
+        <ng-container *ngIf="currentSection === 'departamento' && openTableDeparments">
+          <div class="dept-modal-register-department-container">
+            <button class="dept-modal-register-department-close" aria-label="Fechar" (click)="openTableDeparments = false">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
-              Cadastrar Serviço
             </button>
-          </form>
-        </ng-container>
-
-        <!-- Seção de Lista de Departamentos -->
-        <ng-container *ngIf="currentSection === 'departamentos' && !openModalDepartmentDetail">
-          <h1 class="section-title" [class.margim]="currentSection === 'departamentos'">Departamentos Cadastrados</h1>
+          </div>
+          <h1 class="section-title" [class.margim]="currentSection === 'departamento'">Departamentos Cadastrados</h1>
           <p class="section-desc">Clique em um departamento para ver seus serviços.</p>
 
           <div class="table-wrapper">
@@ -234,8 +201,65 @@
           </div>
         </ng-container>
 
+        <!-- Seção de Cadastro de Serviço -->
+        <ng-container *ngIf="currentSection === 'servico'">
+          <h1 class="section-title">Novo Serviço</h1>
+          <p class="section-desc">Associe um serviço a um departamento existente.</p>
+
+          <form [formGroup]="serviceForm" (ngSubmit)="onSubmitService()">
+            <div class="form-group">
+              <label class="form-label">Departamento *</label>
+              <select class="form-select" formControlName="departmentName" required>
+                <option value="">Selecione um departamento</option>
+                <option *ngFor="let dept of departments()">
+                  {{ dept.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nome do Serviço *</label>
+              <input
+                type="text"
+                class="form-input"
+                formControlName="name"
+                placeholder="Ex: Entregar os documentos"
+                required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Código</label>
+              <input
+                type="text"
+                class="form-input"
+                formControlName="code"
+                placeholder="Ex: DCM">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Descrição</label>
+              <textarea
+                class="form-textarea"
+                formControlName="description"
+                placeholder="Descrição do serviço..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" [disabled]="serviceForm.invalid">
+              <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              Cadastrar Serviço
+            </button>
+          </form>
+        </ng-container>
+
+        <!-- Seção de Lista de Departamentos -->
+
+
         <!-- Seção de Detalhes do Departamento -->
-        <ng-container *ngIf="openModalDepartmentDetail && currentSection === 'departamentos'">
+        <ng-container *ngIf="openModalDepartmentDetail && currentSection === 'departamento'">
           <button class="btn-back" (click)="backToTable()">
             <svg viewBox="0 0 24 24">
               <polyline points="15 18 9 12 15 6"></polyline>
@@ -340,7 +364,7 @@
           <button type="submit" class="btn-update">
             Salvar
           </button>
-          <button  class="btn-secondary" (click)="closeModalUpdateDepartment()">
+          <button class="btn-secondary" (click)="closeModalUpdateDepartment()">
             Cancelar
           </button>
         </div>
