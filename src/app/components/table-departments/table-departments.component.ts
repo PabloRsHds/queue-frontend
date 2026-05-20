@@ -6,7 +6,6 @@ import { HttpService } from '../../services/backend/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepartment';
 
 @Component({
   selector: 'app-table-departments',
@@ -26,56 +25,52 @@ export class TableDepartmentsComponent implements OnInit {
 
   // ===================== STATE =====================
 
-  private state = inject(DepartmentStateService);
+  public departments = this.departmentState.departments;
+  public page = this.departmentState.page;
+  public totalPages = this.departmentState.totalPages;
+  public totalElements = this.departmentState.totalElements;
+  public departmentInfo = this.departmentState.departmentInfo;
+  public search = this.departmentState.search;
+  public openTableDeparments = this.globalState.openTableDeparments;
 
-  departments = this.state.filteredDepartments;
-  page = this.state.page;
-  totalPages = this.state.totalPages;
-  totalElements = this.state.totalElements;
-  selectedDepartment = this.state.selectedDepartment;
-  search = this.state.search;
-  openTableDeparments = this.globalState.openTableDeparments;
+  public updateStatus = this.departmentState.updateStatus;
+  public updateMessage = this.departmentState.updateMessage;
 
-  deleteStatus = this.departmentState.deleteStatus;
-  deleteMessage = this.departmentState.deleteMessage;
+  public deleteStatus = this.departmentState.deleteStatus;
+  public deleteMessage = this.departmentState.deleteMessage;
 
   // ===================== MODAIS =====================
 
-  openModalDeleteDepartment = false;
-  openModalUpdateDepartment = false;
-  openModalDepartmentDetail = false;
+  public openModalDeleteDepartment = false;
+  public openModalUpdateDepartment = false;
+  public openModalDepartmentDetail = false;
 
   // ===================== SECTION =====================
 
-  currentSection: 'departamento' | 'servico' | 'config' = 'departamento';
+  public currentSection: 'departamento' | 'servico' | 'config' = 'departamento';
 
   // ===================== FORM =====================
 
-  updateDepartmentForm!: FormGroup;
+  public updateDepartmentForm!: FormGroup;
 
   // ===================== EXTRA =====================
 
-  department = signal<ResponseGetDepartmentDto | null>(null);
-
-  itemsPerPage = 4;
+  public itemsPerPage = 4;
 
   // ==================== Intialize ============
   constructor() {
 
+    // Effect delete
     effect(() => {
 
       if (this.deleteStatus() === 'success') {
 
         this.closeModalDeleteDepartment();
         this.deleteStatus.set('default');
-        this.department.set(null);
+        this.departmentInfo.set(null);
 
-        this.snackBar.open(
-          'Departamento excluido com sucesso!',
-          'Fechar',
-          {
-            duration: 3000
-          }
+        this.snackBar.open( this.deleteMessage(),'Fechar',
+          { duration: 3000 }
         );
       }
 
@@ -83,7 +78,31 @@ export class TableDepartmentsComponent implements OnInit {
 
         this.deleteStatus.set('default');
 
-        this.snackBar.open('Erro ao excluir departamento.','Fechar',
+        this.snackBar.open(this.deleteMessage(),'Fechar',
+          { duration: 3000 }
+        );
+      }
+    })
+
+    // Effect update
+    effect(() => {
+
+      if (this.updateStatus() === 'success') {
+
+        this.updateStatus.set('default');
+        this.updateDepartmentForm.reset();
+        this.closeModalUpdateDepartment();
+
+        this.snackBar.open(this.updateMessage(),'Fechar',
+          { duration: 3000 }
+        );
+      }
+
+      if (this.updateStatus() === 'error') {
+
+        this.updateStatus.set('default');
+
+        this.snackBar.open(this.updateMessage(),'Fechar',
           { duration: 3000 }
         );
       }
@@ -91,27 +110,27 @@ export class TableDepartmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.state.loadDepartments();
+    this.departmentState.loadDepartments();
   }
 
   // ===================== SEARCH =====================
 
   onSearch(event: any) {
-    this.state.setSearch(event.target.value);
+    this.departmentState.setSearch(event.target.value);
   }
 
   // ===================== PAGINATION =====================
 
   nextPage() {
-    this.state.nextPage();
+    this.departmentState.nextPage();
   }
 
   previousPage() {
-    this.state.previousPage();
+    this.departmentState.previousPage();
   }
 
   goToPage(page: number) {
-    this.state.goToPage(page);
+    this.departmentState.goToPage(page);
   }
 
   getStartIndex(): number {
@@ -138,38 +157,8 @@ export class TableDepartmentsComponent implements OnInit {
 
     this.openModalDepartmentDetail = !this.openModalDepartmentDetail;
 
-    this.http.getDepartmentById(departmentId).subscribe({
-      next: (response) => {
-        this.selectedDepartment.set(response);
-      }
-    });
-  }
-
-  // ===================== DELETE =====================
-
-  showModalDeleteDepartment(departmentId: string) {
-
-    this.selectedDepartment.set(null);
-
-    if (this.selectedDepartment() == null) {
-
-      this.http.getDepartmentById(departmentId).subscribe({
-        next: (response) => {
-          this.selectedDepartment.set(response);
-          this.department.set(response);
-        }
-      });
-    }
-
-    this.openModalDeleteDepartment = true;
-  }
-
-  closeModalDeleteDepartment() {
-    this.openModalDeleteDepartment = false;
-  }
-
-  deleteDepartment(departmentId: string) {
-    this.departmentState.deleteDepartment(departmentId);
+    // Pego a informação e passo para o departmentInfo
+    this.departmentState.getInfoDepartment(departmentId);
   }
 
   // ===================== UPDATE =====================
@@ -180,7 +169,7 @@ export class TableDepartmentsComponent implements OnInit {
 
       next: (response) => {
 
-        this.selectedDepartment.set(response);
+        this.departmentInfo.set(response);
 
         this.updateDepartmentForm = this.fb.group({
           departmentId: [response.departmentId],
@@ -197,41 +186,32 @@ export class TableDepartmentsComponent implements OnInit {
     this.openModalUpdateDepartment = false;
   }
 
-  onSubmitUpdateDepartment(): void {
-
+  onSubmitUpdateDepartment() {
     if (this.updateDepartmentForm.invalid) return;
+    this.departmentState.updateDepartment(this.updateDepartmentForm.value);
+  }
 
-    this.http.updateDepartment(this.updateDepartmentForm.value).subscribe({
+  // ===================== DELETE =====================
 
-      next: () => {
+  showModalDeleteDepartment(departmentId: string) {
 
-        this.state.page.set(0);
+    this.departmentInfo.set(null);
 
-        this.state.refresh();
+    if (this.departmentInfo() == null) {
 
-        this.updateDepartmentForm.reset();
+      // Pego a informação e passo para o departmentInfo
+      this.departmentState.getInfoDepartment(departmentId);
+    }
 
-        this.closeModalUpdateDepartment();
+    this.openModalDeleteDepartment = true;
+  }
 
-        this.snackBar.open(
-          'Departamento atualizado com sucesso!',
-          'Fechar',
-          {
-            duration: 3000
-          }
-        );
-      },
+  closeModalDeleteDepartment() {
+    this.openModalDeleteDepartment = false;
+  }
 
-      error: () => {
+  deleteDepartment(departmentId: string) {
 
-        this.snackBar.open(
-          'Erro ao atualizar departamento.',
-          'Fechar',
-          {
-            duration: 3000
-          }
-        );
-      }
-    });
+    this.departmentState.deleteDepartment(departmentId);
   }
 }

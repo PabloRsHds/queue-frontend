@@ -1,136 +1,238 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
+
 import { HttpService } from '../../backend/http.service';
+
 import { ResponseGetDepartmentDto } from '../../../dtos/department/ResponseGetDepartment';
 import { ResponseDepartmentDto } from '../../../dtos/department/ResponseDepartmentDto';
 import { CreateDepartmentDto } from '../../../dtos/department/CreateDepartmentDto';
+import { UpdateDepartmentDto } from '../../../dtos/department/UpdateDepartmentDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentStateService {
 
-  // ===== INJECTIONS =====
+  // ===================== INJECTIONS =====================
+
   private api = inject(HttpService);
 
-  // ===== DATA =====
-  public departments = signal<ResponseDepartmentDto[]>([]);
-  public selectedDepartment = signal<ResponseGetDepartmentDto | null>(null);
+  // ===================== DATA =====================
 
-  // Message/verifications of Response.
-  public registerMessage = signal<string>('');
+  public departments = signal<ResponseDepartmentDto[]>([]);
+  public departmentInfo = signal<ResponseGetDepartmentDto | null>(null);
+
+  // ===================== LOADING =====================
+
+  public loading = signal(false);
+
+  // ===================== RESPONSE STATUS =====================
+
+  public registerMessage = signal('');
   public registerStatus = signal<'success' | 'error' | 'default'>('default');
 
-  public deleteMessage = signal<string>('');
+  public updateMessage = signal('');
+  public updateStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public deleteMessage = signal('');
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
-  // ===== PAGINATION =====
-  public page = signal<number>(0);
-  public size = 4;
-  public totalElements = signal<number>(0);
+  // ===================== PAGINATION =====================
+
+  public page = signal(0);
+
+  public readonly size = 5;
+
+  public totalElements = signal(0);
 
   public totalPages = computed(() =>
     Math.ceil(this.totalElements() / this.size)
   );
 
-  // ===== SEARCH =====
-  public search = signal<string>('');
+  // ===================== SEARCH =====================
 
-  public filteredDepartments = computed(() => {
-    const term = this.search().toLowerCase().trim();
-    const list = this.departments();
+  public search = signal('');
 
-    if (!term) return list;
+  // ===================== LOAD =====================
 
-    return list.filter(d =>
-      d.name.toLowerCase().includes(term)
-    );
-  });
-
-  // ===== LOAD =====
   loadDepartments() {
+
+    this.loading.set(true);
+
     this.api.getAllDepartments(this.page(), this.size, this.search()).subscribe({
-      next: (res) => {
-        this.departments.set(res.content);
-        this.totalElements.set(res.totalElements);
-      }
-    });
-  }
 
-  // ==== REGISTER ===
-  createDepartment(create: CreateDepartmentDto) {
-
-    this.api.createDepartment(create).subscribe({
       next: (response) => {
 
-        this.registerMessage.set('Departamento criado com successo!');
-        this.registerStatus.set('success');
+        this.departments.set(response.content);
+        this.totalElements.set(response.totalElements);
 
-        this.page.set(0);
-        this.departments.set([...this.departments(), response]);
+        this.loading.set(false);
       },
 
       error: (error) => {
 
-        this.registerMessage.set('Erro ao criar um departamento');
-        this.registerStatus.set('error');
+        console.error('Erro ao carregar departamentos', error);
+        this.loading.set(false);
       }
-    })
+    });
   }
 
-  // ====== Delete ======
+  // ===================== CREATE =====================
+
+  createDepartment(create: CreateDepartmentDto) {
+
+    this.api.createDepartment(create).subscribe({
+      next: () => {
+
+        // volta pra primeira página
+        this.page.set(0);
+
+        // backend recalcula paginação
+        this.loadDepartments();
+
+        this.registerMessage.set('Departamento criado com sucesso!');
+        this.registerStatus.set('success');
+      },
+
+      error: (error) => {
+
+        console.error(error);
+
+        this.registerMessage.set('Erro ao criar departamento');
+        this.registerStatus.set('error');
+      }
+    });
+  }
+
+  // ===================== UPDATE =====================
+
+  updateDepartment(department: UpdateDepartmentDto) {
+
+    this.api.updateDepartment(department).subscribe({
+
+      next: () => {
+
+        // sincroniza com backend
+        this.loadDepartments();
+
+        // atualiza detalhe aberto
+        if (this.departmentInfo() && this.departmentInfo()?.departmentId === department.departmentId) {
+
+          this.getInfoDepartment(department.departmentId);
+        }
+
+        this.updateMessage.set('Departamento atualizado com sucesso!');
+        this.updateStatus.set('success');
+      },
+
+      error: (error) => {
+
+        console.error(error);
+
+        this.updateMessage.set('Erro ao atualizar departamento');
+        this.updateStatus.set('error');
+      }
+    });
+  }
+
+  // ===================== DELETE =====================
 
   deleteDepartment(departmentId: string) {
 
     this.api.deleteDepartment(departmentId).subscribe({
 
-      next: (response) => {
+      next: () => {
 
-        this.departments.set(this.departments()
-          .filter(d => d.departmentId !== departmentId));
+        // se deletou o último item da página
+        // volta uma página
+        if (this.departments().length === 1 && this.page() > 0
+        ) {
+          this.page.update(p => p - 1);
+        }
 
-        this.deleteMessage.set('Departamento excluido com sucesso!');
+        // backend recalcula tudo
+        this.loadDepartments();
+
+        // limpa detalhe
+        this.departmentInfo.set(null);
+
+        this.deleteMessage.set('Departamento excluído com sucesso!');
         this.deleteStatus.set('success');
-        this.selectedDepartment.set(null);
       },
 
-      error: () => {
-        this.deleteMessage.set('Erro ao excluir departamento.');
+      error: (error) => {
+
+        console.error(error);
+
+        this.deleteMessage.set('Erro ao excluir departamento');
         this.deleteStatus.set('error');
       }
     });
   }
 
+  // ===================== DETAILS =====================
 
-  // ===== PAGINATION =====
+  getInfoDepartment(departmentId: string) {
+
+    this.api.getDepartmentById(departmentId).subscribe({
+      next: (response) => {
+
+        this.departmentInfo.set(response);
+      },
+
+      error: (error) => {
+
+        console.error(
+          'Erro ao carregar departamento',
+          error
+        );
+      }
+    });
+  }
+
+  clearDepartmentInfo() {
+    this.departmentInfo.set(null);
+  }
+
+  // ===================== PAGINATION =====================
+
   nextPage() {
+
     if (this.page() + 1 >= this.totalPages()) return;
 
     this.page.update(p => p + 1);
+
     this.loadDepartments();
   }
 
   previousPage() {
-    if (this.page() === 0) return;
 
+    if (this.page() === 0) return;
     this.page.update(p => p - 1);
+
     this.loadDepartments();
   }
 
   goToPage(page: number) {
+
     if (page < 0 || page >= this.totalPages()) return;
-
     this.page.set(page);
+
     this.loadDepartments();
   }
 
-  // ===== SEARCH =====
+  // ===================== SEARCH =====================
+
   setSearch(value: string) {
+
     this.search.set(value);
-    this.page.set(0); // sempre volta pra página 1
+    // volta pra primeira página
+    this.page.set(0);
+
     this.loadDepartments();
   }
 
-  // ===== REFRESH =====
+  // ===================== REFRESH =====================
+
   refresh() {
     this.loadDepartments();
   }

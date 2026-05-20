@@ -27,11 +27,11 @@ export class RegisterServiceComponent {
   private snackBar = inject(MatSnackBar)
 
   // ===== States ==========
-  departments = this.departmentState.filteredDepartments;
-  openRegisterService = this.globalState.openRegisterService;
+  public departments = this.departmentState.departments;
+  public openRegisterService = this.globalState.openRegisterService;
 
   // ===== FORM ==========
-  serviceForm!: FormGroup;
+  public serviceForm!: FormGroup;
 
   initializeServiceForm() {
     this.serviceForm = this.fb.group({

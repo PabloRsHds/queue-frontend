@@ -108,22 +108,22 @@
 
   <div class="dept-detail-card">
     <div class="dept-detail-header">
-      <h3>{{ selectedDepartment()?.name }}</h3>
-      <p>Cadastrado em {{ selectedDepartment()?.createdAt }}</p>
+      <h3>{{ departmentInfo()?.name }}</h3>
+      <p>Cadastrado em {{ departmentInfo()?.createdAt }}</p>
     </div>
 
     <div class="dept-detail-body">
       <div class="detail-row">
         <span class="detail-label">Status</span>
-        <span class="detail-value">{{ selectedDepartment()?.active ? 'Ativo' : 'Inativo' }}</span>
+        <span class="detail-value">{{ departmentInfo()?.active ? 'Ativo' : 'Inativo' }}</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Descrição</span>
-        <span class="detail-value">{{ selectedDepartment()?.description }}</span>
+        <span class="detail-value">{{ departmentInfo()?.description }}</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Serviços</span>
-        <span class="detail-value" *ngFor="let service of selectedDepartment()?.services">
+        <span class="detail-value" *ngFor="let service of departmentInfo()?.services">
           <span style="margin-right: 10px; font-weight: 600">- {{ service }}</span>
         </span>
       </div>
@@ -151,11 +151,11 @@
           </p>
 
           <div class="department-info">
-            {{ selectedDepartment()?.name }}
+            {{ departmentInfo()?.name }}
           </div>
 
           <div class="modal-actions">
-            <button class="btn-danger" (click)="deleteDepartment(selectedDepartment()?.departmentId ?? '')">Sim, deletar</button>
+            <button class="btn-danger" (click)="deleteDepartment(departmentInfo()?.departmentId ?? '')">Sim, deletar</button>
             <button class="btn-secondary" (click)="closeModalDeleteDepartment()">Cancelar</button>
           </div>
         </div>
