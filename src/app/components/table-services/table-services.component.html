@@ -1,0 +1,110 @@
+<ng-container>
+  <div class="dept-table-department-container">
+    <button class="dept-table-department-close" aria-label="Fechar" (click)="openTableServices.set(false)">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <h1 class="section-title">Serviços Cadastrados</h1>
+  <p class="section-desc">Visualize e edite os serviços cadastrados.</p>
+
+  <div class="table-wrapper">
+    <div class="table-header">
+      <h3>Total: {{ totalElements() }} serviços(s)</h3>
+      <input
+        type="text"
+        class="table-search"
+        placeholder="ICN Buscar departamento..."
+        (input)="onSearch($event)"
+        name="searchQuery">
+    </div>
+
+    <table class="dept-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Código</th>
+          <th>Departamento</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="services().length === 0; else departmentRows">
+          <tr>
+            <td colspan="5" style="text-align:center;padding:3rem;color:#9ca3af;">
+              <p>Nenhum serviço cadastrado ainda.</p>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-template #departmentRows>
+          <tr *ngFor="let service of services()" style="cursor: pointer;">
+            <td>
+              <strong>{{ service.name }}</strong>
+            </td>
+            <td>
+              <strong>{{ service.code }}</strong>
+            </td>
+            <td>
+              <strong>{{ service.departmentName }}</strong>
+            </td>
+            <td>
+              <strong>{{ service.active }}</strong>
+            </td>
+
+            <td colspan="3">
+              <button type="button" class="button-department-update">update</button>
+              <button type="button" class="button-department-delete">delete</button>
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+
+
+    <div class="pagination">
+      <span class="pagination-info">
+        Mostrando {{ getStartIndex() }}-{{ getEndIndex() }} de {{ totalElements() }}
+      </span>
+
+      <div class="pagination-buttons">
+
+        <!-- PREV -->
+        <button
+          class="page-btn"
+          (click)="previousPage()"
+          [disabled]="page() === 0">
+
+          <svg viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- PAGES -->
+        <button
+          *ngFor="let p of getPagesArray(); let i = index"
+          class="page-btn"
+          [class.active]="i === page()"
+          (click)="goToPage(i)">
+
+          {{ i + 1 }}
+        </button>
+
+        <!-- NEXT -->
+        <button
+          class="page-btn"
+          (click)="nextPage()"
+          [disabled]="page() + 1 >= totalPages()">
+
+          <svg viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </div>
+</ng-container>

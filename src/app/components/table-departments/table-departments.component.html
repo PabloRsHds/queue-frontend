@@ -1,0 +1,211 @@
+<ng-container *ngIf="!openModalDepartmentDetail">
+  <div class="dept-table-department-container">
+    <button class="dept-table-department-close" aria-label="Fechar" (click)="openTableDeparments.set(false)">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <h1 class="section-title" [class.margim]="currentSection === 'departamento'">Departamentos Cadastrados</h1>
+  <p class="section-desc">Clique em um departamento para ver seus serviços.</p>
+
+  <div class="table-wrapper">
+    <div class="table-header">
+      <h3>Total: {{ totalElements() }} departamento(s)</h3>
+      <input
+        type="text"
+        class="table-search"
+        placeholder="ICN Buscar departamento..."
+        (input)="onSearch($event)"
+        name="searchQuery">
+    </div>
+
+    <table class="dept-table">
+      <thead>
+        <tr>
+          <th>Departamento</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="departments().length === 0; else departmentRows">
+          <tr>
+            <td colspan="2" style="text-align:center;padding:3rem;color:#9ca3af;">
+              <p>Nenhum departamento cadastrado ainda.</p>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-template #departmentRows>
+          <tr *ngFor="let department of departments()" style="cursor: pointer;">
+            <td (click)="showDepartmentDetail(department.departmentId)">
+              <strong>{{ department.name }}</strong>
+            </td>
+
+            <td colspan="3">
+              <button type="button" class="button-department-update" (click)="showModalUpdateDepartment(department.departmentId)">update</button>
+              <button type="button" class="button-department-delete" (click)="showModalDeleteDepartment(department.departmentId)">delete</button>
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+
+
+    <div class="pagination">
+      <span class="pagination-info">
+        Mostrando {{ getStartIndex() }}-{{ getEndIndex() }} de {{ totalElements() }}
+      </span>
+
+      <div class="pagination-buttons">
+
+        <!-- PREV -->
+        <button
+          class="page-btn"
+          (click)="previousPage()"
+          [disabled]="page() === 0">
+
+          <svg viewBox="0 0 24 24">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- PAGES -->
+        <button
+          *ngFor="let p of getPagesArray(); let i = index"
+          class="page-btn"
+          [class.active]="i === page()"
+          (click)="goToPage(i)">
+
+          {{ i + 1 }}
+        </button>
+
+        <!-- NEXT -->
+        <button
+          class="page-btn"
+          (click)="nextPage()"
+          [disabled]="page() + 1 >= totalPages()">
+
+          <svg viewBox="0 0 24 24">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Seção de Detalhes do Departamento -->
+<ng-container *ngIf="openModalDepartmentDetail">
+  <button class="btn-back" (click)="openModalDepartmentDetail = !openModalDepartmentDetail">
+    <svg viewBox="0 0 24 24">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+    Voltar para a tabela
+  </button>
+
+  <div class="dept-detail-card">
+    <div class="dept-detail-header">
+      <h3>{{ selectedDepartment()?.name }}</h3>
+      <p>Cadastrado em {{ selectedDepartment()?.createdAt }}</p>
+    </div>
+
+    <div class="dept-detail-body">
+      <div class="detail-row">
+        <span class="detail-label">Status</span>
+        <span class="detail-value">{{ selectedDepartment()?.active ? 'Ativo' : 'Inativo' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Descrição</span>
+        <span class="detail-value">{{ selectedDepartment()?.description }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Serviços</span>
+        <span class="detail-value" *ngFor="let service of selectedDepartment()?.services">
+          <span style="margin-right: 10px; font-weight: 600">- {{ service }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- MODAIS -->
+<div class="modal-backdrop" *ngIf="openModalDeleteDepartment">
+  <div class="modal-delete-update">
+
+    <div class="modal-header">
+      <h3>Departamento</h3>
+      <button class="close-btn" (click)="closeModalDeleteDepartment()">x</button>
+    </div>
+
+    <div class="modal-body">
+
+      <ng-container>
+
+        <!-- DELETE -->
+        <div>
+          <p class="warning-text">
+            Tem certeza que deseja deletar este departamento?
+          </p>
+
+          <div class="department-info">
+            {{ selectedDepartment()?.name }}
+          </div>
+
+          <div class="modal-actions">
+            <button class="btn-danger" (click)="deleteDepartment()">Sim, deletar</button>
+            <button class="btn-secondary" (click)="closeModalDeleteDepartment()">Cancelar</button>
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="openModalUpdateDepartment">
+  <div class="modal-delete-update">
+
+    <div class="modal-header">
+      <h3>Editar Departamento</h3>
+      <button class="close-btn" (click)="closeModalUpdateDepartment()">x</button>
+    </div>
+
+    <div class="modal-body">
+
+      <form [formGroup]="updateDepartmentForm" (ngSubmit)="onSubmitUpdateDepartment()" class="form-update">
+        <div class="form-group-update">
+          <input
+            type="text"
+            placeholder="Nome do departamento"
+            formControlName="name"
+          />
+        </div>
+
+        <div class="form-group-update">
+          <textarea
+            type="text"
+            rows="3"
+            cols="2"
+            placeholder="Descrição do departamento"
+            formControlName="description"
+          >
+          </textarea>
+        </div>
+
+        <div class="modal-actions-update">
+          <button type="submit" class="btn-update">
+            Salvar
+          </button>
+          <button class="btn-secondary" (click)="closeModalUpdateDepartment()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+</div>

@@ -10,7 +10,7 @@ import { GlobalStatesService } from '../../services/states/global-states.service
 export class HeaderComponent {
 
   private globalState = inject(GlobalStatesService);
-  public openModalDepartment = this.globalState.modalDepartment;
+  public openCardDepartment = this.globalState.openCardDepartment;
 
   sidebarOpen: boolean = false;
 
@@ -18,7 +18,7 @@ export class HeaderComponent {
       this.sidebarOpen = !this.sidebarOpen;
   }
 
-  handleOpenModalDepartment(): void {
-    this.openModalDepartment.set(true);
+  handleOpenCardDepartment(): void {
+    this.openCardDepartment.set(true);
   }
 }

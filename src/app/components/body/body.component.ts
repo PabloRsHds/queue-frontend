@@ -1,22 +1,26 @@
 import { Component, inject } from '@angular/core';
-import { DepartmentComponent } from "../department/department.component";
 import { GlobalStatesService } from '../../services/states/global-states.service';
 import { CommonModule } from '@angular/common';
+import { CardDepartmentComponent } from "../card-department/card-department.component";
 
 @Component({
   selector: 'app-body',
-  imports: [DepartmentComponent, CommonModule],
+  imports: [CommonModule, CardDepartmentComponent],
   templateUrl: './body.component.html',
   styleUrl: './body.component.css'
 })
 export class BodyComponent {
 
+  // ==== Injects ====
   private globalState = inject(GlobalStatesService);
+  // =================
 
-  public openModalDepartment = this.globalState.modalDepartment;
+  // ==== States ====
+  public openCardDepartment = this.globalState.openCardDepartment;
+  // ================
 
-  handleOpenModalDepartment(): void {
-    this.openModalDepartment.set(true);
+  handleOpenCardDepartment(): void {
+    this.openCardDepartment.set(true);
   }
 
 }

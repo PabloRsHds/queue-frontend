@@ -10,8 +10,8 @@ export class ServiceManagementService {
   private api = inject(HttpService);
 
   // ===== DATA =====
-  public departments = signal<ResponseServiceManagementsDto[]>([]);
-  public selectedDepartment = signal<ResponseServiceManagementsDto | null>(null);
+  public services = signal<ResponseServiceManagementsDto[]>([]);
+  public selectedService = signal<ResponseServiceManagementsDto | null>(null);
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -25,9 +25,9 @@ export class ServiceManagementService {
   // ===== SEARCH =====
   public search = signal<string>('');
 
-  public filteredDepartments = computed(() => {
+  public filteredServices = computed(() => {
     const term = this.search().toLowerCase().trim();
-    const list = this.departments();
+    const list = this.services();
 
     if (!term) return list;
 
@@ -37,10 +37,10 @@ export class ServiceManagementService {
   });
 
   // ===== LOAD =====
-  loadDepartments() {
+  loadServices() {
     this.api.getAllServicesManagement(this.page(), this.size, this.search()).subscribe({
       next: (res) => {
-        this.departments.set(res.content);
+        this.services.set(res.content);
         this.totalElements.set(res.totalElements);
       }
     });
@@ -51,32 +51,32 @@ export class ServiceManagementService {
     if (this.page() + 1 >= this.totalPages()) return;
 
     this.page.update(p => p + 1);
-    this.loadDepartments();
+    this.loadServices();
   }
 
   previousPage() {
     if (this.page() === 0) return;
 
     this.page.update(p => p - 1);
-    this.loadDepartments();
+    this.loadServices();
   }
 
   goToPage(page: number) {
     if (page < 0 || page >= this.totalPages()) return;
 
     this.page.set(page);
-    this.loadDepartments();
+    this.loadServices();
   }
 
   // ===== SEARCH =====
   setSearch(value: string) {
     this.search.set(value);
     this.page.set(0); // sempre volta pra página 1
-    this.loadDepartments();
+    this.loadServices();
   }
 
   // ===== REFRESH =====
   refresh() {
-    this.loadDepartments();
+    this.loadServices();
   }
 }

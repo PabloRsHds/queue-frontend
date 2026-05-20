@@ -31,7 +31,7 @@ export class DepartmentComponent {
   public globalState = inject(GlobalStatesService);
   public http = inject(HttpService);
   public snackBar = inject(MatSnackBar);
-  public closeModalDepartment = this.globalState.modalDepartment;
+  public closeModalDepartment = this.globalState.openCardDepartment;
   public search = this.state.search;
 
   fb = inject(FormBuilder);

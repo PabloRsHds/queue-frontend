@@ -5,7 +5,14 @@ import { Injectable, signal } from '@angular/core';
 })
 export class GlobalStatesService {
 
-  public modalDepartment = signal<boolean>(false);
+  public openCardDepartment = signal<boolean>(false);
+  public currentSection = signal<'departamento' | 'servico' | 'config'>('departamento');
+
+  public openRegisterDepartment = signal<boolean>(false);
+  public openTableDeparments = signal<boolean>(false);
+
+  public openRegisterService = signal<boolean>(false);
+  public openTableServices = signal<boolean>(false);
 
   constructor() { }
 }
