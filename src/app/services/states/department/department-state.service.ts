@@ -1,18 +1,27 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
-import { ResponseDepartmentsDto } from '../../../dtos/department/ResponseDepartments';
 import { ResponseGetDepartmentDto } from '../../../dtos/department/ResponseGetDepartment';
+import { ResponseDepartmentDto } from '../../../dtos/department/ResponseDepartmentDto';
+import { CreateDepartmentDto } from '../../../dtos/department/CreateDepartmentDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentStateService {
 
+  // ===== INJECTIONS =====
   private api = inject(HttpService);
 
   // ===== DATA =====
-  public departments = signal<ResponseDepartmentsDto[]>([]);
+  public departments = signal<ResponseDepartmentDto[]>([]);
   public selectedDepartment = signal<ResponseGetDepartmentDto | null>(null);
+
+  // Message/verifications of Response.
+  public registerMessage = signal<string>('');
+  public registerStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public deleteMessage = signal<string>('');
+  public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -46,6 +55,51 @@ export class DepartmentStateService {
       }
     });
   }
+
+  // ==== REGISTER ===
+  createDepartment(create: CreateDepartmentDto) {
+
+    this.api.createDepartment(create).subscribe({
+      next: (response) => {
+
+        this.registerMessage.set('Departamento criado com successo!');
+        this.registerStatus.set('success');
+
+        this.page.set(0);
+        this.departments.set([...this.departments(), response]);
+      },
+
+      error: (error) => {
+
+        this.registerMessage.set('Erro ao criar um departamento');
+        this.registerStatus.set('error');
+      }
+    })
+  }
+
+  // ====== Delete ======
+
+  deleteDepartment(departmentId: string) {
+
+    this.api.deleteDepartment(departmentId).subscribe({
+
+      next: (response) => {
+
+        this.departments.set(this.departments()
+          .filter(d => d.departmentId !== departmentId));
+
+        this.deleteMessage.set('Departamento excluido com sucesso!');
+        this.deleteStatus.set('success');
+        this.selectedDepartment.set(null);
+      },
+
+      error: () => {
+        this.deleteMessage.set('Erro ao excluir departamento.');
+        this.deleteStatus.set('error');
+      }
+    });
+  }
+
 
   // ===== PAGINATION =====
   nextPage() {

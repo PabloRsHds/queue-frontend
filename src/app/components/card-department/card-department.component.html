@@ -23,8 +23,7 @@
             <line x1="16" y1="13" x2="8" y2="13"></line>
             <line x1="16" y1="17" x2="8" y2="17"></line>
           </svg>
-          Departameno
-          <span class="badge">{{ totalElements() }}</span>
+          Departamentos
         </div>
         <div
           class="modal-sidebar-item"
@@ -36,27 +35,19 @@
           </svg>
           Serviços
         </div>
-        <div
-          class="modal-sidebar-item"
-          [class.active]="currentSection() === 'config'"
-          (click)="switchSection('config')">
-          <svg viewBox="0 0 24 24">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-          </svg>
-          Config
-        </div>
       </div>
 
       <!-- Right Content -->
       <div class="modal-content">
         <!-- Seção de Registro de Departamento -->
 
-        <div>
-          <ng-container class="buttons" *ngIf="showButtonsSectionDepartment()">
-            <button class="btn-secondary" type="button" (click)="openRegisterDepartment.set(true)">Registrar departamento</button>
-            <button class="btn-secondary" type="button" (click)="openTableDeparments.set(true)">Visualizar departamentos</button>
+
+          <ng-container *ngIf="showButtonsSectionDepartment()">
+
+            <div class="buttons-sections-container">
+              <button class="btn-section" type="button" (click)="openRegisterDepartment.set(true)">Registrar departamento</button>
+              <button class="btn-section" type="button" (click)="openTableDeparments.set(true)">Visualizar departamentos</button>
+            </div>
           </ng-container>
 
           <app-register-department
@@ -66,12 +57,16 @@
           <app-table-departments
           *ngIf="openTableDeparments() && currentSection() === 'departamento'">
           </app-table-departments>
-        </div>
+
 
         <div>
-          <ng-container class="buttons" *ngIf="showButtonsSectionService()">
-            <button class="btn-secondary" type="button" (click)="openRegisterService.set(true)">Registrar serviço</button>
-            <button class="btn-secondary" type="button" (click)="openTableServices.set(true)">Visualizar serviços</button>
+          <ng-container *ngIf="showButtonsSectionService()">
+
+            <div class="buttons-sections-container">
+              <button class="btn-section" type="button" (click)="openRegisterService.set(true)">Registrar serviço</button>
+              <button class="btn-section" type="button" (click)="openTableServices.set(true)">Visualizar serviços</button>
+            </div>
+
           </ng-container>
 
           <app-register-service

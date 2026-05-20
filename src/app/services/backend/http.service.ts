@@ -1,15 +1,13 @@
 import { PageResponse } from '../../dtos/page/PageResponse';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseServiceManagementDto } from '../../dtos/services/ResponseServiceManagementDto';
 import { ResponseDepartmentDto } from '../../dtos/department/ResponseDepartmentDto';
 import { CreateDepartmentDto } from '../../dtos/department/CreateDepartmentDto';
 import { CreateServiceManagementDto } from '../../dtos/services/CreateServiceManagementDto';
-import { ResponseDepartmentsDto } from '../../dtos/department/ResponseDepartments';
 import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepartment';
 import { UpdateDepartmentDto } from '../../dtos/department/UpdateDepartmentDto';
-import { ResponseUpdateDepartmentDto } from '../../dtos/department/ResponseUpdateDepartmentDto';
 import { UpdateServiceManagementDto } from '../../dtos/services/UpdateServiceManagementDto';
 import { ResponseUpdateServiceManagementDto } from '../../dtos/services/ResponseUpdateServiceManagementDto';
 import { ResponseServiceManagementsDto } from '../../dtos/services/ResponseServiceManagementsDto';
@@ -26,16 +24,16 @@ export class HttpService {
     return this.http.post<ResponseDepartmentDto>('http://localhost:8080/departments', department);
   }
 
-  updateDepartment(department: UpdateDepartmentDto): Observable<ResponseUpdateDepartmentDto> {
-    return this.http.patch<ResponseUpdateDepartmentDto>('http://localhost:8080/departments', department);
+  updateDepartment(department: UpdateDepartmentDto): Observable<ResponseDepartmentDto> {
+    return this.http.patch<ResponseDepartmentDto>('http://localhost:8080/departments', department);
   }
 
-  deleteDepartment(departmentId: string): Observable<void> {
-    return this.http.delete<void>('http://localhost:8080/departments/' + departmentId);
+  deleteDepartment(departmentId: string): Observable<ResponseDepartmentDto> {
+    return this.http.delete<ResponseDepartmentDto>('http://localhost:8080/departments/' + departmentId);
   }
 
-  public getAllDepartments(page: number, size: number, search?: string): Observable<PageResponse<ResponseDepartmentsDto>> {
-    return this.http.get<PageResponse<ResponseDepartmentsDto>>(`http://localhost:8080/departments?page=${page}&size=${size}&search=${search}`);
+  getAllDepartments(page: number, size: number, search?: string): Observable<PageResponse<ResponseDepartmentDto>> {
+    return this.http.get<PageResponse<ResponseDepartmentDto>>(`http://localhost:8080/departments?page=${page}&size=${size}&search=${search}`);
   }
 
   getDepartmentById(departmentId: string): Observable<ResponseGetDepartmentDto>{

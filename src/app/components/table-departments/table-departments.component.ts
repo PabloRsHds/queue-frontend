@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalStatesService } from '../../services/states/global-states.service';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
@@ -14,13 +14,14 @@ import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepar
   templateUrl: './table-departments.component.html',
   styleUrl: './table-departments.component.css'
 })
-export class TableDepartmentsComponent {
+export class TableDepartmentsComponent implements OnInit {
 
   // ===================== INJECTS =====================
 
   public http = inject(HttpService);
   public snackBar = inject(MatSnackBar);
   public globalState = inject(GlobalStatesService);
+  public departmentState = inject(DepartmentStateService);
   public fb = inject(FormBuilder);
 
   // ===================== STATE =====================
@@ -35,6 +36,8 @@ export class TableDepartmentsComponent {
   search = this.state.search;
   openTableDeparments = this.globalState.openTableDeparments;
 
+  deleteStatus = this.departmentState.deleteStatus;
+  deleteMessage = this.departmentState.deleteMessage;
 
   // ===================== MODAIS =====================
 
@@ -56,7 +59,36 @@ export class TableDepartmentsComponent {
 
   itemsPerPage = 4;
 
-  // ===================== INIT =====================
+  // ==================== Intialize ============
+  constructor() {
+
+    effect(() => {
+
+      if (this.deleteStatus() === 'success') {
+
+        this.closeModalDeleteDepartment();
+        this.deleteStatus.set('default');
+        this.department.set(null);
+
+        this.snackBar.open(
+          'Departamento excluido com sucesso!',
+          'Fechar',
+          {
+            duration: 3000
+          }
+        );
+      }
+
+      if (this.deleteStatus() === 'error') {
+
+        this.deleteStatus.set('default');
+
+        this.snackBar.open('Erro ao excluir departamento.','Fechar',
+          { duration: 3000 }
+        );
+      }
+    })
+  }
 
   ngOnInit() {
     this.state.loadDepartments();
@@ -117,6 +149,8 @@ export class TableDepartmentsComponent {
 
   showModalDeleteDepartment(departmentId: string) {
 
+    this.selectedDepartment.set(null);
+
     if (this.selectedDepartment() == null) {
 
       this.http.getDepartmentById(departmentId).subscribe({
@@ -125,7 +159,6 @@ export class TableDepartmentsComponent {
           this.department.set(response);
         }
       });
-
     }
 
     this.openModalDeleteDepartment = true;
@@ -135,43 +168,8 @@ export class TableDepartmentsComponent {
     this.openModalDeleteDepartment = false;
   }
 
-  deleteDepartment() {
-
-    const departmentId = this.department()?.departmentId;
-
-    if (!departmentId) return;
-
-    this.http.deleteDepartment(departmentId).subscribe({
-
-      next: () => {
-
-        this.state.loadDepartments();
-
-        this.closeModalDeleteDepartment();
-
-        this.selectedDepartment.set(null);
-        this.department.set(null);
-
-        this.snackBar.open(
-          'Departamento excluido com sucesso!',
-          'Fechar',
-          {
-            duration: 3000
-          }
-        );
-      },
-
-      error: () => {
-
-        this.snackBar.open(
-          'Erro ao excluir departamento.',
-          'Fechar',
-          {
-            duration: 3000
-          }
-        );
-      }
-    });
+  deleteDepartment(departmentId: string) {
+    this.departmentState.deleteDepartment(departmentId);
   }
 
   // ===================== UPDATE =====================

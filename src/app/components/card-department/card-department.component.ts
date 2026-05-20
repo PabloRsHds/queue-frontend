@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalStatesService } from '../../services/states/global-states.service';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
@@ -35,13 +35,12 @@ export class CardDepartmentComponent {
 
   // ==== UI ====
   get modalTitle(): string {
-    if (this.currentSection() === 'departamento') return 'ICN Registro de Departamentos';
-    if (this.currentSection() === 'servico') return 'ICN Cadastro de Serviços';
-    if (this.currentSection() === 'config') return 'ICN Configurações de Departamentos';
+    if (this.currentSection() === 'departamento') return 'ICN Seção de Departamento';
+    if (this.currentSection() === 'servico') return 'ICN Seção de Serviços';
     return 'ICN Lista de Departamentos';
   }
 
-  switchSection(section: 'departamento' | 'servico' | 'config') {
+  switchSection(section: 'departamento' | 'servico') {
     this.currentSection.set(section);
   }
   // =================

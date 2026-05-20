@@ -80,6 +80,34 @@
 }
 
 /* Left Sidebar of Modal */
+
+
+/* Button of Left Sidebar */
+
+.buttons-sections-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 25%;
+}
+
+.btn-section {
+  border: 1px solid #e9ecef;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 18px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-section:hover {
+  background: #eef2ff;
+  color: #1e3a5f;
+}
+
 .modal-sidebar {
     width: 240px;
     min-width: 240px;

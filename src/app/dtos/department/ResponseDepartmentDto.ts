@@ -1,5 +1,5 @@
 export interface ResponseDepartmentDto {
-  departmentId: number;
+  departmentId: string;
   name: string;
   description: string;
 }

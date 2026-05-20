@@ -155,7 +155,7 @@
           </div>
 
           <div class="modal-actions">
-            <button class="btn-danger" (click)="deleteDepartment()">Sim, deletar</button>
+            <button class="btn-danger" (click)="deleteDepartment(selectedDepartment()?.departmentId ?? '')">Sim, deletar</button>
             <button class="btn-secondary" (click)="closeModalDeleteDepartment()">Cancelar</button>
           </div>
         </div>
@@ -199,7 +199,7 @@
           <button type="submit" class="btn-update">
             Salvar
           </button>
-          <button class="btn-secondary" (click)="closeModalUpdateDepartment()">
+          <button type="button" class="btn-secondary" (click)="closeModalUpdateDepartment()">
             Cancelar
           </button>
         </div>
