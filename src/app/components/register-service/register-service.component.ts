@@ -3,7 +3,6 @@ import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpService } from '../../services/backend/http.service';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
@@ -18,7 +17,6 @@ export class RegisterServiceComponent {
 
   // ====== Injection ======
   private fb = inject(FormBuilder);
-  private http = inject(HttpService);
   private departmentState = inject(DepartmentStateService);
   private serviceState = inject(ServiceManagementService);
   private globalState = inject(GlobalStatesService);

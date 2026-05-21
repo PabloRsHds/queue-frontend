@@ -189,10 +189,6 @@ export class DepartmentStateService {
     });
   }
 
-  clearDepartmentInfo() {
-    this.departmentInfo.set(null);
-  }
-
   // ===================== PAGINATION =====================
 
   nextPage() {
@@ -231,9 +227,19 @@ export class DepartmentStateService {
     this.loadDepartments();
   }
 
-  // ===================== REFRESH =====================
+  // ===================== RESET =====================
 
-  refresh() {
+  resetLoadDepartments() {
     this.loadDepartments();
+  }
+
+  resetStatus() {
+    this.registerStatus.set('default');
+    this.updateStatus.set('default');
+    this.deleteStatus.set('default');
+  }
+
+  resetDepartmentInfo() {
+    this.departmentInfo.set(null);
   }
 }

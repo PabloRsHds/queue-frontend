@@ -53,6 +53,15 @@ export class TableDepartmentsComponent implements OnInit {
 
   public updateDepartmentForm!: FormGroup;
 
+  initializeUpdateForm() {
+
+    this.updateDepartmentForm = this.fb.group({
+      departmentId: [''],
+      name: [''],
+      description: ['']
+    });
+  }
+
   // ===================== EXTRA =====================
 
   public itemsPerPage = 4;
@@ -66,8 +75,7 @@ export class TableDepartmentsComponent implements OnInit {
       if (this.deleteStatus() === 'success') {
 
         this.closeModalDeleteDepartment();
-        this.deleteStatus.set('default');
-        this.departmentInfo.set(null);
+        this.departmentState.resetStatus();
 
         this.snackBar.open( this.deleteMessage(),'Fechar',
           { duration: 3000,
@@ -78,7 +86,7 @@ export class TableDepartmentsComponent implements OnInit {
 
       if (this.deleteStatus() === 'error') {
 
-        this.deleteStatus.set('default');
+        this.departmentState.resetStatus();
 
         this.snackBar.open(this.deleteMessage(),'Fechar',
           { duration: 3000,
@@ -86,14 +94,14 @@ export class TableDepartmentsComponent implements OnInit {
           }
         );
       }
-    })
+    });
 
     // Effect update
     effect(() => {
 
       if (this.updateStatus() === 'success') {
 
-        this.updateStatus.set('default');
+        this.departmentState.resetStatus();
         this.updateDepartmentForm.reset();
         this.closeModalUpdateDepartment();
 
@@ -106,7 +114,7 @@ export class TableDepartmentsComponent implements OnInit {
 
       if (this.updateStatus() === 'error') {
 
-        this.updateStatus.set('default');
+        this.departmentState.resetStatus();
 
         this.snackBar.open(this.updateMessage(),'Fechar',
           { duration: 3000,
@@ -114,11 +122,26 @@ export class TableDepartmentsComponent implements OnInit {
           }
         );
       }
-    })
+    });
+
+    effect(() => {
+
+      const department = this.departmentInfo();
+
+      if (department) {
+
+        this.updateDepartmentForm.patchValue({
+          departmentId: department.departmentId,
+          name: department.name,
+          description: department.description
+        });
+      }
+    });
   }
 
   ngOnInit() {
     this.departmentState.loadDepartments();
+    this.initializeUpdateForm();
   }
 
   // ===================== SEARCH =====================
@@ -163,35 +186,27 @@ export class TableDepartmentsComponent implements OnInit {
 
   showDepartmentDetail(departmentId: string) {
 
-    this.openModalDepartmentDetail = !this.openModalDepartmentDetail;
-
+    this.openModalDepartmentDetail = true;
     // Pego a informação e passo para o departmentInfo
     this.departmentState.getInfoDepartment(departmentId);
+  }
+
+  closeModalDepartmentDetail(){
+    this.openModalDepartmentDetail = false;
+    this.departmentState.resetDepartmentInfo();
   }
 
   // ===================== UPDATE =====================
 
   showModalUpdateDepartment(departmentId: string) {
 
-    this.http.getDepartmentById(departmentId).subscribe({
-
-      next: (response) => {
-
-        this.departmentInfo.set(response);
-
-        this.updateDepartmentForm = this.fb.group({
-          departmentId: [response.departmentId],
-          name: [response.name],
-          description: [response.description]
-        });
-
-        this.openModalUpdateDepartment = true;
-      }
-    });
+    this.departmentState.getInfoDepartment(departmentId);
+    this.openModalUpdateDepartment = true;
   }
 
   closeModalUpdateDepartment() {
     this.openModalUpdateDepartment = false;
+    this.departmentState.resetDepartmentInfo();
   }
 
   onSubmitUpdateDepartment() {
@@ -202,20 +217,13 @@ export class TableDepartmentsComponent implements OnInit {
   // ===================== DELETE =====================
 
   showModalDeleteDepartment(departmentId: string) {
-
-    this.departmentInfo.set(null);
-
-    if (this.departmentInfo() == null) {
-
-      // Pego a informação e passo para o departmentInfo
-      this.departmentState.getInfoDepartment(departmentId);
-    }
-
+    this.departmentState.getInfoDepartment(departmentId);
     this.openModalDeleteDepartment = true;
   }
 
   closeModalDeleteDepartment() {
     this.openModalDeleteDepartment = false;
+    this.departmentState.resetDepartmentInfo();
   }
 
   deleteDepartment(departmentId: string) {
