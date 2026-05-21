@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { ResponseServiceManagementsDto } from '../../../dtos/services/ResponseServiceManagementsDto';
+import { CreateServiceManagementDto } from '../../../dtos/services/CreateServiceManagementDto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,9 @@ export class ServiceManagementService {
   // ===== DATA =====
   public services = signal<ResponseServiceManagementsDto[]>([]);
   public selectedService = signal<ResponseServiceManagementsDto | null>(null);
+
+  public serviceStatus = signal<'success' | 'error' | 'default'>('default');
+  public serviceMessage = signal('');
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -25,18 +29,27 @@ export class ServiceManagementService {
   // ===== SEARCH =====
   public search = signal<string>('');
 
-  public filteredServices = computed(() => {
-    const term = this.search().toLowerCase().trim();
-    const list = this.services();
+  // ===== Register =======
+  registerServiceManagenent(request : CreateServiceManagementDto) {
 
-    if (!term) return list;
+    this.api.createServiceManagement(request).subscribe({
+      next: () => {
 
-    return list.filter(d =>
-      d.name.toLowerCase().includes(term)
-    );
-  });
+        this.page.set(0);
+        this.loadServices();
 
-  // ===== LOAD =====
+        this.serviceMessage.set('Serviço cadastrado com sucesso!');
+        this.serviceStatus.set('success');
+      },
+      error: () => {
+
+        this.serviceMessage.set('Erro ao cadastrar serviço.');
+        this.serviceStatus.set('error');
+      }
+    })
+  }
+
+  // ===== LOAD SERVICES =====
   loadServices() {
     this.api.getAllServicesManagement(this.page(), this.size, this.search()).subscribe({
       next: (res) => {

@@ -41,7 +41,8 @@ export class RegisterDepartmentComponent implements OnInit{
         this.departmentForm.reset();
         this.registerStatus.set('default');
         this.snackBar.open(this.registerMessage(), 'Fechar', {
-          duration: 3000
+          duration: 3000,
+          panelClass: ['snackbar-success'],
         });
       }
 
@@ -50,6 +51,7 @@ export class RegisterDepartmentComponent implements OnInit{
         this.registerStatus.set('default');
         this.snackBar.open(this.registerMessage(), 'Fechar', {
           duration: 3000,
+          panelClass: ['snackbar-danger'],
         });
       }
     })

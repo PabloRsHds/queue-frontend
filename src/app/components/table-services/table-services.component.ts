@@ -18,7 +18,7 @@ export class TableServicesComponent {
 
   // ===== States ====
   public openTableServices = this.globalState.openTableServices
-  public services = this.serviceState.filteredServices;
+  public services = this.serviceState.services;
   public page = this.serviceState.page;
   public totalPages = this.serviceState.totalPages;
   public totalElements = this.serviceState.totalElements;

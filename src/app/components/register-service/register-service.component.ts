@@ -1,11 +1,12 @@
 import { GlobalStatesService } from './../../services/states/global-states.service';
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpService } from '../../services/backend/http.service';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 
 @Component({
   selector: 'app-register-service',
@@ -15,24 +16,57 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RegisterServiceComponent {
 
-  ngOnInit(){
-    this.initializeServiceForm();
-  }
-
   // ====== Injection ======
-  private fb = inject(FormBuilder)
-  private http = inject(HttpService)
-  private departmentState = inject(DepartmentStateService)
-  private globalState = inject(GlobalStatesService)
-  private snackBar = inject(MatSnackBar)
+  private fb = inject(FormBuilder);
+  private http = inject(HttpService);
+  private departmentState = inject(DepartmentStateService);
+  private serviceState = inject(ServiceManagementService);
+  private globalState = inject(GlobalStatesService);
+  private snackBar = inject(MatSnackBar);
 
   // ===== States ==========
   public departments = this.departmentState.departments;
   public openRegisterService = this.globalState.openRegisterService;
 
+  public serviceStatus = this.serviceState.serviceStatus;
+  public serviceMessage = this.serviceState.serviceMessage;
+
   // ===== FORM ==========
   public serviceForm!: FormGroup;
 
+  // ==== Initializations ====
+  ngOnInit(){
+    this.initializeServiceForm();
+  }
+
+  constructor() {
+
+    effect(() => {
+
+      if (this.serviceStatus() === 'success') {
+
+        this.serviceForm.reset();
+        this.serviceForm.get('departmentName')?.setValue('');
+        this.serviceStatus.set('default');
+        this.snackBar.open(this.serviceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+      }
+
+      if (this.serviceStatus() === 'error') {
+
+        this.serviceStatus.set('default');
+        this.snackBar.open(this.serviceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-danger']
+        });
+      }
+
+    })
+  }
+
+  // === FORM ====
   initializeServiceForm() {
     this.serviceForm = this.fb.group({
       departmentName: ['', Validators.required],
@@ -43,27 +77,9 @@ export class RegisterServiceComponent {
   }
 
   // ONSUBMIT
-  onSubmitService(): void {
+  onSubmitService(){
     if (this.serviceForm.invalid) return;
-
-    this.http.createServiceManagement(this.serviceForm.value).subscribe({
-      next: () => {
-
-        // opcional: recarregar departamentos (se serviços aparecem lá)
-        this.departmentState.loadDepartments();
-
-        this.serviceForm.reset();
-
-        this.snackBar.open('Serviço cadastrado com sucesso!', 'Fechar', {
-          duration: 3000
-        });
-      },
-      error: () => {
-        this.snackBar.open('Erro ao cadastrar serviço.', 'Fechar', {
-          duration: 3000,
-        });
-      }
-    });
+    this.serviceState.registerServiceManagenent(this.serviceForm.value);
   }
 
 }

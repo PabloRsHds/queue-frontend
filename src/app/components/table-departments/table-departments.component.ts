@@ -70,7 +70,9 @@ export class TableDepartmentsComponent implements OnInit {
         this.departmentInfo.set(null);
 
         this.snackBar.open( this.deleteMessage(),'Fechar',
-          { duration: 3000 }
+          { duration: 3000,
+            panelClass: ['snackbar-success']
+          }
         );
       }
 
@@ -79,7 +81,9 @@ export class TableDepartmentsComponent implements OnInit {
         this.deleteStatus.set('default');
 
         this.snackBar.open(this.deleteMessage(),'Fechar',
-          { duration: 3000 }
+          { duration: 3000,
+            panelClass: ['snackbar-danger']
+          }
         );
       }
     })
@@ -94,7 +98,9 @@ export class TableDepartmentsComponent implements OnInit {
         this.closeModalUpdateDepartment();
 
         this.snackBar.open(this.updateMessage(),'Fechar',
-          { duration: 3000 }
+          { duration: 3000,
+            panelClass: ['snackbar-success']
+          }
         );
       }
 
@@ -103,7 +109,9 @@ export class TableDepartmentsComponent implements OnInit {
         this.updateStatus.set('default');
 
         this.snackBar.open(this.updateMessage(),'Fechar',
-          { duration: 3000 }
+          { duration: 3000,
+            panelClass: ['snackbar-danger']
+          }
         );
       }
     })
