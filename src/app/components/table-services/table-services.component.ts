@@ -24,9 +24,13 @@ export class TableServicesComponent {
   public totalElements = this.serviceState.totalElements;
   public search = this.serviceState.search;
 
-  openTableDeparments = this.globalState.openTableDeparments;
+  public openTableDeparments = this.globalState.openTableDeparments;
   // =====================
 
+  // ===== Variables ====
+  public itemsPerPage = 4;
+
+  // === Initializations ===
   ngOnInit(){
     this.serviceState.loadServices();
   }
@@ -37,8 +41,6 @@ export class TableServicesComponent {
   }
 
   // ===================== PAGINATION =====================
-
-  itemsPerPage = 4;
 
   nextPage() {
     this.serviceState.nextPage();

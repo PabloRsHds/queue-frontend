@@ -22,10 +22,6 @@ export class ServiceManagementService {
   public size = 4;
   public totalElements = signal<number>(0);
 
-  public totalPages = computed(() =>
-    Math.ceil(this.totalElements() / this.size)
-  );
-
   // ===== SEARCH =====
   public search = signal<string>('');
 
@@ -60,6 +56,10 @@ export class ServiceManagementService {
   }
 
   // ===== PAGINATION =====
+  public totalPages = computed(() =>
+    Math.ceil(this.totalElements() / this.size)
+  );
+
   nextPage() {
     if (this.page() + 1 >= this.totalPages()) return;
 
