@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
-import { ResponseServiceManagementsDto } from '../../../dtos/services/ResponseServiceManagementsDto';
 import { CreateServiceManagementDto } from '../../../dtos/services/CreateServiceManagementDto';
+import { ResponseServiceManagementDto } from '../../../dtos/services/ResponseServiceManagementDto';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,13 @@ export class ServiceManagementService {
   private api = inject(HttpService);
 
   // ===== DATA =====
-  public services = signal<ResponseServiceManagementsDto[]>([]);
-  public selectedService = signal<ResponseServiceManagementsDto | null>(null);
+  public services = signal<ResponseServiceManagementDto[]>([]);
+  public selectedService = signal<ResponseServiceManagementDto | null>(null);
 
   public serviceStatus = signal<'success' | 'error' | 'default'>('default');
   public serviceMessage = signal('');
+
+  public serviceInfo = signal<ResponseServiceManagementDto | null>(null);
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -53,6 +55,17 @@ export class ServiceManagementService {
         this.totalElements.set(res.totalElements);
       }
     });
+  }
+
+  // ==== GET SERVICE BY ID =====
+  getInfoService(serviceManagementId : string) {
+
+    this.api.getServiceManagementById(serviceManagementId).subscribe({
+
+      next: (response) => {
+        this.serviceInfo.set(response);
+      }
+    })
   }
 
   // ===== PAGINATION =====

@@ -56,8 +56,8 @@
             </td>
 
             <td colspan="3">
-              <button type="button" class="button-department-update">update</button>
-              <button type="button" class="button-department-delete">delete</button>
+              <button type="button" class="button-department-update" (click)="openModalUpdateService(service.serviceManagementId)">update</button>
+              <button type="button" class="button-department-delete" (click)="openModalDeleteService(service.serviceManagementId)">delete</button>
             </td>
           </tr>
         </ng-template>
@@ -108,3 +108,107 @@
     </div>
   </div>
 </ng-container>
+
+<!-- MODAIS -->
+<div class="modal-backdrop" *ngIf="openModalDelete">
+  <div class="modal-delete-update">
+
+    <div class="modal-header">
+      <h3>Deletar serviço</h3>
+      <button class="close-btn" (click)="closeModalDeleteService()">x</button>
+    </div>
+
+    <div class="modal-body">
+
+      <ng-container>
+
+        <!-- DELETE -->
+        <div>
+          <p class="warning-text">
+            Tem certeza que deseja deletar este serviço?
+          </p>
+
+          <div class="department-info">
+            {{ serviceInfo()?.name }}
+          </div>
+
+          <div class="modal-actions">
+            <button class="btn-danger">Sim, deletar</button>
+            <button class="btn-secondary">Cancelar</button>
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="openModalUpdate">
+  <div class="modal-delete-update">
+
+    <div class="modal-header">
+      <h3>Editar Serviço</h3>
+      <button class="close-btn" (click)="closeModalUpdateService()">x</button>
+    </div>
+
+    <div class="modal-body">
+
+      <form [formGroup]="updateServiceManagementForm" (ngSubmit)="onSubmitUpdateServiceManagement()" class="form-update">
+
+        <div class="form-group-update">
+          <input
+            type="text"
+            placeholder="Nome do departamento"
+            formControlName="departmentName"
+          />
+        </div>
+
+        <div class="form-group-update">
+          <input
+            type="text"
+            placeholder="Nome do serviço"
+            formControlName="name"
+          />
+        </div>
+
+        <div class="form-group-update">
+          <input
+            type="text"
+            placeholder="Código"
+            formControlName="code"
+          />
+        </div>
+
+        <div class="form-group-update">
+          <input
+            type="text"
+            placeholder="Status do serviço"
+            formControlName="active"
+          />
+        </div>
+
+        <div class="form-group-update">
+          <textarea
+            type="text"
+            rows="3"
+            cols="2"
+            placeholder="Descrição do serviço"
+            formControlName="description"
+          >
+          </textarea>
+        </div>
+
+        <div class="modal-actions-update">
+          <button type="submit" class="btn-update">
+            Salvar
+          </button>
+          <button type="button" class="btn-secondary" (click)="closeModalUpdateService()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+</div>

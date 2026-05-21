@@ -45,11 +45,15 @@ export class HttpService {
     return this.http.post<ResponseServiceManagementDto>("http://localhost:8080/services", request);
   }
 
-  public updateServiceManagement(request: UpdateServiceManagementDto): Observable<ResponseUpdateServiceManagementDto> {
-    return this.http.patch<ResponseUpdateServiceManagementDto>("http://localhost:8080/services", request);
+  public updateServiceManagement(request: UpdateServiceManagementDto): Observable<ResponseServiceManagementDto> {
+    return this.http.patch<ResponseServiceManagementDto>("http://localhost:8080/services", request);
   }
 
-  public getAllServicesManagement(page: number, size: number, search?: string): Observable<PageResponse<ResponseServiceManagementsDto>> {
-    return this.http.get<PageResponse<ResponseServiceManagementsDto>>(`http://localhost:8080/services?page=${page}&size=${size}&search=${search}`);
+  public getAllServicesManagement(page: number, size: number, search?: string): Observable<PageResponse<ResponseServiceManagementDto>> {
+    return this.http.get<PageResponse<ResponseServiceManagementDto>>(`http://localhost:8080/services?page=${page}&size=${size}&search=${search}`);
+  }
+
+  public getServiceManagementById(request : string): Observable<ResponseServiceManagementDto> {
+    return this.http.get<ResponseServiceManagementDto>(`http://localhost:8080/services/${request}`);
   }
 }

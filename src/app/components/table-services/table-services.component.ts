@@ -1,11 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalStatesService } from '../../services/states/global-states.service';
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-table-services',
-  imports: [ CommonModule ],
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule ],
   templateUrl: './table-services.component.html',
   styleUrl: './table-services.component.css'
 })
@@ -14,6 +16,7 @@ export class TableServicesComponent {
   // ===== Injections ====
   private globalState = inject(GlobalStatesService);
   private serviceState = inject(ServiceManagementService);
+  private fb = inject(FormBuilder);
   // =====================
 
   // ===== States ====
@@ -25,14 +28,60 @@ export class TableServicesComponent {
   public search = this.serviceState.search;
 
   public openTableDeparments = this.globalState.openTableDeparments;
+  public serviceInfo = this.serviceState.serviceInfo;
   // =====================
 
   // ===== Variables ====
   public itemsPerPage = 4;
+  public openModalUpdate = false;
+  public openModalDelete = false;
+
+  // Form
+  public updateServiceManagementForm! : FormGroup;
 
   // === Initializations ===
   ngOnInit(){
     this.serviceState.loadServices();
+    this.initializeFormUpdateServiceManagement();
+  }
+
+  constructor() {
+
+    effect(() => {
+
+      if (this.serviceState.serviceInfo() != null) {
+
+        let active = '';
+
+        if (this.serviceInfo()?.active === true ) {
+          active = 'Ativo'
+        } else {
+          active = 'Inativo'
+        }
+
+        this.updateServiceManagementForm = this.fb.group({
+          serviceManagementId: this.serviceInfo()?.serviceManagementId,
+          name: this.serviceInfo()?.name,
+          code: this.serviceInfo()?.code,
+          description: this.serviceInfo()?.description,
+          active: active,
+          departmentName: this.serviceInfo()?.departmentName
+        })
+      }
+    })
+  }
+
+  // Initialize form
+  initializeFormUpdateServiceManagement() {
+
+    this.updateServiceManagementForm = this.fb.group({
+      serviceManagementId: [''],
+      name: [''],
+      code: [''],
+      description: [''],
+      active: [''],
+      departmentName: ['']
+    })
   }
 
   // ===================== SEARCH =====================
@@ -72,4 +121,31 @@ export class TableServicesComponent {
     );
   }
 
+  // ===== Modal ==========
+
+  openModalUpdateService(serviceManagementId : string) {
+    this.openModalUpdate = !this.openModalUpdate;
+    this.serviceState.getInfoService(serviceManagementId);
+  }
+
+  closeModalUpdateService() {
+    this.openModalUpdate = !this.openModalUpdate;
+    this.serviceState.serviceInfo.set(null);
+  }
+
+  openModalDeleteService(serviceManagementId : string) {
+    this.openModalDelete = !this.openModalDelete;
+    this.serviceState.getInfoService(serviceManagementId);
+  }
+
+  closeModalDeleteService() {
+    this.openModalDelete = !this.openModalDelete;
+    this.serviceState.serviceInfo.set(null);
+  }
+
+  // OnSubmit
+
+  onSubmitUpdateServiceManagement() {
+
+  }
 }

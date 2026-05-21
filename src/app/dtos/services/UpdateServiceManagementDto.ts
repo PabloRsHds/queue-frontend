@@ -5,5 +5,5 @@ export interface UpdateServiceManagementDto {
     code: string;
     description: string;
     active: string;
-    departmentId: string;
+    departmentName: string;
 }
