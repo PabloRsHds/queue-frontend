@@ -21,6 +21,9 @@ export class ServiceManagementService {
   public serviceUpdateStatus = signal<'success' | 'error' | 'default'>('default');
   public serviceUpdateMessage = signal('');
 
+  public serviceDeleteStatus = signal<'success' | 'error' | 'default'>('default');
+  public serviceDeleteMessage = signal('');
+
   public serviceInfo = signal<ResponseServiceManagementDto | null>(null);
 
   // ===== PAGINATION =====
@@ -67,6 +70,25 @@ export class ServiceManagementService {
 
         this.serviceUpdateMessage.set('Erro ao atualizar serviço.');
         this.serviceUpdateStatus.set('error');
+      }
+    })
+  }
+
+  // ===== Delete =====
+  deleteService(serviceManagementId : string) {
+    this.api.deleteServiceManagement(serviceManagementId).subscribe({
+      next: () => {
+
+        this.page.set(0);
+        this.loadServices();
+
+        this.serviceDeleteMessage.set('Serviço excluído com sucesso!');
+        this.serviceDeleteStatus.set('success');
+      },
+      error: () => {
+
+        this.serviceDeleteMessage.set('Erro ao excluir serviço.');
+        this.serviceDeleteStatus.set('error');
       }
     })
   }
@@ -133,5 +155,6 @@ export class ServiceManagementService {
   resetStatus() {
     this.serviceRegisterStatus.set('default');
     this.serviceUpdateStatus.set('default');
+    this.serviceDeleteStatus.set('default');
   }
 }

@@ -94,6 +94,28 @@ export class TableServicesComponent {
         });
       }
     })
+
+    effect(() => {
+
+      if (this.serviceState.serviceDeleteStatus() === 'success') {
+
+        this.serviceState.resetStatus();
+        this.closeModalDeleteService();
+        this.snackBar.open(this.serviceState.serviceDeleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+      }
+
+      if (this.serviceState.serviceDeleteStatus() === 'error') {
+
+        this.serviceState.resetStatus();
+        this.snackBar.open(this.serviceState.serviceDeleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-danger']
+        });
+      }
+    })
   }
 
   // Initialize form
@@ -183,7 +205,9 @@ export class TableServicesComponent {
   };
 
   // ======= DELETE ========
-  deleteService(serviceManagementId : string) {};
+  deleteService(serviceManagementId : string) {
+    this.serviceState.deleteService(serviceManagementId);
+  };
 
   // === Modal ===
   closeModalTableServices() {

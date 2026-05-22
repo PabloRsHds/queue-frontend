@@ -49,6 +49,10 @@ export class HttpService {
     return this.http.patch<ResponseServiceManagementDto>("http://localhost:8080/services", request);
   }
 
+  public deleteServiceManagement(request: string): Observable<ResponseServiceManagementDto> {
+    return this.http.delete<ResponseServiceManagementDto>(`http://localhost:8080/services/${request}`);
+  }
+
   public getAllServicesManagement(page: number, size: number, search?: string): Observable<PageResponse<ResponseServiceManagementDto>> {
     return this.http.get<PageResponse<ResponseServiceManagementDto>>(`http://localhost:8080/services?page=${page}&size=${size}&search=${search}`);
   }
