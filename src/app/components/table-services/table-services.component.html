@@ -1,6 +1,6 @@
 <ng-container>
   <div class="dept-table-department-container">
-    <button class="dept-table-department-close" aria-label="Fechar" (click)="openTableServices.set(false)">
+    <button class="dept-table-department-close" aria-label="Fechar" (click)="closeModalTableServices()">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -133,7 +133,7 @@
           </div>
 
           <div class="modal-actions">
-            <button class="btn-danger">Sim, deletar</button>
+            <button class="btn-danger" (click)="deleteService(serviceInfo()?.serviceManagementId ?? '')">Sim, deletar</button>
             <button class="btn-secondary">Cancelar</button>
           </div>
         </div>

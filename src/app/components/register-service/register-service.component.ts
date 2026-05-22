@@ -24,10 +24,8 @@ export class RegisterServiceComponent {
 
   // ===== States ==========
   public departments = this.departmentState.departments;
-  public openRegisterService = this.globalState.openRegisterService;
-
-  public serviceStatus = this.serviceState.serviceStatus;
-  public serviceMessage = this.serviceState.serviceMessage;
+  public serviceRegisterStatus = this.serviceState.serviceRegisterStatus;
+  public serviceRegisterMessage = this.serviceState.serviceRegisterMessage;
 
   // ===== FORM ==========
   public serviceForm!: FormGroup;
@@ -41,21 +39,21 @@ export class RegisterServiceComponent {
 
     effect(() => {
 
-      if (this.serviceStatus() === 'success') {
+      if (this.serviceRegisterStatus() === 'success') {
 
         this.serviceForm.reset();
         this.serviceForm.get('departmentName')?.setValue('');
-        this.serviceStatus.set('default');
-        this.snackBar.open(this.serviceMessage(), 'Fechar', {
+        this.serviceState.resetStatus();
+        this.snackBar.open(this.serviceRegisterMessage(), 'Fechar', {
           duration: 3000,
           panelClass: ['snackbar-success']
         });
       }
 
-      if (this.serviceStatus() === 'error') {
+      if (this.serviceRegisterStatus() === 'error') {
 
-        this.serviceStatus.set('default');
-        this.snackBar.open(this.serviceMessage(), 'Fechar', {
+        this.serviceState.resetStatus();
+        this.snackBar.open(this.serviceRegisterMessage(), 'Fechar', {
           duration: 3000,
           panelClass: ['snackbar-danger']
         });
@@ -66,6 +64,9 @@ export class RegisterServiceComponent {
 
   // === FORM ====
   initializeServiceForm() {
+
+    this.departmentState.loadDepartments();
+
     this.serviceForm = this.fb.group({
       departmentName: ['', Validators.required],
       name: ['', Validators.required],
@@ -78,6 +79,11 @@ export class RegisterServiceComponent {
   onSubmitService(){
     if (this.serviceForm.invalid) return;
     this.serviceState.registerServiceManagenent(this.serviceForm.value);
+  }
+
+  // MODAL
+  closeRegisterServiceModal() {
+    this.globalState.closeModalRegisterService();
   }
 
 }

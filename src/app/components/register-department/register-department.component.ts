@@ -39,7 +39,7 @@ export class RegisterDepartmentComponent implements OnInit{
       if (this.registerStatus() === 'success') {
 
         this.departmentForm.reset();
-        this.registerStatus.set('default');
+        this.departmentState.resetStatus();
         this.snackBar.open(this.registerMessage(), 'Fechar', {
           duration: 3000,
           panelClass: ['snackbar-success'],
@@ -48,7 +48,7 @@ export class RegisterDepartmentComponent implements OnInit{
 
       if (this.registerStatus() === 'error') {
 
-        this.registerStatus.set('default');
+        this.departmentState.resetStatus();
         this.snackBar.open(this.registerMessage(), 'Fechar', {
           duration: 3000,
           panelClass: ['snackbar-danger'],
@@ -69,6 +69,11 @@ export class RegisterDepartmentComponent implements OnInit{
 
   onSubmitDepartment() {
     this.departmentState.createDepartment(this.departmentForm.value);
+  }
+
+  // === MODAL ===
+  closeModalRegisterDepartment() {
+    this.globalState.closeModalRegisterDepartment();
   }
 
 }

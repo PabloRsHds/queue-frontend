@@ -4,6 +4,7 @@ import { GlobalStatesService } from '../../services/states/global-states.service
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-table-services',
@@ -17,6 +18,7 @@ export class TableServicesComponent {
   private globalState = inject(GlobalStatesService);
   private serviceState = inject(ServiceManagementService);
   private fb = inject(FormBuilder);
+  private snackBar = inject(MatSnackBar);
   // =====================
 
   // ===== States ====
@@ -67,6 +69,29 @@ export class TableServicesComponent {
           active: active,
           departmentName: this.serviceInfo()?.departmentName
         })
+      }
+    })
+
+    effect(() => {
+
+      if (this.serviceState.serviceUpdateStatus() === 'success') {
+
+        this.updateServiceManagementForm.reset();
+        this.serviceState.resetStatus();
+
+        this.snackBar.open(this.serviceState.serviceUpdateMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+      }
+
+      if (this.serviceState.serviceUpdateStatus() === 'error') {
+
+        this.serviceState.resetStatus();
+        this.snackBar.open(this.serviceState.serviceUpdateMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-danger']
+        });
       }
     })
   }
@@ -143,9 +168,25 @@ export class TableServicesComponent {
     this.serviceState.serviceInfo.set(null);
   }
 
-  // OnSubmit
-
+  // ======= UPDATE ========
   onSubmitUpdateServiceManagement() {
 
+    if (this.updateServiceManagementForm.invalid) return;
+
+    if (this.updateServiceManagementForm.value.active === 'Ativo') {
+      this.updateServiceManagementForm.value.active = true;
+    } else {
+      this.updateServiceManagementForm.value.active = false;
+    }
+
+    this.serviceState.updateServiceManagement(this.updateServiceManagementForm.value);
+  };
+
+  // ======= DELETE ========
+  deleteService(serviceManagementId : string) {};
+
+  // === Modal ===
+  closeModalTableServices() {
+    this.globalState.closeModalTableServices();
   }
 }

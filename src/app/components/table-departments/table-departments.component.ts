@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GlobalStatesService } from '../../services/states/global-states.service';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
@@ -229,5 +229,10 @@ export class TableDepartmentsComponent implements OnInit {
   deleteDepartment(departmentId: string) {
 
     this.departmentState.deleteDepartment(departmentId);
+  }
+
+  // === MODAL ===
+  closeModalTableDepartments() {
+    this.globalState.closeModalTableDeparments();
   }
 }

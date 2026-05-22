@@ -14,5 +14,22 @@ export class GlobalStatesService {
   public openRegisterService = signal<boolean>(false);
   public openTableServices = signal<boolean>(false);
 
+
+  closeModalRegisterService() {
+    this.openRegisterService.set(false);
+  }
+
+  closeModalRegisterDepartment() {
+    this.openRegisterDepartment.set(false);
+  }
+
+  closeModalTableDeparments() {
+    this.openTableDeparments.set(false);
+  }
+
+  closeModalTableServices() {
+    this.openTableServices.set(false);
+  }
+
   constructor() { }
 }

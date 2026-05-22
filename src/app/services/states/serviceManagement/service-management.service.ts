@@ -2,6 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { CreateServiceManagementDto } from '../../../dtos/services/CreateServiceManagementDto';
 import { ResponseServiceManagementDto } from '../../../dtos/services/ResponseServiceManagementDto';
+import { UpdateServiceManagementDto } from '../../../dtos/services/UpdateServiceManagementDto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,11 @@ export class ServiceManagementService {
   public services = signal<ResponseServiceManagementDto[]>([]);
   public selectedService = signal<ResponseServiceManagementDto | null>(null);
 
-  public serviceStatus = signal<'success' | 'error' | 'default'>('default');
-  public serviceMessage = signal('');
+  public serviceRegisterStatus = signal<'success' | 'error' | 'default'>('default');
+  public serviceRegisterMessage = signal('');
+
+  public serviceUpdateStatus = signal<'success' | 'error' | 'default'>('default');
+  public serviceUpdateMessage = signal('');
 
   public serviceInfo = signal<ResponseServiceManagementDto | null>(null);
 
@@ -36,13 +40,33 @@ export class ServiceManagementService {
         this.page.set(0);
         this.loadServices();
 
-        this.serviceMessage.set('Serviço cadastrado com sucesso!');
-        this.serviceStatus.set('success');
+        this.serviceRegisterMessage.set('Serviço cadastrado com sucesso!');
+        this.serviceRegisterStatus.set('success');
       },
       error: () => {
 
-        this.serviceMessage.set('Erro ao cadastrar serviço.');
-        this.serviceStatus.set('error');
+        this.serviceRegisterMessage.set('Erro ao cadastrar serviço.');
+        this.serviceRegisterStatus.set('error');
+      }
+    })
+  }
+
+  // ===== Update ====
+  updateServiceManagement(request : UpdateServiceManagementDto) {
+
+    this.api.updateServiceManagement(request).subscribe({
+      next: () => {
+
+        this.page.set(0);
+        this.loadServices();
+
+        this.serviceUpdateMessage.set('Serviço atualizado com sucesso!');
+        this.serviceUpdateStatus.set('success');
+      },
+      error: () => {
+
+        this.serviceUpdateMessage.set('Erro ao atualizar serviço.');
+        this.serviceUpdateStatus.set('error');
       }
     })
   }
@@ -104,5 +128,10 @@ export class ServiceManagementService {
   // ===== REFRESH =====
   refresh() {
     this.loadServices();
+  }
+
+  resetStatus() {
+    this.serviceRegisterStatus.set('default');
+    this.serviceUpdateStatus.set('default');
   }
 }
