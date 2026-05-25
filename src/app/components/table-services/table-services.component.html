@@ -174,7 +174,7 @@
           <td data-label="buttons">
 
             <div style="display:flex;align-items:center; gap:10px;">
-              <button type="button" class="button-department-update" >
+              <button type="button" class="button-department-update" (click)="openModalUpdate = true">
 
                 <div style="display:flex;align-items:center;gap:5px;">
 
@@ -196,9 +196,9 @@
                   </svg>
                 </div>
 
-                <div class="modal-delete" *ngIf="openModalDelete === service.code ">
+                <div class="drop-down-delete" *ngIf="openDropdownDelete === service.code ">
                   <div style="display:flex;flex-direction:column;">
-                    <button type="button" class="button-department-delete" >
+                    <button type="button" class="button-department-delete" (click)="handleCloseModalDelete()">
                       <div style="display:flex;align-items:center; justify-content:center; gap:5px; color:#046af0e7;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
                           <path d="M20.5001 6H3.5" stroke="#eb3414" stroke-width="1.5" stroke-linecap="round"/>
@@ -248,22 +248,22 @@
   </div>
 </div>
 
-
+<!-- MODAL REGISTER -->
 <div class="modal-register-container" *ngIf="openModalRegister">
   <div class="modal-register">
 
-    <div style="display: flex; justify-content: space-between;">
+    <div class="modal-register-header-container">
       <div class="modal-register-header">
         <div class="modal-register-header-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 16 16" fill="none">
-            <g fill="#0a9f14">
+            <g fill="#0e90e6dc">
             <path d="M6.834.33a2.25 2.25 0 012.332 0l5.25 3.182A2.25 2.25 0 0115.5 5.436V6A.75.75 0 0114 6v-.564a.75.75 0 00-.361-.642l-5.25-3.181a.75.75 0 00-.778 0l-5.25 3.181A.75.75 0 002 5.436v5.128a.75.75 0 00.361.642l4.028 2.44a.75.75 0 11-.778 1.283l-4.027-2.44A2.25 2.25 0 01.5 10.563V5.436a2.25 2.25 0 011.084-1.924L6.834.33z"/>
             <path fill-rule="evenodd" d="M11.749 7.325l.001-.042v-.286a.75.75 0 00-1.5 0v.286l.001.042a3.73 3.73 0 00-1.318.546.76.76 0 00-.03-.03l-.201-.203a.75.75 0 00-1.06 1.06l.201.203.03.028c-.26.394-.45.84-.547 1.319a.878.878 0 00-.04-.001H7a.75.75 0 000 1.5h.286l.038-.001c.097.48.286.926.547 1.32a.71.71 0 00-.028.027l-.202.202a.75.75 0 001.06 1.06l.203-.202a.695.695 0 00.025-.026c.395.261.842.45 1.322.548l-.001.036v.286a.75.75 0 001.5 0v-.286-.036c.48-.097.926-.287 1.32-.548l.026.026.202.203a.75.75 0 001.06-1.061l-.201-.202a.667.667 0 00-.028-.026c.261-.395.45-.842.547-1.321H15a.75.75 0 000-1.5h-.286l-.04.002a3.734 3.734 0 00-.547-1.319l.03-.028.202-.202a.75.75 0 00-1.06-1.061l-.203.202-.029.03a3.73 3.73 0 00-1.318-.545zM11 8.75A2.247 2.247 0 008.75 11 2.247 2.247 0 0011 13.25 2.247 2.247 0 0013.25 11 2.247 2.247 0 0011 8.75z" clip-rule="evenodd"/>
             </g>
           </svg>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 5px;">
-          <h3>Cadastrar serviço</h3>
+        <div class="modal-register-header-text">
+          <h2>Cadastrar serviço</h2>
           <span >Preencha os campos abaixo para cadastrar um novo serviço.</span>
         </div>
       </div>
@@ -276,11 +276,200 @@
       </button>
     </div>
 
-    <div>
-      <label>Nome do serviço</label>
-      <input type="text">
-      <label>Código</label>
-      <input type="text">
+    <form>
+      <div class="form-group">
+        <label class="form-label">Nome do serviço</label>
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Ex: RH"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Código</label>
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Ex: 00E3"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Descrição</label>
+        <textarea
+          rows="7"
+          class="form-textarea"
+          placeholder="Breve descrição do departamento..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Departamento</label>
+        <select class="form-select" required>
+          <option value="">Selecione um departamento</option>
+          <option>
+            RH
+          </option>
+          <option>
+            DP
+          </option>
+        </select>
+      </div>
+
+      <div class="separator"></div>
+
+      <div style="display: flex; justify-content: end; gap: 5px;">
+        <button type="button" class="button-submit">Salvar</button>
+        <button type="button" class="button-back" (click)="openModalRegister = false">Voltar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL UPDATE -->
+<div class="modal-update-container" *ngIf="openModalUpdate">
+  <div class="modal-update">
+
+    <div class="modal-update-header-container">
+      <div class="modal-update-header">
+        <div class="modal-update-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 64 64" stroke-width="3" stroke="#419717" fill="none">
+            <polyline points="45.56 46.83 45.56 56.26 7.94 56.26 7.94 20.6 19.9 7.74 45.56 7.74 45.56 21.29"/>
+            <polyline points="19.92 7.74 19.9 20.6 7.94 20.6"/>
+            <line x1="13.09" y1="47.67" x2="31.1" y2="47.67"/>
+            <line x1="13.09" y1="41.14" x2="29.1" y2="41.14"/>
+            <line x1="13.09" y1="35.04" x2="33.1" y2="35.04"/>
+            <line x1="13.09" y1="28.94" x2="39.1" y2="28.94"/>
+            <path d="M34.45,43.23l.15,4.3a.49.49,0,0,0,.62.46l4.13-1.11a.54.54,0,0,0,.34-.23L57.76,22.21a1.23,1.23,0,0,0-.26-1.72l-3.14-2.34a1.22,1.22,0,0,0-1.72.26L34.57,42.84A.67.67,0,0,0,34.45,43.23Z"/><line x1="50.2" y1="21.7" x2="55.27" y2="25.57"/>
+          </svg>
+        </div>
+        <div class="modal-update-header-text">
+          <h2>Alterar serviço</h2>
+          <span >Altere as informações do serviço abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="openModalUpdate = false">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form>
+
+      <div style="display: flex; gap: 20px; ">
+        <div style="flex: 1;">
+          <div class="form-group">
+            <label class="form-label">Nome do serviço</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Ex: RH"
+              required>
+          </div>
+        </div>
+
+        <div style="flex: 1;">
+          <div class="form-group">
+            <label class="form-label">Código</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Ex: RH"
+              required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Descrição</label>
+        <textarea
+          rows="5"
+          class="form-textarea"
+          placeholder="Breve descrição do departamento..."></textarea>
+      </div>
+
+      <div style="display: flex; gap: 18px; ">
+
+        <div style="flex: 1;">
+          <div class="form-group">
+            <label class="form-label">Departamento</label>
+            <select class="form-select" required>
+              <option value="">Selecione um departamento</option>
+              <option>
+                RH
+              </option>
+              <option>
+                DP
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div style="flex: 1;">
+          <label class="form-label">Status</label>
+
+          <div class="status-container">
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider"></span>
+            </label>
+
+            <span class="status-text">Ativo</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="separator"></div>
+
+      <div style="display: flex; justify-content: end; gap: 5px;">
+        <button type="button" class="button-submit">Salvar Alterações</button>
+        <button type="button" class="button-back" (click)="openModalUpdate = false">Voltar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL DELETE -->
+<div class="modal-delete-container" *ngIf="openModalDelete">
+  <div class="modal-delete">
+
+    <div class="modal-delete-header-container">
+      <div class="modal-delete-header">
+        <div class="modal-delete-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24" fill="none">
+            <path d="M20.5001 6H3.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9.5 11L10 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.5 11L14 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#da1414" stroke-width="1.5"/>
+            <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="modal-delete-header-text">
+          <h2>Deletar serviço</h2>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="openModalDelete = false">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-delete-content">
+      <p>Tem certeza que deseja deletar esse serviço?</p>
+      <p>Essa operaçao nao pode ser desfeita.</p>
+    </div>
+
+    <div class="separator"></div>
+    <div style="display: flex; justify-content: end; gap: 5px;">
+      <button type="button" class="button-delete">Excluir</button>
+      <button type="button" class="button-back" (click)="openModalUpdate = false">Cancelar</button>
     </div>
   </div>
 </div>

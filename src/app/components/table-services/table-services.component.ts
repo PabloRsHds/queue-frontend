@@ -18,9 +18,10 @@ export class TableServicesComponent {
   private serviceState = inject(ServiceManagementService);
 
   // Methods
-  public openModalDelete: string = '';
+  public openDropdownDelete: string = '';
   public openModalRegister: boolean = false;
   public openModalUpdate: boolean = false;
+  public openModalDelete: boolean = false;
   // =========
 
   services = [
@@ -60,11 +61,16 @@ export class TableServicesComponent {
 
   toggleDeleteModal(serviceId: string) {
 
-    if (this.openModalDelete === serviceId) {
-      this.openModalDelete = '';
+    if (this.openDropdownDelete === serviceId) {
+      this.openDropdownDelete = '';
       return;
     }
 
-    this.openModalDelete = serviceId;
+    this.openDropdownDelete = serviceId;
+  }
+
+  handleCloseModalDelete() {
+    this.openDropdownDelete = '';
+    this.openModalDelete = true;
   }
 }
