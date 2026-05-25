@@ -1,211 +1,105 @@
-<ng-container *ngIf="!openModalDepartmentDetail">
-  <div class="dept-table-department-container">
-    <button class="dept-table-department-close" aria-label="Fechar" (click)="closeModalTableDepartments()">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
+<!-- SERVIÇOS PAGE -->
+<div id="page-servicos" class="fade-in" style="padding:32px;">
+  <div style="margin-bottom:24px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <a href="#" onclick="navigateTo('dashboard')" style="color:#64748b;font-size:13px;text-decoration:none;">Início</a>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="display:inline;vertical-align:middle;"><polyline points="9 18 15 12 9 6"/></svg>
+      <span style="color:#1e293b;font-size:13px;font-weight:600;">Serviços</span>
+    </div>
+    <h1 style="font-size:22px;font-weight:700;color:#1e293b;">Serviços</h1>
   </div>
-  <h1 class="section-title" [class.margim]="currentSection === 'departamento'">Departamentos Cadastrados</h1>
-  <p class="section-desc">Clique em um departamento para ver seus serviços.</p>
 
-  <div class="table-wrapper">
-    <div class="table-header">
-      <h3>Total: {{ totalElements() }} departamento(s)</h3>
-      <input
-        type="text"
-        class="table-search"
-        placeholder="ICN Buscar departamento..."
-        (input)="onSearch($event)"
-        name="searchQuery">
-    </div>
-
-    <table class="dept-table">
-      <thead>
-        <tr>
-          <th>Departamento</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngIf="departments().length === 0; else departmentRows">
-          <tr>
-            <td colspan="2" style="text-align:center;padding:3rem;color:#9ca3af;">
-              <p>Nenhum departamento cadastrado ainda.</p>
-            </td>
-          </tr>
-        </ng-container>
-
-        <ng-template #departmentRows>
-          <tr *ngFor="let department of departments()" style="cursor: pointer;">
-            <td (click)="showDepartmentDetail(department.departmentId)">
-              <strong>{{ department.name }}</strong>
-            </td>
-
-            <td colspan="3">
-              <button type="button" class="button-department-update" (click)="showModalUpdateDepartment(department.departmentId)">update</button>
-              <button type="button" class="button-department-delete" (click)="showModalDeleteDepartment(department.departmentId)">delete</button>
-            </td>
-          </tr>
-        </ng-template>
-      </tbody>
-    </table>
-
-
-    <div class="pagination">
-      <span class="pagination-info">
-        Mostrando {{ getStartIndex() }}-{{ getEndIndex() }} de {{ totalElements() }}
-      </span>
-
-      <div class="pagination-buttons">
-
-        <!-- PREV -->
-        <button
-          class="page-btn"
-          (click)="previousPage()"
-          [disabled]="page() === 0">
-
-          <svg viewBox="0 0 24 24">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-
-        <!-- PAGES -->
-        <button
-          *ngFor="let p of getPagesArray(); let i = index"
-          class="page-btn"
-          [class.active]="i === page()"
-          (click)="goToPage(i)">
-
-          {{ i + 1 }}
-        </button>
-
-        <!-- NEXT -->
-        <button
-          class="page-btn"
-          (click)="nextPage()"
-          [disabled]="page() + 1 >= totalPages()">
-
-          <svg viewBox="0 0 24 24">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-
-      </div>
-    </div>
-  </div>
-</ng-container>
-
-<!-- Seção de Detalhes do Departamento -->
-<ng-container *ngIf="openModalDepartmentDetail">
-  <button class="btn-back" (click)="closeModalDepartmentDetail()">
-    <svg viewBox="0 0 24 24">
-      <polyline points="15 18 9 12 15 6"></polyline>
-    </svg>
-    Voltar para a tabela
-  </button>
-
-  <div class="dept-detail-card">
-    <div class="dept-detail-header">
-      <h3>{{ departmentInfo()?.name }}</h3>
-      <p>Cadastrado em {{ departmentInfo()?.createdAt }}</p>
-    </div>
-
-    <div class="dept-detail-body">
-      <div class="detail-row">
-        <span class="detail-label">Status</span>
-        <span class="detail-value">{{ departmentInfo()?.active ? 'Ativo' : 'Inativo' }}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Descrição</span>
-        <span class="detail-value">{{ departmentInfo()?.description }}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Serviços</span>
-        <span class="detail-value" *ngFor="let service of departmentInfo()?.services">
-          <span style="margin-right: 10px; font-weight: 600">- {{ service }}</span>
-        </span>
-      </div>
-    </div>
-  </div>
-</ng-container>
-
-<!-- MODAIS -->
-<div class="modal-backdrop" *ngIf="openModalDeleteDepartment">
-  <div class="modal-delete-update">
-
-    <div class="modal-header">
-      <h3>Departamento</h3>
-      <button class="close-btn" (click)="closeModalDeleteDepartment()">x</button>
-    </div>
-
-    <div class="modal-body">
-
-      <ng-container>
-
-        <!-- DELETE -->
+  <!-- Stats Cards -->
+  <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+    <div class="stat-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:44px;height:44px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
         <div>
-          <p class="warning-text">
-            Tem certeza que deseja deletar este departamento?
-          </p>
-
-          <div class="department-info">
-            {{ departmentInfo()?.name }}
-          </div>
-
-          <div class="modal-actions">
-            <button class="btn-danger" (click)="deleteDepartment(departmentInfo()?.departmentId ?? '')">Sim, deletar</button>
-            <button class="btn-secondary" (click)="closeModalDeleteDepartment()">Cancelar</button>
-          </div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">18</div>
+          <div style="font-size:12px;color:#64748b;">Total de serviços cadastrados</div>
         </div>
-
-      </ng-container>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:44px;height:44px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <div style="width:12px;height:12px;background:#16a34a;border-radius:50%;"></div>
+        </div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">16</div>
+          <div style="font-size:12px;color:#64748b;">Ativos</div>
+          <div style="font-size:11px;color:#16a34a;">89% do total</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:44px;height:44px;background:#f1f5f9;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <div style="width:12px;height:12px;background:#94a3b8;border-radius:50%;"></div>
+        </div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">2</div>
+          <div style="font-size:12px;color:#64748b;">Inativos</div>
+          <div style="font-size:11px;color:#94a3b8;">11% do total</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card" style="padding:0;border:none;background:none;box-shadow:none;">
+      <div class="new-service-card" onclick="openModal()" style="width:100%;height:100%;">
+        <div class="new-service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div>
+          <div class="new-service-text">Novo Serviço</div>
+          <div class="new-service-sub">Cadastrar um novo serviço</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="modal-backdrop" *ngIf="openModalUpdateDepartment">
-  <div class="modal-delete-update">
+  <!-- Services Table -->
+  <div class="section-card">
+    <div class="section-body">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div style="flex:1;position:relative;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Buscar serviço..." style="width:100%;padding:10px 14px 10px 40px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;" oninput="filterServices()">
+        </div>
+        <button class="btn-secondary" style="display:flex;align-items:center;gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filtros
+        </button>
+      </div>
 
-    <div class="modal-header">
-      <h3>Editar Departamento</h3>
-      <button class="close-btn" (click)="closeModalUpdateDepartment()">x</button>
+      <div class="table-header" style="padding-bottom:12px;">
+        <span>Serviço</span>
+        <span>Código</span>
+        <span>Departamento</span>
+        <span>Tempo médio</span>
+        <span>Status</span>
+        <span style="text-align:right;">Ações</span>
+      </div>
+
+      <div id="services-list"></div>
     </div>
-
-    <div class="modal-body">
-
-      <form [formGroup]="updateDepartmentForm" (ngSubmit)="onSubmitUpdateDepartment()" class="form-update">
-        <div class="form-group-update">
-          <input
-            type="text"
-            placeholder="Nome do departamento"
-            formControlName="name"
-          />
+    <div style="padding:16px 24px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <span id="showing-text" style="font-size:13px;color:#64748b;">Mostrando 1 a 5 de 18 serviços</span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="pagination" style="display:flex;align-items:center;gap:8px;">
+          <button><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="active">1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
         </div>
-
-        <div class="form-group-update">
-          <textarea
-            type="text"
-            rows="3"
-            cols="2"
-            placeholder="Descrição do departamento"
-            formControlName="description"
-          >
-          </textarea>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:13px;color:#64748b;">5 por página</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-
-        <div class="modal-actions-update">
-          <button type="submit" class="btn-update">
-            Salvar
-          </button>
-          <button type="button" class="btn-secondary" (click)="closeModalUpdateDepartment()">
-            Cancelar
-          </button>
-        </div>
-      </form>
-
+      </div>
     </div>
-
   </div>
 </div>

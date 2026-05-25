@@ -5,6 +5,9 @@ import { Injectable, signal } from '@angular/core';
 })
 export class GlobalStatesService {
 
+  public activeSection = signal<string>('inicio');
+  public openModalTableService = signal<boolean>(false);
+
   public openCardDepartment = signal<boolean>(false);
   public currentSection = signal<'departamento' | 'servico' | 'config'>('departamento');
 
@@ -30,6 +33,4 @@ export class GlobalStatesService {
   closeModalTableServices() {
     this.openTableServices.set(false);
   }
-
-  constructor() { }
 }

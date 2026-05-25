@@ -1,0 +1,561 @@
+
+
+  <!-- USUARIOS PAGE -->
+  <div id="page-usuarios" class="fade-in" style="padding:32px;">
+    <div style="margin-bottom:24px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <a href="#" onclick="navigateTo('dashboard')" style="color:#64748b;font-size:13px;text-decoration:none;">Início</a>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="display:inline;vertical-align:middle;"><polyline points="9 18 15 12 9 6"/></svg>
+        <span style="color:#1e293b;font-size:13px;font-weight:600;">Usuários</span>
+      </div>
+      <h1 style="font-size:22px;font-weight:700;color:#1e293b;">Usuários</h1>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-cards-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+      <div class="stat-card">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;background:#dbeafe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:#1e293b;">8</div>
+            <div style="font-size:12px;color:#64748b;">Total de usuários cadastrados</div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+            <div style="width:12px;height:12px;background:#16a34a;border-radius:50%;"></div>
+          </div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:#1e293b;">7</div>
+            <div style="font-size:12px;color:#64748b;">Ativos</div>
+            <div style="font-size:11px;color:#16a34a;">88% do total</div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;background:#fef3c7;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+            <div style="width:12px;height:12px;background:#d97706;border-radius:50%;"></div>
+          </div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:#1e293b;">1</div>
+            <div style="font-size:12px;color:#64748b;">Inativos</div>
+            <div style="font-size:11px;color:#d97706;">12% do total</div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:#1e293b;">2</div>
+            <div style="font-size:12px;color:#64748b;">Administradores</div>
+            <div style="font-size:11px;color:#7c3aed;">25% do total</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions bar -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+      <button class="btn-primary" onclick="openNewUserModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Novo usuário
+      </button>
+    </div>
+
+    <!-- User Table -->
+    <div class="section-card">
+      <div class="section-body">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div style="flex:1;position:relative;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="userSearch" placeholder="Buscar usuário..." style="width:100%;padding:10px 14px 10px 40px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;outline:none;" oninput="filterUsers()">
+          </div>
+          <button class="btn-secondary" style="display:flex;align-items:center;gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            Filtros
+          </button>
+        </div>
+
+        <div class="table-header" style="padding-bottom:12px;">
+          <span>Usuário</span>
+          <span>E-mail</span>
+          <span>Departamento</span>
+          <span>Perfil</span>
+          <span>Status</span>
+          <span style="text-align:right;">Ações</span>
+        </div>
+
+        <div id="users-list"></div>
+      </div>
+      <div style="padding:16px 24px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <span id="users-showing" style="font-size:13px;color:#64748b;">Mostrando 1 a 5 de 8 usuários</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="pagination" style="display:flex;align-items:center;gap:8px;">
+            <button><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:13px;color:#64748b;">5 por página</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- NOVO USUÁRIO MODAL -->
+<div class="modal-overlay" id="newUserModal" onclick="closeModal(event, 'newUserModal')">
+  <div class="modal-lg" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button onclick="closeModal(null,'newUserModal')" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid #e2e8f0;background:white;cursor:pointer;" id="backBtn" onclick="prevStep()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div>
+          <h3 style="font-size:16px;">Novo usuário</h3>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#64748b;">
+            <a href="#" onclick="navigateTo('dashboard')" style="color:#64748b;text-decoration:none;">Início</a>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <a href="#" onclick="navigateTo('usuarios')" style="color:#64748b;text-decoration:none;">Usuários</a>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <span style="color:#3b82f6;font-weight:500;">Novo</span>
+          </div>
+        </div>
+      </div>
+      <button class="close-btn" onclick="closeModal(null,'newUserModal')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Wizard Steps -->
+    <div class="wizard-steps" id="wizardSteps">
+      <div class="wizard-step active" onclick="goToStep(1)">
+        <div class="wizard-step-circle">1</div>
+        <div>
+          <div class="wizard-step-text">Informações pessoais</div>
+          <div class="wizard-step-sub">Dados gerais do usuário</div>
+        </div>
+      </div>
+      <div class="wizard-step" onclick="goToStep(2)">
+        <div class="wizard-step-circle">2</div>
+        <div>
+          <div class="wizard-step-text">Permissões e acesso</div>
+          <div class="wizard-step-sub">Defina perfil e permissões</div>
+        </div>
+      </div>
+      <div class="wizard-step" onclick="goToStep(3)">
+        <div class="wizard-step-circle">3</div>
+        <div>
+          <div class="wizard-step-text">Departamentos</div>
+          <div class="wizard-step-sub">Vincule o usuário</div>
+        </div>
+      </div>
+      <div class="wizard-step" onclick="goToStep(4)">
+        <div class="wizard-step-circle">4</div>
+        <div>
+          <div class="wizard-step-text">Revisão</div>
+          <div class="wizard-step-sub">Confirme as informações</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 1: Informações pessoais -->
+    <div class="modal-body" id="step1">
+      <h4 style="font-size:15px;font-weight:700;color:#1e293b;margin-bottom:20px;">Informações pessoais</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="input-group">
+          <label>Nome completo <span class="required">*</span></label>
+          <input type="text" id="newName" placeholder="Ex: João da Silva">
+        </div>
+        <div class="input-group">
+          <label>E-mail <span class="required">*</span></label>
+          <input type="email" id="newEmail" placeholder="Ex: joao@torrecia.com.br">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="input-group">
+          <label>Telefone (opcional)</label>
+          <input type="text" id="newPhone" placeholder="(00) 00000-0000">
+        </div>
+        <div class="input-group">
+          <label>CPF (opcional)</label>
+          <input type="text" id="newCpf" placeholder="000.000.000-00">
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0;">
+      <h4 style="font-size:15px;font-weight:700;color:#1e293b;margin-bottom:20px;">Credenciais de acesso</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+        <div class="input-group">
+          <label>Nome de usuário <span class="required">*</span></label>
+          <input type="text" id="newUsername" placeholder="Ex: joao.silva">
+        </div>
+        <div class="input-group">
+          <label>Senha <span class="required">*</span></label>
+          <div class="password-wrapper">
+            <input type="password" id="newPassword" placeholder="••••••••">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Confirmar senha <span class="required">*</span></label>
+          <div class="password-wrapper">
+            <input type="password" id="newPasswordConfirm" placeholder="••••••••">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Permissões e acesso -->
+    <div class="modal-body" id="step2" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:24px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+            <div style="width:28px;height:28px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div style="font-size:13px;font-weight:600;color:#1e293b;">Informações pessoais</div>
+          </div>
+          <div style="font-size:12px;color:#64748b;margin-left:36px;" id="step2Preview">Ex: João da Silva</div>
+        </div>
+        <div>
+          <h4 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:12px;">Perfil do usuário</h4>
+          <p style="font-size:12px;color:#64748b;margin-bottom:16px;">Selecione o perfil que melhor define o acesso do usuário.</p>
+
+          <div class="profile-option selected" onclick="selectProfile(this, 'Administrador')">
+            <div class="profile-option-icon" style="background:#ede9fe;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div class="profile-option-title" style="color:#7c3aed;">Administrador</div>
+              <div class="profile-option-desc">Acesso total ao sistema</div>
+            </div>
+            <div class="profile-option-radio"></div>
+          </div>
+          <div class="profile-option" onclick="selectProfile(this, 'Supervisor')">
+            <div class="profile-option-icon" style="background:#fff7ed;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div>
+              <div class="profile-option-title" style="color:#ea580c;">Supervisor</div>
+              <div class="profile-option-desc">Gerencia atendentes e relatórios</div>
+            </div>
+            <div class="profile-option-radio"></div>
+          </div>
+          <div class="profile-option" onclick="selectProfile(this, 'Atendente')">
+            <div class="profile-option-icon" style="background:#dbeafe;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div>
+              <div class="profile-option-title" style="color:#2563eb;">Atendente</div>
+              <div class="profile-option-desc">Realiza atendimentos e agendamentos</div>
+            </div>
+            <div class="profile-option-radio"></div>
+          </div>
+          <div class="profile-option" onclick="selectProfile(this, 'Visualizador')">
+            <div class="profile-option-icon" style="background:#f1f5f9;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div>
+              <div class="profile-option-title" style="color:#64748b;">Visualizador</div>
+              <div class="profile-option-desc">Acesso somente leitura</div>
+            </div>
+            <div class="profile-option-radio"></div>
+          </div>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0;">
+
+      <h4 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:12px;">Permissões rápidas</h4>
+      <p style="font-size:12px;color:#64748b;margin-bottom:16px;">Selecione as principais permissões.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Gerenciar usuários</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Gerenciar departamentos</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Gerenciar serviços</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Agendamentos</span></div>
+        </div>
+        <div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Atendimentos</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Relatórios</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Configurações</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Chamadas</span></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;">
+        <div class="perm-check"><input type="checkbox"><span class="perm-check-label">Selecionar todos</span></div>
+      </div>
+    </div>
+
+    <!-- Step 3: Departamentos -->
+    <div class="modal-body" id="step3" style="display:none;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+        <div style="width:28px;height:28px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#1e293b;">Informações pessoais</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;margin-left:36px;">
+        <div style="width:28px;height:28px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#1e293b;">Permissões e acesso</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;margin-left:36px;">
+        <div style="width:28px;height:28px;background:#3b82f6;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:12px;font-weight:700;color:white;">3</span>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#3b82f6;">Departamentos</div>
+      </div>
+
+      <h4 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:12px;">Vincular departamentos</h4>
+      <p style="font-size:12px;color:#64748b;margin-bottom:16px;">Selecione os departamentos que o usuário terá acesso.</p>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+          <input type="checkbox" checked>
+          <span class="perm-check-label">Departamento ao Cliente</span>
+        </label>
+        <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+          <input type="checkbox">
+          <span class="perm-check-label">Financeiro</span>
+        </label>
+        <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+          <input type="checkbox">
+          <span class="perm-check-label">Suporte Técnico</span>
+        </label>
+        <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+          <input type="checkbox">
+          <span class="perm-check-label">Administrativo</span>
+        </label>
+        <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+          <input type="checkbox">
+          <span class="perm-check-label">Documentação</span>
+        </label>
+        <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+          <input type="checkbox">
+          <span class="perm-check-label">Protocolo</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Step 4: Revisão -->
+    <div class="modal-body" id="step4" style="display:none;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <div style="width:28px;height:28px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#16a34a;">Informações pessoais</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;margin-left:36px;">
+        <div style="width:28px;height:28px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#16a34a;">Permissões e acesso</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;margin-left:36px;">
+        <div style="width:28px;height:28px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#16a34a;">Departamentos</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;margin-left:36px;">
+        <div style="width:28px;height:28px;background:#3b82f6;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:12px;font-weight:700;color:white;">4</span>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#3b82f6;">Revisão</div>
+      </div>
+
+      <div class="user-card-center">
+        <div class="user-card-avatar" style="background:#3b82f6;" id="reviewAvatar">JS</div>
+        <div class="user-card-name" id="reviewName">João da Silva</div>
+        <div class="user-card-role" id="reviewRole">Administrador</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+        <div style="background:#f8fafc;border-radius:10px;padding:16px;">
+          <div style="font-size:11px;color:#64748b;text-transform:uppercase;font-weight:600;margin-bottom:8px;">Informações</div>
+          <div style="font-size:13px;color:#1e293b;margin-bottom:4px;" id="reviewEmail">joao.silvatorrecia.com.br</div>
+          <div style="font-size:13px;color:#1e293b;" id="reviewUsername">joao.silva</div>
+        </div>
+        <div style="background:#f8fafc;border-radius:10px;padding:16px;">
+          <div style="font-size:11px;color:#64748b;text-transform:uppercase;font-weight:600;margin-bottom:8px;">Departamento</div>
+          <div style="font-size:13px;color:#1e293b;" id="reviewDept">Departamento ao Cliente</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer" id="modalFooter">
+      <button class="btn-secondary" onclick="closeModal(null,'newUserModal')">Cancelar</button>
+      <button class="btn-primary" id="nextBtn" onclick="nextStep()">
+        Próximo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- EDITAR USUÁRIO MODAL -->
+<div class="modal-overlay" id="editUserModal" onclick="closeModal(event, 'editUserModal')">
+  <div class="modal-md" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 style="font-size:16px;">Editar usuário</h3>
+      <button class="close-btn" onclick="closeModal(null,'editUserModal')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="edit-tabs" id="editTabs">
+      <div class="edit-tab active" onclick="switchEditTab(this, 'edit-info')">Informações</div>
+      <div class="edit-tab" onclick="switchEditTab(this, 'edit-perms')">Permissões</div>
+      <div class="edit-tab" onclick="switchEditTab(this, 'edit-depts')">Departamentos</div>
+      <div class="edit-tab" onclick="switchEditTab(this, 'edit-activity')">Atividade</div>
+    </div>
+
+    <div class="modal-body">
+      <!-- Info tab -->
+      <div id="edit-info">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+          <div class="user-card-avatar" style="background:#3b82f6;width:56px;height:56px;font-size:18px;" id="editAvatar">JS</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:#1e293b;" id="editName">João Silva</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="badge badge-green" id="editStatus">Ativo</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="input-group">
+            <label>Nome completo <span class="required">*</span></label>
+            <input type="text" id="editFullName" value="João Silva">
+          </div>
+          <div class="input-group">
+            <label>E-mail <span class="required">*</span></label>
+            <input type="email" id="editEmail" value="joao.silva@torrecia.com.br">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Telefone</label>
+          <input type="text" id="editPhone" value="(11) 98765-4321">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="input-group">
+            <label>Departamento <span class="required">*</span></label>
+            <select id="editDept">
+              <option selected>Atendimento ao Cliente</option>
+              <option>Financeiro</option>
+              <option>Suporte Técnico</option>
+              <option>Administrativo</option>
+              <option>Documentação</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Perfil <span class="required">*</span></label>
+            <select id="editProfile">
+              <option>Administrador</option>
+              <option selected>Atendente</option>
+              <option>Supervisor</option>
+              <option>Visualizador</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Status <span class="required">*</span></label>
+          <select id="editStatusSelect">
+            <option selected>Ativo</option>
+            <option>Inativo</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Perms tab -->
+      <div id="edit-perms" style="display:none;">
+        <h4 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:12px;">Permissões do usuário</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Gerenciar usuários</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Gerenciar departamentos</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Gerenciar serviços</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Agendamentos</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Atendimentos</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Relatórios</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Configurações</span></div>
+          <div class="perm-check"><input type="checkbox" checked><span class="perm-check-label">Chamadas</span></div>
+        </div>
+      </div>
+
+      <!-- Depts tab -->
+      <div id="edit-depts" style="display:none;">
+        <h4 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:12px;">Departamentos vinculados</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+            <input type="checkbox" checked><span class="perm-check-label">Departamento ao Cliente</span>
+          </label>
+          <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+            <input type="checkbox"><span class="perm-check-label">Financeiro</span>
+          </label>
+          <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+            <input type="checkbox"><span class="perm-check-label">Suporte Técnico</span>
+          </label>
+          <label class="perm-check" style="padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;margin:0;">
+            <input type="checkbox"><span class="perm-check-label">Administrativo</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Activity tab -->
+      <div id="edit-activity" style="display:none;">
+        <h4 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:16px;">Histórico de atividades</h4>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:12px;">
+            <div style="width:8px;height:8px;background:#3b82f6;border-radius:50%;margin-top:6px;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:13px;color:#1e293b;">Login realizado</div>
+              <div style="font-size:12px;color:#94a3b8;">Hoje, 10:24</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <div style="width:8px;height:8px;background:#16a34a;border-radius:50%;margin-top:6px;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:13px;color:#1e293b;">Perfil atualizado</div>
+              <div style="font-size:12px;color:#94a3b8;">Ontem, 14:30</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <div style="width:8px;height:8px;background:#d97706;border-radius:50%;margin-top:6px;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:13px;color:#1e293b;">Senha alterada</div>
+              <div style="font-size:12px;color:#94a3b8;">22/05/2026, 09:15</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <div style="width:8px;height:8px;background:#94a3b8;border-radius:50%;margin-top:6px;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:13px;color:#1e293b;">Conta criada</div>
+              <div style="font-size:12px;color:#94a3b8;">15/01/2026, 08:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal(null,'editUserModal')">Cancelar</button>
+      <button class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Salvar alterações
+      </button>
+    </div>
+  </div>
+</div>
+
+

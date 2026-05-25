@@ -14,203 +14,57 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TableServicesComponent {
 
-  // ===== Injections ====
-  private globalState = inject(GlobalStatesService);
+  // Injections
   private serviceState = inject(ServiceManagementService);
-  private fb = inject(FormBuilder);
-  private snackBar = inject(MatSnackBar);
-  // =====================
 
-  // ===== States ====
-  public openTableServices = this.globalState.openTableServices
-  public services = this.serviceState.services;
-  public page = this.serviceState.page;
-  public totalPages = this.serviceState.totalPages;
-  public totalElements = this.serviceState.totalElements;
-  public search = this.serviceState.search;
+  // Methods
+  public openModalDelete: string = '';
+  public openModalRegister: boolean = false;
+  public openModalUpdate: boolean = false;
+  // =========
 
-  public openTableDeparments = this.globalState.openTableDeparments;
-  public serviceInfo = this.serviceState.serviceInfo;
-  // =====================
+  services = [
+    {
+      name: 'Financeiro',
+      description: 'Serviços financeiros e cobranças',
+      code: 'FIN',
+      department: 'Financeiro',
+      time: '00:20:10',
+      status: 'Ativo'
+    },
+    {
+      name: 'Coquinho',
+      description: 'Atendimento geral ao cliente',
+      code: 'ATC',
+      department: 'Atendimento ao Cliente',
+      time: '00:15:30',
+      status: 'Ativo'
+    },
+    {
+      name: 'Suporte Técnico',
+      description: 'Suporte e assistência técnica',
+      code: 'SUP',
+      department: 'Suporte',
+      time: '00:25:45',
+      status: 'Ativo'
+    },
+    {
+      name: 'Protocolo',
+      description: 'Protocolos e documentos',
+      code: 'PRO',
+      department: 'Administrativo',
+      time: '00:10:05',
+      status: 'Inativo'
+    }
+  ];
 
-  // ===== Variables ====
-  public itemsPerPage = 4;
-  public openModalUpdate = false;
-  public openModalDelete = false;
+  toggleDeleteModal(serviceId: string) {
 
-  // Form
-  public updateServiceManagementForm! : FormGroup;
-
-  // === Initializations ===
-  ngOnInit(){
-    this.serviceState.loadServices();
-    this.initializeFormUpdateServiceManagement();
-  }
-
-  constructor() {
-
-    effect(() => {
-
-      if (this.serviceState.serviceInfo() != null) {
-
-        let active = '';
-
-        if (this.serviceInfo()?.active === true ) {
-          active = 'Ativo'
-        } else {
-          active = 'Inativo'
-        }
-
-        this.updateServiceManagementForm = this.fb.group({
-          serviceManagementId: this.serviceInfo()?.serviceManagementId,
-          name: this.serviceInfo()?.name,
-          code: this.serviceInfo()?.code,
-          description: this.serviceInfo()?.description,
-          active: active,
-          departmentName: this.serviceInfo()?.departmentName
-        })
-      }
-    })
-
-    effect(() => {
-
-      if (this.serviceState.serviceUpdateStatus() === 'success') {
-
-        this.updateServiceManagementForm.reset();
-        this.serviceState.resetStatus();
-
-        this.snackBar.open(this.serviceState.serviceUpdateMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-success']
-        });
-      }
-
-      if (this.serviceState.serviceUpdateStatus() === 'error') {
-
-        this.serviceState.resetStatus();
-        this.snackBar.open(this.serviceState.serviceUpdateMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-danger']
-        });
-      }
-    })
-
-    effect(() => {
-
-      if (this.serviceState.serviceDeleteStatus() === 'success') {
-
-        this.serviceState.resetStatus();
-        this.closeModalDeleteService();
-        this.snackBar.open(this.serviceState.serviceDeleteMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-success']
-        });
-      }
-
-      if (this.serviceState.serviceDeleteStatus() === 'error') {
-
-        this.serviceState.resetStatus();
-        this.snackBar.open(this.serviceState.serviceDeleteMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-danger']
-        });
-      }
-    })
-  }
-
-  // Initialize form
-  initializeFormUpdateServiceManagement() {
-
-    this.updateServiceManagementForm = this.fb.group({
-      serviceManagementId: [''],
-      name: [''],
-      code: [''],
-      description: [''],
-      active: [''],
-      departmentName: ['']
-    })
-  }
-
-  // ===================== SEARCH =====================
-  onSearch(event: any) {
-    this.serviceState.setSearch(event.target.value);
-  }
-
-  // ===================== PAGINATION =====================
-
-  nextPage() {
-    this.serviceState.nextPage();
-  }
-
-  previousPage() {
-    this.serviceState.previousPage();
-  }
-
-  goToPage(page: number) {
-    this.serviceState.goToPage(page);
-  }
-
-  getStartIndex(): number {
-    return this.page() * this.itemsPerPage + 1;
-  }
-
-  getEndIndex(): number {
-    return Math.min(
-      (this.page() + 1) * this.itemsPerPage,
-      this.totalElements()
-    );
-  }
-
-  getPagesArray(): number[] {
-    return Array.from(
-      { length: this.totalPages() },
-      (_, i) => i
-    );
-  }
-
-  // ===== Modal ==========
-
-  openModalUpdateService(serviceManagementId : string) {
-    this.openModalUpdate = !this.openModalUpdate;
-    this.serviceState.getInfoService(serviceManagementId);
-  }
-
-  closeModalUpdateService() {
-    this.openModalUpdate = !this.openModalUpdate;
-    this.serviceState.serviceInfo.set(null);
-  }
-
-  openModalDeleteService(serviceManagementId : string) {
-    this.openModalDelete = !this.openModalDelete;
-    this.serviceState.getInfoService(serviceManagementId);
-  }
-
-  closeModalDeleteService() {
-    this.openModalDelete = !this.openModalDelete;
-    this.serviceState.serviceInfo.set(null);
-  }
-
-  // ======= UPDATE ========
-  onSubmitUpdateServiceManagement() {
-
-    if (this.updateServiceManagementForm.invalid) return;
-
-    if (this.updateServiceManagementForm.value.active === 'Ativo') {
-      this.updateServiceManagementForm.value.active = true;
-    } else {
-      this.updateServiceManagementForm.value.active = false;
+    if (this.openModalDelete === serviceId) {
+      this.openModalDelete = '';
+      return;
     }
 
-    this.serviceState.updateServiceManagement(this.updateServiceManagementForm.value);
-  };
-
-  // ======= DELETE ========
-  deleteService(serviceManagementId : string) {
-    this.serviceState.deleteService(serviceManagementId);
-  };
-
-  // === Modal ===
-  closeModalTableServices() {
-    this.globalState.closeModalTableServices();
+    this.openModalDelete = serviceId;
   }
 }
