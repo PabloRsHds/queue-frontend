@@ -6,6 +6,7 @@ import { ResponseGetDepartmentDto } from '../../../dtos/department/ResponseGetDe
 import { ResponseDepartmentDto } from '../../../dtos/department/ResponseDepartmentDto';
 import { CreateDepartmentDto } from '../../../dtos/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../../../dtos/department/UpdateDepartmentDto';
+import { ResponseDepartmentNamesDto } from '../../../dtos/department/ResponseDepartmentNamesDto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class DepartmentStateService {
 
   public departments = signal<ResponseDepartmentDto[]>([]);
   public departmentInfo = signal<ResponseGetDepartmentDto | null>(null);
+  public departmentNames = signal<ResponseDepartmentNamesDto[] | null>(null);
 
   // ===================== LOADING =====================
 
@@ -189,6 +191,17 @@ export class DepartmentStateService {
     });
   }
 
+  // ================= GET DEPARTMENT NAMES =================
+
+  loadDepartmentNames() {
+
+    this.api.getDeparmentNames().subscribe({
+      next: (response) => {
+        this.departmentNames.set(response);
+      }
+    })
+  }
+
   // ===================== PAGINATION =====================
 
   nextPage() {
@@ -241,5 +254,9 @@ export class DepartmentStateService {
 
   resetDepartmentInfo() {
     this.departmentInfo.set(null);
+  }
+
+  resetDepartmentNames() {
+    this.departmentNames.set(null);
   }
 }

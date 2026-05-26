@@ -13,16 +13,22 @@ export class ServiceManagementService {
 
   // ===== DATA =====
   public services = signal<ResponseServiceManagementDto[]>([]);
+  public totalElementsActive = signal<number>(0);
+  public totalElementsInactive = signal<number>(0);
+
+  public percentageActive = signal<number>(0);
+  public percentageInactive = signal<number>(0);
+
   public selectedService = signal<ResponseServiceManagementDto | null>(null);
 
-  public serviceRegisterStatus = signal<'success' | 'error' | 'default'>('default');
-  public serviceRegisterMessage = signal('');
+  public registerStatus = signal<'success' | 'error' | 'default'>('default');
+  public registerMessage = signal('');
 
-  public serviceUpdateStatus = signal<'success' | 'error' | 'default'>('default');
-  public serviceUpdateMessage = signal('');
+  public updateStatus = signal<'success' | 'error' | 'default'>('default');
+  public updateMessage = signal('');
 
-  public serviceDeleteStatus = signal<'success' | 'error' | 'default'>('default');
-  public serviceDeleteMessage = signal('');
+  public deleteStatus = signal<'success' | 'error' | 'default'>('default');
+  public deleteMessage = signal('');
 
   public serviceInfo = signal<ResponseServiceManagementDto | null>(null);
 
@@ -43,13 +49,13 @@ export class ServiceManagementService {
         this.page.set(0);
         this.loadServices();
 
-        this.serviceRegisterMessage.set('Serviço cadastrado com sucesso!');
-        this.serviceRegisterStatus.set('success');
+        this.registerMessage.set('Serviço cadastrado com sucesso!');
+        this.registerStatus.set('success');
       },
       error: () => {
 
-        this.serviceRegisterMessage.set('Erro ao cadastrar serviço.');
-        this.serviceRegisterStatus.set('error');
+        this.registerMessage.set('Erro ao cadastrar serviço.');
+        this.registerStatus.set('error');
       }
     })
   }
@@ -63,13 +69,13 @@ export class ServiceManagementService {
         this.page.set(0);
         this.loadServices();
 
-        this.serviceUpdateMessage.set('Serviço atualizado com sucesso!');
-        this.serviceUpdateStatus.set('success');
+        this.updateMessage.set('Serviço atualizado com sucesso!');
+        this.updateStatus.set('success');
       },
       error: () => {
 
-        this.serviceUpdateMessage.set('Erro ao atualizar serviço.');
-        this.serviceUpdateStatus.set('error');
+        this.updateMessage.set('Erro ao atualizar serviço.');
+        this.updateStatus.set('error');
       }
     })
   }
@@ -82,13 +88,13 @@ export class ServiceManagementService {
         this.page.set(0);
         this.loadServices();
 
-        this.serviceDeleteMessage.set('Serviço excluído com sucesso!');
-        this.serviceDeleteStatus.set('success');
+        this.deleteMessage.set('Serviço excluído com sucesso!');
+        this.deleteStatus.set('success');
       },
       error: () => {
 
-        this.serviceDeleteMessage.set('Erro ao excluir serviço.');
-        this.serviceDeleteStatus.set('error');
+        this.deleteMessage.set('Erro ao excluir serviço.');
+        this.deleteStatus.set('error');
       }
     })
   }
@@ -96,9 +102,19 @@ export class ServiceManagementService {
   // ===== LOAD SERVICES =====
   loadServices() {
     this.api.getAllServicesManagement(this.page(), this.size, this.search()).subscribe({
+
       next: (res) => {
+
         this.services.set(res.content);
         this.totalElements.set(res.totalElements);
+
+        if (res.content.map(s => s.active).includes(true)) {
+          this.totalElementsActive.set(res.totalElements);
+          this.percentageActive.set((this.totalElementsActive() / this.totalElements()) * 100);
+        } else {
+          this.totalElementsInactive.set(res.totalElements);
+          this.percentageInactive.set((this.totalElementsInactive() / this.totalElements()) * 100);
+        }
       }
     });
   }
@@ -107,7 +123,6 @@ export class ServiceManagementService {
   getInfoService(serviceManagementId : string) {
 
     this.api.getServiceManagementById(serviceManagementId).subscribe({
-
       next: (response) => {
         this.serviceInfo.set(response);
       }
@@ -153,8 +168,12 @@ export class ServiceManagementService {
   }
 
   resetStatus() {
-    this.serviceRegisterStatus.set('default');
-    this.serviceUpdateStatus.set('default');
-    this.serviceDeleteStatus.set('default');
+    this.registerStatus.set('default');
+    this.updateStatus.set('default');
+    this.deleteStatus.set('default');
+  }
+
+  resetInfoService() {
+    this.serviceInfo.set(null);
   }
 }

@@ -9,7 +9,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">18</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalElements() }}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de serviços cadastrados</div>
         </div>
       </div>
@@ -21,8 +21,10 @@
             <div style="width:6px;height: 6px;background:#16a34a;border-radius:50%;"></div>
             <div style="font-size:12px;color:#64748b;">Ativos</div>
           </div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">16</div>
-          <div style="font-size:11px;color:#6c6e72;">89% do total</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
+            {{ totalElementsActive() }}
+          </div>
+          <div style="font-size:11px;color:#6c6e72;">{{ percentageActive() }}% do total</div>
         </div>
       </div>
     </div>
@@ -33,13 +35,15 @@
             <div style="width:6px;height: 6px;background:#b9b9b9;border-radius:50%;"></div>
             <div style="font-size:12px;color:#64748b;">Inativos</div>
           </div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">2</div>
-          <div style="font-size:11px;color:#6c6e72;">89% do total</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
+            {{ totalElementsInactive() }}
+          </div>
+          <div style="font-size:11px;color:#6c6e72;">{{ percentageInactive() }}% do total</div>
         </div>
       </div>
     </div>
     <div class="stat-card" style="padding:0;border:none;background:none;box-shadow:none;">
-      <div class="new-service-card" (click)="openModalRegister = !openModalRegister" style="width:100%;height:100%;">
+      <div class="new-service-card" (click)="openModalRegister()" style="width:100%;height:100%;">
         <div class="new-service-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
@@ -74,7 +78,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngIf="services.length === 0; else departmentRows">
+      <ng-container *ngIf="services().length === 0;">
         <tr>
           <td colspan="5" style="text-align:center;padding:3rem;color:#9ca3af;">
             <p>Nenhum serviço cadastrado ainda.</p>
@@ -82,9 +86,9 @@
         </tr>
       </ng-container>
 
-      <ng-template #departmentRows>
-        <tr *ngFor="let service of services">
-          <td class="td-name" (click)="openModalView = true">
+      <ng-container *ngIf="services().length > 0">
+        <tr *ngFor="let service of services()">
+          <td class="td-name" (click)="openModalView(service.serviceManagementId)">
             <div class="td-name-container">
               <div style="width:45px;height:45px;background:#a1a1a12f;border-radius:10px;display:flex;align-items:center;justify-content:center;">
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -144,29 +148,29 @@
               </div>
               <div style="display:flex;flex-direction:column;gap:5px;">
                 <strong>{{ service.name }}</strong>
-                <strong style="font-size: 12px; color: #7f8a99;">{{ service.department }}</strong>
+                <strong style="font-size: 12px; color: #7f8a99;">{{ service.departmentName }}</strong>
               </div>
             </div>
           </td>
-          <td data-label="Código" (click)="openModalView = true">
+          <td data-label="Código" (click)="openModalView(service.serviceManagementId)">
             <strong>{{ service.code }}</strong>
           </td>
-          <td data-label="Departamento" (click)="openModalView = true">
-            <strong>{{ service.department }}</strong>
+          <td data-label="Departamento" (click)="openModalView(service.serviceManagementId)">
+            <strong>{{ service.departmentName }}</strong>
           </td>
 
-          <td data-label="Status" (click)="openModalView = true">
-            <div *ngIf="service.status === 'Ativo'" style="display: flex; align-items: center;">
+          <td data-label="Status" (click)="openModalView(service.serviceManagementId)">
+            <div *ngIf="service.active" style="display: flex; align-items: center;">
               <div class="td-status-active">
                 <div style="width:6px;height: 6px;background:#16a34a;border-radius:50%;"></div>
-                <strong  >{{ service.status }}</strong>
+                <strong>Ativo</strong>
               </div>
             </div>
 
-            <div *ngIf="service.status === 'Inativo'" style="display: flex; align-items: center;">
+            <div *ngIf="!service.active" style="display: flex; align-items: center;">
               <div class="td-status-inactive">
                 <div style="width:6px;height: 6px; background:#4d4f52; border-radius:50%;"></div>
-                <strong  >{{ service.status }}</strong>
+                <strong>Inativo</strong>
               </div>
             </div>
           </td>
@@ -174,8 +178,7 @@
           <td data-label="buttons">
 
             <div style="display:flex;align-items:center; gap:10px;">
-              <button type="button" class="button-department-update" (click)="openModalUpdate = true">
-
+              <button type="button" class="button-department-update" (click)="openModalUpdate(service.serviceManagementId)">
                 <div style="display:flex;align-items:center;gap:5px;">
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
@@ -214,7 +217,7 @@
             </div>
           </td>
         </tr>
-      </ng-template>
+      </ng-container>
     </tbody>
   </table>
 
@@ -247,7 +250,7 @@
 </div>
 
 <!-- MODAL REGISTER -->
-<div class="modal-register-container" *ngIf="openModalRegister">
+<div class="modal-register-container" *ngIf="modalRegister">
   <div class="modal-register">
 
     <div class="modal-register-header-container">
@@ -266,7 +269,7 @@
         </div>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="openModalRegister = false">
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalRegister()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -274,10 +277,11 @@
       </button>
     </div>
 
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="registerServiceManagement()">
       <div class="form-group">
         <label class="form-label">Nome do serviço</label>
         <input
+          formControlName="name"
           type="text"
           class="form-input"
           placeholder="Ex: RH"
@@ -287,6 +291,7 @@
       <div class="form-group">
         <label class="form-label">Código</label>
         <input
+          formControlName="code"
           type="text"
           class="form-input"
           placeholder="Ex: 00E3"
@@ -296,6 +301,7 @@
       <div class="form-group">
         <label class="form-label">Descrição</label>
         <textarea
+          formControlName="description"
           rows="7"
           class="form-textarea"
           placeholder="Breve descrição do departamento..."></textarea>
@@ -303,13 +309,12 @@
 
       <div class="form-group">
         <label class="form-label">Departamento</label>
-        <select class="form-select" required>
-          <option value="">Selecione um departamento</option>
-          <option>
-            RH
+        <select class="form-select" formControlName="departmentName" required>
+          <option value="">
+            Selecione um departamento
           </option>
-          <option>
-            DP
+          <option *ngFor="let dept of departmentNames()">
+            {{ dept.name }}
           </option>
         </select>
       </div>
@@ -317,15 +322,15 @@
       <div class="separator"></div>
 
       <div style="display: flex; justify-content: end; gap: 5px;">
-        <button type="button" class="button-submit">Salvar</button>
-        <button type="button" class="button-back" (click)="openModalRegister = false">Voltar</button>
+        <button type="submit" class="button-submit">Salvar</button>
+        <button type="button" class="button-back" (click)="closeModalRegister()">Voltar</button>
       </div>
     </form>
   </div>
 </div>
 
 <!-- MODAL UPDATE -->
-<div class="modal-update-container" *ngIf="openModalUpdate">
+<div class="modal-update-container" *ngIf="modalUpdate">
   <div class="modal-update">
 
     <div class="modal-update-header-container">
@@ -338,7 +343,8 @@
             <line x1="13.09" y1="41.14" x2="29.1" y2="41.14"/>
             <line x1="13.09" y1="35.04" x2="33.1" y2="35.04"/>
             <line x1="13.09" y1="28.94" x2="39.1" y2="28.94"/>
-            <path d="M34.45,43.23l.15,4.3a.49.49,0,0,0,.62.46l4.13-1.11a.54.54,0,0,0,.34-.23L57.76,22.21a1.23,1.23,0,0,0-.26-1.72l-3.14-2.34a1.22,1.22,0,0,0-1.72.26L34.57,42.84A.67.67,0,0,0,34.45,43.23Z"/><line x1="50.2" y1="21.7" x2="55.27" y2="25.57"/>
+            <path d="M34.45,43.23l.15,4.3a.49.49,0,0,0,.62.46l4.13-1.11a.54.54,0,0,0,.34-.23L57.76,22.21a1.23,1.23,0,0,0-.26-1.72l-3.14-2.34a1.22,1.22,0,0,0-1.72.26L34.57,42.84A.67.67,0,0,0,34.45,43.23Z"/>
+            <line x1="50.2" y1="21.7" x2="55.27" y2="25.57"/>
           </svg>
         </div>
         <div class="modal-update-header-text">
@@ -347,7 +353,7 @@
         </div>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="openModalUpdate = false">
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalUpdate()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -355,13 +361,14 @@
       </button>
     </div>
 
-    <form>
+    <form [formGroup]="updateForm" (ngSubmit)="updateServiceManagement()">
 
       <div style="display: flex; gap: 20px; ">
         <div style="flex: 1;">
           <div class="form-group">
             <label class="form-label">Nome do serviço</label>
             <input
+              formControlName="name"
               type="text"
               class="form-input"
               placeholder="Ex: RH"
@@ -373,6 +380,7 @@
           <div class="form-group">
             <label class="form-label">Código</label>
             <input
+              formControlName="code"
               type="text"
               class="form-input"
               placeholder="Ex: RH"
@@ -384,6 +392,7 @@
       <div class="form-group">
         <label class="form-label">Descrição</label>
         <textarea
+          formControlName="description"
           rows="5"
           class="form-textarea"
           placeholder="Breve descrição do departamento..."></textarea>
@@ -394,13 +403,9 @@
         <div style="flex: 1;">
           <div class="form-group">
             <label class="form-label">Departamento</label>
-            <select class="form-select" required>
-              <option value="">Selecione um departamento</option>
-              <option>
-                RH
-              </option>
-              <option>
-                DP
+            <select class="form-select" formControlName="departmentName" required>
+              <option *ngFor="let department of departmentNames()">
+                {{ department.name }}
               </option>
             </select>
           </div>
@@ -411,7 +416,7 @@
 
           <div class="status-container">
             <label class="switch">
-              <input type="checkbox" checked>
+              <input type="checkbox" formControlName="active" checked>
               <span class="slider"></span>
             </label>
 
@@ -424,8 +429,8 @@
       <div class="separator"></div>
 
       <div style="display: flex; justify-content: end; gap: 5px;">
-        <button type="button" class="button-submit">Salvar Alterações</button>
-        <button type="button" class="button-back" (click)="openModalUpdate = false">Voltar</button>
+        <button type="submit" [disabled]="updateForm.invalid" class="button-submit">Salvar Alterações</button>
+        <button type="button" class="button-back" (click)="closeModalUpdate()">Voltar</button>
       </div>
     </form>
   </div>
@@ -448,6 +453,7 @@
         </div>
         <div class="modal-delete-header-text">
           <h2>Deletar serviço</h2>
+          <span>Delete o serviço escolhido abaixo.</span>
         </div>
       </div>
 
@@ -460,8 +466,8 @@
     </div>
 
     <div class="modal-delete-content">
-      <p>Tem certeza que deseja deletar esse serviço?</p>
-      <p>Essa operaçao nao pode ser desfeita.</p>
+      <p>Tem certeza que deseja deletar o serviço <strong>X</strong>?</p>
+      <p>Deleta-lo, apagará todos os seus atendimentos associados.</p>
     </div>
 
     <div class="separator"></div>
@@ -474,7 +480,7 @@
 
 
 <!-- MODAL VIEW -->
-<div class="modal-view-container" *ngIf="openModalView">
+<div class="modal-view-container" *ngIf="modalView">
   <div class="modal-view">
 
     <div class="modal-view-header-container">
@@ -490,7 +496,7 @@
         </div>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="openModalView = false">
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalView()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -503,50 +509,47 @@
 
       <div class="info-row">
         <span class="label">Nome do serviço</span>
-        <span class="value">Suporte Técnico</span>
+        <span class="value">{{serviceInfo()?.name}}</span>
       </div>
 
       <div class="info-row">
         <span class="label">Código</span>
-        <span class="value">SUP</span>
+        <span class="value">{{serviceInfo()?.code}}</span>
       </div>
 
       <div class="info-row">
         <span class="label">Descrição</span>
-        <span class="value">
-          Serviço responsável por prestar suporte técnico aos usuários.
-        </span>
+        <span class="value">{{serviceInfo()?.description}}</span>
       </div>
 
       <div class="info-row">
         <span class="label">Departamento</span>
-        <span class="value">Suporte</span>
+        <span class="value">{{serviceInfo()?.departmentName}}</span>
       </div>
 
       <div class="info-row">
         <span class="label">Status</span>
 
 
-        <div *ngIf="ativo === 'Ativo'" style="display: flex; align-items: center;">
+        <div *ngIf="serviceInfo()?.active" style="display: flex; align-items: center;">
           <div class="td-status-active-view">
             <div style="width:6px;height: 6px;background:#16a34a;border-radius:50%;"></div>
-            <strong  >{{ ativo }}</strong>
+            <strong>Ativo</strong>
           </div>
         </div>
 
-        <div *ngIf="inativo === '1Inativo'" style="display: flex; align-items: center;">
+        <div *ngIf="!serviceInfo()?.active" style="display: flex; align-items: center;">
           <div class="td-status-inactive-view">
             <div style="width:6px;height: 6px; background:#4d4f52; border-radius:50%;"></div>
-            <strong  >{{ inativo }}</strong>
+            <strong >Inativo</strong>
           </div>
         </div>
-
 
       </div>
     </div>
 
     <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
-      <button type="button" class="button-back" (click)="openModalView = false">Fechar</button>
+      <button type="button" class="button-back" (click)="closeModalView()">Fechar</button>
     </div>
 
   </div>
