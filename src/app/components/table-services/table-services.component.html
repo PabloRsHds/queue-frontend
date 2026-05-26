@@ -84,7 +84,7 @@
 
       <ng-template #departmentRows>
         <tr *ngFor="let service of services">
-          <td class="td-name">
+          <td class="td-name" (click)="openModalView = true">
             <div class="td-name-container">
               <div style="width:45px;height:45px;background:#a1a1a12f;border-radius:10px;display:flex;align-items:center;justify-content:center;">
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -148,14 +148,14 @@
               </div>
             </div>
           </td>
-          <td data-label="Código">
+          <td data-label="Código" (click)="openModalView = true">
             <strong>{{ service.code }}</strong>
           </td>
-          <td data-label="Departamento">
+          <td data-label="Departamento" (click)="openModalView = true">
             <strong>{{ service.department }}</strong>
           </td>
-          <td data-label="Status">
 
+          <td data-label="Status" (click)="openModalView = true">
             <div *ngIf="service.status === 'Ativo'" style="display: flex; align-items: center;">
               <div class="td-status-active">
                 <div style="width:6px;height: 6px;background:#16a34a;border-radius:50%;"></div>
@@ -169,8 +169,8 @@
                 <strong  >{{ service.status }}</strong>
               </div>
             </div>
-
           </td>
+
           <td data-label="buttons">
 
             <div style="display:flex;align-items:center; gap:10px;">
@@ -210,9 +210,7 @@
                     </button>
                   </div>
                 </div>
-
               </div>
-
             </div>
           </td>
         </tr>
@@ -469,7 +467,87 @@
     <div class="separator"></div>
     <div style="display: flex; justify-content: end; gap: 5px;">
       <button type="button" class="button-delete">Excluir</button>
-      <button type="button" class="button-back" (click)="openModalUpdate = false">Cancelar</button>
+      <button type="button" class="button-back" (click)="openModalDelete = false">Cancelar</button>
     </div>
+  </div>
+</div>
+
+
+<!-- MODAL VIEW -->
+<div class="modal-view-container" *ngIf="openModalView">
+  <div class="modal-view">
+
+    <div class="modal-view-header-container">
+      <div class="modal-view-header">
+        <div class="modal-view-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#0957b1" width="40px" height="40px" viewBox="0 0 1920 1920">
+              <path d="M960 1489.82c-348.474 0-668.545-202.323-841.298-529.918C291.455 632.306 611.526 429.984 960 429.984s668.545 202.322 841.298 529.918C1628.545 1287.497 1308.474 1489.82 960 1489.82Zm948.342-553.552C1720.645 558.648 1357.332 324 960 324c-397.333 0-760.645 234.648-948.342 612.268L0 959.902l11.658 23.634c187.697 377.62 551.01 612.268 948.342 612.268 397.333 0 760.645-234.648 948.342-612.268L1920 959.902l-11.658-23.634ZM960 1171.869c-116.9 0-211.967-95.067-211.967-211.967 0-116.9 95.067-211.967 211.967-211.967 116.9 0 211.967 95.067 211.967 211.967 0 116.9-95.067 211.967-211.967 211.967m0-529.918c-175.297 0-317.951 142.654-317.951 317.951 0 175.297 142.654 317.95 317.951 317.95 175.297 0 317.951-142.653 317.951-317.95S1135.297 641.951 960 641.951" fill-rule="evenodd"/>
+          </svg>
+        </div>
+        <div class="modal-view-header-text">
+          <h2>Detalhes do serviço</h2>
+          <span >Vizualize as informações do serviço abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="openModalView = false">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+
+      <div class="info-row">
+        <span class="label">Nome do serviço</span>
+        <span class="value">Suporte Técnico</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Código</span>
+        <span class="value">SUP</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Descrição</span>
+        <span class="value">
+          Serviço responsável por prestar suporte técnico aos usuários.
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Departamento</span>
+        <span class="value">Suporte</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Status</span>
+
+
+        <div *ngIf="ativo === 'Ativo'" style="display: flex; align-items: center;">
+          <div class="td-status-active-view">
+            <div style="width:6px;height: 6px;background:#16a34a;border-radius:50%;"></div>
+            <strong  >{{ ativo }}</strong>
+          </div>
+        </div>
+
+        <div *ngIf="inativo === '1Inativo'" style="display: flex; align-items: center;">
+          <div class="td-status-inactive-view">
+            <div style="width:6px;height: 6px; background:#4d4f52; border-radius:50%;"></div>
+            <strong  >{{ inativo }}</strong>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
+      <button type="button" class="button-back" (click)="openModalView = false">Fechar</button>
+    </div>
+
   </div>
 </div>

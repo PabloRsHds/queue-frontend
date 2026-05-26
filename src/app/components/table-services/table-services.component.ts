@@ -17,11 +17,15 @@ export class TableServicesComponent {
   // Injections
   private serviceState = inject(ServiceManagementService);
 
+  public ativo = 'Ativo';
+  public inativo = 'Inativo';
+
   // Methods
   public openDropdownDelete: string = '';
   public openModalRegister: boolean = false;
   public openModalUpdate: boolean = false;
   public openModalDelete: boolean = false;
+  public openModalView: boolean = false;
   // =========
 
   services = [
