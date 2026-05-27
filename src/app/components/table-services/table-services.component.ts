@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -41,7 +41,7 @@ export class TableServicesComponent implements OnInit{
   public updateForm!: FormGroup;
 
   // variables Modals
-  public openDropdownDelete: string = '';
+  public dropDown: number | null = null;
   public modalRegister: boolean = false;
   public modalUpdate: boolean = false;
   public modalDelete: boolean = false;
@@ -167,14 +167,33 @@ export class TableServicesComponent implements OnInit{
     });
   }
 
-  toggleDeleteModal(serviceId: string) {
+  // DropDown
 
-    if (this.openDropdownDelete === serviceId) {
-      this.openDropdownDelete = '';
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+
+    const target = event.target as HTMLElement;
+
+    // verifica se clicou dentro do menu
+    const clickedInsideDropdown = target.closest('.button-menu-table')
+      || target.closest('.drop-down-delete');
+
+    if (!clickedInsideDropdown) {
+      this.closeDropDown();
+    }
+  }
+  openDropDown(index: number) {
+
+    if (this.dropDown === index) {
+      this.dropDown = null;
       return;
     }
 
-    this.openDropdownDelete = serviceId;
+    this.dropDown = index;
+  }
+
+  closeDropDown() {
+    this.dropDown = null;
   }
 
   // Register
@@ -226,7 +245,7 @@ export class TableServicesComponent implements OnInit{
   }
 
   openModalDelete(serviceManagementId: string) {
-    this.openDropdownDelete = '';
+    this.dropDown = null;
     this.modalDelete = true;
     this.serviceState.getInfoService(serviceManagementId);
   }
@@ -276,6 +295,29 @@ export class TableServicesComponent implements OnInit{
   }
 
   getPagesArray(): number[] {
-    return Array.from({ length: this.totalPages() }, (_, i) => i);
+    const total = this.totalPages();
+    const current = this.page();
+
+    const maxVisible = 4;
+
+    let start = current - Math.floor(maxVisible / 2);
+    let end = current + Math.floor(maxVisible / 2) + 1;
+
+    // Ajusta início
+    if (start < 0) {
+      start = 0;
+      end = Math.min(maxVisible, total);
+    }
+
+    // Ajusta final
+    if (end > total) {
+      end = total;
+      start = Math.max(0, total - maxVisible);
+    }
+
+    return Array.from(
+      { length: end - start },
+      (_, i) => start + i
+    );
   }
 }

@@ -335,6 +335,46 @@ body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
     gap: 15px;
 }
 
+.td-name-background-0 {
+  width:45px;
+  height:45px;
+  background:#c5c5c52f;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.td-name-background-1 {
+  width:45px;
+  height:45px;
+  background:#90ee9546;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.td-name-background-2 {
+  width:45px;
+  height:45px;
+  background:#aae5fc5e;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.td-name-background-3 {
+  width:45px;
+  height:45px;
+  background:#fcbbbb62;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 .dept-table tbody tr:hover td {
     background: #ffffff91;
 }

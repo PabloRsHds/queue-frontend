@@ -49,6 +49,8 @@ export class ServiceManagementService {
 
         this.registerMessage.set('Serviço cadastrado com sucesso!');
         this.registerStatus.set('success');
+
+        this.loadStatistics();
       },
       error: () => {
 
