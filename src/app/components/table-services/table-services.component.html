@@ -9,7 +9,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalElements() }}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ statistics()?.totalElements }}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de serviços cadastrados</div>
         </div>
       </div>
@@ -22,9 +22,9 @@
             <div style="font-size:12px;color:#64748b;">Ativos</div>
           </div>
           <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-            {{ totalElementsActive() }}
+            {{ statistics()?.totalElementsActive }}
           </div>
-          <div style="font-size:11px;color:#6c6e72;">{{ percentageActive() }}% do total</div>
+          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageActive }}% do total</div>
         </div>
       </div>
     </div>
@@ -36,9 +36,9 @@
             <div style="font-size:12px;color:#64748b;">Inativos</div>
           </div>
           <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-            {{ totalElementsInactive() }}
+            {{ statistics()?.totalElementsInactive }}
           </div>
-          <div style="font-size:11px;color:#6c6e72;">{{ percentageInactive() }}% do total</div>
+          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageInactive }}% do total</div>
         </div>
       </div>
     </div>
@@ -61,7 +61,9 @@
       <svg class="search-icon" width="20" height="20" fill="none" stroke="#64748b" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z"/>
       </svg>
-      <input class="search-box" ...
+      <input
+      (input)="onSearch($event)"
+      class="search-box"
       placeholder="Pesquisar serviços...">
     </div>
   </div>
@@ -201,7 +203,7 @@
 
                 <div class="drop-down-delete" *ngIf="openDropdownDelete === service.code ">
                   <div style="display:flex;flex-direction:column;">
-                    <button type="button" class="button-department-delete" (click)="handleCloseModalDelete()">
+                    <button type="button" class="button-department-delete" (click)="openModalDelete(service.serviceManagementId)">
                       <div style="display:flex;align-items:center; justify-content:center; gap:5px; color:#046af0e7;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
                           <path d="M20.5001 6H3.5" stroke="#eb3414" stroke-width="1.5" stroke-linecap="round"/>
@@ -223,24 +225,35 @@
 
   <div class="pagination">
     <span class="pagination-info">
-      Mostrando 1 a 5 de 10 serviços
+      Mostrando {{ getStartIndex() }}-{{ getEndIndex() }} de {{ totalElements() }}
     </span>
 
     <div class="pagination-buttons">
       <!-- PREV -->
       <button
-        class="page-btn">
+        class="page-btn"
+        (click)="previousPage()"
+        [disabled]="page() === 0"
+        >
         <svg viewBox="0 0 24 24">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
       <!-- PAGES -->
-      <button [class.active]="true">
-        1
+      <button
+        *ngFor="let p of getPagesArray(); let i = index"
+        class="page-btn"
+        [class.active]="i === page()"
+        (click)="goToPage(i)">
+
+        {{ i + 1 }}
       </button>
       <!-- NEXT -->
       <button
-        class="page-btn">
+        class="page-btn"
+        (click)="nextPage()"
+        [disabled]="page() + 1 >= totalPages()"
+        >
         <svg viewBox="0 0 24 24">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
@@ -437,7 +450,7 @@
 </div>
 
 <!-- MODAL DELETE -->
-<div class="modal-delete-container" *ngIf="openModalDelete">
+<div class="modal-delete-container" *ngIf="modalDelete">
   <div class="modal-delete">
 
     <div class="modal-delete-header-container">
@@ -457,7 +470,7 @@
         </div>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="openModalDelete = false">
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalDelete()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -466,14 +479,14 @@
     </div>
 
     <div class="modal-delete-content">
-      <p>Tem certeza que deseja deletar o serviço <strong>X</strong>?</p>
+      <p>Tem certeza que deseja deletar o serviço <strong>{{this.serviceInfo()?.name}}</strong>?</p>
       <p>Deleta-lo, apagará todos os seus atendimentos associados.</p>
     </div>
 
     <div class="separator"></div>
     <div style="display: flex; justify-content: end; gap: 5px;">
-      <button type="button" class="button-delete">Excluir</button>
-      <button type="button" class="button-back" (click)="openModalDelete = false">Cancelar</button>
+      <button type="button" class="button-delete" (click)="deleteServiceManagement(this.serviceInfo()?.serviceManagementId ?? '')">Excluir</button>
+      <button type="button" class="button-back" (click)="closeModalDelete()">Cancelar</button>
     </div>
   </div>
 </div>
@@ -481,7 +494,7 @@
 
 <!-- MODAL VIEW -->
 <div class="modal-view-container" *ngIf="modalView">
-  <div class="modal-view">
+  <div class="modal-view" [ngClass]="{'modal-view-updatedAt': serviceInfo()?.updatedAt != null}">
 
     <div class="modal-view-header-container">
       <div class="modal-view-header">
@@ -545,6 +558,16 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="info-row">
+        <span class="label">Dia de criação</span>
+        <span class="value">{{serviceInfo()?.createdAt}}</span>
+      </div>
+
+      <div class="info-row" *ngIf="serviceInfo()?.updatedAt != null">
+        <span class="label">Última atualização</span>
+        <span class="value">{{serviceInfo()?.updatedAt}}</span>
       </div>
     </div>
 

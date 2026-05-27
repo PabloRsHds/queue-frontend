@@ -1134,3 +1134,15 @@ app-config {
       display: none;
   }
 }
+
+
+.active-section-servico {
+  color:#4e5c70;
+  font-size:13px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.active-section-servico:hover {
+  color:#333e4d;
+}

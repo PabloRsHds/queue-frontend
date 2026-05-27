@@ -18,6 +18,7 @@ export class TableServicesComponent implements OnInit{
   ngOnInit(): void {
     this.initializeRegisterForm();
     this.serviceState.loadServices();
+    this.serviceState.loadStatistics();
   }
 
   // Injections
@@ -31,11 +32,25 @@ export class TableServicesComponent implements OnInit{
   public serviceInfo = this.serviceState.serviceInfo;
   public departmentNames = this.deparmentState.departmentNames;
 
+  public page = this.serviceState.page;
+  public totalPages = this.serviceState.totalPages;
   public totalElements = this.serviceState.totalElements;
-  public totalElementsActive = this.serviceState.totalElementsActive;
-  public totalElementsInactive = this.serviceState.totalElementsInactive;
-  public percentageActive = this.serviceState.percentageActive;
-  public percentageInactive = this.serviceState.percentageInactive;
+  public statistics = this.serviceState.statistics;
+
+   // Form update
+  public updateForm!: FormGroup;
+
+  // variables Modals
+  public openDropdownDelete: string = '';
+  public modalRegister: boolean = false;
+  public modalUpdate: boolean = false;
+  public modalDelete: boolean = false;
+  public modalView: boolean = false;
+  // =========
+
+  // Search
+  searchQuery = '';
+  itemsPerPage = 4;
 
   // Effects
   constructor() {
@@ -46,7 +61,7 @@ export class TableServicesComponent implements OnInit{
       description: ['', Validators.required],
       departmentName: ['', Validators.required],
       active: [false]
-    })
+    });
 
     effect(() => {
 
@@ -62,7 +77,7 @@ export class TableServicesComponent implements OnInit{
           active: service?.active
         });
       }
-    })
+    });
 
     effect(() => {
 
@@ -87,7 +102,7 @@ export class TableServicesComponent implements OnInit{
           panelClass: ['snackbar-danger']
         });
       }
-    })
+    });
 
     effect(() => {
 
@@ -112,7 +127,31 @@ export class TableServicesComponent implements OnInit{
           panelClass: ['snackbar-danger']
         });
       }
-    })
+    });
+
+    effect(() => {
+
+      if (this.serviceState.deleteStatus() === 'success') {
+
+        this.serviceState.resetStatus();
+        this.modalDelete = false;
+
+        this.snackBar.open(this.serviceState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+      }
+
+      if (this.serviceState.deleteStatus() === 'error') {
+
+        this.serviceState.resetStatus();
+
+        this.snackBar.open(this.serviceState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-danger']
+        });
+      }
+    });
   }
 
   // Form register
@@ -128,17 +167,6 @@ export class TableServicesComponent implements OnInit{
     });
   }
 
-  // Form update
-  public updateForm!: FormGroup;
-
-  // variables Modals
-  public openDropdownDelete: string = '';
-  public modalRegister: boolean = false;
-  public modalUpdate: boolean = false;
-  public openModalDelete: boolean = false;
-  public modalView: boolean = false;
-  // =========
-
   toggleDeleteModal(serviceId: string) {
 
     if (this.openDropdownDelete === serviceId) {
@@ -147,11 +175,6 @@ export class TableServicesComponent implements OnInit{
     }
 
     this.openDropdownDelete = serviceId;
-  }
-
-  handleCloseModalDelete() {
-    this.openDropdownDelete = '';
-    this.openModalDelete = true;
   }
 
   // Register
@@ -173,6 +196,13 @@ export class TableServicesComponent implements OnInit{
 
   //===========================
 
+  deleteServiceManagement(serviceManagementId: string) {
+    if(serviceManagementId === '') return;
+    this.serviceState.deleteService(serviceManagementId);
+  }
+
+  // ==========================
+
   // ====== Modals ========
   openModalRegister() {
     this.deparmentState.loadDepartmentNames();
@@ -190,6 +220,22 @@ export class TableServicesComponent implements OnInit{
     this.deparmentState.loadDepartmentNames();
   }
 
+  closeModalUpdate() {
+    this.modalUpdate = false;
+    this.serviceState.resetInfoService();
+  }
+
+  openModalDelete(serviceManagementId: string) {
+    this.openDropdownDelete = '';
+    this.modalDelete = true;
+    this.serviceState.getInfoService(serviceManagementId);
+  }
+
+  closeModalDelete() {
+    this.modalDelete = false;
+    this.serviceState.resetInfoService();
+  }
+
   openModalView(serviceManagementId: string) {
     this.modalView = true;
     this.serviceState.getInfoService(serviceManagementId);
@@ -200,8 +246,36 @@ export class TableServicesComponent implements OnInit{
     this.serviceState.resetInfoService();
   }
 
-  closeModalUpdate() {
-    this.modalUpdate = false;
-    this.serviceState.resetInfoService();
+  // ===================== SEARCH =====================
+  onSearch(event: any) {
+    this.serviceState.setSearch(event.target.value);
+  }
+
+  // ===================== PAGINATION =====================
+  nextPage() {
+    this.serviceState.nextPage();
+  }
+
+  previousPage() {
+    this.serviceState.previousPage();
+  }
+
+  goToPage(page: number) {
+    this.serviceState.goToPage(page);
+  }
+
+  getStartIndex(): number {
+    return this.page() * this.itemsPerPage + 1;
+  }
+
+  getEndIndex(): number {
+    return Math.min(
+      (this.page() + 1) * this.itemsPerPage,
+      this.totalElements()
+    );
+  }
+
+  getPagesArray(): number[] {
+    return Array.from({ length: this.totalPages() }, (_, i) => i);
   }
 }

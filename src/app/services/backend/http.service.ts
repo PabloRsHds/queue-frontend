@@ -9,8 +9,8 @@ import { CreateServiceManagementDto } from '../../dtos/services/CreateServiceMan
 import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepartment';
 import { UpdateDepartmentDto } from '../../dtos/department/UpdateDepartmentDto';
 import { UpdateServiceManagementDto } from '../../dtos/services/UpdateServiceManagementDto';
-import { ResponseUpdateServiceManagementDto } from '../../dtos/services/ResponseUpdateServiceManagementDto';
-import { ResponseServiceManagementsDto } from '../../dtos/services/ResponseServiceManagementsDto';
+import { ResponseGetServiceByIdDto } from '../../dtos/services/ResponseGetServiceByIdDto';
+import { ResponseStatisticsDto } from '../../dtos/services/ResponseStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +61,11 @@ export class HttpService {
     return this.http.get<PageResponse<ResponseServiceManagementDto>>(`http://localhost:8080/services?page=${page}&size=${size}&search=${search}`);
   }
 
-  public getServiceManagementById(request : string): Observable<ResponseServiceManagementDto> {
-    return this.http.get<ResponseServiceManagementDto>(`http://localhost:8080/services/${request}`);
+  public getServiceManagementById(request : string): Observable<ResponseGetServiceByIdDto> {
+    return this.http.get<ResponseGetServiceByIdDto>(`http://localhost:8080/services/${request}`);
+  }
+
+  public getStatistics(): Observable<ResponseStatisticsDto> {
+    return this.http.get<ResponseStatisticsDto>('http://localhost:8080/services/statistics');
   }
 }

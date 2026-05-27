@@ -3,6 +3,8 @@ import { HttpService } from '../../backend/http.service';
 import { CreateServiceManagementDto } from '../../../dtos/services/CreateServiceManagementDto';
 import { ResponseServiceManagementDto } from '../../../dtos/services/ResponseServiceManagementDto';
 import { UpdateServiceManagementDto } from '../../../dtos/services/UpdateServiceManagementDto';
+import { ResponseGetServiceByIdDto } from '../../../dtos/services/ResponseGetServiceByIdDto';
+import { ResponseStatisticsDto } from '../../../dtos/services/ResponseStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,6 @@ export class ServiceManagementService {
 
   // ===== DATA =====
   public services = signal<ResponseServiceManagementDto[]>([]);
-  public totalElementsActive = signal<number>(0);
-  public totalElementsInactive = signal<number>(0);
-
-  public percentageActive = signal<number>(0);
-  public percentageInactive = signal<number>(0);
 
   public selectedService = signal<ResponseServiceManagementDto | null>(null);
 
@@ -30,7 +27,8 @@ export class ServiceManagementService {
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
   public deleteMessage = signal('');
 
-  public serviceInfo = signal<ResponseServiceManagementDto | null>(null);
+  public serviceInfo = signal<ResponseGetServiceByIdDto | null>(null);
+  public statistics = signal<ResponseStatisticsDto | null>(null);
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -71,6 +69,8 @@ export class ServiceManagementService {
 
         this.updateMessage.set('Serviço atualizado com sucesso!');
         this.updateStatus.set('success');
+
+        this.loadStatistics();
       },
       error: () => {
 
@@ -90,6 +90,8 @@ export class ServiceManagementService {
 
         this.deleteMessage.set('Serviço excluído com sucesso!');
         this.deleteStatus.set('success');
+
+        this.loadStatistics();
       },
       error: () => {
 
@@ -107,16 +109,18 @@ export class ServiceManagementService {
 
         this.services.set(res.content);
         this.totalElements.set(res.totalElements);
-
-        if (res.content.map(s => s.active).includes(true)) {
-          this.totalElementsActive.set(res.totalElements);
-          this.percentageActive.set((this.totalElementsActive() / this.totalElements()) * 100);
-        } else {
-          this.totalElementsInactive.set(res.totalElements);
-          this.percentageInactive.set((this.totalElementsInactive() / this.totalElements()) * 100);
-        }
       }
     });
+  }
+
+  // ===== LOAD STATISTICS =====
+  loadStatistics() {
+
+    this.api.getStatistics().subscribe({
+      next: (response) => {
+        this.statistics.set(response);
+      }
+    })
   }
 
   // ==== GET SERVICE BY ID =====
