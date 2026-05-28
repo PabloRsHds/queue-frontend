@@ -49,7 +49,6 @@ export class TableServicesComponent implements OnInit{
   // =========
 
   // Search
-  searchQuery = '';
   itemsPerPage = 4;
 
   // Effects
