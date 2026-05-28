@@ -54,14 +54,6 @@ export class TableServicesComponent implements OnInit{
   // Effects
   constructor() {
 
-    this.updateForm = this.fb.group({
-      name: ['', Validators.required],
-      code: ['', Validators.required],
-      description: ['', Validators.required],
-      departmentName: ['', Validators.required],
-      active: [false]
-    });
-
     effect(() => {
 
       const service = this.serviceInfo();
@@ -166,6 +158,18 @@ export class TableServicesComponent implements OnInit{
     });
   }
 
+  // Form update
+  initializeUpdateForm() {
+
+    this.updateForm = this.fb.group({
+      name: ['', Validators.required],
+      code: ['', Validators.required],
+      description: ['', Validators.required],
+      departmentName: ['', Validators.required],
+      active: [false]
+    });
+  }
+
   // DropDown
 
   @HostListener('document:click', ['$event'])
@@ -233,8 +237,9 @@ export class TableServicesComponent implements OnInit{
   }
 
   openModalUpdate(serviceManagementId: string) {
-    this.modalUpdate = true;
+    this.initializeUpdateForm();
     this.serviceState.getInfoService(serviceManagementId);
+    this.modalUpdate = true;
     this.deparmentState.loadDepartmentNames();
   }
 
@@ -244,9 +249,9 @@ export class TableServicesComponent implements OnInit{
   }
 
   openModalDelete(serviceManagementId: string) {
+    this.serviceState.getInfoService(serviceManagementId);
     this.dropDown = null;
     this.modalDelete = true;
-    this.serviceState.getInfoService(serviceManagementId);
   }
 
   closeModalDelete() {
@@ -255,8 +260,8 @@ export class TableServicesComponent implements OnInit{
   }
 
   openModalView(serviceManagementId: string) {
-    this.modalView = true;
     this.serviceState.getInfoService(serviceManagementId);
+    this.modalView = true;
   }
 
   closeModalView() {

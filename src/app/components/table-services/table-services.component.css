@@ -428,26 +428,18 @@ body {
 
 .modal-register {
   width: 550px;
-  height: 700px;
 }
 
 .modal-update {
   width: 550px;
-  height: 610px;
 }
 
 .modal-delete {
   width: 550px;
-  height: 315px;
 }
 
 .modal-view {
   width: 700px;
-  height: 600px;
-}
-
-.modal-view-updatedAt {
-  height: 650px;
 }
 
 /* MODAL HEADERS */
