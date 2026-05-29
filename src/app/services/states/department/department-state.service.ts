@@ -7,6 +7,7 @@ import { ResponseDepartmentDto } from '../../../dtos/department/ResponseDepartme
 import { CreateDepartmentDto } from '../../../dtos/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../../../dtos/department/UpdateDepartmentDto';
 import { ResponseDepartmentNamesDto } from '../../../dtos/department/ResponseDepartmentNamesDto';
+import { ResponseStatisticsDto } from '../../../dtos/services/ResponseStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class DepartmentStateService {
   public departments = signal<ResponseDepartmentDto[]>([]);
   public departmentInfo = signal<ResponseGetDepartmentDto | null>(null);
   public departmentNames = signal<ResponseDepartmentNamesDto[] | null>(null);
+  public statistics = signal<ResponseStatisticsDto | null>(null);
 
   // ===================== LOADING =====================
 
@@ -42,7 +44,7 @@ export class DepartmentStateService {
 
   public page = signal(0);
 
-  public readonly size = 5;
+  public readonly size = 4;
 
   public totalElements = signal(0);
 
@@ -78,6 +80,16 @@ export class DepartmentStateService {
     });
   }
 
+  // ========== LOAD STATISTICS ==========
+  loadStatistics() {
+
+    this.api.getDepartmentStatistics().subscribe({
+      next: (response) => {
+        this.statistics.set(response);
+      }
+    })
+  }
+
   // ===================== CREATE =====================
 
   createDepartment(create: CreateDepartmentDto) {
@@ -90,6 +102,7 @@ export class DepartmentStateService {
 
         // backend recalcula paginação
         this.loadDepartments();
+        this.loadStatistics();
 
         this.registerMessage.set('Departamento criado com sucesso!');
         this.registerStatus.set('success');
@@ -115,6 +128,7 @@ export class DepartmentStateService {
 
         // sincroniza com backend
         this.loadDepartments();
+        this.loadStatistics();
 
         // atualiza detalhe aberto
         if (this.departmentInfo() && this.departmentInfo()?.departmentId === department.departmentId) {
@@ -153,6 +167,7 @@ export class DepartmentStateService {
 
         // backend recalcula tudo
         this.loadDepartments();
+        this.loadStatistics();
 
         // limpa detalhe
         this.departmentInfo.set(null);

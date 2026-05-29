@@ -22,6 +22,8 @@ export class TableDepartmentsComponent implements OnInit {
   public departments = this.departmentState.departments;
   public departmentInfo = this.departmentState.departmentInfo;
 
+  public statistics = this.departmentState.statistics;
+
   public page = this.departmentState.page;
   public totalPages = this.departmentState.totalPages;
   public totalElements = this.departmentState.totalElements;
@@ -60,6 +62,7 @@ export class TableDepartmentsComponent implements OnInit {
   // Initialize
   ngOnInit() {
     this.departmentState.loadDepartments();
+    this.departmentState.loadStatistics();
   }
 
   // Constructor

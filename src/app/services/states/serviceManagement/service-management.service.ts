@@ -118,7 +118,7 @@ export class ServiceManagementService {
   // ===== LOAD STATISTICS =====
   loadStatistics() {
 
-    this.api.getStatistics().subscribe({
+    this.api.getServiceStatistics().subscribe({
       next: (response) => {
         this.statistics.set(response);
       }

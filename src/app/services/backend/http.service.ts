@@ -44,6 +44,10 @@ export class HttpService {
     return this.http.get<ResponseGetDepartmentDto[]>('http://localhost:8080/departments/names');
   }
 
+  public getDepartmentStatistics(): Observable<ResponseStatisticsDto> {
+    return this.http.get<ResponseStatisticsDto>('http://localhost:8080/departments/statistics');
+  }
+
   // Services
   public createServiceManagement(request: CreateServiceManagementDto): Observable<ResponseServiceManagementDto> {
     return this.http.post<ResponseServiceManagementDto>("http://localhost:8080/services", request);
@@ -65,7 +69,7 @@ export class HttpService {
     return this.http.get<ResponseGetServiceByIdDto>(`http://localhost:8080/services/${request}`);
   }
 
-  public getStatistics(): Observable<ResponseStatisticsDto> {
+  public getServiceStatistics(): Observable<ResponseStatisticsDto> {
     return this.http.get<ResponseStatisticsDto>('http://localhost:8080/services/statistics');
   }
 }

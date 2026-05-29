@@ -16,7 +16,6 @@ export class TableServicesComponent implements OnInit{
 
   // Initialize
   ngOnInit(): void {
-    this.initializeRegisterForm();
     this.serviceState.loadServices();
     this.serviceState.loadStatistics();
   }
@@ -227,6 +226,7 @@ export class TableServicesComponent implements OnInit{
 
   // ====== Modals ========
   openModalRegister() {
+    this.initializeRegisterForm();
     this.deparmentState.loadDepartmentNames();
     this.modalRegister = true;
   }
