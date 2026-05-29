@@ -11,6 +11,7 @@ import { UpdateDepartmentDto } from '../../dtos/department/UpdateDepartmentDto';
 import { UpdateServiceManagementDto } from '../../dtos/services/UpdateServiceManagementDto';
 import { ResponseGetServiceByIdDto } from '../../dtos/services/ResponseGetServiceByIdDto';
 import { ResponseStatisticsDto } from '../../dtos/services/ResponseStatisticsDto';
+import { ResponseUserDto } from '../../dtos/users/ResponseUserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +72,14 @@ export class HttpService {
 
   public getServiceStatistics(): Observable<ResponseStatisticsDto> {
     return this.http.get<ResponseStatisticsDto>('http://localhost:8080/services/statistics');
+  }
+
+  // Users
+  public getAllUsers(page: number, size: number, search?: string): Observable<PageResponse<ResponseUserDto>> {
+    return this.http.get<PageResponse<ResponseUserDto>>(`http://localhost:8080/users?page=${page}&size=${size}&search=${search}`)
+  }
+
+  public getUserById(userId: string): Observable<ResponseUserDto> {
+    return this.http.get<ResponseUserDto>(`http://localhost:8080/users/${userId}`);
   }
 }

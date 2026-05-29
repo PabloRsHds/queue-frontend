@@ -16,7 +16,7 @@ export class DepartmentStateService {
 
   // ===================== INJECTIONS =====================
 
-  private api = inject(HttpService);
+  private http = inject(HttpService);
 
   // ===================== DATA =====================
 
@@ -62,7 +62,7 @@ export class DepartmentStateService {
 
     this.loading.set(true);
 
-    this.api.getAllDepartments(this.page(), this.size, this.search()).subscribe({
+    this.http.getAllDepartments(this.page(), this.size, this.search()).subscribe({
 
       next: (response) => {
 
@@ -83,7 +83,7 @@ export class DepartmentStateService {
   // ========== LOAD STATISTICS ==========
   loadStatistics() {
 
-    this.api.getDepartmentStatistics().subscribe({
+    this.http.getDepartmentStatistics().subscribe({
       next: (response) => {
         this.statistics.set(response);
       }
@@ -94,7 +94,7 @@ export class DepartmentStateService {
 
   createDepartment(create: CreateDepartmentDto) {
 
-    this.api.createDepartment(create).subscribe({
+    this.http.createDepartment(create).subscribe({
       next: () => {
 
         // volta pra primeira página
@@ -122,7 +122,7 @@ export class DepartmentStateService {
 
   updateDepartment(department: UpdateDepartmentDto) {
 
-    this.api.updateDepartment(department).subscribe({
+    this.http.updateDepartment(department).subscribe({
 
       next: () => {
 
@@ -154,7 +154,7 @@ export class DepartmentStateService {
 
   deleteDepartment(departmentId: string) {
 
-    this.api.deleteDepartment(departmentId).subscribe({
+    this.http.deleteDepartment(departmentId).subscribe({
 
       next: () => {
 
@@ -190,7 +190,7 @@ export class DepartmentStateService {
 
   getInfoDepartment(departmentId: string) {
 
-    this.api.getDepartmentById(departmentId).subscribe({
+    this.http.getDepartmentById(departmentId).subscribe({
       next: (response) => {
 
         this.departmentInfo.set(response);
@@ -210,7 +210,7 @@ export class DepartmentStateService {
 
   loadDepartmentNames() {
 
-    this.api.getDeparmentNames().subscribe({
+    this.http.getDeparmentNames().subscribe({
       next: (response) => {
         this.departmentNames.set(response);
       }

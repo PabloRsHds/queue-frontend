@@ -11,7 +11,7 @@ import { ResponseStatisticsDto } from '../../../dtos/services/ResponseStatistics
 })
 export class ServiceManagementService {
 
-  private api = inject(HttpService);
+  private http = inject(HttpService);
 
   // ===== DATA =====
   public services = signal<ResponseServiceManagementDto[]>([]);
@@ -41,7 +41,7 @@ export class ServiceManagementService {
   // ===== Register =======
   registerServiceManagenent(request : CreateServiceManagementDto) {
 
-    this.api.createServiceManagement(request).subscribe({
+    this.http.createServiceManagement(request).subscribe({
       next: () => {
 
         this.page.set(0);
@@ -63,7 +63,7 @@ export class ServiceManagementService {
   // ===== Update ====
   updateServiceManagement(request : UpdateServiceManagementDto) {
 
-    this.api.updateServiceManagement(request).subscribe({
+    this.http.updateServiceManagement(request).subscribe({
       next: () => {
 
         this.page.set(0);
@@ -84,7 +84,7 @@ export class ServiceManagementService {
 
   // ===== Delete =====
   deleteService(serviceManagementId : string) {
-    this.api.deleteServiceManagement(serviceManagementId).subscribe({
+    this.http.deleteServiceManagement(serviceManagementId).subscribe({
       next: () => {
 
         this.page.set(0);
@@ -105,12 +105,12 @@ export class ServiceManagementService {
 
   // ===== LOAD SERVICES =====
   loadServices() {
-    this.api.getAllServicesManagement(this.page(), this.size, this.search()).subscribe({
+    this.http.getAllServicesManagement(this.page(), this.size, this.search()).subscribe({
 
-      next: (res) => {
+      next: (response) => {
 
-        this.services.set(res.content);
-        this.totalElements.set(res.totalElements);
+        this.services.set(response.content);
+        this.totalElements.set(response.totalElements);
       }
     });
   }
@@ -118,7 +118,7 @@ export class ServiceManagementService {
   // ===== LOAD STATISTICS =====
   loadStatistics() {
 
-    this.api.getServiceStatistics().subscribe({
+    this.http.getServiceStatistics().subscribe({
       next: (response) => {
         this.statistics.set(response);
       }
@@ -128,7 +128,7 @@ export class ServiceManagementService {
   // ==== GET SERVICE BY ID =====
   getInfoService(serviceManagementId : string) {
 
-    this.api.getServiceManagementById(serviceManagementId).subscribe({
+    this.http.getServiceManagementById(serviceManagementId).subscribe({
       next: (response) => {
         this.serviceInfo.set(response);
       }
