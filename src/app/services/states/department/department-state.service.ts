@@ -7,7 +7,7 @@ import { ResponseDepartmentDto } from '../../../dtos/department/ResponseDepartme
 import { CreateDepartmentDto } from '../../../dtos/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../../../dtos/department/UpdateDepartmentDto';
 import { ResponseDepartmentNamesDto } from '../../../dtos/department/ResponseDepartmentNamesDto';
-import { ResponseStatisticsDto } from '../../../dtos/services/ResponseStatisticsDto';
+import { ResponseStatisticsDto } from '../../../dtos/statistics/ResponseStatisticsDto';
 
 @Injectable({
   providedIn: 'root'

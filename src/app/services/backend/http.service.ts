@@ -10,8 +10,11 @@ import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepar
 import { UpdateDepartmentDto } from '../../dtos/department/UpdateDepartmentDto';
 import { UpdateServiceManagementDto } from '../../dtos/services/UpdateServiceManagementDto';
 import { ResponseGetServiceByIdDto } from '../../dtos/services/ResponseGetServiceByIdDto';
-import { ResponseStatisticsDto } from '../../dtos/services/ResponseStatisticsDto';
+import { ResponseStatisticsDto } from '../../dtos/statistics/ResponseStatisticsDto';
 import { ResponseUserDto } from '../../dtos/users/ResponseUserDto';
+import { ResponseAllUsersDto } from '../../dtos/users/ResponseAllUsersDto';
+import { ResponseUserStatisticsDto } from '../../dtos/statistics/ResponseUserStatisticsDto';
+import { RequestUserDto } from '../../dtos/users/RequestUserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -75,11 +78,19 @@ export class HttpService {
   }
 
   // Users
-  public getAllUsers(page: number, size: number, search?: string): Observable<PageResponse<ResponseUserDto>> {
-    return this.http.get<PageResponse<ResponseUserDto>>(`http://localhost:8080/users?page=${page}&size=${size}&search=${search}`)
+  public createUser(user: RequestUserDto): Observable<ResponseUserDto> {
+    return this.http.post<ResponseUserDto>('http://localhost:8080/users', user);
+  }
+
+  public getAllUsers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllUsersDto>> {
+    return this.http.get<PageResponse<ResponseAllUsersDto>>(`http://localhost:8080/users?page=${page}&size=${size}&search=${search}`)
   }
 
   public getUserById(userId: string): Observable<ResponseUserDto> {
     return this.http.get<ResponseUserDto>(`http://localhost:8080/users/${userId}`);
+  }
+
+  public getUserStatistics(): Observable<ResponseUserStatisticsDto> {
+    return this.http.get<ResponseUserStatisticsDto>('http://localhost:8080/users/statistics');
   }
 }

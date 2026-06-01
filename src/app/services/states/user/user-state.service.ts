@@ -1,6 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { ResponseUserDto } from '../../../dtos/users/ResponseUserDto';
+import { ResponseAllUsersDto } from '../../../dtos/users/ResponseAllUsersDto';
+import { ResponseUserStatisticsDto } from '../../../dtos/statistics/ResponseUserStatisticsDto';
+import { RequestUserDto } from '../../../dtos/users/RequestUserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +14,24 @@ export class UserStateService {
   private http = inject(HttpService);
 
   // Signals
-  public users = signal<ResponseUserDto[]>([]);
+  public users = signal<ResponseAllUsersDto[]>([]);
   public userInfo = signal<ResponseUserDto | null>(null);
+
+  public statistics = signal<ResponseUserStatisticsDto | null>(null);
+
+  // Messages
+  public registerMessage = signal('');
+  public registerStatus = signal<'success' | 'error' | 'default'>('default');
+  public updateMessage = signal('');
+  public updateStatus = signal<'success' | 'error' | 'default'>('default');
+  public deleteMessage = signal('');
+  public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
   // ===================== PAGINATION =====================
 
   public page = signal<number>(0);
-
   public readonly size = 4;
-
   public totalElements = signal(0);
-
   public totalPages = computed(() =>
     Math.ceil(this.totalElements() / this.size)
   );
@@ -30,11 +40,38 @@ export class UserStateService {
 
   public search = signal('');
 
+  // Create user
+  registerUser(request: RequestUserDto) {
+    this.http.createUser(request).subscribe({
+      next: (response) => {
+
+        this.registerMessage.set('User created successfully');
+        this.registerStatus.set('success');
+        this.loadingAllUsers();
+      },
+      error: () => {
+        this.registerMessage.set('Error creating user');
+        this.registerStatus.set('error');
+      }
+    })
+  }
+
   // All users
   loadingAllUsers() {
     this.http.getAllUsers(this.page(), this.size, this.search()).subscribe({
       next: (response) => {
         this.users.set(response.content);
+        this.totalElements.set(response.totalElements);
+        console.log(response);
+      }
+    })
+  }
+
+  // ===== LOAD STATISTICS =====
+  loadStatistics() {
+    this.http.getUserStatistics().subscribe({
+      next: (response) => {
+        this.statistics.set(response);
       }
     })
   }

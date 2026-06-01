@@ -4,7 +4,7 @@ import { CreateServiceManagementDto } from '../../../dtos/services/CreateService
 import { ResponseServiceManagementDto } from '../../../dtos/services/ResponseServiceManagementDto';
 import { UpdateServiceManagementDto } from '../../../dtos/services/UpdateServiceManagementDto';
 import { ResponseGetServiceByIdDto } from '../../../dtos/services/ResponseGetServiceByIdDto';
-import { ResponseStatisticsDto } from '../../../dtos/services/ResponseStatisticsDto';
+import { ResponseStatisticsDto } from '../../../dtos/statistics/ResponseStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
