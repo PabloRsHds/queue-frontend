@@ -9,4 +9,5 @@ export interface RequestUserDto {
   role: string;
   counterNumber: number;
   serviceIds: string[];
+
 }

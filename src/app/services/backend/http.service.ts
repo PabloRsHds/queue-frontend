@@ -15,6 +15,7 @@ import { ResponseUserDto } from '../../dtos/users/ResponseUserDto';
 import { ResponseAllUsersDto } from '../../dtos/users/ResponseAllUsersDto';
 import { ResponseUserStatisticsDto } from '../../dtos/statistics/ResponseUserStatisticsDto';
 import { RequestUserDto } from '../../dtos/users/RequestUserDto';
+import { ResponseServicesForCreatedUser } from '../../dtos/services/ResponseServicesForCreatedUser';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,10 @@ export class HttpService {
 
   public getServiceManagementById(request : string): Observable<ResponseGetServiceByIdDto> {
     return this.http.get<ResponseGetServiceByIdDto>(`http://localhost:8080/services/${request}`);
+  }
+
+  public getServiceNamesAndDepartments(): Observable<ResponseServicesForCreatedUser[]> {
+    return this.http.get<ResponseServicesForCreatedUser[]>('http://localhost:8080/services/service-for-created-user');
   }
 
   public getServiceStatistics(): Observable<ResponseStatisticsDto> {

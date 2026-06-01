@@ -5,6 +5,7 @@ import { ResponseServiceManagementDto } from '../../../dtos/services/ResponseSer
 import { UpdateServiceManagementDto } from '../../../dtos/services/UpdateServiceManagementDto';
 import { ResponseGetServiceByIdDto } from '../../../dtos/services/ResponseGetServiceByIdDto';
 import { ResponseStatisticsDto } from '../../../dtos/statistics/ResponseStatisticsDto';
+import { ResponseServicesForCreatedUser } from '../../../dtos/services/ResponseServicesForCreatedUser';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class ServiceManagementService {
 
   // ===== DATA =====
   public services = signal<ResponseServiceManagementDto[]>([]);
+  public servicesForCreatedUser = signal<ResponseServicesForCreatedUser[]>([]);
 
   public selectedService = signal<ResponseServiceManagementDto | null>(null);
 
@@ -113,6 +115,15 @@ export class ServiceManagementService {
         this.totalElements.set(response.totalElements);
       }
     });
+  }
+
+  // ===== LOAD SERVICES FOR CREATE USER =====
+  loadServicesForCreateUser() {
+    this.http.getServiceNamesAndDepartments().subscribe({
+      next: (response) => {
+        this.servicesForCreatedUser.set(response);
+      }
+    })
   }
 
   // ===== LOAD STATISTICS =====
