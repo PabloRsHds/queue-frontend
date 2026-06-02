@@ -15,6 +15,7 @@ export class TableUsersComponent implements OnInit {
   ngOnInit(){
     this.userState.loadingAllUsers();
     this.userState.loadStatistics();
+    this.initRegisterForm();
   }
 
   // Injections
@@ -226,7 +227,6 @@ export class TableUsersComponent implements OnInit {
   public openModalRegister(): void {
     this.modalRegister = true;
     this.serviceState.loadServicesForCreateUser();
-    this.initRegisterForm();
   }
 
   public closeModalRegister(): void {
