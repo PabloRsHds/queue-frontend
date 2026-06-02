@@ -1,9 +1,9 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, effect, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserStateService } from '../../services/states/user/user-state.service';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
-import { RequestUserDto } from '../../dtos/users/RequestUserDto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-table-users',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -18,10 +18,45 @@ export class TableUsersComponent implements OnInit {
     this.initRegisterForm();
   }
 
+  constructor() {
+
+    effect(() => {
+
+      if (this.userState.registerStatus() === 'success') {
+        this.snackBar.open(this.userState.registerMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.registerForm.reset();
+        this.modalRegister = false;
+      }
+
+      if (this.userState.registerStatus() === 'error') {
+        this.snackBar.open(this.userState.registerMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    })
+
+    effect(() => {
+
+      if (this.selectedRole() === 'RECEPTION') {
+        this.registerForm.patchValue({
+          serviceIds: []
+        });
+
+        this.selectedServices = [];
+        this.selectedServiceNames = [];
+      }
+    })
+  }
+
   // Injections
   private userState = inject(UserStateService);
   private serviceState = inject(ServiceManagementService)
   private fb = inject(FormBuilder);
+  private snackBar = inject(MatSnackBar);
 
   // States
   public users = this.userState.users;
@@ -41,7 +76,7 @@ export class TableUsersComponent implements OnInit {
 
   // Form
   public registerForm!: FormGroup;
-  public selectedRole: string = 'MANAGER';
+  public selectedRole = signal<string>('MANAGER');
 
   public selectedPermissions: string[] = [
     'Gerenciar usuários',
@@ -78,6 +113,7 @@ export class TableUsersComponent implements OnInit {
 
   // ========= Selectd services ==========
   selectedServices: string[] = [];
+  selectedServiceNames: string[] = [];
 
   public toggleService(serviceId: string, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
@@ -91,22 +127,34 @@ export class TableUsersComponent implements OnInit {
         id => id !== serviceId
       );
     }
+  }
 
-    console.log(this.selectedServices);
+  public toggleServiceName(serviceName: string, event: Event): void {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    if (checked) {
+      if (!this.selectedServiceNames.includes(serviceName)) {
+        this.selectedServiceNames.push(serviceName);
+      }
+    } else {
+      this.selectedServiceNames = this.selectedServiceNames.filter(
+        name => name !== serviceName
+      );
+    }
   }
 
   // =========== Form Initialization ===========
   private initRegisterForm() {
     this.registerForm = this.fb.group({
-      name: [''],
-      surname: [''],
-      email: [''],
-      username: [''],
-      phone: [''],
-      password: [''],
-      confirmPassword: [''],
-      counterNumber: [0],
-      role: [''],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      email: ['', Validators.required],
+      username: ['', Validators.required],
+      phone: [null],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      counterNumber: [null],
+      role: ['', Validators.required],
       serviceIds: [[]],
       active: [true]}
     );
@@ -150,8 +198,29 @@ export class TableUsersComponent implements OnInit {
   // =========== Step Navigation ===========
 
   nextStep() {
-    if (this.currentStep < 4) {
-      this.currentStep++;
+    const step1Fields = ['name', 'surname', 'email', 'username', 'password', 'confirmPassword'];
+    const step2Fields = ['role'];
+    const step3Fields = ['serviceIds'];
+    const step3FieldsIfRoleIsAttendant = ['counterNumber', 'serviceIds'];
+
+    const isStepValid1 = step1Fields.every(field =>
+      this.registerForm.get(field)?.valid
+    );
+
+    const isStepValid2 = step2Fields.every(field =>
+      this.registerForm.get(field)?.valid
+    );
+
+    if (this.registerForm.get('password')?.value === this.registerForm.get('confirmPassword')?.value
+      && isStepValid1) {
+      this.currentStep = 2;
+    if (isStepValid2) {
+      this.currentStep = 3;
+    }
+    } else {
+      step1Fields.forEach(field => {
+        this.registerForm.get(field)?.markAsTouched();
+      });
     }
   }
 
@@ -161,7 +230,7 @@ export class TableUsersComponent implements OnInit {
 
   // =========== Role Selection ===========
   public selectRole(role: string): void {
-    this.selectedRole = role;
+    this.selectedRole.set(role);
 
     this.registerForm.patchValue({
       role: role
@@ -231,6 +300,11 @@ export class TableUsersComponent implements OnInit {
 
   public closeModalRegister(): void {
     this.modalRegister = false;
+    this.registerForm.reset();
+    this.currentStep = 1;
+  }
+
+  handleCurrentStep() {
   }
 
   public openModalUpdate(serviceManagementId: string): void {
@@ -284,6 +358,7 @@ export class TableUsersComponent implements OnInit {
   // =========== Helper Methods ===========
   getRole(role: string): string {
     switch (role) {
+      case 'ADMIN': return 'Administrador';
       case 'MANAGER': return 'Gerente';
       case 'RECEPTION': return 'Recepcionista';
       case 'ATTENDANT': return 'Atendente';
@@ -355,5 +430,11 @@ export class TableUsersComponent implements OnInit {
     if (this.modalUpdate) this.closeModalUpdate();
     if (this.modalDelete) this.closeModalDelete();
     if (this.modalView) this.closeModalView();
+  }
+
+  // Register User
+  registerUser() {
+    console.log(this.registerForm.value);
+    this.userState.registerUser(this.registerForm.value);
   }
 }

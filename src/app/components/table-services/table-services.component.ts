@@ -150,10 +150,10 @@ export class TableServicesComponent implements OnInit{
   initializeRegisterForm() {
 
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      code: ['', Validators.required],
-      description: ['', Validators.required],
-      departmentName: ['', Validators.required]
+      name: [''],
+      code: [''],
+      description: [''],
+      departmentName: ['']
     });
   }
 
@@ -161,10 +161,10 @@ export class TableServicesComponent implements OnInit{
   initializeUpdateForm() {
 
     this.updateForm = this.fb.group({
-      name: ['', Validators.required],
-      code: ['', Validators.required],
-      description: ['', Validators.required],
-      departmentName: ['', Validators.required],
+      name: [''],
+      code: [''],
+      description: [''],
+      departmentName: [''],
       active: [false]
     });
   }

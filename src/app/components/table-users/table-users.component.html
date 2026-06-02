@@ -66,7 +66,7 @@
     </div>
 
     <div style="display: flex; align-items: center; justify-content: center;">
-      <button (click)="openModalRegister()" class="stat-card-button">
+      <button type="button" (click)="openModalRegister()" class="stat-card-button">
       <span style="display: flex; align-items: center; justify-content: center; margin-right: 3px">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white" width="18px" height="18px" font-weight="bold"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M6 12h6V6h1v6h6v1h-6v6h-1v-6H6z"></path><path fill="none" d="M0 0h24v24H0z"></path></g>
         </svg>
@@ -209,6 +209,7 @@
     <div class="pagination-buttons">
       <!-- PREV -->
       <button
+        type="button"
         class="page-btn"
         (click)="previousPage()"
         [disabled]="page() === 0"
@@ -219,6 +220,7 @@
       </button>
       <!-- PAGES -->
       <button
+        type="button"
         *ngFor="let p of getPagesArray()"
         class="page-btn"
         [class.active]="p === page()"
@@ -228,6 +230,7 @@
       </button>
       <!-- NEXT -->
       <button
+        type="button"
         class="page-btn"
         (click)="nextPage()"
         [disabled]="page() + 1 >= totalPages()"
@@ -247,7 +250,7 @@
     <div class="modal">
         <div class="modal-header">
             <div class="modal-header-left">
-                <button class="btn-back" (click)="closeModalRegister()">
+                <button type="button" class="btn-back" (click)="closeModalRegister()">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                 </button>
                 <div class="modal-header-text">
@@ -257,7 +260,7 @@
                     </div>
                 </div>
             </div>
-            <button class="btn-close" (click)="closeModalRegister()">
+            <button type="button" class="btn-close" (click)="closeModalRegister()">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
@@ -285,13 +288,15 @@
             </div>
         </div>
 
-        <form [formGroup]="registerForm">
+        <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
           <div class="modal-body">
               <div class="steps-sidebar">
 
                   <div class="step-item">
                       <div class="step-col">
-                          <div class="step-circle" [class.active]="currentStep === 1" [class.completed]="currentStep > 1">1</div>
+                          <div class="step-circle"
+                            [class.active]="currentStep === 1"
+                            [class.completed]="currentStep > 1">1</div>
                           <div class="step-line" [class.active]="currentStep > 1" [class.inactive]="currentStep <= 1"></div>
                       </div>
                       <div>
@@ -311,20 +316,21 @@
                       </div>
                   </div>
 
-                  <div class="step-item">
+                  <div class="step-item" *ngIf="selectedRole() !== 'RECEPTION'">
                       <div class="step-col">
                           <div class="step-circle" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">3</div>
                           <div class="step-line" [class.active]="currentStep > 3" [class.inactive]="currentStep <= 3"></div>
                       </div>
                       <div>
-                          <div class="step-text-title" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">Departamentos</div>
-                          <div class="step-text-sub">Vincula o usuário</div>
+                          <div class="step-text-title" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">Serviços</div>
+                          <div class="step-text-sub">Vincular serviços ao usuário</div>
                       </div>
                   </div>
 
                   <div class="step-item">
                       <div class="step-col">
-                          <div class="step-circle" [class.active]="currentStep === 4">4</div>
+                        <div class="step-circle" [class.active]="currentStep === 3" *ngIf="selectedRole() === 'RECEPTION'">3</div>
+                        <div class="step-circle" [class.active]="currentStep === 4" *ngIf="selectedRole() !== 'RECEPTION'">4</div>
                       </div>
                       <div>
                           <div class="step-text-title" [class.active]="currentStep === 4">Revisão</div>
@@ -363,7 +369,7 @@
                     <label class="form-label">Senha <span class="required">*</span></label>
                     <div class="input-with-icon">
                       <input [type]="showPassword ? 'text' : 'password'" class="form-input" placeholder="••••••••" formControlName="password">
-                      <button class="input-icon-btn" type="button" (click)="togglePassword()">
+                      <button type="button" class="input-icon-btn" type="button" (click)="togglePassword()">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                       </button>
                     </div>
@@ -372,7 +378,7 @@
                     <label class="form-label">Confirmar senha <span class="required">*</span></label>
                     <div class="input-with-icon">
                       <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-input" placeholder="••••••••" formControlName="confirmPassword">
-                      <button class="input-icon-btn" type="button" (click)="toggleConfirmPassword()">
+                      <button type="button" class="input-icon-btn" (click)="toggleConfirmPassword()">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                       </button>
                     </div>
@@ -381,23 +387,23 @@
               </div>
 
               <!-- Step 2: Permissões -->
-              <div class="form-area" *ngIf="currentStep === 2">
+              <div class="form-area" [class.current2]="currentStep === 2" *ngIf="currentStep === 2">
                   <div class="permissions-layout">
                       <div class="permissions-section">
                           <h3>Perfil do usuário</h3>
                           <p class="subtitle">Selecione o perfil que melhor define o acesso do usuário.</p>
 
-                          <div class="radio-card" [class.selected]="selectedRole === 'MANAGER'" (click)="selectRole('MANAGER')">
+                          <div class="radio-card" [class.selected]="selectedRole() === 'MANAGER'" (click)="selectRole('MANAGER')">
                               <div class="radio-card-icon supervisor-bg"><svg width="20" height="20" fill="none" stroke="#ea580c" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg></div>
                               <div class="radio-card-info"><div class="radio-card-title">Gerente</div><div class="radio-card-desc">Gerencia atendentes, recepcionistas e relatórios</div></div>
                               <div class="radio-indicator"><svg fill="none" stroke="#fff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
                           </div>
-                          <div class="radio-card" [class.selected]="selectedRole === 'ATTENDANT'" (click)="selectRole('ATTENDANT')">
+                          <div class="radio-card" [class.selected]="selectedRole() === 'ATTENDANT'" (click)="selectRole('ATTENDANT')">
                               <div class="radio-card-icon attendant-bg"><svg width="20" height="20" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
                               <div class="radio-card-info"><div class="radio-card-title">Atendente</div><div class="radio-card-desc">Realiza atendimentos</div></div>
                               <div class="radio-indicator"><svg fill="none" stroke="#fff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
                           </div>
-                          <div class="radio-card" [class.selected]="selectedRole === 'RECEPTION'" (click)="selectRole('RECEPTION')">
+                          <div class="radio-card" [class.selected]="selectedRole() === 'RECEPTION'" (click)="selectRole('RECEPTION')">
                               <div class="radio-card-icon attendant-bg"><svg width="20" height="20" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
                               <div class="radio-card-info"><div class="radio-card-title">Recepcionista</div><div class="radio-card-desc">Realiza agendamentos</div></div>
                               <div class="radio-indicator"><svg fill="none" stroke="#fff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
@@ -407,7 +413,7 @@
                           <h3>Permissões habilitadas</h3>
                           <p class="subtitle">Visualize as permissões habilitadas para o perfil.</p>
                           <div class="checkbox-list">
-                              <label class="checkbox-item" *ngFor="let permission of permissionsByRole[selectedRole]">
+                              <label class="checkbox-item" *ngFor="let permission of permissionsByRole[selectedRole()]">
                                   <input type="checkbox" checked disabled>
                                   <span>{{ permission }}</span>
                               </label>
@@ -417,36 +423,56 @@
               </div>
 
               <!-- Step 3: Departamentos -->
-              <div class="form-area" *ngIf="currentStep === 3">
-                  <div class="form-title">Serviços</div>
-                  <div class="form-subtitle">Selecione os serviços em que o usuário terá acesso.</div>
+              <div class="form-area" *ngIf="currentStep === 3 && selectedRole() !== 'RECEPTION'">
 
-                  <div class="dept-list">
-                      <div class="dept-item" *ngFor="let service of services()">
-                          <input type="checkbox" [checked]="selectedServices.includes(service.serviceManagementId)" (change)="toggleService(service.serviceManagementId, $event)">
-                          <div class="dept-info">
-                              <h4>{{ service.name }}</h4>
-                              <p>{{ service.departmentName }}</p>
-                          </div>
-                      </div>
+                <div *ngIf="selectedRole() === 'ATTENDANT'">
+                  <div class="form-title" [class.current3]="currentStep === 3"]>Guichê</div>
+                  <div class="form-subtitle">Selecione o número do guichê em que o atendente terá acesso.</div>
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label class="form-label">Guichê <span class="required">*</span></label>
+                      <input type="number" min="1" class="form-input" placeholder="Ex: 1" formControlName="counterNumber">
+                    </div>
                   </div>
 
-                  <div class="tip-box">
-                      <svg width="20" height="20" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                      <div>
-                          <p class="tip-title">Dica</p>
-                          <p class="tip-text">O usuário terá acesso aos serviços selecionados. E cada serviço é associado a um departamento.</p>
-                      </div>
-                  </div>
+                </div>
+
+                <div class="separator" *ngIf="selectedRole() === 'ATTENDANT'"></div>
+
+                <div class="form-title" [class.current3]="currentStep === 3"]>Serviços</div>
+                <div class="form-subtitle">Selecione os serviços ativos em que o usuário terá acesso.</div>
+
+                <div class="dept-list">
+                    <div class="dept-item"
+                    *ngFor="let service of services()">
+                        <input type="checkbox"
+                        [checked]="selectedServices.includes(service.serviceManagementId)"
+                        (change)="toggleService(service.serviceManagementId, $event)"
+                        (change)="toggleServiceName(service.name, $event)">
+                        <div class="dept-info">
+                            <h4>{{ service.name }}</h4>
+                            <p>{{ service.departmentName }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <svg width="20" height="20" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div>
+                        <p class="tip-title">Dica</p>
+                        <p class="tip-text">O usuário terá acesso aos serviços selecionados. E cada serviço é associado a um departamento.</p>
+                    </div>
+                </div>
               </div>
 
               <!-- Step 4: Revisão -->
-              <div class="form-area" *ngIf="currentStep === 4">
+              <div class="form-area" *ngIf="currentStep === 4 || (currentStep === 3 && selectedRole() === 'RECEPTION')">
                   <div class="form-title">Revisão</div>
                   <div class="form-subtitle">Confirme todas as informações antes de criar o novo usuário.</div>
 
                   <div class="review-user-summary">
-                      <div class="review-avatar">{{ siglas }}</div>
+                      <div class="review-avatar">{{ name.charAt(0) || 'N'}}{{ surname.charAt(0) || 'A' }}</div>
                       <div class="review-user-info">
                           <h3>{{ name || 'Nome do usuário' }}</h3>
                           <p>{{ username || 'username' }}</p>
@@ -461,16 +487,16 @@
                   <div class="review-section">
                       <div class="review-header">
                           <h3>Informações pessoais <span class="step-badge">Passo 1</span></h3>
-                          <button class="review-edit-btn">Editar</button>
+                          <button type="button" class="review-edit-btn" (click)="currentStep = 1">Editar</button>
                       </div>
                       <div class="review-grid">
                           <div class="review-field">
                               <div class="review-field-label">Nome</div>
-                              <div class="review-field-value">{{ name }} {{ surname }}</div>
+                              <div class="review-field-value">{{ name || 'Nome' }} {{ surname || 'Sobrenome' }}</div>
                           </div>
                           <div class="review-field">
                               <div class="review-field-label">E-mail</div>
-                              <div class="review-field-value">{{ email }}</div>
+                              <div class="review-field-value">{{ email || 'E-mail' }}</div>
                           </div>
                           <div class="review-field">
                               <div class="review-field-label">Telefone</div>
@@ -478,18 +504,26 @@
                           </div>
                           <div class="review-field">
                               <div class="review-field-label">Nome de usuário</div>
-                              <div class="review-field-value">{{ username }}</div>
+                              <div class="review-field-value">{{ username || 'Nome de usuário' }}</div>
                           </div>
                           <div class="review-field">
                               <div class="review-field-label">Senha</div>
                               <div class="review-field-value">
+                                <div style="display:flex;align-items:center;gap:5px;">
+                                  <p *ngIf="!showPassword">{{ '***********' }}</p>
+                                  <p *ngIf="showPassword">{{this.registerForm.get('password')?.value}}</p>
                                   <div class="password-field">
                                       <span class="password-dots"></span>
-                                      <button class="password-eye" type="button">
+                                      <button class="password-eye" type="button" (click)="togglePassword()" [disabled]="this.registerForm.get('password')?.value === null">
                                           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                       </button>
                                   </div>
+                                </div>
                               </div>
+                          </div>
+                          <div class="review-field">
+                              <div class="review-field-label">Nome de usuário</div>
+                              <div class="review-field-value">{{ username || 'Nome de usuário' }}</div>
                           </div>
                       </div>
                   </div>
@@ -498,13 +532,13 @@
                   <div class="review-section">
                       <div class="review-header">
                           <h3>Permissões e acesso <span class="step-badge">Passo 2</span></h3>
-                          <button class="review-edit-btn" >Editar</button>
+                          <button type="button" class="review-edit-btn" (click)="currentStep = 2">Editar</button>
                       </div>
                       <div class="review-grid">
                           <div class="review-field">
                               <div class="review-field-label">Perfil</div>
                               <div class="review-tags">
-                                  <span class="review-tag blue">{{ getRoleDisplayName(selectedRole) }}</span>
+                                  <span class="review-tag blue">{{ getRoleDisplayName(selectedRole()) }}</span>
                               </div>
                           </div>
                           <div class="review-field full-width">
@@ -520,17 +554,17 @@
                   </div>
 
                   <!-- Departamentos -->
-                  <div class="review-section">
+                  <div class="review-section" *ngIf="selectedRole() !== 'RECEPTION'">
                       <div class="review-header">
-                          <h3>Departamentos <span class="step-badge">Passo 3</span></h3>
-                          <button class="review-edit-btn" >Editar</button>
+                          <h3>Serviços <span class="step-badge">Passo 3</span></h3>
+                          <button type="button" class="review-edit-btn" (click)="currentStep = 3">Editar</button>
                       </div>
                       <div class="review-grid">
                           <div class="review-field full-width">
-                              <div class="review-field-label">Departamentos vinculados</div>
+                              <div class="review-field-label">Serviços vinculados</div>
                               <div class="review-tags">
-                                  <span class="review-tag green">
-                                      {{ 0 || '-' }} <span>(Principal)</span>
+                                  <span class="review-tag green" *ngFor="let serviceName of selectedServiceNames">
+                                      {{ serviceName || '-' }}
                                   </span>
                               </div>
                           </div>
@@ -540,11 +574,12 @@
           </div>
 
           <div class="modal-footer">
-            <button class="btn-cancel" (click)="closeModalRegister()">Cancelar</button>
+            <button type="button" class="btn-cancel" (click)="closeModalRegister()">Cancelar</button>
               <div class="footer-right">
-                  <button class="btn-secondary" *ngIf="currentStep > 1" (click)="previousStep()">Voltar</button>
-                  <button type="button" class="btn-primary" *ngIf="currentStep < 4" (click)="nextStep()") >Próximo</button>
-                  <button class="btn-success" *ngIf="currentStep === 4">
+                  <button type="button" class="btn-secondary" *ngIf="currentStep > 1" (click)="previousStep()">Voltar</button>
+                  <button type="button" class="btn-primary" *ngIf="currentStep < 4 && selectedRole() !== 'RECEPTION'" (click)="nextStep()">Próximo</button>
+                  <button type="button" class="btn-primary" *ngIf="currentStep < 3 && selectedRole() === 'RECEPTION'" (click)="nextStep()">Próximo</button>
+                  <button type="submit" class="btn-success" *ngIf="currentStep === 4 || (currentStep === 3 && selectedRole() === 'RECEPTION')">
                       <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 6px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                       Criar usuário
                   </button>
