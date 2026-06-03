@@ -65,6 +65,7 @@ export class DepartmentStateService {
       next: (response) => {
         this.departments.set(response.content);
         this.loadStatistics();
+        this.totalElements.set(response.totalElements);
 
         this.loading.set(false);
       },

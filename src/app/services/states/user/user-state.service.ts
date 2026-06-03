@@ -63,6 +63,7 @@ export class UserStateService {
 
         this.users.set(response.content);
         this.loadStatistics();
+        this.totalElements.set(response.totalElements);
       }
     })
   }
@@ -130,6 +131,8 @@ export class UserStateService {
   }
 
   resetStatus() {
-
+    this.registerStatus.set('default');
+    this.updateStatus.set('default');
+    this.deleteStatus.set('default');
   }
 }

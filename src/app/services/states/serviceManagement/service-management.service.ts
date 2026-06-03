@@ -113,6 +113,7 @@ export class ServiceManagementService {
 
         this.services.set(response.content);
         this.loadStatistics();
+        this.totalElements.set(response.totalElements);
       }
     });
   }

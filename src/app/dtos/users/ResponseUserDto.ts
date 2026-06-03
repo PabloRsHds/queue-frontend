@@ -4,6 +4,7 @@ export interface ResponseUserDto {
   username: string;
   name: string;
   surname: string;
+  phone: string;
   email: string;
   role: string;
   counterNumber: number;

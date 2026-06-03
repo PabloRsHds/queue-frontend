@@ -15,7 +15,6 @@ export class TableUsersComponent implements OnInit {
   ngOnInit(){
     this.userState.loadingAllUsers();
     this.userState.loadStatistics();
-    this.initRegisterForm();
   }
 
   constructor() {
@@ -27,6 +26,7 @@ export class TableUsersComponent implements OnInit {
           duration: 3000,
           panelClass: ['snackbar-success']
         });
+        this.userState.resetStatus();
         this.registerForm.reset();
         this.currentStep = 1;
         this.modalRegister = false;
@@ -37,6 +37,7 @@ export class TableUsersComponent implements OnInit {
           duration: 3000,
           panelClass: ['snackbar-error']
         });
+        this.userState.resetStatus();
       }
     })
 
@@ -61,6 +62,7 @@ export class TableUsersComponent implements OnInit {
 
   // States
   public users = this.userState.users;
+  public userInfo = this.userState.userInfo;
   public services = this.serviceState.servicesForCreatedUser;
   public statistics = this.userState.statistics;
 
@@ -77,6 +79,9 @@ export class TableUsersComponent implements OnInit {
 
   // Form
   public registerForm!: FormGroup;
+  public updateForm!: FormGroup;
+
+  // Role and Permissions
   public selectedRole = signal<string>('MANAGER');
 
   public selectedPermissions: string[] = [
@@ -154,11 +159,27 @@ export class TableUsersComponent implements OnInit {
       phone: [null],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      counterNumber: [null],
+      counterNumber: [null, Validators.required],
       role: ['', Validators.required],
       serviceIds: [[]],
       active: [true]}
     );
+  }
+
+  private initUpdateForm() {
+    this.updateForm = this.fb.group({
+      userId: [''],
+      name: [''],
+      surname: [''],
+      phone: [''],
+      email: [''],
+      password: [''],
+      confirmPassword: [''],
+      role: [''],
+      serviceIds: [[]],
+      active: [false],
+      counterNumber: [null]
+    });
   }
 
   // ========== Form Getters ===========
@@ -283,9 +304,33 @@ export class TableUsersComponent implements OnInit {
     ]
   };
 
+  // Handle current step with validation
+  handleCurrentStep(step: number) {
+
+    const step1Fields = ['name', 'surname', 'email', 'username', 'password', 'confirmPassword'];
+    const step2Fields = ['role'];
+
+    const isStepValid1 = step1Fields.every(field =>
+      this.registerForm.get(field)?.valid
+    );
+
+    const isStepValid2 = step2Fields.every(field =>
+      this.registerForm.get(field)?.valid
+    );
+
+    if (step === 1) {
+      this.currentStep = 1;
+    } else if (step === 2 && isStepValid1) {
+      this.currentStep = 2;
+    } else if (step === 3 && isStepValid1 && isStepValid2) {
+      this.currentStep = 3;
+    }
+  }
+
   // =========== Modals ===========
   public openModalRegister(): void {
     this.modalRegister = true;
+    this.initRegisterForm();
     this.serviceState.loadServicesForCreateUser();
   }
 
@@ -295,12 +340,10 @@ export class TableUsersComponent implements OnInit {
     this.currentStep = 1;
   }
 
-  handleCurrentStep() {
-  }
-
-  public openModalUpdate(serviceManagementId: string): void {
+  public openModalUpdate(userId: string): void {
     this.modalUpdate = true;
-    document.body.style.overflow = 'hidden';
+    this.initUpdateForm();
+    this.userState.getUserById(userId);
   }
 
   public closeModalUpdate(): void {
@@ -427,5 +470,10 @@ export class TableUsersComponent implements OnInit {
   registerUser() {
     console.log(this.registerForm.value);
     this.userState.registerUser(this.registerForm.value);
+  }
+
+  // Update User
+  updateUser() {
+
   }
 }
