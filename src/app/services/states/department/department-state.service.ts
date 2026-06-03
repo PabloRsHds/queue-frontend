@@ -43,9 +43,7 @@ export class DepartmentStateService {
   // ===================== PAGINATION =====================
 
   public page = signal(0);
-
   public readonly size = 4;
-
   public totalElements = signal(0);
 
   public totalPages = computed(() =>
@@ -65,9 +63,8 @@ export class DepartmentStateService {
     this.http.getAllDepartments(this.page(), this.size, this.search()).subscribe({
 
       next: (response) => {
-
         this.departments.set(response.content);
-        this.totalElements.set(response.totalElements);
+        this.loadStatistics();
 
         this.loading.set(false);
       },

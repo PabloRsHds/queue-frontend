@@ -451,10 +451,17 @@
   gap: 15px;
 }
 
-.td-name-background-0,
-.td-name-background-1,
-.td-name-background-2,
-.td-name-background-3 {
+.td-name-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #9ff98421;
+  padding: 15px;
+  border: 1px solid #419717;
+  border-radius: 50px;
+}
+
+.td-name-background{
   width: 45px;
   height: 45px;
   border-radius: 10px;
@@ -463,10 +470,7 @@
   justify-content: center;
 }
 
-.td-name-background-0 { background: #ff66002a; }
-.td-name-background-1 { background: #90ee9546; }
-.td-name-background-2 { background: #aae5fc5e; }
-.td-name-background-3 { background: #fcbbbb62; }
+.td-name-background { background: #0084ff2a; }
 
 /* Status */
 .td-status-active {

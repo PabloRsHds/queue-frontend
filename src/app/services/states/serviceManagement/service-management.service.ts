@@ -112,7 +112,7 @@ export class ServiceManagementService {
       next: (response) => {
 
         this.services.set(response.content);
-        this.totalElements.set(response.totalElements);
+        this.loadStatistics();
       }
     });
   }

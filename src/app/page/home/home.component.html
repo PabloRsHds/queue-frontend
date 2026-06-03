@@ -276,8 +276,8 @@
                               </svg>
                           </div>
                           <div>
-                              <div class="stat-number">{{ totalDepartments() }}</div>
-                              <div class="stat-label">Departamentos</div>
+                              <div class="stat-number">{{ totalDepartments()?.totalElementsActive || 0 }}</div>
+                              <div class="stat-label">Departamentos ativos</div>
                           </div>
                       </div>
                       <div class="stat-footer">
@@ -298,8 +298,8 @@
                               </svg>
                           </div>
                           <div>
-                              <div class="stat-number">{{ totalServices() }}</div>
-                              <div class="stat-label">Serviços</div>
+                              <div class="stat-number">{{ totalServices()?.totalElementsActive || 0 }}</div>
+                              <div class="stat-label">Serviços ativos</div>
                           </div>
                       </div>
                       <div class="stat-footer">
@@ -344,7 +344,7 @@
                               </svg>
                           </div>
                           <div>
-                              <div class="stat-number">8</div>
+                              <div class="stat-number">{{ totalUsers()?.totalElementsActive || 0 }}</div>
                               <div class="stat-label">Usuários ativos</div>
                           </div>
                       </div>

@@ -28,6 +28,7 @@ export class TableUsersComponent implements OnInit {
           panelClass: ['snackbar-success']
         });
         this.registerForm.reset();
+        this.currentStep = 1;
         this.modalRegister = false;
       }
 
@@ -199,24 +200,14 @@ export class TableUsersComponent implements OnInit {
 
   nextStep() {
     const step1Fields = ['name', 'surname', 'email', 'username', 'password', 'confirmPassword'];
-    const step2Fields = ['role'];
-    const step3Fields = ['serviceIds'];
-    const step3FieldsIfRoleIsAttendant = ['counterNumber', 'serviceIds'];
 
     const isStepValid1 = step1Fields.every(field =>
       this.registerForm.get(field)?.valid
     );
 
-    const isStepValid2 = step2Fields.every(field =>
-      this.registerForm.get(field)?.valid
-    );
-
     if (this.registerForm.get('password')?.value === this.registerForm.get('confirmPassword')?.value
       && isStepValid1) {
-      this.currentStep = 2;
-    if (isStepValid2) {
-      this.currentStep = 3;
-    }
+      this.currentStep ++;
     } else {
       step1Fields.forEach(field => {
         this.registerForm.get(field)?.markAsTouched();

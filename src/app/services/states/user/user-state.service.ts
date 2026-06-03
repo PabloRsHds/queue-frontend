@@ -60,9 +60,9 @@ export class UserStateService {
   loadingAllUsers() {
     this.http.getAllUsers(this.page(), this.size, this.search()).subscribe({
       next: (response) => {
+
         this.users.set(response.content);
-        this.totalElements.set(response.totalElements);
-        console.log(response);
+        this.loadStatistics();
       }
     })
   }

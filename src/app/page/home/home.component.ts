@@ -10,6 +10,7 @@ import { SchedulingComponent } from "../../components/scheduling/scheduling.comp
 import { GraphicComponent } from "../../components/graphic/graphic.component";
 import { ConfigComponent } from "../../components/config/config.component";
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
+import { UserStateService } from '../../services/states/user/user-state.service';
 
 @Component({
   selector: 'app-home',
@@ -23,17 +24,20 @@ export class HomeComponent {
   public globalState = inject(GlobalStatesService);
   public departmentState = inject(DepartmentStateService);
   public ServiceManagementState = inject(ServiceManagementService);
+  public userState = inject(UserStateService);
 
   public openAside = false;
 
   // States
   public activeSection = this.globalState.activeSection;
-  public totalDepartments = this.departmentState.totalElements
-  public totalServices = this.ServiceManagementState.totalElements
+  public totalDepartments = this.departmentState.statistics;
+  public totalServices = this.ServiceManagementState.statistics;
+  public totalUsers = this.userState.statistics;
 
   ngOnInit(){
-    this.departmentState.loadDepartments();
-    this.ServiceManagementState.loadServices();
+    this.departmentState.loadStatistics();
+    this.ServiceManagementState.loadStatistics();
+    this.userState.loadStatistics();
   }
 
   // Methods
