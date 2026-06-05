@@ -170,7 +170,7 @@
 }
 
 .section-header {
-  padding: 20px 24px;
+  padding: 20px 0px;
   border-bottom: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
@@ -983,9 +983,8 @@
 .modal-edit {
   background: #fff;
   border-radius: 10px;
-  padding: 30px;
-  width: 850px;
-  height: 90vh;
+  width: 800px;
+  max-height: 80vh;
   overflow-y: auto;
 }
 
@@ -994,7 +993,6 @@
 }
 
 .modal-body {
-  padding: 24px;
   overflow-y: auto;
   flex: 1;
 }
@@ -1045,6 +1043,7 @@
   padding: 0 24px;
   overflow-x: auto;
   white-space: nowrap;
+  justify-content: space-around;
 }
 .modal-tabs::-webkit-scrollbar { height: 0; }
 .modal-tab {
@@ -1071,7 +1070,7 @@
 
 /* Modal Body */
 .modal-update-body {
-  padding: 24px;
+  padding: 20px 50px;
   overflow-y: auto;
   flex: 1;
 }
@@ -1095,6 +1094,7 @@
 .section-title {
   font-size: 14px;
   font-weight: 600;
+  margin-bottom: 2px;
   color: #1e293b;
 }
 .section-desc {
@@ -1225,35 +1225,20 @@
 
 /* Buttons */
 .btn-cancel {
-  background: white;
-  color: #374151;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 14px 30px;
   font-size: 14px;
-  font-weight: 600;
-  border: 1px solid #e2e8f0;
+  font-weight: 500;
+  color: #4b5563;
+  background: none;
+  border: 1px solid #a1a1a169;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   transition: all 0.2s;
+  white-space: nowrap;
 }
-.btn-cancel:hover { background: #f1f5f9; }
 
-.btn-save {
-  background: #2563eb;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'Inter', sans-serif;
-  transition: background 0.2s;
-}
-.btn-save:hover { background: #1d4ed8; }
+.btn-cancel:hover { background: #f1f5f9; }
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -1261,10 +1246,15 @@
   .modal-tab span.tab-text { display: none; }
   .modal-tabs { padding: 0 16px; }
   .modal-header { padding: 16px; }
-  .modal-update-body { padding: 16px; }
-  .modal-footer { padding: 12px 16px; flex-direction: column; gap: 10px; }
+  .modal-update-body { padding: 20px; }
+  .modal-footer {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 8px;
+  }
   .modal-footer .btn-cancel,
-  .modal-footer .btn-save { width: 100%; justify-content: center; }
+  .modal-footer .btn-primary { width: 100%; justify-content: center; }
 }
 
 /* Modal Delete */
@@ -1286,6 +1276,12 @@
   border-radius: 10px;
   padding: 30px;
   width: 550px;
+}
+
+@media (max-width: 768px) {
+  .modal-delete {
+    border-radius: 0px;
+  }
 }
 
 .modal-delete-header-container {
@@ -1656,6 +1652,7 @@
   .modal-view {
     width: 100%;
     height: 100vh;
+    border-radius: 0px;
     scrollbar-width: none;
     overflow-y: auto;
   }
@@ -2157,7 +2154,7 @@
   font-size: 16px;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .form-subtitle {
@@ -2170,13 +2167,6 @@
   margin-bottom: 10px;
 }
 
-/* Form Grid */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
 @media (min-width: 640px) {
   .form-grid {
       grid-template-columns: 1fr 1fr;
@@ -2186,7 +2176,7 @@
 
 @media (max-width: 768px) {
   .form-area {
-    padding: 0px;
+    padding: 20px;
   }
 }
 
@@ -2866,25 +2856,6 @@
   gap: 8px;
 }
 
-.btn-cancel {
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #4b5563;
-  background: none;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.btn-cancel:hover {
-  color: #1f2937;
-  background: #e5e7eb;
-}
-
 /* btn-secondary - VERSÃO PRIORITÁRIA (NOVO CSS) */
 .btn-secondary {
   padding: 10px 16px;
@@ -2906,8 +2877,14 @@
 }
 
 /* btn-primary - VERSÃO PRIORITÁRIA (NOVO CSS) */
+.btn-group {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
 .btn-primary {
-  padding: 10px 20px;
+  padding: 14px 30px;
   font-size: 14px;
   font-weight: 500;
   color: #fff;
@@ -2926,7 +2903,7 @@
 }
 
 .btn-success {
-  padding: 10px 20px;
+  padding: 14px 30px;
   font-size: 14px;
   font-weight: 500;
   color: #fff;
@@ -2942,6 +2919,19 @@
 
 .btn-success:hover {
   background: #16a34a;
+}
+
+@media (max-width: 768px) {
+  .btn-group {
+
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .btn-success {
+    width: 100%;
+  }
 }
 
 .radio-hidden {

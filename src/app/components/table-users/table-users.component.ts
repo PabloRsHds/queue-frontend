@@ -92,7 +92,15 @@ export class TableUsersComponent implements OnInit {
         });
       }
     })
+  }
 
+  getaa(names: string[]) {
+
+    this.userInfo()?.serviceNames.forEach(serviceName => {
+      if (names.includes(serviceName)) {
+        this.selectedServiceNames.push(serviceName);
+      }
+    })
   }
 
   // Injections
@@ -391,10 +399,8 @@ export class TableUsersComponent implements OnInit {
   }
 
   public openModalUpdate(userId: string) {
-
-    console.log('ABRINDO MODAL', userId);
     this.modalUpdate = true;
-    console.log(this.modalUpdate);
+    this.serviceState.loadServicesForCreateUser();
     this.userState.getUserById(userId);
   }
 
