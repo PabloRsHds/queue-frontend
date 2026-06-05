@@ -239,8 +239,8 @@
 <!-- ============================== -->
 <!-- MODAL 1: Novo Usuário - Passo 1 -->
 <!-- ============================== -->
-<div class="modal-overlay" [class.active]="modalRegister" >
-    <div class="modal">
+<div class="modal-overlay" [class.active]="modalRegister" (click)="closeModalRegister()">
+    <div class="modal" onclick="event.stopPropagation()">
         <div class="modal-header">
             <div class="modal-header-left">
                 <button type="button" class="btn-back" (click)="closeModalRegister()">
@@ -596,19 +596,20 @@
   <div class="modal-edit" onclick="event.stopPropagation()">
     <!-- Header -->
     <div class="modal-header">
-      <div>
-        <h3>Editar usuário</h3>
-        <div class="modal-breadcrumb">
-          <span>Início</span>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          <span>Usuários</span>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          <span class="active">Editar</span>
+        <div class="modal-header-left">
+            <button type="button" class="btn-back" (click)="closeModalUpdate()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="modal-header-text">
+                <h2>Editar usuário</h2>
+                <div class="breadcrumb">
+                    <a href="#">Início</a><span>/</span><a href="#">Usuários</a><span>/</span><span class="current">Editar</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <button class="modal-close" (click)="closeModalUpdate()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+        <button type="button" class="btn-close" (click)="closeModalUpdate()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
     </div>
 
     <!-- Tabs -->
@@ -788,8 +789,8 @@
 
 
 <!-- MODAL DELETE -->
-<div class="modal-delete-container" *ngIf="modalDelete">
-  <div class="modal-delete">
+<div class="modal-delete-container" *ngIf="modalDelete" (click)="closeModalDelete()">
+  <div class="modal-delete" onclick="event.stopPropagation()">
 
     <div class="modal-delete-header-container">
       <div class="modal-delete-header">
@@ -831,8 +832,8 @@
 
 
 <!-- MODAL VIEW -->
-<div class="modal-view-container" *ngIf="modalView">
-  <div class="modal-view" [ngClass]="{'modal-view-updatedAt': userInfo()?.updatedAt != null}">
+<div class="modal-view-container" *ngIf="modalView" (click)="closeModalView()">
+  <div class="modal-view" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': userInfo()?.updatedAt != null}">
 
     <div class="modal-view-header-container">
       <div class="modal-view-header">

@@ -504,8 +504,8 @@
 </div>
 
 <!-- MODAL REGISTER -->
-<div class="modal-register-container" *ngIf="modalRegister">
-  <div class="modal-register">
+<div class="modal-register-container" *ngIf="modalRegister" (click)="closeModalRegister()">
+  <div class="modal-register" onclick="event.stopPropagation()">
 
     <div class="modal-register-header-container">
       <div class="modal-register-header">
@@ -584,8 +584,8 @@
 </div>
 
 <!-- MODAL UPDATE -->
-<div class="modal-update-container" *ngIf="modalUpdate">
-  <div class="modal-update">
+<div class="modal-update-container" *ngIf="modalUpdate" (click)="closeModalUpdate()">
+  <div class="modal-update" onclick="event.stopPropagation()">
 
     <div class="modal-update-header-container">
       <div class="modal-update-header">
@@ -691,8 +691,8 @@
 </div>
 
 <!-- MODAL DELETE -->
-<div class="modal-delete-container" *ngIf="modalDelete">
-  <div class="modal-delete">
+<div class="modal-delete-container" *ngIf="modalDelete" (click)="closeModalDelete()">
+  <div class="modal-delete" onclick="event.stopPropagation()">
 
     <div class="modal-delete-header-container">
       <div class="modal-delete-header">
@@ -734,8 +734,8 @@
 
 
 <!-- MODAL VIEW -->
-<div class="modal-view-container" *ngIf="modalView">
-  <div class="modal-view" [ngClass]="{'modal-view-updatedAt': serviceInfo()?.updatedAt != null}">
+<div class="modal-view-container" *ngIf="modalView" (click)="closeModalView()">
+  <div class="modal-view" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': serviceInfo()?.updatedAt != null}">
 
     <div class="modal-view-header-container">
       <div class="modal-view-header">
