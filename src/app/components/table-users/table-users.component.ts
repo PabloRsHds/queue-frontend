@@ -15,6 +15,8 @@ export class TableUsersComponent implements OnInit {
   ngOnInit(){
     this.userState.loadingAllUsers();
     this.userState.loadStatistics();
+    this.initRegisterForm();
+    this.initUpdateForm();
   }
 
   constructor() {
@@ -41,6 +43,27 @@ export class TableUsersComponent implements OnInit {
       }
     })
 
+
+    effect(() => {
+
+      if (this.userState.deleteStatus() === 'success') {
+        this.snackBar.open(this.userState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.userState.resetStatus();
+        this.modalDelete = false;
+      }
+
+      if (this.userState.deleteStatus() === 'error') {
+        this.snackBar.open(this.userState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.userState.resetStatus();
+      }
+    })
+
     effect(() => {
 
       if (this.selectedRole() === 'RECEPTION') {
@@ -52,6 +75,24 @@ export class TableUsersComponent implements OnInit {
         this.selectedServiceNames = [];
       }
     })
+
+    effect(() => {
+
+      if (this.userInfo() != null && this.modalUpdate) {
+
+        this.updateForm.patchValue({
+          name: this.userInfo()?.name,
+          surname: this.userInfo()?.surname,
+          phone: this.userInfo()?.phone,
+          email: this.userInfo()?.email,
+          username: this.userInfo()?.username,
+          role: this.userInfo()?.role,
+          active: this.userInfo()?.active,
+          counterNumber: this.userInfo()?.counterNumber
+        });
+      }
+    })
+
   }
 
   // Injections
@@ -82,7 +123,7 @@ export class TableUsersComponent implements OnInit {
   public updateForm!: FormGroup;
 
   // Role and Permissions
-  public selectedRole = signal<string>('MANAGER');
+  public selectedRole = signal<string>('');
 
   public selectedPermissions: string[] = [
     'Gerenciar usuários',
@@ -169,6 +210,7 @@ export class TableUsersComponent implements OnInit {
   private initUpdateForm() {
     this.updateForm = this.fb.group({
       userId: [''],
+      username: [''],
       name: [''],
       surname: [''],
       phone: [''],
@@ -220,20 +262,29 @@ export class TableUsersComponent implements OnInit {
   // =========== Step Navigation ===========
 
   nextStep() {
-    const step1Fields = ['name', 'surname', 'email', 'username', 'password', 'confirmPassword'];
 
-    const isStepValid1 = step1Fields.every(field =>
-      this.registerForm.get(field)?.valid
-    );
+    if (this.modalRegister) {
 
-    if (this.registerForm.get('password')?.value === this.registerForm.get('confirmPassword')?.value
-      && isStepValid1) {
-      this.currentStep ++;
-    } else {
-      step1Fields.forEach(field => {
-        this.registerForm.get(field)?.markAsTouched();
-      });
+      const step1Fields = ['name', 'surname', 'email', 'username', 'password', 'confirmPassword'];
+
+      const isStepValid1 = step1Fields.every(field =>
+        this.registerForm.get(field)?.valid
+      );
+
+      if (this.registerForm.get('password')?.value === this.registerForm.get('confirmPassword')?.value
+        && isStepValid1) {
+        this.currentStep ++;
+      } else {
+        step1Fields.forEach(field => {
+          this.registerForm.get(field)?.markAsTouched();
+        });
+      }
     }
+
+    if (this.modalUpdate) {
+      this.currentStep ++;
+    }
+
   }
 
   previousStep() {
@@ -330,7 +381,6 @@ export class TableUsersComponent implements OnInit {
   // =========== Modals ===========
   public openModalRegister(): void {
     this.modalRegister = true;
-    this.initRegisterForm();
     this.serviceState.loadServicesForCreateUser();
   }
 
@@ -340,35 +390,39 @@ export class TableUsersComponent implements OnInit {
     this.currentStep = 1;
   }
 
-  public openModalUpdate(userId: string): void {
+  public openModalUpdate(userId: string) {
+
+    console.log('ABRINDO MODAL', userId);
     this.modalUpdate = true;
-    this.initUpdateForm();
+    console.log(this.modalUpdate);
     this.userState.getUserById(userId);
   }
 
   public closeModalUpdate(): void {
     this.modalUpdate = false;
-    document.body.style.overflow = '';
+    this.currentStep = 1;
+    this.userState.resetInfoUser();
   }
 
-  public openModalDelete(serviceManagementId: string): void {
+  public openModalDelete(userId: string): void {
     this.modalDelete = true;
-    document.body.style.overflow = 'hidden';
+    this.dropDown = null;
+    this.userState.getUserById(userId);
   }
 
   public closeModalDelete(): void {
     this.modalDelete = false;
-    document.body.style.overflow = '';
+    this.userState.resetInfoUser();
   }
 
-  public openModalView(serviceManagementId: string): void {
+  openModalView(userId: string) {
+    this.userState.getUserById(userId);
     this.modalView = true;
-    document.body.style.overflow = 'hidden';
   }
 
-  public closeModalView(): void {
+  closeModalView() {
     this.modalView = false;
-    document.body.style.overflow = '';
+    this.userState.resetInfoUser();
   }
 
   // =========== DropDown ===========
@@ -469,11 +523,16 @@ export class TableUsersComponent implements OnInit {
   // Register User
   registerUser() {
     console.log(this.registerForm.value);
-    this.userState.registerUser(this.registerForm.value);
+    console.log(this.selectedServices);
+    this.userState.registerUser({...this.registerForm.value, serviceIds: this.selectedServices});
   }
 
   // Update User
   updateUser() {
 
+  }
+
+  deleteUser () {
+    this.userState.deleteUser();
   }
 }

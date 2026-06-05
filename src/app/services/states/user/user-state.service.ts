@@ -4,6 +4,7 @@ import { ResponseUserDto } from '../../../dtos/users/ResponseUserDto';
 import { ResponseAllUsersDto } from '../../../dtos/users/ResponseAllUsersDto';
 import { ResponseUserStatisticsDto } from '../../../dtos/statistics/ResponseUserStatisticsDto';
 import { RequestUserDto } from '../../../dtos/users/RequestUserDto';
+import { ResponseUserInfoDto } from '../../../dtos/users/ResponseUserInfoDto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class UserStateService {
 
   // Signals
   public users = signal<ResponseAllUsersDto[]>([]);
-  public userInfo = signal<ResponseUserDto | null>(null);
+  public userInfo = signal<ResponseUserInfoDto | null>(null);
 
   public statistics = signal<ResponseUserStatisticsDto | null>(null);
 
@@ -52,6 +53,24 @@ export class UserStateService {
       error: () => {
         this.registerMessage.set('Error creating user');
         this.registerStatus.set('error');
+      }
+    })
+  }
+
+  deleteUser() {
+
+    const userId = this.userInfo()?.userId;
+    if (!userId) return;
+
+    this.http.deleteUser(userId).subscribe({
+      next: () => {
+        this.deleteMessage.set('User deleted successfully');
+        this.deleteStatus.set('success');
+        this.loadingAllUsers();
+      },
+      error: () => {
+        this.deleteMessage.set('Error deleting user');
+        this.deleteStatus.set('error');
       }
     })
   }
@@ -134,5 +153,9 @@ export class UserStateService {
     this.registerStatus.set('default');
     this.updateStatus.set('default');
     this.deleteStatus.set('default');
+  }
+
+  resetInfoUser() {
+    this.userInfo.set(null);
   }
 }

@@ -16,6 +16,7 @@ import { ResponseAllUsersDto } from '../../dtos/users/ResponseAllUsersDto';
 import { ResponseUserStatisticsDto } from '../../dtos/statistics/ResponseUserStatisticsDto';
 import { RequestUserDto } from '../../dtos/users/RequestUserDto';
 import { ResponseServicesForCreatedUser } from '../../dtos/services/ResponseServicesForCreatedUser';
+import { ResponseUserInfoDto } from '../../dtos/users/ResponseUserInfoDto';
 
 @Injectable({
   providedIn: 'root'
@@ -87,15 +88,21 @@ export class HttpService {
     return this.http.post<ResponseUserDto>('http://localhost:8080/users', user);
   }
 
+  public deleteUser(userId: string): Observable<ResponseUserDto> {
+    return this.http.delete<ResponseUserDto>(`http://localhost:8080/users/${userId}`);
+  }
+
   public getAllUsers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllUsersDto>> {
     return this.http.get<PageResponse<ResponseAllUsersDto>>(`http://localhost:8080/users?page=${page}&size=${size}&search=${search}`)
   }
 
-  public getUserById(userId: string): Observable<ResponseUserDto> {
-    return this.http.get<ResponseUserDto>(`http://localhost:8080/users/${userId}`);
+  public getUserById(userId: string): Observable<ResponseUserInfoDto> {
+    return this.http.get<ResponseUserInfoDto>(`http://localhost:8080/users/${userId}`);
   }
 
   public getUserStatistics(): Observable<ResponseUserStatisticsDto> {
     return this.http.get<ResponseUserStatisticsDto>('http://localhost:8080/users/statistics');
   }
+
+
 }

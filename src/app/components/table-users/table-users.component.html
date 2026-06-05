@@ -422,7 +422,7 @@
                   </div>
               </div>
 
-              <!-- Step 3: Departamentos -->
+              <!-- Step 3: Serviços -->
               <div class="form-area" *ngIf="currentStep === 3 && selectedRole() !== 'RECEPTION'">
 
                 <div *ngIf="selectedRole() === 'ATTENDANT'">
@@ -591,31 +591,224 @@
 </div>
 
 
-<!-- MODAL UPDATE -->
-<div class="modal-update-container" *ngIf="modalUpdate">
-  <div class="modal-update">
-
-    <div class="modal-update-header-container">
-      <div class="modal-update-header">
-        <div class="modal-update-header-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 64 64" stroke-width="3" stroke="#419717" fill="none">
-            <polyline points="45.56 46.83 45.56 56.26 7.94 56.26 7.94 20.6 19.9 7.74 45.56 7.74 45.56 21.29"/>
-            <polyline points="19.92 7.74 19.9 20.6 7.94 20.6"/>
-            <line x1="13.09" y1="47.67" x2="31.1" y2="47.67"/>
-            <line x1="13.09" y1="41.14" x2="29.1" y2="41.14"/>
-            <line x1="13.09" y1="35.04" x2="33.1" y2="35.04"/>
-            <line x1="13.09" y1="28.94" x2="39.1" y2="28.94"/>
-            <path d="M34.45,43.23l.15,4.3a.49.49,0,0,0,.62.46l4.13-1.11a.54.54,0,0,0,.34-.23L57.76,22.21a1.23,1.23,0,0,0-.26-1.72l-3.14-2.34a1.22,1.22,0,0,0-1.72.26L34.57,42.84A.67.67,0,0,0,34.45,43.23Z"/>
-            <line x1="50.2" y1="21.7" x2="55.27" y2="25.57"/>
-          </svg>
+<!-- EDITAR USUÁRIO MODAL -->
+<div class="modal-update-overlay" [class.active]="modalUpdate" (click)="closeModalUpdate()">
+  <div class="modal-edit" onclick="event.stopPropagation()">
+    <!-- Header -->
+    <div class="modal-header">
+      <div>
+        <h3>Editar usuário</h3>
+        <div class="modal-breadcrumb">
+          <span>Início</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>Usuários</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <span class="active">Editar</span>
         </div>
-        <div class="modal-update-header-text">
-          <h2>Alterar serviço</h2>
-          <span >Altere as informações do serviço abaixo.</span>
+      </div>
+      <button class="modal-close" (click)="closeModalUpdate()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="modal-tabs" id="editTabs">
+      <button class="modal-tab" [class.active]="currentStep === 1" (click)="currentStep = 1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="tab-text">Perfil</span>
+      </button>
+      <button class="modal-tab" [class.active]="currentStep === 2"  (click)="currentStep = 2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span class="tab-text">Acessos</span>
+      </button>
+      <button class="modal-tab" [class.active]="currentStep === 3"  (click)="currentStep = 3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span class="tab-text">Serviços</span>
+      </button>
+      <button class="modal-tab" [class.active]="currentStep === 4" (click)="currentStep = 4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span class="tab-text">Segurança</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-update-body">
+      <!-- Tab 1: Perfil -->
+      <div *ngIf="currentStep == 1">
+        <div class="section-header">
+          <div class="section-icon" style="background:#eff6ff;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Informações pessoais</div>
+            <div class="section-desc">Atualize os dados pessoais do usuário.</div>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="input-group">
+            <label>Nome <span class="required">*</span></label>
+            <input type="text" value="João" placeholder="Ex: João">
+          </div>
+          <div class="input-group">
+            <label>Sobrenome <span class="required">*</span></label>
+            <input type="text" value="Silva" placeholder="Ex: Silva">
+          </div>
+          <div class="input-group">
+            <label>E-mail <span class="required">*</span></label>
+            <input type="email" value="joao.silva@empresa.com.br" placeholder="Ex: joao.silva@empresa.com.br">
+          </div>
+          <div class="input-group">
+            <label>Telefone</label>
+            <input type="text" value="(21) 99999-9999" placeholder="(21) 99999-9999">
+          </div>
+          <div class="input-group">
+            <label>Username <span class="required">*</span></label>
+            <input type="text" value="joao.silva" placeholder="Ex: joao.silva">
+          </div>
+          <div class="input-group">
+            <label>Documento <span class="optional">(Opcional)</span></label>
+            <input type="text" value="123.456.789-00" placeholder="123.456.789-00">
+          </div>
+        </div>
+        <div class="toggle-wrapper">
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">Usuário ativo</span>
         </div>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalUpdate()">
+      <!-- Tab 2: Acessos -->
+      <div *ngIf="currentStep == 2">
+        <div class="section-header">
+          <div class="section-icon" style="background:#fef3c7;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Permissões e acesso</div>
+            <div class="section-desc">Defina o perfil e níveis de acesso.</div>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="input-group">
+            <label>Função (Perfil) <span class="required">*</span></label>
+            <select>
+              <option value="Atendente" selected>Atendente</option>
+              <option value="Administrador">Administrador</option>
+              <option value="Supervisor">Supervisor</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Nº do guichê <span class="optional">(Opcional)</span></label>
+            <input type="number" value="3" placeholder="Ex: 3">
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Serviços -->
+      <div *ngIf="currentStep == 3">
+        <div class="section-header">
+          <div class="section-icon" style="background:#dcfce7;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Serviços vinculados</div>
+            <div class="section-desc">Selecione os serviços que o usuário pode acessar.</div>
+          </div>
+        </div>
+        <label class="custom-checkbox">
+          <input type="checkbox" checked>
+          <span class="custom-checkbox-label">Painel de Atendimento</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" checked>
+          <span class="custom-checkbox-label">Gerenciar agendamentos</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox" checked>
+          <span class="custom-checkbox-label">Visualizar relatórios</span>
+        </label>
+        <label class="custom-checkbox">
+          <input type="checkbox">
+          <span class="custom-checkbox-label">Configurações</span>
+        </label>
+      </div>
+
+      <!-- Tab 4: Segurança -->
+      <div *ngIf="currentStep == 4">
+        <div class="section-header">
+          <div class="section-icon" style="background:#fee2e2;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="section-title">Segurança</div>
+            <div class="section-desc">Altere a senha do usuário (opcional).</div>
+          </div>
+        </div>
+        <label class="custom-checkbox" style="margin-bottom:20px;">
+          <input type="checkbox" id="toggleSenha" onchange="toggleSenhaFields()">
+          <span class="custom-checkbox-label">Alterar senha</span>
+        </label>
+        <div id="senhaFields" style="display:none;">
+          <div class="form-grid">
+            <div class="input-group">
+              <label>Nova senha</label>
+              <div class="password-wrapper">
+                <input type="password" placeholder="Digite a nova senha">
+                <button type="button" class="password-toggle" onclick="togglePassword(this)">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Confirmar nova senha</label>
+              <div class="password-wrapper">
+                <input type="password" placeholder="Confirme a nova senha">
+                <button type="button" class="password-toggle" onclick="togglePassword(this)">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn-cancel" (click)="closeModalUpdate()">Cancelar</button>
+      <button type="submit" class="btn-save">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Salvar alterações
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL DELETE -->
+<div class="modal-delete-container" *ngIf="modalDelete">
+  <div class="modal-delete">
+
+    <div class="modal-delete-header-container">
+      <div class="modal-delete-header">
+        <div class="modal-delete-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24" fill="none">
+            <path d="M20.5001 6H3.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9.5 11L10 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.5 11L14 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#da1414" stroke-width="1.5"/>
+            <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="modal-delete-header-text">
+          <h2>Deletar usuário</h2>
+          <span>Deletar o usuário escolhido abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalDelete()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -623,77 +816,130 @@
       </button>
     </div>
 
-    <form [formGroup]="updateForm" (ngSubmit)="updateUser()">
+    <div class="modal-delete-content">
+      <p>Tem certeza que deseja deletar este usuário? <strong>{{this.userInfo()?.username}}</strong></p>
+      <p>Essa ação não pode ser desfeita.</p>
+    </div>
 
-      <div style="display: flex; gap: 20px; ">
-        <div style="flex: 1;">
-          <div class="form-group">
-            <label class="form-label">Nome do serviço</label>
-            <input
-              formControlName="name"
-              type="text"
-              class="form-input"
-              placeholder="Ex: RH"
-              required>
-          </div>
+    <div class="separator"></div>
+    <div style="display: flex; justify-content: end; gap: 5px;">
+      <button type="button" class="button-delete" (click)="deleteUser()">Excluir</button>
+      <button type="button" class="button-back" (click)="closeModalDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL VIEW -->
+<div class="modal-view-container" *ngIf="modalView">
+  <div class="modal-view" [ngClass]="{'modal-view-updatedAt': userInfo()?.updatedAt != null}">
+
+    <div class="modal-view-header-container">
+      <div class="modal-view-header">
+        <div class="modal-view-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#0957b1" width="40px" height="40px" viewBox="0 0 1920 1920">
+              <path d="M960 1489.82c-348.474 0-668.545-202.323-841.298-529.918C291.455 632.306 611.526 429.984 960 429.984s668.545 202.322 841.298 529.918C1628.545 1287.497 1308.474 1489.82 960 1489.82Zm948.342-553.552C1720.645 558.648 1357.332 324 960 324c-397.333 0-760.645 234.648-948.342 612.268L0 959.902l11.658 23.634c187.697 377.62 551.01 612.268 948.342 612.268 397.333 0 760.645-234.648 948.342-612.268L1920 959.902l-11.658-23.634ZM960 1171.869c-116.9 0-211.967-95.067-211.967-211.967 0-116.9 95.067-211.967 211.967-211.967 116.9 0 211.967 95.067 211.967 211.967 0 116.9-95.067 211.967-211.967 211.967m0-529.918c-175.297 0-317.951 142.654-317.951 317.951 0 175.297 142.654 317.95 317.951 317.95 175.297 0 317.951-142.653 317.951-317.95S1135.297 641.951 960 641.951" fill-rule="evenodd"/>
+          </svg>
         </div>
-
-        <div style="flex: 1;">
-          <div class="form-group">
-            <label class="form-label">Código</label>
-            <input
-              formControlName="code"
-              type="text"
-              class="form-input"
-              placeholder="Ex: RH"
-              required>
-          </div>
+        <div class="modal-view-header-text">
+          <h2>Detalhes do usuario</h2>
+          <span >Visualize as informações completas do usuário.</span>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Descrição</label>
-        <textarea
-          formControlName="description"
-          rows="5"
-          class="form-textarea"
-          placeholder="Breve descrição do departamento..."></textarea>
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalView()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-view-body">
+
+      <div class="info-row">
+        <span class="label">Nome de usuário: </span>
+        <span class="value">{{userInfo()?.username ?? 'usuario'}}</span>
       </div>
 
-      <div style="display: flex; gap: 18px; ">
+      <div class="info-row">
+        <span class="label">Name: </span>
+        <span class="value">{{userInfo()?.name ?? 'nome'}}</span>
+      </div>
 
-        <div style="flex: 1;">
-          <div class="form-group">
-            <label class="form-label">Departamento</label>
-            <select class="form-select" formControlName="departmentName" required>
-              <option>
-                1
-              </option>
-            </select>
+      <div class="info-row">
+        <span class="label">Sobrenome: </span>
+        <span class="value">{{userInfo()?.surname ?? 'sobrenome'}}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Telefone: </span>
+        <span class="value">{{userInfo()?.phone ?? '(00) 00000-0000' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">E-mail: </span>
+        <span class="value">{{userInfo()?.email ?? 'email' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Função: </span>
+        <span class="value">{{ getRole(userInfo()?.role ?? 'função') }}</span>
+      </div>
+
+      <div class="info-row" *ngIf="userInfo()?.counterNumber != null">
+        <span class="label">Guichê: </span>
+        <span class="value">{{ userInfo()?.counterNumber ?? 'guiche' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Status: </span>
+
+
+        <div *ngIf="userInfo()?.active" style="display: flex; align-items: center;">
+          <div class="td-status-active-view">
+            <div style="width:6px;height: 6px;background:#16a34a;border-radius:50%;"></div>
+            <strong>Ativo</strong>
           </div>
         </div>
 
-        <div style="flex: 1;">
-          <label class="form-label">Status</label>
-
-          <div class="status-container">
-            <label class="switch">
-              <input type="checkbox" formControlName="active" checked>
-              <span class="slider"></span>
-            </label>
-
-            <span class="status-text">Ativo</span>
+        <div *ngIf="!userInfo()?.active" style="display: flex; align-items: center;">
+          <div class="td-status-inactive-view">
+            <div style="width:6px;height: 6px; background:#4d4f52; border-radius:50%;"></div>
+            <strong >Inativo</strong>
           </div>
         </div>
 
       </div>
 
-      <div class="separator"></div>
-
-      <div style="display: flex; justify-content: end; gap: 5px;">
-        <button type="submit" [disabled]="updateForm.invalid" class="button-submit">Salvar Alterações</button>
-        <button type="button" class="button-back" (click)="closeModalUpdate()">Voltar</button>
+      <div class="info-row">
+        <span class="label">Dia de criação: </span>
+        <span class="value">{{userInfo()?.createdAt}}</span>
       </div>
-    </form>
+
+      <div class="info-row" *ngIf="userInfo()?.updatedAt != null">
+        <span class="label">Última atualização: </span>
+        <span class="value">{{userInfo()?.updatedAt}}</span>
+      </div>
+
+
+      <div class="info-row" *ngIf="(userInfo()?.serviceNames?.length ?? 0) > 0">
+        <span class="label">Serviços vinculados: </span>
+        <div class="services-container">
+          <span
+            class="service-tag"
+            *ngFor="let service of userInfo()?.serviceNames">
+            {{ service }}
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
+      <button type="button" class="button-back" (click)="closeModalView()">Fechar</button>
+    </div>
+
   </div>
 </div>
