@@ -23,86 +23,94 @@ import { ResponseUserInfoDto } from '../../dtos/users/ResponseUserInfoDto';
 })
 export class HttpService {
 
+  private readonly API_URL = 'http://192.168.1.2:8080';
+
   constructor(private http: HttpClient) { }
 
   // Departments
   public createDepartment(department: CreateDepartmentDto): Observable<ResponseDepartmentDto> {
-    return this.http.post<ResponseDepartmentDto>('http://localhost:8080/departments', department);
+    return this.http.post<ResponseDepartmentDto>(`${this.API_URL}/departments`, department);
   }
 
   public updateDepartment(department: UpdateDepartmentDto): Observable<ResponseDepartmentDto> {
-    return this.http.patch<ResponseDepartmentDto>('http://localhost:8080/departments', department);
+    return this.http.patch<ResponseDepartmentDto>(`${this.API_URL}/departments`, department);
   }
 
   public deleteDepartment(departmentId: string): Observable<ResponseDepartmentDto> {
-    return this.http.delete<ResponseDepartmentDto>('http://localhost:8080/departments/' + departmentId);
+    return this.http.delete<ResponseDepartmentDto>(`${this.API_URL}/departments/${departmentId}`);
   }
 
   public getAllDepartments(page: number, size: number, search?: string): Observable<PageResponse<ResponseDepartmentDto>> {
-    return this.http.get<PageResponse<ResponseDepartmentDto>>(`http://localhost:8080/departments?page=${page}&size=${size}&search=${search}`);
+    return this.http.get<PageResponse<ResponseDepartmentDto>>(
+      `${this.API_URL}/departments?page=${page}&size=${size}&search=${search ?? ''}`
+    );
   }
 
-  public getDepartmentById(departmentId: string): Observable<ResponseGetDepartmentDto>{
-    return this.http.get<ResponseGetDepartmentDto>('http://localhost:8080/departments/' + departmentId);
+  public getDepartmentById(departmentId: string): Observable<ResponseGetDepartmentDto> {
+    return this.http.get<ResponseGetDepartmentDto>(`${this.API_URL}/departments/${departmentId}`);
   }
 
   public getDeparmentNames(): Observable<ResponseGetDepartmentDto[]> {
-    return this.http.get<ResponseGetDepartmentDto[]>('http://localhost:8080/departments/names');
+    return this.http.get<ResponseGetDepartmentDto[]>(`${this.API_URL}/departments/names`);
   }
 
   public getDepartmentStatistics(): Observable<ResponseStatisticsDto> {
-    return this.http.get<ResponseStatisticsDto>('http://localhost:8080/departments/statistics');
+    return this.http.get<ResponseStatisticsDto>(`${this.API_URL}/departments/statistics`);
   }
 
   // Services
   public createServiceManagement(request: CreateServiceManagementDto): Observable<ResponseServiceManagementDto> {
-    return this.http.post<ResponseServiceManagementDto>("http://localhost:8080/services", request);
+    return this.http.post<ResponseServiceManagementDto>(`${this.API_URL}/services`, request);
   }
 
   public updateServiceManagement(request: UpdateServiceManagementDto): Observable<ResponseServiceManagementDto> {
-    return this.http.patch<ResponseServiceManagementDto>("http://localhost:8080/services", request);
+    return this.http.patch<ResponseServiceManagementDto>(`${this.API_URL}/services`, request);
   }
 
   public deleteServiceManagement(request: string): Observable<ResponseServiceManagementDto> {
-    return this.http.delete<ResponseServiceManagementDto>(`http://localhost:8080/services/${request}`);
+    return this.http.delete<ResponseServiceManagementDto>(`${this.API_URL}/services/${request}`);
   }
 
   public getAllServicesManagement(page: number, size: number, search?: string): Observable<PageResponse<ResponseServiceManagementDto>> {
-    return this.http.get<PageResponse<ResponseServiceManagementDto>>(`http://localhost:8080/services?page=${page}&size=${size}&search=${search}`);
+    return this.http.get<PageResponse<ResponseServiceManagementDto>>(
+      `${this.API_URL}/services?page=${page}&size=${size}&search=${search ?? ''}`
+    );
   }
 
-  public getServiceManagementById(request : string): Observable<ResponseGetServiceByIdDto> {
-    return this.http.get<ResponseGetServiceByIdDto>(`http://localhost:8080/services/${request}`);
+  public getServiceManagementById(request: string): Observable<ResponseGetServiceByIdDto> {
+    return this.http.get<ResponseGetServiceByIdDto>(`${this.API_URL}/services/${request}`);
   }
 
   public getServiceNamesAndDepartments(): Observable<ResponseServicesForCreatedUser[]> {
-    return this.http.get<ResponseServicesForCreatedUser[]>('http://localhost:8080/services/service-for-created-user');
+    return this.http.get<ResponseServicesForCreatedUser[]>(
+      `${this.API_URL}/services/service-for-created-user`
+    );
   }
 
   public getServiceStatistics(): Observable<ResponseStatisticsDto> {
-    return this.http.get<ResponseStatisticsDto>('http://localhost:8080/services/statistics');
+    return this.http.get<ResponseStatisticsDto>(`${this.API_URL}/services/statistics`);
   }
 
   // Users
   public createUser(user: RequestUserDto): Observable<ResponseUserDto> {
-    return this.http.post<ResponseUserDto>('http://localhost:8080/users', user);
+    return this.http.post<ResponseUserDto>(`${this.API_URL}/users`, user);
   }
 
   public deleteUser(userId: string): Observable<ResponseUserDto> {
-    return this.http.delete<ResponseUserDto>(`http://localhost:8080/users/${userId}`);
+    return this.http.delete<ResponseUserDto>(`${this.API_URL}/users/${userId}`);
   }
 
   public getAllUsers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllUsersDto>> {
-    return this.http.get<PageResponse<ResponseAllUsersDto>>(`http://localhost:8080/users?page=${page}&size=${size}&search=${search}`)
+    return this.http.get<PageResponse<ResponseAllUsersDto>>(
+      `${this.API_URL}/users?page=${page}&size=${size}&search=${search ?? ''}`
+    );
   }
 
   public getUserById(userId: string): Observable<ResponseUserInfoDto> {
-    return this.http.get<ResponseUserInfoDto>(`http://localhost:8080/users/${userId}`);
+    return this.http.get<ResponseUserInfoDto>(`${this.API_URL}/users/${userId}`);
   }
 
   public getUserStatistics(): Observable<ResponseUserStatisticsDto> {
-    return this.http.get<ResponseUserStatisticsDto>('http://localhost:8080/users/statistics');
+    return this.http.get<ResponseUserStatisticsDto>(`${this.API_URL}/users/statistics`);
   }
-
-
 }
