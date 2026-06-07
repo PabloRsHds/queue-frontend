@@ -1,128 +1,547 @@
-<!-- AGENDAMENTOS PAGE -->
-<div id="page-agendamentos" class="fade-in" style="padding:24px 32px;">
-  <!-- Page Header -->
-  <div style="margin-bottom:24px;">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-      <div style="width:40px;height:40px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </div>
-      <div>
-        <h1 style="font-size:20px;font-weight:700;color:#1e293b;">Agendamentos</h1>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#64748b;margin-top:2px;">
-          <a href="#" onclick="navigateTo('dashboard')" style="color:#64748b;text-decoration:none;">Início</a>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          <span style="color:#1e293b;font-weight:500;">Agendamentos</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stats Row -->
-  <div class="stat-cards-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px;">
+<!-- SCHEDULING PAGE -->
+<div id="page-servicos" class="fade-in" (click)="closeDropDown()">
+  <!-- Stats Cards -->
+  <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
     <div class="stat-card">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">24</div>
-          <div style="font-size:12px;color:#64748b;">Agendamentos hoje</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:#16a34a;font-weight:500;">↑ 20% vs ontem</div>
-    </div>
-    <div class="stat-card">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;background:#dcfce7;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="8 14 10 16 14 12"/></svg>
-        </div>
-        <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">78</div>
-          <div style="font-size:12px;color:#64748b;">Agendamentos esta semana</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:#16a34a;font-weight:500;">↑ 15% vs semana passada</div>
-    </div>
-    <div class="stat-card">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;background:#fef3c7;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">12</div>
-          <div style="font-size:12px;color:#64748b;">Pendentes</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:#d97706;font-weight:500;cursor:pointer;">Ver pendentes ↑</div>
-    </div>
-    <div class="stat-card">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;background:#dbeafe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">156</div>
-          <div style="font-size:12px;color:#64748b;">Agendamentos este mês</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:#2563eb;font-weight:500;cursor:pointer;">Ver relatório ↑</div>
-    </div>
-    <div class="stat-card">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">342</div>
-          <div style="font-size:12px;color:#64748b;">Total de agendamentos</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:#94a3b8;">Este ano</div>
-    </div>
-  </div>
-
-  <!-- Appointments Table -->
-  <div class="section-card">
-    <div style="padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;" class="section-header-mobile">
-      <h3 style="font-size:15px;font-weight:700;color:#1e293b;">Agendamentos</h3>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <button class="btn-secondary" style="font-size:13px;padding:8px 16px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Exportar
-        </button>
-        <button class="btn-primary" style="font-size:13px;padding:8px 16px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Novo agendamento
-        </button>
-      </div>
-    </div>
-    <div style="padding:0 20px;">
-      <div class="table-header-row">
-        <span>Data/Hora</span>
-        <span>Cliente</span>
-        <span>Serviço</span>
-        <span>Departamento</span>
-        <span>Status</span>
-        <span>Ticket</span>
-        <span style="text-align:right;">Ações</span>
-      </div>
-      <div id="appointments-list"></div>
-    </div>
-    <div style="padding:16px 20px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-      <span style="font-size:13px;color:#64748b;">Mostrando 1 a 8 de 24 agendamentos</span>
       <div style="display:flex;align-items:center;gap:12px;">
-        <div class="pagination" style="display:flex;align-items:center;gap:8px;">
-          <button><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="active">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <div style="width:55px;height:55px;background:#ffc8766c;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#000000" width="35px" height="35px">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <g> <g> <g>
+                <path fill="#506C7F" d="M50,2c-0.553,0-1,0.447-1,1v1v2v4c0,0.553,0.447,1,1,1s1-0.447,1-1V6V4V3C51,2.447,50.553,2,50,2z"></path>
+                <path fill="#506C7F" d="M14,2c-0.553,0-1,0.447-1,1v1v2v4c0,0.553,0.447,1,1,1s1-0.447,1-1V6V4V3C15,2.447,14.553,2,14,2z"></path>
+              </g>
+              <path fill="#F9EBB2" d="M62,60c0,1.104-0.896,2-2,2H4c-1.104,0-2-0.896-2-2V17h60V60z"></path>
+              <path fill="#b1821b" d="M62,15H2V8c0-1.104,0.896-2,2-2h7v4c0,1.657,1.343,3,3,3s3-1.343,3-3V6h30v4c0,1.657,1.343,3,3,3 s3-1.343,3-3V6h7c1.104,0,2,0.896,2,2V15z"></path>
+              <g>
+                <path fill="#394240" d="M11,54h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C10,53.553,10.447,54,11,54z M12,49h4v3h-4V49z"></path>
+                <path fill="#394240" d="M23,54h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C22,53.553,22.447,54,23,54z M24,49h4v3h-4V49z"></path>
+                <path fill="#394240" d="M35,54h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C34,53.553,34.447,54,35,54z M36,49h4v3h-4V49z"></path>
+                <path fill="#394240" d="M11,43h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C10,42.553,10.447,43,11,43z M12,38h4v3h-4V38z"></path>
+                <path fill="#394240" d="M23,43h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C22,42.553,22.447,43,23,43z M24,38h4v3h-4V38z"></path>
+                <path fill="#394240" d="M35,43h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C34,42.553,34.447,43,35,43z M36,38h4v3h-4V38z"></path>
+                <path fill="#394240" d="M47,43h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C46,42.553,46.447,43,47,43z M48,38h4v3h-4V38z"></path>
+                <path fill="#394240" d="M11,32h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C10,31.553,10.447,32,11,32z M12,27h4v3h-4V27z"></path>
+                <path fill="#394240" d="M23,32h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C22,31.553,22.447,32,23,32z M24,27h4v3h-4V27z"></path>
+                <path fill="#394240" d="M35,32h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C34,31.553,34.447,32,35,32z M36,27h4v3h-4V27z"></path>
+                <path fill="#394240" d="M47,32h6c0.553,0,1-0.447,1-1v-5c0-0.553-0.447-1-1-1h-6c-0.553,0-1,0.447-1,1v5 C46,31.553,46.447,32,47,32z M48,27h4v3h-4V27z"></path>
+                <path fill="#394240" d="M60,4h-7V3c0-1.657-1.343-3-3-3s-3,1.343-3,3v1H17V3c0-1.657-1.343-3-3-3s-3,1.343-3,3v1H4 C1.789,4,0,5.789,0,8v52c0,2.211,1.789,4,4,4h56c2.211,0,4-1.789,4-4V8C64,5.789,62.211,4,60,4z M49,3c0-0.553,0.447-1,1-1 s1,0.447,1,1v7c0,0.553-0.447,1-1,1s-1-0.447-1-1V3z M13,3c0-0.553,0.447-1,1-1s1,0.447,1,1v7c0,0.553-0.447,1-1,1s-1-0.447-1-1 V3z M62,60c0,1.104-0.896,2-2,2H4c-1.104,0-2-0.896-2-2V17h60V60z M62,15H2V8c0-1.104,0.896-2,2-2h7v4c0,1.657,1.343,3,3,3 s3-1.343,3-3V6h30v4c0,1.657,1.343,3,3,3s3-1.343,3-3V6h7c1.104,0,2,0.896,2,2V15z"></path>
+               </g> </g> <g> <rect x="12" y="27" fill="#ffffff" width="4" height="3"></rect> <rect x="24" y="27" fill="#ffffff" width="4" height="3"></rect> <rect x="36" y="27" fill="#ffffff" width="4" height="3"></rect> <rect x="48" y="27" fill="#ffffff" width="4" height="3"></rect> <rect x="12" y="38" fill="#ffffff" width="4" height="3"></rect> <rect x="24" y="38" fill="#ffffff" width="4" height="3"></rect> <rect x="36" y="38" fill="#ffffff" width="4" height="3"></rect> <rect x="48" y="38" fill="#ffffff" width="4" height="3"></rect> <rect x="12" y="49" fill="#ffffff" width="4" height="3"></rect> <rect x="24" y="49" fill="#ffffff" width="4" height="3"></rect> <rect x="36" y="49" fill="#ffffff" width="4" height="3"></rect> </g> </g> </g>
+          </svg>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="font-size:13px;color:#64748b;">10 por página</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">1</div>
+          <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de agendamentos</div>
         </div>
       </div>
     </div>
+    <div class="stat-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:55px;height:55px;background:#ff767644;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 -14.5 1053 1053" class="icon" version="1.1">
+            <path d="M160.914286 73.142857h541.257143v833.828572H160.914286z" fill="#F4B1B2"/>
+            <path d="M731.428571 936.228571H131.657143V51.2H731.428571v885.028571zM190.171429 877.714286h482.742857V102.4H190.171429V877.714286z" fill="#D72822"/>
+            <path d="M702.171429 219.428571h212.114285v687.542858H702.171429z" fill="#FFFEFE"/>
+            <path d="M936.228571 936.228571H672.914286V190.171429h263.314285v746.057142z m-204.8-51.2h153.6V248.685714H731.428571v636.342857z" fill="#D72822"/>
+            <path d="M1024 943.542857H29.257143c-14.628571 0-29.257143-14.628571-29.257143-29.257143s14.628571-29.257143 29.257143-29.257143H1024c14.628571 0 29.257143 14.628571 29.257143 29.257143s-14.628571 29.257143-29.257143 29.257143zM468.114286 197.485714h175.542857v58.514286H468.114286zM226.742857 197.485714h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M468.114286 358.4h175.542857v58.514286H468.114286zM226.742857 358.4h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M468.114286 512h175.542857v58.514286H468.114286zM226.742857 512h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M782.628571 570.514286h58.514286v175.542857h-58.514286zM782.628571 329.142857h58.514286v175.542857h-58.514286z" fill="#D72822"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">1</div>
+          <div style="font-size:12px;color:#64748b; margin-top: 3px">Agendamentos concluídos</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:55px;height:55px;background:#ff767644;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 -14.5 1053 1053" class="icon" version="1.1">
+            <path d="M160.914286 73.142857h541.257143v833.828572H160.914286z" fill="#F4B1B2"/>
+            <path d="M731.428571 936.228571H131.657143V51.2H731.428571v885.028571zM190.171429 877.714286h482.742857V102.4H190.171429V877.714286z" fill="#D72822"/>
+            <path d="M702.171429 219.428571h212.114285v687.542858H702.171429z" fill="#FFFEFE"/>
+            <path d="M936.228571 936.228571H672.914286V190.171429h263.314285v746.057142z m-204.8-51.2h153.6V248.685714H731.428571v636.342857z" fill="#D72822"/>
+            <path d="M1024 943.542857H29.257143c-14.628571 0-29.257143-14.628571-29.257143-29.257143s14.628571-29.257143 29.257143-29.257143H1024c14.628571 0 29.257143 14.628571 29.257143 29.257143s-14.628571 29.257143-29.257143 29.257143zM468.114286 197.485714h175.542857v58.514286H468.114286zM226.742857 197.485714h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M468.114286 358.4h175.542857v58.514286H468.114286zM226.742857 358.4h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M468.114286 512h175.542857v58.514286H468.114286zM226.742857 512h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M782.628571 570.514286h58.514286v175.542857h-58.514286zM782.628571 329.142857h58.514286v175.542857h-58.514286z" fill="#D72822"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalElements() }}</div>
+          <div style="font-size:12px;color:#64748b; margin-top: 3px">Agendamentos pendentes</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:55px;height:55px;background:#ff767644;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 -14.5 1053 1053" class="icon" version="1.1">
+            <path d="M160.914286 73.142857h541.257143v833.828572H160.914286z" fill="#F4B1B2"/>
+            <path d="M731.428571 936.228571H131.657143V51.2H731.428571v885.028571zM190.171429 877.714286h482.742857V102.4H190.171429V877.714286z" fill="#D72822"/>
+            <path d="M702.171429 219.428571h212.114285v687.542858H702.171429z" fill="#FFFEFE"/>
+            <path d="M936.228571 936.228571H672.914286V190.171429h263.314285v746.057142z m-204.8-51.2h153.6V248.685714H731.428571v636.342857z" fill="#D72822"/>
+            <path d="M1024 943.542857H29.257143c-14.628571 0-29.257143-14.628571-29.257143-29.257143s14.628571-29.257143 29.257143-29.257143H1024c14.628571 0 29.257143 14.628571 29.257143 29.257143s-14.628571 29.257143-29.257143 29.257143zM468.114286 197.485714h175.542857v58.514286H468.114286zM226.742857 197.485714h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M468.114286 358.4h175.542857v58.514286H468.114286zM226.742857 358.4h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M468.114286 512h175.542857v58.514286H468.114286zM226.742857 512h175.542857v58.514286H226.742857z" fill="#D72822"/>
+            <path d="M782.628571 570.514286h58.514286v175.542857h-58.514286zM782.628571 329.142857h58.514286v175.542857h-58.514286z" fill="#D72822"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalElements() }}</div>
+          <div style="font-size:12px;color:#64748b; margin-top: 3px">Agendamentos cancelados</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="table-search-container" >
+    <div class="search-container">
+      <svg class="search-icon" width="20" height="20" fill="none" stroke="#64748b" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input
+      (input)="onSearch($event)"
+      class="search-box"
+      placeholder="Pesquisar departamentos...">
+    </div>
+  </div>
+
+  <!-- Services Table -->
+  <table class="dept-table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>RG</th>
+        <th>Phone</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="customers().length === 0;">
+        <tr>
+          <td colspan="5" style="text-align:center;padding:3rem;color:#9ca3af;">
+            <p>Nenhum departamento cadastrado ainda.</p>
+          </td>
+        </tr>
+      </ng-container>
+
+      <ng-container *ngIf="customers().length > 0">
+        <tr *ngFor="let customer of customers(), let i = index">
+          <td class="td-name" (click)="openModalView(customer.cpf)">
+            <div class="td-name-container">
+
+              <div class="td-name-background-0" *ngIf="i == 0">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="35px" width="35px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xml:space="preserve">
+                  <path style="fill:#FFBAA8;" d="M67.155,244.034H55.649c-14.112,0-25.554-11.44-25.554-25.554v-24.344  c0-14.112,11.44-25.554,25.554-25.554h11.506c12.598,0,22.809,10.213,22.809,22.809v29.832  C89.965,233.821,79.753,244.034,67.155,244.034z"/>
+                  <path style="fill:#0BBBDA;" d="M109.541,330.996H10.52V283.9c0-22.017,17.849-39.866,39.866-39.866h19.288  c22.017,0,39.866,17.849,39.866,39.866V330.996z"/>
+                  <path style="fill:#FFBAA8;" d="M431.278,244.034h-11.506c-14.113,0-25.554-11.44-25.554-25.554v-24.344  c0-14.112,11.44-25.554,25.554-25.554h11.506c12.598,0,22.809,10.213,22.809,22.809v29.832  C454.089,233.821,443.876,244.034,431.278,244.034z"/>
+                  <g>
+                    <path style="fill:#0BBBDA;" d="M473.664,330.996h-99.021V283.9c0-22.017,17.849-39.866,39.866-39.866h19.288   c22.017,0,39.866,17.849,39.866,39.866V330.996z"/>
+                    <path style="fill:#0BBBDA;" d="M151.621,369.054v-56.282c0-32.391,29.553-49.181,62.115-49.181h56.713   c32.562,0,62.115,16.79,62.115,49.181v56.282H151.621z"/>
+                  </g>
+                  <path style="fill:#FFBAA8;" d="M245.511,263.591h-6.838c-21.643,0-34.979-17.544-34.979-39.187v-18.41  c0-21.643,13.336-39.187,34.979-39.187h6.838c21.643,0,34.979,17.544,34.979,39.187v18.41  C280.49,246.046,267.154,263.591,245.511,263.591z"/>
+                  <g>
+                    <polygon style="fill:#ECF0F1;" points="275.685,263.591 242.092,316.366 208.499,263.591  "/>
+                    <path style="fill:#ECF0F1;" d="M378.611,328.575c16.776-25.629,26.54-56.262,26.54-89.18c0-90.055-73.004-163.059-163.059-163.059   S79.033,149.341,79.033,239.396s73.004,163.059,163.059,163.059c31.919,0,61.689-9.18,86.833-25.03l123.286,123.286l49.268-49.268   L378.611,328.575z M242.092,355.115c-63.808,0-115.719-51.912-115.719-115.719s51.912-115.719,115.719-115.719   s115.719,51.912,115.719,115.719S305.9,355.115,242.092,355.115z"/>
+                  </g>
+                  <g>
+                    <path style="fill:#231F20;" d="M508.919,444.004L406.43,341.516h67.234c5.809,0,10.52-4.711,10.52-10.52v-47.097   c0-18.725-10.276-35.086-25.477-43.771c3.717-5.376,5.902-11.889,5.902-18.905v-29.831c0-18.378-14.952-33.329-33.33-33.329   h-11.506c-7.815,0-15.049,2.509-20.963,6.749c-27.947-58.489-87.689-98.996-156.719-98.996   c-68.639,0-128.097,40.049-156.243,98.005c-5.336-3.629-11.769-5.758-18.694-5.758H55.649c-19.891,0-36.074,16.183-36.074,36.073   v24.344c0,7.877,2.545,15.168,6.846,21.107C10.699,248.124,0,264.786,0,283.899v47.097c0,5.809,4.71,10.52,10.52,10.52h91.305   c31.596,43.28,82.699,71.459,140.268,71.459c29.986,0,59.261-7.693,85.186-22.32l117.494,117.495   c2.055,2.053,4.747,3.081,7.439,3.081s5.384-1.028,7.439-3.081l49.268-49.268C513.027,454.773,513.027,448.112,508.919,444.004z    M463.144,320.476h-67.571c10.825-20.448,17.412-42.808,19.419-65.922h18.805c16.182,0,29.346,13.165,29.346,29.346V320.476z    M419.773,179.103h11.506c6.776,0,12.29,5.512,12.29,12.289v29.831c0,6.776-5.513,12.29-12.29,12.29h-11.506   c-1.472,0-2.891-0.222-4.236-0.618c-0.605-16.344-3.478-32.114-8.317-47.01C409.911,181.804,414.53,179.103,419.773,179.103z    M40.615,194.136c0-8.29,6.744-15.033,15.034-15.033h11.506c4.264,0,8.025,2.184,10.23,5.49   c-5.147,15.432-8.178,31.821-8.757,48.823c-0.484,0.058-0.973,0.097-1.473,0.097H55.649c-8.29,0-15.034-6.744-15.034-15.034   C40.615,218.479,40.615,194.136,40.615,194.136z M21.04,320.476v-36.577c0-16.182,13.165-29.346,29.346-29.346h18.796   c2.055,23.638,8.865,45.932,19.471,65.922H21.04V320.476z M452.211,485.833L336.363,369.985c-2.031-2.03-4.725-3.081-7.442-3.081   c-1.934,0-3.88,0.531-5.607,1.621c-24.293,15.315-52.379,23.409-81.222,23.409c-84.11,0-152.539-68.429-152.539-152.539   S157.982,86.856,242.092,86.856s152.539,68.429,152.539,152.539c0,29.765-8.583,58.611-24.822,83.419   c-2.728,4.168-2.159,9.677,1.363,13.2l115.429,115.429L452.211,485.833z"/>
+                    <path style="fill:#231F20;" d="M242.092,113.156c-69.608,0-126.239,56.631-126.239,126.239s56.631,126.239,126.239,126.239   s126.239-56.631,126.239-126.239S311.7,113.156,242.092,113.156z M242.092,134.196c58.008,0,105.199,47.191,105.199,105.199   c0,16.732-3.933,32.561-10.913,46.62c-9.544-17.402-28.698-29.24-53.462-32.206c5.151-8.074,8.094-18.13,8.094-29.405v-18.41   c0-28.803-19.135-49.707-45.499-49.707h-6.838c-26.364,0-45.499,20.904-45.499,49.707v18.41c0,11.275,2.943,21.331,8.094,29.405   c-24.764,2.967-43.919,14.805-53.462,32.206c-6.98-14.06-10.913-29.888-10.913-46.62   C136.893,181.388,184.085,134.196,242.092,134.196z M214.214,224.405v-18.41c0-14.268,7.563-28.667,24.459-28.667h6.838   c16.896,0,24.459,14.399,24.459,28.667v18.41c0,14.268-7.563,28.667-24.459,28.667h-6.838   C221.777,253.072,214.214,238.673,214.214,224.405z M256.519,274.111l-14.427,22.664l-14.426-22.664H256.519z M242.092,344.595   c-31.805,0-60.356-14.188-79.663-36.566c2.466-19.947,20.521-30.536,40.74-33.219l30.048,47.207   c1.931,3.034,5.279,4.871,8.875,4.871c3.597,0,6.944-1.837,8.875-4.871l30.048-47.207c20.219,2.683,38.275,13.272,40.741,33.219   C302.448,330.406,273.897,344.595,242.092,344.595z"/>
+                    <path style="fill:#231F20;" d="M242.092,41.797c5.809,0,10.52-4.711,10.52-10.52V11.289c0-5.809-4.711-10.52-10.52-10.52   c-5.81,0-10.52,4.711-10.52,10.52v19.988C231.572,37.086,236.282,41.797,242.092,41.797z"/>
+                    <path style="fill:#231F20;" d="M336.158,67.001c1.657,0.956,3.465,1.412,5.249,1.412c3.636,0,7.172-1.887,9.121-5.262l9.994-17.311   c2.906-5.032,1.181-11.466-3.85-14.37c-5.034-2.906-11.467-1.18-14.37,3.85l-9.994,17.311   C329.402,57.663,331.126,64.097,336.158,67.001z"/>
+                    <path style="fill:#231F20;" d="M133.656,63.15c1.948,3.375,5.484,5.262,9.12,5.262c1.784,0,3.594-0.456,5.251-1.412   c5.032-2.905,6.756-9.339,3.85-14.37l-9.994-17.311c-2.906-5.032-9.339-6.757-14.37-3.85c-5.032,2.905-6.756,9.339-3.85,14.37   L133.656,63.15z"/>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="td-name-background-1" *ngIf="i == 1">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="35px" width="35px" version="1.1" id="Capa_1" viewBox="0 0 370.001 370.001" xml:space="preserve">
+                  <g>
+                    <g id="Guides_For_Artboard_19_">
+                    </g>
+                    <g id="Artwork_18_">
+                    </g>
+                    <g id="Layer_2_18_">
+                      <g>
+                        <path style="fill:#E74424;" d="M322.821,122.055h-74.882V47.17c0-26.056-21.114-47.17-47.17-47.17h-27.246h-4.297     c-26.05,0-47.175,21.114-47.175,47.17v74.885H47.163c-26.035,0-47.161,21.121-47.161,47.166v31.55     c0,26.049,21.126,47.163,47.161,47.163h74.889v74.887c0,26.056,21.125,47.18,47.175,47.18h4.297h27.246     c26.056,0,47.17-21.124,47.17-47.18v-74.887h74.882c26.061,0,47.177-21.114,47.177-47.163v-31.55     C369.998,143.176,348.882,122.055,322.821,122.055z M246.372,178.153c-2.844,17.322-23.532,36.792-40.196,52.469     c0,0-8.315,8.349-10.812,10.489c-1.873,1.612-5.951,4.854-10.36,4.854c-4.417,0-8.485-3.242-10.368-4.854     c-2.496-2.141-10.813-10.489-10.813-10.489c-16.665-15.677-37.351-35.138-40.196-52.469c-1.994-12.248-0.048-22.347,5.795-30.015     c5.896-7.742,14.867-12.159,27.431-13.504c1.218-0.122,2.31-0.179,3.414-0.179c8.875,0,17.85,3.307,24.729,8.901     c6.89-5.594,15.855-8.901,24.747-8.901c1.094,0,2.197,0.057,3.404,0.179c12.563,1.345,21.527,5.762,27.429,13.504     C246.421,155.806,248.366,165.905,246.372,178.153z"/>
+                        <path style="fill:#F7F1E6;" d="M213.147,134.634c-1.207-0.122-2.311-0.179-3.404-0.179c-8.892,0-17.857,3.307-24.747,8.901     c-6.88-5.594-15.854-8.901-24.729-8.901c-1.104,0-2.196,0.057-3.414,0.179c-12.563,1.345-21.535,5.762-27.431,13.504     c-5.843,7.668-7.789,17.768-5.795,30.015c2.846,17.331,23.531,36.792,40.196,52.469c0,0,8.316,8.349,10.813,10.489     c1.883,1.612,5.951,4.854,10.368,4.854c4.409,0,8.487-3.242,10.36-4.854c2.496-2.141,10.812-10.489,10.812-10.489     c16.664-15.677,37.353-35.146,40.196-52.469c1.994-12.248,0.049-22.347-5.796-30.015     C234.675,140.396,225.711,135.979,213.147,134.634z"/>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="td-name-background-2" *ngIf="i == 2">
+
+                <svg height="35px" width="35px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.001 512.001" xml:space="preserve" fill="#000000">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path style="fill:#C3E678;" d="M238.892,191.856h239.437c14.168,0,25.654,11.485,25.654,25.654v153.924 c0,14.168-11.485,25.654-25.654,25.654H341.508v28.204c0,5.37-6.493,8.06-10.289,4.262l-32.467-32.467h-59.859 c-14.168,0-25.654-11.485-25.654-25.654V217.509C213.238,203.342,224.724,191.856,238.892,191.856z"></path>
+                    <path style="fill:#A5D76E;" d="M213.238,217.51v153.924c0,4.893,1.443,9.42,3.82,13.311 c62.891-25.271,107.347-86.717,107.347-158.644c0-11.729-1.192-23.179-3.441-34.245h-82.072 C224.724,191.856,213.238,203.342,213.238,217.51z"></path>
+                    <path style="fill:#a366ff;" d="M298.751,226.061c0-80.287-65.085-145.372-145.372-145.372S8.007,145.774,8.007,226.061 c0,70.326,49.942,128.979,116.292,142.452l43.785,43.785c4.04,4.04,10.949,1.179,10.949-4.535v-38.727 C247.063,356.902,298.751,297.58,298.751,226.061z"></path>
+                    <circle style="fill:#a366ff;" cx="153.378" cy="226.097" r="111.167"></circle>
+                    <path d="M478.329,183.82H300.803c-7.9-27.511-23.412-52.593-45.133-72.042c-32.921-29.481-75.446-43.016-119.749-38.119 C64.871,81.518,8.048,138.871,0.809,210.032c-3.953,38.846,6.67,77.251,29.909,108.14c22.271,29.6,54.229,50.063,90.203,57.816 l37.845,37.844c3.177,3.178,7.395,4.861,11.698,4.86c2.138,0,4.296-0.416,6.358-1.27c6.214-2.574,10.227-8.582,10.227-15.307V375.62 c6.223-1.391,12.285-3.155,18.172-5.257v1.05c0,18.566,15.105,33.671,33.671,33.671h56.539l30.119,30.119 c2.694,2.694,6.269,4.121,9.916,4.121c1.812,0,3.641-0.353,5.389-1.076c5.267-2.182,8.67-7.275,8.67-12.976v-20.188H478.33 c18.566,0,33.671-15.105,33.671-33.671V217.489C512,198.924,496.895,183.82,478.329,183.82z M177.625,361.164 c-3.825,0.682-6.609,4.007-6.609,7.892v33.06c0,0.191,0,0.357-0.33,0.494c-0.33,0.135-0.446,0.019-0.583-0.115l-39.539-39.539 c-1.121-1.121-2.55-1.886-4.106-2.194c-33.084-6.575-62.535-25.124-82.928-52.229c-20.805-27.654-30.313-62.059-26.771-96.878 c3.121-30.685,17.014-59.873,39.119-82.19c22.109-22.32,51.16-36.479,81.805-39.868c5.332-0.59,10.628-0.882,15.885-0.882 c33.893,0,65.884,12.154,91.405,35.007c29.082,26.042,45.761,63.35,45.761,102.359C290.735,292.663,243.166,349.473,177.625,361.164 z M495.966,371.414c0,9.725-7.912,17.637-17.637,17.637H341.508c-4.427,0-8.017,3.589-8.017,8.017v23.403l-29.071-29.071 c-1.503-1.504-3.542-2.348-5.668-2.348h-59.859c-9.725,0-17.637-7.912-17.637-17.637v-7.818 c51.32-25.224,85.513-77.856,85.513-137.515c0-8.852-0.781-17.622-2.28-26.228h173.841c9.725,0,17.637,7.912,17.637,17.637V371.414z "></path> <path d="M438.455,246.027l-79.845,79.845l-37.069-37.069c-3.131-3.131-8.207-3.131-11.337,0c-3.131,3.131-3.131,8.207,0,11.337 l42.737,42.737c1.565,1.565,3.617,2.348,5.668,2.348c2.051,0,4.104-0.782,5.668-2.348l85.513-85.513 c3.131-3.131,3.131-8.207,0-11.337C446.662,242.896,441.586,242.896,438.455,246.027z"></path> <path d="M153.385,286.464c-0.003,0-0.007,0-0.011,0c-4.427,0-8.022,3.595-8.022,8.022c0,0.001,0,0.003,0,0.005 c0,0.002,0,0.003,0,0.005c0,4.427,3.595,8.022,8.022,8.022c0.003,0,0.007,0,0.011,0c4.427,0,8.022-3.595,8.022-8.022 c0-0.001,0-0.003,0-0.005c0-0.002,0-0.003,0-0.005C161.407,290.059,157.812,286.464,153.385,286.464z"></path> <path d="M153.375,149.654c-27.994,0.002-50.769,22.78-50.769,50.773c0,4.427,3.589,8.017,8.017,8.017 c4.427,0,8.017-3.589,8.017-8.017c0-19.154,15.583-34.739,34.736-34.74c9.039,0,17.697,3.679,24.38,10.362 s10.363,15.342,10.363,24.381c-0.001,15.227-10.176,28.911-24.742,33.278c-10.776,3.231-18.014,12.886-18.014,24.024v2.554 c0,4.427,3.589,8.017,8.017,8.017c4.427,0,8.017-3.589,8.017-8.017v-2.554c0-4.002,2.647-7.485,6.587-8.666 c21.295-6.386,36.169-26.385,36.17-48.636c0.001-13.322-5.347-26.008-15.059-35.719 C179.382,155.001,166.697,149.653,153.375,149.654z"></path> </g>
+                </svg>
+              </div>
+
+              <div class="td-name-background-3" *ngIf="i == 3">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" viewBox="0 0 56 56" xml:space="preserve" width="35px" height="35px" fill="#000000">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                  <g id="SVGRepo_iconCarrier"> <g> <path style="fill:#FFFFFF;" d="M43,6H13c-1.302,0-2.402,0-2.816,2H39c2.757,0,5,1.951,5,4.708v36.816c1.161-0.414,2-1.514,2-2.816 v-38C46,7.053,44.654,6,43,6z"/> <path style="fill:#FFFFFF;" d="M47,2H17c-1.302,0-2.402,0-2.816,2H43c2.757,0,5,1.951,5,4.708v36.816c1.161-0.414,2-1.514,2-2.816 v-38C50,3.053,48.654,2,47,2z"/> <path style="fill:#ffe066;" d="M42,13c0-1.657-1.343-3-3-3H9c-1.657,0-3,1.343-3,3v38c0,1.657,1.343,3,3,3h30c1.657,0,3-1.343,3-3 V13z M21.707,14.414l-5,5c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293l-2-2L14.707,16L16,17.293L20.293,13 L21.707,14.414z M22,50.708C22,51.26,21.552,52,21,52H11c-0.552,0-1-0.74-1-1.292v-10C10,40.155,10.448,40,11,40h7v2h-6v8h8v-4h2 V50.708z M20.293,41l1.414,1.414l-5,5c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293l-2-2L14.707,44L16,45.293 L20.293,41z M22,36.708C22,37.26,21.552,38,21,38H11c-0.552,0-1-0.74-1-1.292v-10C10,26.155,10.448,26,11,26h7v2h-6v8h8v-4h2 V36.708z M20.293,27l1.414,1.414l-5,5c-0.195,0.195-0.451,0.293-0.707,0.293s-0.512-0.098-0.707-0.293l-2-2L14.707,30L16,31.293 L20.293,27z M22,22.708C22,23.26,21.552,24,21,24H11c-0.552,0-1-0.74-1-1.292v-10C10,12.155,10.448,12,11,12h7v2h-6v8h8v-4h2 V22.708z M38,51H24v-2h14V51z M38,47H24v-2h14V47z M38,43H24v-2h14V43z M38,37H24v-2h14V37z M38,33H24v-2h14V33z M38,29H24v-2h14 V29z M38,23H24v-2h14V23z M38,19H24v-2h14V19z M38,15H24v-2h14V15z"/> <g> <path d="M47,0H17c-2.446,0-4.479,1.622-4.908,3.946c-2.028,0.375-3.625,1.899-4,3.927C5.768,8.302,4,10.262,4,12.708v38 C4,53.464,6.243,56,9,56h30c2.446,0,4.479-1.914,4.908-4.238c2.028-0.375,3.625-2.045,4-4.073C50.232,47.259,52,45.153,52,42.708 v-38C52,1.951,49.757,0,47,0z M42,51c0,1.657-1.343,3-3,3H9c-1.657,0-3-1.343-3-3V13c0-1.657,1.343-3,3-3h30c1.657,0,3,1.343,3,3 V51z M46,46.708c0,1.302-0.839,2.402-2,2.816V12.708C44,9.951,41.757,8,39,8H10.184C10.598,6,11.698,6,13,6h30 c1.654,0,3,1.053,3,2.708V46.708z M50,42.708c0,1.302-0.839,2.402-2,2.816V8.708C48,5.951,45.757,4,43,4H14.184 C14.598,2,15.698,2,17,2h30c1.654,0,3,1.053,3,2.708V42.708z"/> <path d="M14.707,16l-1.414,1.414l2,2c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l5-5L20.293,13L16,17.293 L14.707,16z"/> <path d="M20,22h-8v-8h6v-2h-7c-0.552,0-1,0.155-1,0.708v10C10,23.26,10.448,24,11,24h10c0.552,0,1-0.74,1-1.292V18h-2V22z"/> <path d="M14.707,30l-1.414,1.414l2,2c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l5-5L20.293,27L16,31.293 L14.707,30z"/> <path d="M20,36h-8v-8h6v-2h-7c-0.552,0-1,0.155-1,0.708v10C10,37.26,10.448,38,11,38h10c0.552,0,1-0.74,1-1.292V32h-2V36z"/> <path d="M14.707,44l-1.414,1.414l2,2c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l5-5L20.293,41L16,45.293 L14.707,44z"/> <path d="M20,50h-8v-8h6v-2h-7c-0.552,0-1,0.155-1,0.708v10C10,51.26,10.448,52,11,52h10c0.552,0,1-0.74,1-1.292V46h-2V50z"/> <rect x="24" y="13" width="14" height="2"/> <rect x="24" y="17" width="14" height="2"/> <rect x="24" y="21" width="14" height="2"/> <rect x="24" y="27" width="14" height="2"/> <rect x="24" y="31" width="14" height="2"/> <rect x="24" y="35" width="14" height="2"/> <rect x="24" y="41" width="14" height="2"/> <rect x="24" y="45" width="14" height="2"/> <rect x="24" y="49" width="14" height="2"/> </g> </g> </g>
+                </svg>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:5px;">
+                <strong>{{ customer.name }}</strong>
+              </div>
+
+            </div>
+          </td>
+          <td data-label="CPF" (click)="openModalView(customer.cpf)">
+            <strong>{{ customer.cpf }}</strong>
+          </td>
+
+          <td data-label="RG" (click)="openModalView(customer.cpf)">
+            <strong>{{ customer.rg }}</strong>
+          </td>
+
+          <td data-label="Phone" (click)="openModalView(customer.cpf)">
+            <strong>{{ customer.phone }}</strong>
+          </td>
+
+          <td data-label="Email" (click)="openModalView(customer.cpf)">
+            <strong>{{ customer.email }}</strong>
+          </td>
+
+          <td data-label="buttons">
+
+            <div style="display:flex;align-items:center; gap:10px;">
+              <button type="button" class="button-department-update" (click)="openModalUpdate(customer.cpf)">
+                <div style="display:flex;align-items:center;gap:5px;">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
+                    <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8" fill="none" stroke="#046af0e7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    <polygon fill="none" points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8" stroke="#046af0e7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  </svg>
+
+                  <span>Editar</span>
+                </div>
+              </button>
+
+              <div style="position: relative;">
+                <div class="button-menu-table" (click)="openDropDown(i); $event.stopPropagation()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12Z" fill="#1C274C"/>
+                    <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="#1C274C"/>
+                    <path d="M21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z" fill="#1C274C"/>
+                  </svg>
+                </div>
+
+                <div class="drop-down-delete" *ngIf="dropDown === i" (click)="$event.stopPropagation()">
+                  <div style="display:flex;flex-direction:column;">
+                    <button type="button" class="button-department-delete" (click)="openModalDelete(customer.cpf)">
+                      <div style="display:flex;align-items:center; justify-content:center; gap:5px; color:#046af0e7;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
+                          <path d="M20.5001 6H3.5" stroke="#eb3414" stroke-width="1.5" stroke-linecap="round"/>
+                          <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#eb3414" stroke-width="1.5"/>
+                          <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#eb3414" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <span>Excluir</span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <span class="pagination-info">
+      Mostrando {{ getStartIndex() }} - {{ getEndIndex() }} de {{ totalElements() }}
+    </span>
+
+    <div class="pagination-buttons">
+      <!-- PREV -->
+      <button
+        class="page-btn"
+        (click)="previousPage()"
+        [disabled]="page() === 0"
+        >
+        <svg viewBox="0 0 24 24">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <!-- PAGES -->
+      <button
+        *ngFor="let p of getPagesArray()"
+        class="page-btn"
+        [class.active]="p === page()"
+        (click)="goToPage(p)">
+
+        {{ p + 1 }}
+      </button>
+      <!-- NEXT -->
+      <button
+        class="page-btn"
+        (click)="nextPage()"
+        [disabled]="page() + 1 >= totalPages()"
+        >
+        <svg viewBox="0 0 24 24">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REGISTER -->
+<div class="modal-register-container" *ngIf="modalRegister" (click)="closeModalRegister()">
+  <div class="modal-register" onclick="event.stopPropagation()">
+
+    <div class="modal-register-header-container">
+      <div class="modal-register-header">
+        <div class="modal-register-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 16 16" fill="none">
+            <g fill="#0e90e6dc">
+            <path d="M6.834.33a2.25 2.25 0 012.332 0l5.25 3.182A2.25 2.25 0 0115.5 5.436V6A.75.75 0 0114 6v-.564a.75.75 0 00-.361-.642l-5.25-3.181a.75.75 0 00-.778 0l-5.25 3.181A.75.75 0 002 5.436v5.128a.75.75 0 00.361.642l4.028 2.44a.75.75 0 11-.778 1.283l-4.027-2.44A2.25 2.25 0 01.5 10.563V5.436a2.25 2.25 0 011.084-1.924L6.834.33z"/>
+            <path fill-rule="evenodd" d="M11.749 7.325l.001-.042v-.286a.75.75 0 00-1.5 0v.286l.001.042a3.73 3.73 0 00-1.318.546.76.76 0 00-.03-.03l-.201-.203a.75.75 0 00-1.06 1.06l.201.203.03.028c-.26.394-.45.84-.547 1.319a.878.878 0 00-.04-.001H7a.75.75 0 000 1.5h.286l.038-.001c.097.48.286.926.547 1.32a.71.71 0 00-.028.027l-.202.202a.75.75 0 001.06 1.06l.203-.202a.695.695 0 00.025-.026c.395.261.842.45 1.322.548l-.001.036v.286a.75.75 0 001.5 0v-.286-.036c.48-.097.926-.287 1.32-.548l.026.026.202.203a.75.75 0 001.06-1.061l-.201-.202a.667.667 0 00-.028-.026c.261-.395.45-.842.547-1.321H15a.75.75 0 000-1.5h-.286l-.04.002a3.734 3.734 0 00-.547-1.319l.03-.028.202-.202a.75.75 0 00-1.06-1.061l-.203.202-.029.03a3.73 3.73 0 00-1.318-.545zM11 8.75A2.247 2.247 0 008.75 11 2.247 2.247 0 0011 13.25 2.247 2.247 0 0013.25 11 2.247 2.247 0 0011 8.75z" clip-rule="evenodd"/>
+            </g>
+          </svg>
+        </div>
+        <div class="modal-register-header-text">
+          <h2>Cadastrar departamento</h2>
+          <span >Preencha os campos abaixo para cadastrar um novo departamento.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalRegister()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="registerDepartment()">
+      <div class="form-group">
+        <label class="form-label">Nome do departamento</label>
+        <input
+          formControlName="name"
+          type="text"
+          class="form-input"
+          placeholder="Ex: RH"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Descrição</label>
+        <textarea
+          formControlName="description"
+          rows="7"
+          class="form-textarea"
+          placeholder="Breve descrição do departamento..."></textarea>
+      </div>
+
+      <div class="separator"></div>
+
+      <div style="display: flex; justify-content: end; gap: 5px;">
+        <button type="submit" class="button-submit">Salvar</button>
+        <button type="button" class="button-back" (click)="closeModalRegister()">Voltar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL UPDATE -->
+<div class="modal-update-container" *ngIf="modalUpdate" (click)="closeModalUpdate()">
+  <div class="modal-update" onclick="event.stopPropagation()">
+
+    <div class="modal-update-header-container">
+      <div class="modal-update-header">
+        <div class="modal-update-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 64 64" stroke-width="3" stroke="#419717" fill="none">
+            <polyline points="45.56 46.83 45.56 56.26 7.94 56.26 7.94 20.6 19.9 7.74 45.56 7.74 45.56 21.29"/>
+            <polyline points="19.92 7.74 19.9 20.6 7.94 20.6"/>
+            <line x1="13.09" y1="47.67" x2="31.1" y2="47.67"/>
+            <line x1="13.09" y1="41.14" x2="29.1" y2="41.14"/>
+            <line x1="13.09" y1="35.04" x2="33.1" y2="35.04"/>
+            <line x1="13.09" y1="28.94" x2="39.1" y2="28.94"/>
+            <path d="M34.45,43.23l.15,4.3a.49.49,0,0,0,.62.46l4.13-1.11a.54.54,0,0,0,.34-.23L57.76,22.21a1.23,1.23,0,0,0-.26-1.72l-3.14-2.34a1.22,1.22,0,0,0-1.72.26L34.57,42.84A.67.67,0,0,0,34.45,43.23Z"/>
+            <line x1="50.2" y1="21.7" x2="55.27" y2="25.57"/>
+          </svg>
+        </div>
+        <div class="modal-update-header-text">
+          <h2>Alterar departamento</h2>
+          <span >Altere as informações do departamento abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalUpdate()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form [formGroup]="updateForm" (ngSubmit)="updateDepartment()">
+
+      <div style="display: flex; gap: 18px; ">
+
+        <div style="flex: 1;">
+          <div class="form-group">
+            <label class="form-label">Nome do departamento</label>
+            <input
+              formControlName="name"
+              type="text"
+              class="form-input"
+              placeholder="Ex: RH"
+              required>
+          </div>
+        </div>
+
+        <div style="flex: 1;">
+          <label class="form-label">Status</label>
+
+          <div class="status-container">
+            <label class="switch">
+              <input type="checkbox" formControlName="active" checked>
+              <span class="slider"></span>
+            </label>
+
+            <span class="status-text">Ativo</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Descrição</label>
+        <textarea
+          formControlName="description"
+          rows="8"
+          class="form-textarea"
+          placeholder="Breve descrição do departamento..."></textarea>
+      </div>
+
+      <div class="separator"></div>
+
+      <div style="display: flex; justify-content: end; gap: 5px;">
+        <button type="submit" class="button-submit">Salvar Alterações</button>
+        <button type="button" class="button-back" (click)="closeModalUpdate()">Voltar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL DELETE -->
+<div class="modal-delete-container" *ngIf="modalDelete" (click)="closeModalDelete()">
+  <div class="modal-delete" onclick="event.stopPropagation()">
+
+    <div class="modal-delete-header-container">
+      <div class="modal-delete-header">
+        <div class="modal-delete-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24" fill="none">
+            <path d="M20.5001 6H3.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9.5 11L10 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.5 11L14 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#da1414" stroke-width="1.5"/>
+            <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="modal-delete-header-text">
+          <h2>Deletar departamento</h2>
+          <span>Delete o departamento escolhido abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalDelete()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-delete-content">
+      <p>Tem certeza que deseja deletar o departamento <strong>{{customerInfo()?.name}}</strong>?</p>
+      <p>Deleta-lo, apagará todos os seus serviços.</p>
+    </div>
+
+    <div class="separator"></div>
+    <div style="display: flex; justify-content: end; gap: 5px;">
+      <button type="button" class="button-delete" (click)="deleteDepartment(this.customerInfo()?.customerId ?? '')">Excluir</button>
+      <button type="button" class="button-back" (click)="closeModalDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL VIEW -->
+<div class="modal-view-container" *ngIf="modalView" (click)="closeModalView()">
+  <div class="modal-view" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': customerInfo()?.updatedAt != null}">
+
+    <div class="modal-view-header-container">
+      <div class="modal-view-header">
+        <div class="modal-view-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#0957b1" width="40px" height="40px" viewBox="0 0 1920 1920">
+              <path d="M960 1489.82c-348.474 0-668.545-202.323-841.298-529.918C291.455 632.306 611.526 429.984 960 429.984s668.545 202.322 841.298 529.918C1628.545 1287.497 1308.474 1489.82 960 1489.82Zm948.342-553.552C1720.645 558.648 1357.332 324 960 324c-397.333 0-760.645 234.648-948.342 612.268L0 959.902l11.658 23.634c187.697 377.62 551.01 612.268 948.342 612.268 397.333 0 760.645-234.648 948.342-612.268L1920 959.902l-11.658-23.634ZM960 1171.869c-116.9 0-211.967-95.067-211.967-211.967 0-116.9 95.067-211.967 211.967-211.967 116.9 0 211.967 95.067 211.967 211.967 0 116.9-95.067 211.967-211.967 211.967m0-529.918c-175.297 0-317.951 142.654-317.951 317.951 0 175.297 142.654 317.95 317.951 317.95 175.297 0 317.951-142.653 317.951-317.95S1135.297 641.951 960 641.951" fill-rule="evenodd"/>
+          </svg>
+        </div>
+        <div class="modal-view-header-text">
+          <h2>Detalhes do departamento</h2>
+          <span >Vizualize as informações do departamento abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalView()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+
+      <div class="info-row">
+        <span class="label">Nome do departamento</span>
+        <span class="value">{{customerInfo()?.name}}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Descrição</span>
+        <span class="value">{{customerInfo()?.name}}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Dia de criação</span>
+        <span class="value">{{customerInfo()?.createdAt}}</span>
+      </div>
+
+      <div class="info-row" *ngIf="customerInfo()?.updatedAt != null">
+        <span class="label">Última atualização</span>
+        <span class="value">{{customerInfo()?.updatedAt}}</span>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
+      <button type="button" class="button-back" (click)="closeModalView()">Fechar</button>
+    </div>
+
   </div>
 </div>

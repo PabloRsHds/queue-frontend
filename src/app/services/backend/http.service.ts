@@ -18,6 +18,8 @@ import { RequestUserDto } from '../../dtos/users/RequestUserDto';
 import { ResponseServicesForCreatedUser } from '../../dtos/services/ResponseServicesForCreatedUser';
 import { ResponseUserInfoDto } from '../../dtos/users/ResponseUserInfoDto';
 import { UpdateUserDto } from '../../dtos/users/UpdateUserDto';
+import { ResponseAllCustomersDto } from '../../dtos/customer/ResponseAllCustomersDto';
+import { ResponseCustomerInfoDto } from '../../dtos/customer/ResponseCustomerInfoDto';
 
 @Injectable({
   providedIn: 'root'
@@ -117,5 +119,20 @@ export class HttpService {
 
   public getUserStatistics(): Observable<ResponseUserStatisticsDto> {
     return this.http.get<ResponseUserStatisticsDto>(`${this.API_URL}/users/statistics`);
+  }
+
+  // CUSTOMERS
+  public getCustomerById(customerId: string): Observable<ResponseCustomerInfoDto> {
+    return this.http.get<ResponseCustomerInfoDto>(`${this.API_URL}/customers/${customerId}`);
+  }
+
+  public getAllCustomers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllCustomersDto>> {
+    return this.http.get<PageResponse<ResponseAllCustomersDto>>(
+      `${this.API_URL}/customers?page=${page}&size=${size}&search=${search ?? ''}`
+    );
+  }
+
+  public getCustomerStatistics(): Observable<ResponseUserStatisticsDto> {
+    return this.http.get<ResponseUserStatisticsDto>(`${this.API_URL}/customers/statistics`);
   }
 }

@@ -1,116 +1,171 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SchedulingStateService } from '../../services/states/scheduling/scheduling-state.service';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-scheduling',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './scheduling.component.html',
   styleUrl: './scheduling.component.css'
 })
-export class SchedulingComponent {
+export class SchedulingComponent implements OnInit{
 
-  sidebarOpen = false;
-  ticketModalOpen = false;
-
-  currentPage: 'dashboard' | 'agendamentos' = 'dashboard';
-
-  breadcrumb = 'Início';
-
-  selectedAppointment: any = null;
-
-  appointments = [
-    {
-      date: '24/05/2025',
-      time: '09:00',
-      name: 'João Silva',
-      initials: 'JS',
-      email: 'joao.silva@email.com',
-      phone: '(11) 99999-9999',
-      service: 'Atendimento ao Cliente',
-      dept: 'Atendimento ao Cliente',
-      guiche: 'Guichê 01',
-      status: 'Confirmado',
-      statusClass: 'badge-green',
-      ticket: 'A123',
-      ticketBg: '#dcfce7',
-      ticketColor: '#16a34a',
-      color: '#3b82f6'
-    },
-
-    {
-      date: '24/05/2025',
-      time: '09:30',
-      name: 'Maria Oliveira',
-      initials: 'MO',
-      email: 'maria.oliveira@email.com',
-      phone: '(11) 98888-8888',
-      service: 'Serviços Financeiros',
-      dept: 'Financeiro',
-      guiche: 'Guichê 02',
-      status: 'Confirmado',
-      statusClass: 'badge-green',
-      ticket: 'F045',
-      ticketBg: '#dcfce7',
-      ticketColor: '#16a34a',
-      color: '#9333ea'
-    },
-
-    {
-      date: '24/05/2025',
-      time: '10:00',
-      name: 'Carlos Santos',
-      initials: 'CS',
-      email: 'carlos.santos@email.com',
-      phone: '(11) 97777-7777',
-      service: 'Suporte Técnico',
-      dept: 'Suporte',
-      guiche: 'Guichê 03',
-      status: 'Pendente',
-      statusClass: 'badge-orange',
-      ticket: '-',
-      ticketBg: '#f1f5f9',
-      ticketColor: '#94a3b8',
-      color: '#16a34a'
-    }
-  ];
-
-  navigateTo(page: 'dashboard' | 'agendamentos'): void {
-
-    this.currentPage = page;
-
-    if (page === 'dashboard') {
-      this.breadcrumb = 'Início';
-    }
-
-    if (page === 'agendamentos') {
-      this.breadcrumb = 'Agendamentos';
-    }
-
-    this.sidebarOpen = false;
+  ngOnInit() {
+    this.customerState.loadCustomers();
+    this.customerState.loadStatistics();
   }
 
-  toggleSidebar(): void {
-    this.sidebarOpen = !this.sidebarOpen;
+  // ==== Injections ====
+  private customerState = inject(SchedulingStateService);
+
+  // Variables
+  dropDown: number | null = null;
+  itemsPerPage = 4;
+
+  modalRegister = false;
+  modalUpdate = false;
+  modalDelete = false;
+  modalView = false;
+
+  // Form
+  registerForm!: FormGroup;
+  updateForm!: FormGroup;
+
+  // ==== STATES ====
+  public customers = this.customerState.customers;
+  public customerInfo = this.customerState.customerInfo;
+  public page = this.customerState.page;
+  public totalPages = this.customerState.totalPages;
+  public totalElements = this.customerState.totalElements;
+
+  // ====== MODALS ========
+
+  public openModalRegister() {
+
   }
 
-  openTicketModal(appt: any): void {
-    this.selectedAppointment = appt;
-    this.ticketModalOpen = true;
+  public openModalUpdate(customerId: string) {
+
   }
 
-  closeModal(event?: Event): void {
+  public openModalDelete(customerId: string) {
 
-    if (event) {
-      event.stopPropagation();
+  }
+
+  public openModalView(customerId: string) {
+
+  }
+
+  public closeModalRegister() {
+
+  }
+
+  public closeModalUpdate() {
+
+  }
+
+  public closeModalDelete() {
+
+  }
+
+  public closeModalView() {
+
+  }
+
+  // ===================== SEARCH =====================
+  onSearch(event: any) {
+    this.customerState.setSearch(event.target.value);
+  }
+
+  // ===================== PAGINATION =====================
+  nextPage() {
+    this.customerState.nextPage();
+  }
+
+  previousPage() {
+    this.customerState.previousPage();
+  }
+
+  goToPage(page: number) {
+    this.customerState.goToPage(page);
+  }
+
+  getStartIndex(): number {
+    return this.page() * this.itemsPerPage + 1;
+  }
+
+  getEndIndex(): number {
+    return Math.min(
+      (this.page() + 1) * this.itemsPerPage,
+      this.totalElements()
+    );
+  }
+
+  getPagesArray(): number[] {
+    const total = this.totalPages();
+    const current = this.page();
+
+    const maxVisible = 4;
+
+    let start = current - Math.floor(maxVisible / 2);
+    let end = current + Math.floor(maxVisible / 2) + 1;
+
+    if (start < 0) {
+      start = 0;
+      end = Math.min(maxVisible, total);
     }
 
-    this.ticketModalOpen = false;
+    if (end > total) {
+      end = total;
+      start = Math.max(0, total - maxVisible);
+    }
+
+    return Array.from(
+      { length: end - start },
+      (_, i) => start + i
+    );
   }
 
-  generateTicket(): void {
+  // DropDown
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
 
-    alert('Ticket gerado com sucesso!');
+    const target = event.target as HTMLElement;
 
-    this.ticketModalOpen = false;
+    // verifica se clicou dentro do menu
+    const clickedInsideDropdown = target.closest('.button-menu-table')
+      || target.closest('.drop-down-delete');
+
+    if (!clickedInsideDropdown) {
+      this.closeDropDown();
+    }
+  }
+  openDropDown(index: number) {
+
+    if (this.dropDown === index) {
+      this.dropDown = null;
+      return;
+    }
+
+    this.dropDown = index;
+  }
+
+  closeDropDown() {
+    this.dropDown = null;
+  }
+
+  // Register
+
+  registerDepartment() {
+
+  }
+
+  updateDepartment() {
+
+  }
+
+  deleteDepartment(customerId: string) {
+
   }
 }
