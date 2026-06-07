@@ -12,97 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TableUsersComponent implements OnInit {
 
-  ngOnInit(){
-    this.userState.loadingAllUsers();
-    this.userState.loadStatistics();
-    this.initRegisterForm();
-    this.initUpdateForm();
-  }
-
-  constructor() {
-
-    effect(() => {
-
-      if (this.userState.registerStatus() === 'success') {
-        this.snackBar.open(this.userState.registerMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-success']
-        });
-        this.userState.resetStatus();
-        this.registerForm.reset();
-        this.currentStep = 1;
-        this.modalRegister = false;
-      }
-
-      if (this.userState.registerStatus() === 'error') {
-        this.snackBar.open(this.userState.registerMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-error']
-        });
-        this.userState.resetStatus();
-      }
-    })
-
-
-    effect(() => {
-
-      if (this.userState.deleteStatus() === 'success') {
-        this.snackBar.open(this.userState.deleteMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-success']
-        });
-        this.userState.resetStatus();
-        this.modalDelete = false;
-      }
-
-      if (this.userState.deleteStatus() === 'error') {
-        this.snackBar.open(this.userState.deleteMessage(), 'Fechar', {
-          duration: 3000,
-          panelClass: ['snackbar-error']
-        });
-        this.userState.resetStatus();
-      }
-    })
-
-    effect(() => {
-
-      if (this.selectedRole() === 'RECEPTION') {
-        this.registerForm.patchValue({
-          serviceIds: []
-        });
-
-        this.selectedServices = [];
-        this.selectedServiceNames = [];
-      }
-    })
-
-    effect(() => {
-
-      if (this.userInfo() != null && this.modalUpdate) {
-
-        this.updateForm.patchValue({
-          name: this.userInfo()?.name,
-          surname: this.userInfo()?.surname,
-          phone: this.userInfo()?.phone,
-          email: this.userInfo()?.email,
-          username: this.userInfo()?.username,
-          role: this.userInfo()?.role,
-          active: this.userInfo()?.active,
-          counterNumber: this.userInfo()?.counterNumber
-        });
-      }
-    })
-  }
-
-  getaa(names: string[]) {
-
-    this.userInfo()?.serviceNames.forEach(serviceName => {
-      if (names.includes(serviceName)) {
-        this.selectedServiceNames.push(serviceName);
-      }
-    })
-  }
-
   // Injections
   private userState = inject(UserStateService);
   private serviceState = inject(ServiceManagementService)
@@ -169,6 +78,130 @@ export class TableUsersComponent implements OnInit {
   // ========= Selectd services ==========
   selectedServices: string[] = [];
   selectedServiceNames: string[] = [];
+
+  ngOnInit(){
+    this.userState.loadingAllUsers();
+    this.userState.loadStatistics();
+    this.initRegisterForm();
+    this.initUpdateForm();
+  }
+
+  constructor() {
+
+    effect(() => {
+
+      if (this.userState.registerStatus() === 'success') {
+        this.snackBar.open(this.userState.registerMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.userState.resetStatus();
+        this.registerForm.reset();
+        this.currentStep = 1;
+        this.modalRegister = false;
+      }
+
+      if (this.userState.registerStatus() === 'error') {
+        this.snackBar.open(this.userState.registerMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.userState.resetStatus();
+      }
+    })
+
+    effect(() => {
+
+      if (this.userState.updateStatus() === 'success') {
+        this.snackBar.open(this.userState.updateMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.userState.resetStatus();
+        this.userInfo.set(null);
+        this.modalUpdate = false;
+        this.selectedServices = [];
+      }
+
+      if (this.userState.updateStatus() === 'error') {
+        this.snackBar.open(this.userState.updateMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.userState.resetStatus();
+      }
+    })
+
+
+    effect(() => {
+
+      if (this.userState.deleteStatus() === 'success') {
+        this.snackBar.open(this.userState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.userState.resetStatus();
+        this.userInfo.set(null);
+        this.modalDelete = false;
+      }
+
+      if (this.userState.deleteStatus() === 'error') {
+        this.snackBar.open(this.userState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.userState.resetStatus();
+      }
+    })
+
+    effect(() => {
+
+      if (this.selectedRole() === 'RECEPTION') {
+        this.registerForm.patchValue({
+          serviceIds: []
+        });
+
+        this.selectedServices = [];
+        this.selectedServiceNames = [];
+      }
+    })
+
+    effect(() => {
+
+      if (this.userInfo() != null && this.modalUpdate) {
+
+        this.selectedRole.set(this.userInfo()?.role ?? '');
+
+        this.updateForm.patchValue({
+          userId: this.userInfo()?.userId,
+          name: this.userInfo()?.name,
+          surname: this.userInfo()?.surname,
+          phone: this.userInfo()?.phone,
+          email: this.userInfo()?.email,
+          username: this.userInfo()?.username,
+          role: this.userInfo()?.role,
+          active: this.userInfo()?.active,
+          counterNumber: this.userInfo()?.counterNumber
+        });
+      }
+    })
+
+
+    effect(() => {
+
+      if (this.userInfo() != null && this.modalUpdate) {
+
+          this.services().forEach(service => {
+          this.userInfo()?.serviceNames.forEach(serviceName => {
+
+            if (service.name === serviceName) {
+              this.selectedServices.push(service.serviceManagementId);
+            }
+          })
+        });
+      }
+    })
+  }
 
   public toggleService(serviceId: string, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
@@ -307,6 +340,10 @@ export class TableUsersComponent implements OnInit {
       role: role
     });
 
+    this.updateForm.patchValue({
+      role: role
+    });
+
     this.selectedPermissions = [...this.permissionsByRole[role]];
   }
 
@@ -399,15 +436,18 @@ export class TableUsersComponent implements OnInit {
   }
 
   public openModalUpdate(userId: string) {
-    this.modalUpdate = true;
-    this.serviceState.loadServicesForCreateUser();
     this.userState.getUserById(userId);
+    this.serviceState.loadServicesForCreateUser();
+    this.modalUpdate = true;
   }
 
   public closeModalUpdate(): void {
+    console.log('fechando')
     this.modalUpdate = false;
     this.currentStep = 1;
     this.userState.resetInfoUser();
+    this.selectedRole.set('');
+    this.selectedServices = [];
   }
 
   public openModalDelete(userId: string): void {
@@ -421,12 +461,12 @@ export class TableUsersComponent implements OnInit {
     this.userState.resetInfoUser();
   }
 
-  openModalView(userId: string) {
+  public openModalView(userId: string) {
     this.userState.getUserById(userId);
     this.modalView = true;
   }
 
-  closeModalView() {
+  public closeModalView() {
     this.modalView = false;
     this.userState.resetInfoUser();
   }
@@ -528,16 +568,16 @@ export class TableUsersComponent implements OnInit {
 
   // Register User
   registerUser() {
-    console.log(this.registerForm.value);
-    console.log(this.selectedServices);
     this.userState.registerUser({...this.registerForm.value, serviceIds: this.selectedServices});
   }
 
   // Update User
   updateUser() {
-
+    if (this.updateForm.get('password')?.touched && this.updateForm.get('password')?.value !== this.updateForm.get('confirmPassword')?.value) return;
+    this.userState.updateUser({...this.updateForm.value, serviceIds: this.selectedServices});
   }
 
+  // Delete User
   deleteUser () {
     this.userState.deleteUser();
   }

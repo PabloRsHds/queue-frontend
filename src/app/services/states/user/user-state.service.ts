@@ -5,6 +5,7 @@ import { ResponseAllUsersDto } from '../../../dtos/users/ResponseAllUsersDto';
 import { ResponseUserStatisticsDto } from '../../../dtos/statistics/ResponseUserStatisticsDto';
 import { RequestUserDto } from '../../../dtos/users/RequestUserDto';
 import { ResponseUserInfoDto } from '../../../dtos/users/ResponseUserInfoDto';
+import { UpdateUserDto } from '../../../dtos/users/UpdateUserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,21 @@ export class UserStateService {
       error: () => {
         this.registerMessage.set('Error creating user');
         this.registerStatus.set('error');
+      }
+    })
+  }
+
+  updateUser(request: UpdateUserDto) {
+
+    this.http.updateUser(request).subscribe({
+      next: () => {
+        this.updateMessage.set('User updated successfully');
+        this.updateStatus.set('success');
+        this.loadingAllUsers();
+      },
+      error: () => {
+        this.updateMessage.set('Error updating user');
+        this.updateStatus.set('error');
       }
     })
   }

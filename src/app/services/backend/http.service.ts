@@ -17,6 +17,7 @@ import { ResponseUserStatisticsDto } from '../../dtos/statistics/ResponseUserSta
 import { RequestUserDto } from '../../dtos/users/RequestUserDto';
 import { ResponseServicesForCreatedUser } from '../../dtos/services/ResponseServicesForCreatedUser';
 import { ResponseUserInfoDto } from '../../dtos/users/ResponseUserInfoDto';
+import { UpdateUserDto } from '../../dtos/users/UpdateUserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,10 @@ export class HttpService {
   // Users
   public createUser(user: RequestUserDto): Observable<ResponseUserDto> {
     return this.http.post<ResponseUserDto>(`${this.API_URL}/users`, user);
+  }
+
+  public updateUser(user: UpdateUserDto): Observable<ResponseUserDto> {
+    return this.http.patch<ResponseUserDto>(`${this.API_URL}/users`, user);
   }
 
   public deleteUser(userId: string): Observable<ResponseUserDto> {
