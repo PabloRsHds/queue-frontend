@@ -314,6 +314,66 @@ body {
   margin-top: 4px;
 }
 
+/* Buttons */
+
+.stat-card-button {
+  padding: 12px 0px;
+  width: 180px;
+  border: 2px solid #0851a5;
+  border-radius: 8px;
+  background-color: #0968d4;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 550;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.stat-card-button:hover {
+  background: #0851a5;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.144);
+}
+
+.table-search-toggle-button {
+  padding: 12px 10px;
+  border: 2px solid #d4d4d4;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: rgb(25, 31, 44);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 550;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.table-search-toggle-button:hover {
+  border-color: #3b83f67c;
+  background: #eff6ff;
+}
+
+.table-search-toggle-button.active {
+  border-color: #3b83f67c;
+  background: #eff6ff;
+}
+
+.table-search-flex-search {
+  flex: 3;
+}
+
+.table-search-flex-button {
+  flex: 1;
+}
+
+.table-search-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
 /* ========================================
    TABELA PRINCIPAL
    ======================================== */
@@ -360,9 +420,7 @@ body {
    ======================================== */
 
 .table-search-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 15px;
   background-color: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
@@ -1444,6 +1502,23 @@ body {
   }
   .table-header {
     grid-template-columns: 1.5fr 0.8fr 1fr 0.7fr 0.7fr auto !important;
+  }
+
+  .table-search-container {
+    display: flex;
+    align-items: normal;
+    flex-direction: column;
+  }
+
+  .stat-card-button {
+    width: 100%;
+  }
+
+  .table-search-buttons-container {
+    display: flex;
+    align-items: normal;
+    flex-direction: column;
+    gap: 5px;
   }
 }
 

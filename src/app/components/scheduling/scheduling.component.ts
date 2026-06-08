@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SchedulingStateService } from '../../services/states/scheduling/scheduling-state.service';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ export class SchedulingComponent implements OnInit{
   // Variables
   dropDown: number | null = null;
   itemsPerPage = 4;
+  public table = signal<string>('Scheduling');
 
   modalRegister = false;
   modalUpdate = false;
@@ -167,5 +168,10 @@ export class SchedulingComponent implements OnInit{
 
   deleteDepartment(customerId: string) {
 
+  }
+
+  // Handle
+  public handleTable(table: string) {
+    this.table.set(table);
   }
 }
