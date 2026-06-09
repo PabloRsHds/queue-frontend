@@ -24,21 +24,22 @@ export class SchedulingComponent implements OnInit{
   itemsPerPage = 4;
   public table = signal<string>('Scheduling');
 
-  modalRegister = false;
-  modalUpdate = false;
-  modalDelete = false;
-  modalView = false;
+  // Modals
+  modalCustomerRegister = false;
+  modalCustomerUpdate = false;
+  modalCustomerDelete = false;
+  modalCustomerView = false;
 
   // Form
   registerForm!: FormGroup;
   updateForm!: FormGroup;
 
-  // ==== STATES ====
+  // ==== CUSTOMERS STATES ====
   public customers = this.customerState.customers;
   public customerInfo = this.customerState.customerInfo;
-  public page = this.customerState.page;
-  public totalPages = this.customerState.totalPages;
-  public totalElements = this.customerState.totalElements;
+  public customerPage = this.customerState.page;
+  public customerTotalPages = this.customerState.totalPages;
+  public customerTotalElements = this.customerState.totalElements;
 
   // ====== MODALS ========
 
@@ -54,9 +55,7 @@ export class SchedulingComponent implements OnInit{
 
   }
 
-  public openModalView(customerId: string) {
 
-  }
 
   public closeModalRegister() {
 
@@ -70,62 +69,104 @@ export class SchedulingComponent implements OnInit{
 
   }
 
-  public closeModalView() {
+  public openCustomerModalView(customerId: string) {
+    this.customerState.getInfoCustomer(customerId);
+    this.modalCustomerView = true;
+  }
 
+  public closeCustomerModalView() {
+    this.modalCustomerView = false;
+    this.customerState.resetCustomerInfo();
   }
 
   // ===================== SEARCH =====================
   onSearch(event: any) {
-    this.customerState.setSearch(event.target.value);
+
+    if (this.table() === 'Scheduling') {
+      //
+    } else {
+      this.customerState.setSearch(event.target.value);
+    }
   }
 
   // ===================== PAGINATION =====================
   nextPage() {
-    this.customerState.nextPage();
+    if (this.table() === 'Scheduling') {
+      //
+    } else {
+      this.customerState.nextPage();
+    }
   }
 
   previousPage() {
-    this.customerState.previousPage();
+
+    if (this.table() === 'Scheduling') {
+      //
+    } else {
+      this.customerState.previousPage();
+    }
   }
 
   goToPage(page: number) {
-    this.customerState.goToPage(page);
+
+    if (this.table() === 'Scheduling') {
+      //
+    } else {
+      this.customerState.goToPage(page);
+    }
   }
 
   getStartIndex(): number {
-    return this.page() * this.itemsPerPage + 1;
+
+    if (this.table() === 'Scheduling') {
+      return 0;
+    } else {
+      return this.customerPage() * this.itemsPerPage + 1;
+    }
   }
 
   getEndIndex(): number {
-    return Math.min(
-      (this.page() + 1) * this.itemsPerPage,
-      this.totalElements()
-    );
+
+    if (this.table() === 'Scheduling') {
+      return 0;
+    } else {
+      return Math.min(
+        (this.customerPage() + 1) * this.itemsPerPage,
+        this.customerTotalElements()
+      )
+    }
   }
 
   getPagesArray(): number[] {
-    const total = this.totalPages();
-    const current = this.page();
 
-    const maxVisible = 4;
+    if (this.table() === 'Scheduling') {
+      return [];
+    } else {
 
-    let start = current - Math.floor(maxVisible / 2);
-    let end = current + Math.floor(maxVisible / 2) + 1;
+      const total = this.customerTotalPages();
+      const current = this.customerPage();
 
-    if (start < 0) {
-      start = 0;
-      end = Math.min(maxVisible, total);
+      const maxVisible = 4;
+
+      let start = current - Math.floor(maxVisible / 2);
+      let end = current + Math.floor(maxVisible / 2) + 1;
+
+      if (start < 0) {
+        start = 0;
+        end = Math.min(maxVisible, total);
+      }
+
+      if (end > total) {
+        end = total;
+        start = Math.max(0, total - maxVisible);
+      }
+
+      return Array.from(
+        { length: end - start },
+        (_, i) => start + i
+      );
     }
 
-    if (end > total) {
-      end = total;
-      start = Math.max(0, total - maxVisible);
-    }
-
-    return Array.from(
-      { length: end - start },
-      (_, i) => start + i
-    );
   }
 
   // DropDown
@@ -142,6 +183,7 @@ export class SchedulingComponent implements OnInit{
       this.closeDropDown();
     }
   }
+
   openDropDown(index: number) {
 
     if (this.dropDown === index) {

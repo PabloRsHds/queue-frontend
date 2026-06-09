@@ -92,4 +92,9 @@ export class SchedulingStateService {
     this.page.set(0); // sempre volta pra página 1
     this.loadCustomers();
   }
+
+  // Resets
+  resetCustomerInfo() {
+    this.customerInfo.set(null);
+  }
 }
