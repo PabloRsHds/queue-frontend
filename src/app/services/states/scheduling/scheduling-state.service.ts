@@ -3,6 +3,8 @@ import { HttpService } from '../../backend/http.service';
 import { ResponseAllCustomersDto } from '../../../dtos/customer/ResponseAllCustomersDto';
 import { ResponseStatisticsDto } from '../../../dtos/statistics/ResponseStatisticsDto';
 import { ResponseCustomerInfoDto } from '../../../dtos/customer/ResponseCustomerInfoDto';
+import { CreateCustomerDto } from '../../../dtos/customer/CreateCustomerDto';
+import { UpdateCustomerDto } from '../../../dtos/customer/UpdateCustomerDto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,15 @@ export class SchedulingStateService {
   public statistics = signal<ResponseStatisticsDto | null>(null);
   public customerInfo = signal<ResponseCustomerInfoDto | null>(null);
 
+  // Messages
+  public registerCustomerMessage = signal('');
+  public registerCustomerStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public updateCustomerMessage = signal('');
+  public updateCustomerStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public deleteCustomerMessage = signal('');
+  public deleteCustomerStatus = signal<'success' | 'error' | 'default'>('default');
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -28,6 +39,57 @@ export class SchedulingStateService {
 
 
   // ===== CUSTOMERS ========
+
+  // register client
+  registerCustomer(request: CreateCustomerDto) {
+
+    this.http.registerCustomer(request).subscribe({
+
+      next: (response) => {
+
+        this.registerCustomerMessage.set('Cliente registrado com sucesso!');
+        this.registerCustomerStatus.set('success');
+        this.loadCustomers();
+      },
+      error: (error) => {
+
+        this.registerCustomerMessage.set('Erro ao registrar cliente. Tente novamente.');
+        this.registerCustomerStatus.set('error');
+      }
+    })
+  }
+
+  // Update Customer
+  updateCustomer(request: UpdateCustomerDto) {
+
+    this.http.updateCustomer(request).subscribe({
+
+      next: () => {
+        this.updateCustomerMessage.set('Cliente atualizado com sucesso!');
+        this.updateCustomerStatus.set('success');
+        this.loadCustomers();
+      },
+      error: () => {
+        this.updateCustomerMessage.set('Erro ao atualizar cliente. Tente novamente.');
+        this.updateCustomerStatus.set('error');
+      }
+    })
+  }
+
+  // Delete Customer
+  deleteCustomer(customerId: string) {
+    this.http.deleteCustomer(customerId).subscribe({
+      next: () => {
+        this.deleteCustomerMessage.set('Cliente deletado com sucesso!');
+        this.deleteCustomerStatus.set('success');
+        this.loadCustomers();
+      },
+      error: () => {
+        this.deleteCustomerMessage.set('Erro ao deletar cliente. Tente novamente.');
+        this.deleteCustomerStatus.set('error');
+      }
+    })
+  }
 
   // Get all customers
   loadCustomers() {
@@ -94,6 +156,12 @@ export class SchedulingStateService {
   }
 
   // Resets
+  resetStatus() {
+    this.registerCustomerStatus.set('default');
+    this.updateCustomerStatus.set('default');
+    this.deleteCustomerStatus.set('default');
+  }
+
   resetCustomerInfo() {
     this.customerInfo.set(null);
   }

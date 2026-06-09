@@ -20,13 +20,16 @@ import { ResponseUserInfoDto } from '../../dtos/users/ResponseUserInfoDto';
 import { UpdateUserDto } from '../../dtos/users/UpdateUserDto';
 import { ResponseAllCustomersDto } from '../../dtos/customer/ResponseAllCustomersDto';
 import { ResponseCustomerInfoDto } from '../../dtos/customer/ResponseCustomerInfoDto';
+import { CreateCustomerDto } from '../../dtos/customer/CreateCustomerDto';
+import { ResponseCustomerDto } from '../../dtos/customer/ResponseCustomerDto';
+import { UpdateCustomerDto } from '../../dtos/customer/UpdateCustomerDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.1.2:8080';
+  private readonly API_URL = 'http://192.168.25.107:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -122,6 +125,18 @@ export class HttpService {
   }
 
   // CUSTOMERS
+  public registerCustomer(request: CreateCustomerDto): Observable<ResponseCustomerDto> {
+    return this.http.post<ResponseCustomerDto>(`${this.API_URL}/customers`, request);
+  }
+
+  public updateCustomer(request: UpdateCustomerDto): Observable<ResponseCustomerDto> {
+    return this.http.patch<ResponseCustomerDto>(`${this.API_URL}/customers`, request);
+  }
+
+  public deleteCustomer(customerId: string): Observable<ResponseCustomerDto> {
+    return this.http.delete<ResponseCustomerDto>(`${this.API_URL}/customers/${customerId}`);
+  }
+
   public getCustomerById(customerId: string): Observable<ResponseCustomerInfoDto> {
     return this.http.get<ResponseCustomerInfoDto>(`${this.API_URL}/customers/${customerId}`);
   }
