@@ -1,25 +1,25 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { ResponseAllCustomersDto } from '../../../dtos/customer/ResponseAllCustomersDto';
-import { ResponseStatisticsDto } from '../../../dtos/statistics/ResponseStatisticsDto';
 import { ResponseCustomerInfoDto } from '../../../dtos/customer/ResponseCustomerInfoDto';
 import { CreateCustomerDto } from '../../../dtos/customer/CreateCustomerDto';
 import { UpdateCustomerDto } from '../../../dtos/customer/UpdateCustomerDto';
+import { ResponseAllSchedulesDto } from '../../../dtos/schedule/ResponseAllSchedulesDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchedulingStateService {
 
-  // Injections
+  // ===== INJECTIONS =====
   private http = inject(HttpService);
 
-  // States
+  // ===== STATES =====
   public customers = signal<ResponseAllCustomersDto[]>([]);
-  public statistics = signal<ResponseStatisticsDto | null>(null);
+  public schedules = signal<ResponseAllSchedulesDto[]>([]);
   public customerInfo = signal<ResponseCustomerInfoDto | null>(null);
 
-  // Messages
+  // ===== MESSAGES =====
   public registerCustomerMessage = signal('');
   public registerCustomerStatus = signal<'success' | 'error' | 'default'>('default');
 
@@ -29,54 +29,112 @@ export class SchedulingStateService {
   public deleteCustomerMessage = signal('');
   public deleteCustomerStatus = signal<'success' | 'error' | 'default'>('default');
 
-  // ===== PAGINATION =====
-  public page = signal<number>(0);
-  public size = 4;
-  public totalElements = signal<number>(0);
+  // ==========================================================
+  // =================== CUSTOMER PAGINATION ==================
+  // ==========================================================
 
-  // ===== SEARCH =====
-  public search = signal<string>('');
+  public customerPage = signal<number>(0);
+  public customerSize = 4;
+  public customerTotalElements = signal<number>(0);
+  public customerSearch = signal<string>('');
 
+  public customerTotalPages = computed(() =>
+    Math.ceil(this.customerTotalElements() / this.customerSize)
+  );
 
-  // ===== CUSTOMERS ========
+  // ==========================================================
+  // =================== SCHEDULE PAGINATION ==================
+  // ==========================================================
 
-  // register client
-  registerCustomer(request: CreateCustomerDto) {
+  public schedulePage = signal<number>(0);
+  public scheduleSize = 4;
+  public scheduleTotalElements = signal<number>(0);
+  public scheduleSearch = signal<string>('');
 
-    this.http.registerCustomer(request).subscribe({
+  public scheduleTotalPages = computed(() =>
+    Math.ceil(this.scheduleTotalElements() / this.scheduleSize)
+  );
 
+  // ==========================================================
+  // ====================== SCHEDULES =========================
+  // ==========================================================
+
+  loadSchedules() {
+    this.http.getAllScheduling(
+      this.schedulePage(),
+      this.scheduleSize,
+      this.scheduleSearch()
+    ).subscribe({
       next: (response) => {
+        this.schedules.set(response.content);
+        this.scheduleTotalElements.set(response.totalElements);
+      }
+    });
+  }
 
+  nextSchedulePage() {
+    if (this.schedulePage() + 1 >= this.scheduleTotalPages()) return;
+
+    this.schedulePage.update(p => p + 1);
+    this.loadSchedules();
+  }
+
+  previousSchedulePage() {
+    if (this.schedulePage() === 0) return;
+
+    this.schedulePage.update(p => p - 1);
+    this.loadSchedules();
+  }
+
+  goToSchedulePage(page: number) {
+    if (page < 0 || page >= this.scheduleTotalPages()) return;
+
+    this.schedulePage.set(page);
+    this.loadSchedules();
+  }
+
+  setScheduleSearch(value: string) {
+    this.scheduleSearch.set(value);
+    this.schedulePage.set(0);
+    this.loadSchedules();
+  }
+
+  // ==========================================================
+  // ======================= CUSTOMERS ========================
+  // ==========================================================
+
+  registerCustomer(request: CreateCustomerDto) {
+    this.http.registerCustomer(request).subscribe({
+      next: () => {
         this.registerCustomerMessage.set('Cliente registrado com sucesso!');
         this.registerCustomerStatus.set('success');
         this.loadCustomers();
       },
-      error: (error) => {
-
-        this.registerCustomerMessage.set('Erro ao registrar cliente. Tente novamente.');
+      error: () => {
+        this.registerCustomerMessage.set(
+          'Erro ao registrar cliente. Tente novamente.'
+        );
         this.registerCustomerStatus.set('error');
       }
-    })
+    });
   }
 
-  // Update Customer
   updateCustomer(request: UpdateCustomerDto) {
-
     this.http.updateCustomer(request).subscribe({
-
       next: () => {
         this.updateCustomerMessage.set('Cliente atualizado com sucesso!');
         this.updateCustomerStatus.set('success');
         this.loadCustomers();
       },
       error: () => {
-        this.updateCustomerMessage.set('Erro ao atualizar cliente. Tente novamente.');
+        this.updateCustomerMessage.set(
+          'Erro ao atualizar cliente. Tente novamente.'
+        );
         this.updateCustomerStatus.set('error');
       }
-    })
+    });
   }
 
-  // Delete Customer
   deleteCustomer(customerId: string) {
     this.http.deleteCustomer(customerId).subscribe({
       next: () => {
@@ -85,77 +143,66 @@ export class SchedulingStateService {
         this.loadCustomers();
       },
       error: () => {
-        this.deleteCustomerMessage.set('Erro ao deletar cliente. Tente novamente.');
+        this.deleteCustomerMessage.set(
+          'Erro ao deletar cliente. Tente novamente.'
+        );
         this.deleteCustomerStatus.set('error');
-      }
-    })
-  }
-
-  // Get all customers
-  loadCustomers() {
-    this.http.getAllCustomers(this.page(), this.size, this.search()).subscribe({
-      next: (response) => {
-        this.customers.set(response.content);
-        this.totalElements.set(response.totalElements);
       }
     });
   }
 
-  // Statistics
-  loadStatistics() {
-    this.http.getCustomerStatistics().subscribe({
+  loadCustomers() {
+    this.http.getAllCustomers(
+      this.customerPage(),
+      this.customerSize,
+      this.customerSearch()
+    ).subscribe({
       next: (response) => {
-        this.statistics.set(response);
+        this.customers.set(response.content);
+        this.customerTotalElements.set(response.totalElements);
       }
-    })
+    });
   }
 
-  // Get customer by id
-  getInfoCustomer(customerId : string) {
-
+  getInfoCustomer(customerId: string) {
     this.http.getCustomerById(customerId).subscribe({
       next: (response) => {
         this.customerInfo.set(response);
       }
-    })
+    });
   }
 
-  // ========================
+  nextCustomerPage() {
+    if (this.customerPage() + 1 >= this.customerTotalPages()) return;
 
-  // ===== PAGINATION =====
-  public totalPages = computed(() =>
-    Math.ceil(this.totalElements() / this.size)
-  );
-
-  nextPage() {
-    if (this.page() + 1 >= this.totalPages()) return;
-
-    this.page.update(p => p + 1);
+    this.customerPage.update(p => p + 1);
     this.loadCustomers();
   }
 
-  previousPage() {
-    if (this.page() === 0) return;
+  previousCustomerPage() {
+    if (this.customerPage() === 0) return;
 
-    this.page.update(p => p - 1);
+    this.customerPage.update(p => p - 1);
     this.loadCustomers();
   }
 
-  goToPage(page: number) {
-    if (page < 0 || page >= this.totalPages()) return;
+  goToCustomerPage(page: number) {
+    if (page < 0 || page >= this.customerTotalPages()) return;
 
-    this.page.set(page);
+    this.customerPage.set(page);
     this.loadCustomers();
   }
 
-  // ===== SEARCH =====
-  setSearch(value: string) {
-    this.search.set(value);
-    this.page.set(0); // sempre volta pra página 1
+  setCustomerSearch(value: string) {
+    this.customerSearch.set(value);
+    this.customerPage.set(0);
     this.loadCustomers();
   }
 
-  // Resets
+  // ==========================================================
+  // ======================== RESETS ==========================
+  // ==========================================================
+
   resetStatus() {
     this.registerCustomerStatus.set('default');
     this.updateCustomerStatus.set('default');

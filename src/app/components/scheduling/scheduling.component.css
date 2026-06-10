@@ -338,7 +338,7 @@ body {
 
 .table-search-toggle-button {
   padding: 12px 10px;
-  border: 2px solid #d4d4d4;
+  border: 1px solid #d4d4d4;
   border-radius: 8px;
   background-color: #ffffff;
   color: rgb(25, 31, 44);
@@ -361,6 +361,12 @@ body {
 
 .table-search-flex-search {
   flex: 3;
+}
+
+.table-search-flex {
+  display:flex;
+  align-items:center;
+  gap:16px;
 }
 
 .table-search-flex-button {
@@ -517,6 +523,19 @@ body {
   align-items: center;
   justify-content: center;
   background: #2e89d415;
+  color: #64748b;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.td-name-background-schedule {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ccf0ff;
   color: #64748b;
   font-size: 1.3rem;
   font-weight: 700;
@@ -1515,6 +1534,11 @@ body {
     align-items: normal;
     flex-direction: column;
     gap: 5px;
+  }
+
+  .table-search-flex {
+    display: grid;
+    gap: 10px;
   }
 }
 

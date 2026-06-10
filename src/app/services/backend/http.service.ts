@@ -23,13 +23,14 @@ import { ResponseCustomerInfoDto } from '../../dtos/customer/ResponseCustomerInf
 import { CreateCustomerDto } from '../../dtos/customer/CreateCustomerDto';
 import { ResponseCustomerDto } from '../../dtos/customer/ResponseCustomerDto';
 import { UpdateCustomerDto } from '../../dtos/customer/UpdateCustomerDto';
+import { ResponseAllSchedulesDto } from '../../dtos/schedule/ResponseAllSchedulesDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.25.107:8080';
+  private readonly API_URL = 'http://192.168.1.2:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -147,7 +148,10 @@ export class HttpService {
     );
   }
 
-  public getCustomerStatistics(): Observable<ResponseUserStatisticsDto> {
-    return this.http.get<ResponseUserStatisticsDto>(`${this.API_URL}/customers/statistics`);
+  // Scheduling
+  public getAllScheduling(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllSchedulesDto>> {
+    return this.http.get<PageResponse<ResponseAllSchedulesDto>>(
+      `${this.API_URL}/scheduling?page=${page}&size=${size}&search=${search ?? ''}`
+    );
   }
 }
