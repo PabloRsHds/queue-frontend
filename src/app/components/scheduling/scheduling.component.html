@@ -433,7 +433,7 @@
       </button>
     </div>
 
-    <form [formGroup]="registerScheduleForm" (ngSubmit)="registerCustomer()">
+    <form [formGroup]="registerScheduleForm" (ngSubmit)="registerSchedule()">
 
       <div class="form-group">
         <label class="form-label">Cliente</label>
@@ -441,7 +441,7 @@
           <option value="">
             Selecione um cliente
           </option>
-          <option *ngFor="let customer of customerIdsAndNames()">
+          <option *ngFor="let customer of customerIdsAndNames()" value="{{ customer.customerId }}">
             {{ customer.name }}
           </option>
         </select>
@@ -453,7 +453,7 @@
           <option value="">
             Selecione um serviço
           </option>
-          <option *ngFor="let service of serviceNamesAndDepartments()">
+          <option *ngFor="let service of serviceNamesAndDepartments()" value="{{ service.serviceManagementId }}">
             {{ service.name }}
           </option>
         </select>

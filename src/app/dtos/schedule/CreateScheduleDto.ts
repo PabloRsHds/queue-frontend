@@ -1,4 +1,4 @@
-export interface CreateSchedule {
+export interface CreateScheduleDto {
 
   customerId: string;
   serviceManagementId: string;

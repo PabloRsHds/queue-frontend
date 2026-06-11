@@ -1,11 +1,7 @@
+import { CreateScheduleDto } from './../../../dtos/schedule/CreateScheduleDto';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
-import { ResponseAllCustomersDto } from '../../../dtos/customer/ResponseAllCustomersDto';
-import { ResponseCustomerInfoDto } from '../../../dtos/customer/ResponseCustomerInfoDto';
-import { CreateCustomerDto } from '../../../dtos/customer/CreateCustomerDto';
-import { UpdateCustomerDto } from '../../../dtos/customer/UpdateCustomerDto';
 import { ResponseAllSchedulesDto } from '../../../dtos/schedule/ResponseAllSchedulesDto';
-import { ResponseCustomerIdsAndNames } from '../../../dtos/customer/ResponseCustomerIdsAndNames';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +13,8 @@ export class ScheduleStateService {
   // ===== STATES =====
 
   public schedules = signal<ResponseAllSchedulesDto[]>([]);
-  // ===== PAGINATION =====
 
+  // ===== PAGINATION =====
   public schedulePage = signal(0);
   public scheduleSize = 4;
   public scheduleTotalElements = signal(0);
@@ -26,15 +22,28 @@ export class ScheduleStateService {
   public scheduleSearch = signal('');
   public scheduleSearchDate = signal<string | null>(null);
 
+  // ===== MESSAGES =====
+  public registerMessage = signal('');
+  public registerStatus = signal<'success' | 'error' | 'default'>('default');
+
   public scheduleTotalPages = computed(() =>
     Math.ceil(this.scheduleTotalElements() / this.scheduleSize)
   );
 
   // ===== METHODS =====
 
-  registerSchedule() {
-
-    this.htt
+  registerSchedule(request: CreateScheduleDto) {
+    this.http.registerSchedule(request).subscribe({
+      next: () => {
+        this.registerMessage.set('Agendamento realizado com sucesso!');
+        this.registerStatus.set('success');
+        this.loadSchedules();
+      },
+      error: () => {
+        this.registerMessage.set('Erro ao realizar agendamento');
+        this.registerStatus.set('error');
+      }
+    });
   }
 
   loadSchedules() {
@@ -83,4 +92,8 @@ export class ScheduleStateService {
   }
 
 
+  // RESETS
+  resetStatus() {
+    this.registerStatus.set('default');
+  }
 }

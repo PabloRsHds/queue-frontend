@@ -69,6 +69,9 @@ export class SchedulingComponent implements OnInit {
   public scheduleTotalElements = this.schedulingState.scheduleTotalElements;
   public scheduleSearch = this.schedulingState.scheduleSearch;
 
+  public customerId = signal<string>('');
+  public serviceManagementId = signal<string>('');
+
   constructor() {
 
     effect(() => {
@@ -76,6 +79,13 @@ export class SchedulingComponent implements OnInit {
         this.schedulingState.loadSchedules();
       }
     })
+
+    this.registerScheduleForm = this.fb.group({
+      customerId: [''],
+      serviceManagementId: [''],
+      note: [''],
+      scheduledDate: [''],
+    });
 
     this.registerCustomerForm = this.fb.group({
       name: [''],
@@ -94,13 +104,6 @@ export class SchedulingComponent implements OnInit {
       phone: [''],
     });
 
-    this.registerScheduleForm = this.fb.group({
-      customerId: [''],
-      serviceManagementId: [''],
-      note: [''],
-      scheduledDate: [''],
-    });
-
     effect(() => {
       if (this.customerInfo() !== null) {
         this.updateCustomerForm.patchValue({
@@ -111,6 +114,27 @@ export class SchedulingComponent implements OnInit {
           email: this.customerInfo()?.email,
           phone: this.customerInfo()?.phone,
         });
+      }
+    })
+
+    effect(() => {
+
+      if (this.schedulingState.registerStatus() === 'success') {
+        this.snackBar.open(this.schedulingState.registerMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.modalSchedulingRegister = false;
+        this.registerScheduleForm.reset();
+        this.schedulingState.resetStatus();
+      }
+
+      if (this.schedulingState.registerStatus() === 'error') {
+        this.snackBar.open(this.schedulingState.registerMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.schedulingState.resetStatus();
       }
     })
 
@@ -346,6 +370,11 @@ export class SchedulingComponent implements OnInit {
   }
 
   // ===================== SCHEDULE =====================
+
+  registerSchedule() {
+    if (this.registerScheduleForm.invalid) return;
+    this.schedulingState.registerSchedule(this.registerScheduleForm.value);
+  }
 
 
   // ===================== CUSTOMER =====================

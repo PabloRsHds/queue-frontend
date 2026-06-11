@@ -25,13 +25,16 @@ import { ResponseCustomerDto } from '../../dtos/customer/ResponseCustomerDto';
 import { UpdateCustomerDto } from '../../dtos/customer/UpdateCustomerDto';
 import { ResponseAllSchedulesDto } from '../../dtos/schedule/ResponseAllSchedulesDto';
 import { ResponseCustomerIdsAndNames } from '../../dtos/customer/ResponseCustomerIdsAndNames';
+import { CreateScheduleDto } from '../../dtos/schedule/CreateScheduleDto';
+import { ResponseScheduleDto } from '../../dtos/schedule/ResponseScheduleDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.25.107:8080';
+  //private readonly API_URL = 'http://192.168.25.107:8080';
+  private readonly API_URL = 'http://192.168.1.4:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -154,6 +157,10 @@ export class HttpService {
   }
 
   // Scheduling
+  public registerSchedule(request: CreateScheduleDto): Observable<ResponseScheduleDto> {
+    return this.http.post<ResponseScheduleDto>(`${this.API_URL}/scheduling`, request);
+  }
+
   public getAllScheduling(page: number, size: number, search?: string, scheduleDate?: string | null ): Observable<PageResponse<ResponseAllSchedulesDto>> {
     return this.http.get<PageResponse<ResponseAllSchedulesDto>>(
       `${this.API_URL}/scheduling?page=${page}&size=${size}&search=${search ?? ''}&scheduleDate=${scheduleDate ?? ''}`
