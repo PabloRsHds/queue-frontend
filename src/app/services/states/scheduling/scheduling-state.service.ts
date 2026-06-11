@@ -17,7 +17,6 @@ export class ScheduleStateService {
   // ===== STATES =====
 
   public schedules = signal<ResponseAllSchedulesDto[]>([]);
-
   // ===== PAGINATION =====
 
   public schedulePage = signal(0);
@@ -32,6 +31,11 @@ export class ScheduleStateService {
   );
 
   // ===== METHODS =====
+
+  registerSchedule() {
+
+    this.htt
+  }
 
   loadSchedules() {
     this.http.getAllScheduling(
@@ -77,4 +81,6 @@ export class ScheduleStateService {
     this.schedulePage.set(0);
     this.loadSchedules();
   }
+
+
 }

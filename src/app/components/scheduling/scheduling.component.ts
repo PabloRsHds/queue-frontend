@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerStateService } from '../../services/states/customer/customer-state.service';
 import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
+import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 
 @Component({
   selector: 'app-scheduling',
@@ -20,6 +21,7 @@ export class SchedulingComponent implements OnInit {
   // ==== Injections ====
   private customerState = inject(CustomerStateService);
   private schedulingState = inject(ScheduleStateService);
+  private serviceState = inject(ServiceManagementService);
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
 
@@ -47,6 +49,9 @@ export class SchedulingComponent implements OnInit {
   // Form Schedules
   registerScheduleForm!: FormGroup;
   updateScheduleForm!: FormGroup;
+
+  // ==== SERVICES STATES ====
+  public serviceNamesAndDepartments = this.serviceState.serviceNamesAndDepartments;
 
   // ==== CUSTOMERS STATES ====
   public customers = this.customerState.customers;
@@ -116,6 +121,7 @@ export class SchedulingComponent implements OnInit {
           panelClass: ['snackbar-success']
         });
         this.modalCustomerRegister = false;
+        this.registerCustomerForm.reset();
         this.customerState.resetStatus();
       }
 
@@ -173,6 +179,7 @@ export class SchedulingComponent implements OnInit {
   public openScheduleModalRegister() {
     this.modalSchedulingRegister = true;
     this.customerState.loadCustomerIdsAndNames();
+    this.serviceState.loadServiceNamesAndDepartments();
   }
 
   public closeScheduleModalRegister() {

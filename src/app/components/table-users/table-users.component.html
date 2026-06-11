@@ -445,7 +445,7 @@
 
                 <div class="dept-list">
                     <div class="dept-item"
-                    *ngFor="let service of services()">
+                    *ngFor="let service of serviceNamesAndDepartments()">
                         <input type="checkbox"
                         [checked]="selectedServices.includes(service.serviceManagementId)"
                         (change)="toggleService(service.serviceManagementId, $event)"
@@ -760,7 +760,7 @@
 
             <div class="dept-list">
                 <div class="dept-item"
-                *ngFor="let service of services()">
+                *ngFor="let service of serviceNamesAndDepartments()">
                     <input type="checkbox"
                     [checked]="selectedServices.includes(service.serviceManagementId)"
                     (change)="toggleService(service.serviceManagementId, $event)"

@@ -453,8 +453,8 @@
           <option value="">
             Selecione um serviço
           </option>
-          <option>
-            1
+          <option *ngFor="let service of serviceNamesAndDepartments()">
+            {{ service.name }}
           </option>
         </select>
       </div>

@@ -21,7 +21,7 @@ export class TableUsersComponent implements OnInit {
   // States
   public users = this.userState.users;
   public userInfo = this.userState.userInfo;
-  public services = this.serviceState.servicesForCreatedUser;
+  public serviceNamesAndDepartments = this.serviceState.serviceNamesAndDepartments;
   public statistics = this.userState.statistics;
 
   public page = this.userState.page;
@@ -191,7 +191,7 @@ export class TableUsersComponent implements OnInit {
 
       if (this.userInfo() != null && this.modalUpdate) {
 
-          this.services().forEach(service => {
+          this.serviceNamesAndDepartments().forEach(service => {
           this.userInfo()?.serviceNames.forEach(serviceName => {
 
             if (service.name === serviceName) {
@@ -426,7 +426,7 @@ export class TableUsersComponent implements OnInit {
   // =========== Modals ===========
   public openModalRegister(): void {
     this.modalRegister = true;
-    this.serviceState.loadServicesForCreateUser();
+    this.serviceState.loadServiceNamesAndDepartments();
   }
 
   public closeModalRegister(): void {
@@ -437,7 +437,7 @@ export class TableUsersComponent implements OnInit {
 
   public openModalUpdate(userId: string) {
     this.userState.getUserById(userId);
-    this.serviceState.loadServicesForCreateUser();
+    this.serviceState.loadServiceNamesAndDepartments();
     this.modalUpdate = true;
   }
 

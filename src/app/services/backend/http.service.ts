@@ -15,7 +15,7 @@ import { ResponseUserDto } from '../../dtos/users/ResponseUserDto';
 import { ResponseAllUsersDto } from '../../dtos/users/ResponseAllUsersDto';
 import { ResponseUserStatisticsDto } from '../../dtos/statistics/ResponseUserStatisticsDto';
 import { RequestUserDto } from '../../dtos/users/RequestUserDto';
-import { ResponseServicesForCreatedUser } from '../../dtos/services/ResponseServicesForCreatedUser';
+import { ResponseServiceNamesAndDepartments } from '../../dtos/services/ResponseServiceNamesAndDepartments';
 import { ResponseUserInfoDto } from '../../dtos/users/ResponseUserInfoDto';
 import { UpdateUserDto } from '../../dtos/users/UpdateUserDto';
 import { ResponseAllCustomersDto } from '../../dtos/customer/ResponseAllCustomersDto';
@@ -31,7 +31,7 @@ import { ResponseCustomerIdsAndNames } from '../../dtos/customer/ResponseCustome
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.1.4:8080';
+  private readonly API_URL = 'http://192.168.25.107:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -89,8 +89,8 @@ export class HttpService {
     return this.http.get<ResponseGetServiceByIdDto>(`${this.API_URL}/services/${request}`);
   }
 
-  public getServiceNamesAndDepartments(): Observable<ResponseServicesForCreatedUser[]> {
-    return this.http.get<ResponseServicesForCreatedUser[]>(
+  public getServiceNamesAndDepartments(): Observable<ResponseServiceNamesAndDepartments[]> {
+    return this.http.get<ResponseServiceNamesAndDepartments[]>(
       `${this.API_URL}/services/service-for-created-user`
     );
   }
