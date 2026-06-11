@@ -465,6 +465,21 @@ body {
   border-color: #215fa7b6;
 }
 
+.search-date {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: #fff;
+  transition: all 0.2s;
+}
+
+.search-date:focus {
+  outline: none;
+  border-color: #215fa7b6;
+}
+
 /* ========================================
    TABELA DE DEPARTAMENTOS / SERVIÇOS
    ======================================== */

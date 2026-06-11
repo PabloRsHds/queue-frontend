@@ -1,8 +1,9 @@
 import { Component, effect, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SchedulingStateService } from '../../services/states/scheduling/scheduling-state.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CustomerStateService } from '../../services/states/customer/customer-state.service';
+import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
 
 @Component({
   selector: 'app-scheduling',
@@ -17,7 +18,8 @@ export class SchedulingComponent implements OnInit {
   }
 
   // ==== Injections ====
-  private customerState = inject(SchedulingStateService);
+  private customerState = inject(CustomerStateService);
+  private schedulingState = inject(ScheduleStateService);
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
 
@@ -26,15 +28,25 @@ export class SchedulingComponent implements OnInit {
   itemsPerPage = 4;
   public table = signal<string>('Scheduling');
 
-  // Modals
+  // MODAIS SCHEDULING
+  modalSchedulingRegister = false;
+  modalSchedulingUpdate = false;
+  modalSchedulingDelete = false;
+  modalSchedulingView = false;
+
+  // MODAIS CUSTOMER
   modalCustomerRegister = false;
   modalCustomerUpdate = false;
   modalCustomerDelete = false;
   modalCustomerView = false;
 
-  // Form
+  // Form Customers
   registerCustomerForm!: FormGroup;
   updateCustomerForm!: FormGroup;
+
+  // Form Schedules
+  registerScheduleForm!: FormGroup;
+  updateScheduleForm!: FormGroup;
 
   // ==== CUSTOMERS STATES ====
   public customers = this.customerState.customers;
@@ -43,19 +55,20 @@ export class SchedulingComponent implements OnInit {
   public customerTotalPages = this.customerState.customerTotalPages;
   public customerTotalElements = this.customerState.customerTotalElements;
   public customerSearch = this.customerState.customerSearch;
+  public customerIdsAndNames = this.customerState.customerIdsAndNames;
 
   // ==== SCHEDULES STATES ====
-  public schedules = this.customerState.schedules;
-  public schedulePage = this.customerState.schedulePage;
-  public scheduleTotalPages = this.customerState.scheduleTotalPages;
-  public scheduleTotalElements = this.customerState.scheduleTotalElements;
-  public scheduleSearch = this.customerState.scheduleSearch;
+  public schedules = this.schedulingState.schedules;
+  public schedulePage = this.schedulingState.schedulePage;
+  public scheduleTotalPages = this.schedulingState.scheduleTotalPages;
+  public scheduleTotalElements = this.schedulingState.scheduleTotalElements;
+  public scheduleSearch = this.schedulingState.scheduleSearch;
 
   constructor() {
 
     effect(() => {
       if (this.table() === 'Scheduling') {
-        this.customerState.loadSchedules();
+        this.schedulingState.loadSchedules();
       }
     })
 
@@ -74,6 +87,13 @@ export class SchedulingComponent implements OnInit {
       rg: [''],
       email: [''],
       phone: [''],
+    });
+
+    this.registerScheduleForm = this.fb.group({
+      customerId: [''],
+      serviceManagementId: [''],
+      note: [''],
+      scheduledDate: [''],
     });
 
     effect(() => {
@@ -149,7 +169,17 @@ export class SchedulingComponent implements OnInit {
     })
   }
 
-  // ====== MODALS ========
+  // ====== MODALS SCHEDULE =========
+  public openScheduleModalRegister() {
+    this.modalSchedulingRegister = true;
+    this.customerState.loadCustomerIdsAndNames();
+  }
+
+  public closeScheduleModalRegister() {
+    this.modalSchedulingRegister = false;
+  }
+
+  // ====== MODALS CUSTOMER =========
   public openCustomerModalRegister() {
     this.modalCustomerRegister = true;
   }
@@ -191,34 +221,42 @@ export class SchedulingComponent implements OnInit {
   // ===================== SEARCH =====================
   onSearch(event: any) {
     if (this.table() === 'Scheduling') {
-      this.customerState.setScheduleSearch(event.target.value);
+      this.schedulingState.setSearch(event.target.value);
     } else {
-      this.customerState.setCustomerSearch(event.target.value);
+      this.customerState.setSearch(event.target.value);
+    }
+  }
+
+  onDateFilter(event: any) {
+    if (this.table() === 'Scheduling') {
+
+      this.schedulingState.setSearchDate(event.target.value);
+      console.log(event.target.value);
     }
   }
 
   // ===================== PAGINATION =====================
   nextPage() {
     if (this.table() === 'Scheduling') {
-      this.customerState.nextSchedulePage();
+      this.schedulingState.nextPage();
     } else {
-      this.customerState.nextCustomerPage();
+      this.customerState.nextPage();
     }
   }
 
   previousPage() {
     if (this.table() === 'Scheduling') {
-      this.customerState.previousSchedulePage();
+      this.schedulingState.previousPage();
     } else {
-      this.customerState.previousCustomerPage();
+      this.customerState.previousPage();
     }
   }
 
   goToPage(page: number) {
     if (this.table() === 'Scheduling') {
-      this.customerState.goToSchedulePage(page);
+      this.schedulingState.goToPage(page);
     } else {
-      this.customerState.goToCustomerPage(page);
+      this.customerState.goToPage(page);
     }
   }
 
@@ -300,6 +338,11 @@ export class SchedulingComponent implements OnInit {
     this.dropDown = null;
   }
 
+  // ===================== SCHEDULE =====================
+
+
+  // ===================== CUSTOMER =====================
+
   // Register
   registerCustomer() {
     if (this.registerCustomerForm.invalid) return;
@@ -318,5 +361,15 @@ export class SchedulingComponent implements OnInit {
   // Handle
   public handleTable(table: string) {
     this.table.set(table);
+  }
+
+  public getStatusSchedule(status: string) {
+    if (status === 'SCHEDULED') return 'Agendado';
+    if (status === 'CONFIRMED') return 'Confirmado';
+    if (status === 'FINISHED') return 'Finalizado';
+    if (status === 'CANCELLED') return 'Cancelado';
+    if (status === 'MISSED') return 'Atrasado';
+
+    return '';
   }
 }

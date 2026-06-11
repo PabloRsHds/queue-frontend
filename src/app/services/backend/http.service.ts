@@ -24,13 +24,14 @@ import { CreateCustomerDto } from '../../dtos/customer/CreateCustomerDto';
 import { ResponseCustomerDto } from '../../dtos/customer/ResponseCustomerDto';
 import { UpdateCustomerDto } from '../../dtos/customer/UpdateCustomerDto';
 import { ResponseAllSchedulesDto } from '../../dtos/schedule/ResponseAllSchedulesDto';
+import { ResponseCustomerIdsAndNames } from '../../dtos/customer/ResponseCustomerIdsAndNames';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.1.2:8080';
+  private readonly API_URL = 'http://192.168.1.4:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -142,6 +143,10 @@ export class HttpService {
     return this.http.get<ResponseCustomerInfoDto>(`${this.API_URL}/customers/${customerId}`);
   }
 
+  public getCustomerIdsAndNames(): Observable<ResponseCustomerIdsAndNames[]> {
+    return this.http.get<ResponseCustomerIdsAndNames[]>(`${this.API_URL}/customers/ids-and-names`);
+  }
+
   public getAllCustomers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllCustomersDto>> {
     return this.http.get<PageResponse<ResponseAllCustomersDto>>(
       `${this.API_URL}/customers?page=${page}&size=${size}&search=${search ?? ''}`
@@ -149,9 +154,9 @@ export class HttpService {
   }
 
   // Scheduling
-  public getAllScheduling(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllSchedulesDto>> {
+  public getAllScheduling(page: number, size: number, search?: string, scheduleDate?: string | null ): Observable<PageResponse<ResponseAllSchedulesDto>> {
     return this.http.get<PageResponse<ResponseAllSchedulesDto>>(
-      `${this.API_URL}/scheduling?page=${page}&size=${size}&search=${search ?? ''}`
+      `${this.API_URL}/scheduling?page=${page}&size=${size}&search=${search ?? ''}&scheduleDate=${scheduleDate ?? ''}`
     );
   }
 }

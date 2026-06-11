@@ -120,6 +120,20 @@
           placeholder="Pesquisar agendamentos...">
         </div>
 
+        <div class="table-search-flex-right" *ngIf="table() === 'Scheduling'">
+          <input
+            type="date"
+            class="search-date"
+            (change)="onDateFilter($event)"
+          >
+        </div>
+
+        <div class="table-search-flex-right" *ngIf="table() === 'Scheduling'">
+          <button type="button" class="stat-card-button" (click)="openScheduleModalRegister()">
+            Criar agendamento
+          </button>
+        </div>
+
         <div class="search-container" *ngIf="table() === 'Customers'">
           <svg class="search-icon" width="20" height="20" fill="none" stroke="#64748b" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z"/>
@@ -130,17 +144,14 @@
           placeholder="Pesquisar clientes...">
         </div>
 
-        <div class="table-search-flex-right">
-          <button type="button" class="stat-card-button" *ngIf="table() === 'Scheduling'">
-            Criar agendamento
-          </button>
+        <div class="table-search-flex-right" *ngIf="table() === 'Customers'">
           <button type="button"
-            class="stat-card-button"
-            *ngIf="table() === 'Customers'"
-            (click)="openCustomerModalRegister()">
-            Cadastrar cliente
-          </button>
+              class="stat-card-button"
+              (click)="openCustomerModalRegister()">
+              Cadastrar cliente
+            </button>
         </div>
+
       </div>
     </div>
 
@@ -168,7 +179,7 @@
 
       <ng-container *ngIf="schedules().length > 0">
         <tr *ngFor="let schedule of schedules(), let i = index">
-          <td class="td-name" (click)="openCustomerModalView(schedule.scheduleId)">
+          <td class="td-name">
             <div class="td-name-container">
 
               <div class="td-name-background-schedule">
@@ -185,22 +196,22 @@
 
             </div>
           </td>
-          <td data-label="Data e Hora" (click)="openCustomerModalView(schedule.scheduleId)">
+          <td data-label="Data e Hora">
             <strong>{{ schedule.scheduleDate | date:'dd/MM/yyyy HH:mm' }}</strong>
           </td>
 
-          <td data-label="Serviço" (click)="openCustomerModalView(schedule.scheduleId)">
+          <td data-label="Serviço">
             <strong>{{ schedule.serviceManagementName }}</strong>
           </td>
 
-          <td data-label="Status" (click)="openCustomerModalView(schedule.scheduleId)">
-            <strong>{{ schedule.status }}</strong>
+          <td data-label="Status">
+            <strong>{{ getStatusSchedule(schedule.status) }}</strong>
           </td>
 
           <td data-label="buttons">
 
             <div style="display:flex;align-items:center; gap:10px;">
-              <button type="button" class="button-department-update" (click)="openModalUpdate(schedule.scheduleId)">
+              <button type="button" class="button-department-update">
                 <div style="display:flex;align-items:center;gap:5px;">
 
                   <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24">
@@ -223,7 +234,7 @@
 
                 <div class="drop-down-delete" *ngIf="dropDown === i" (click)="$event.stopPropagation()">
                   <div style="display:flex;flex-direction:column;">
-                    <button type="button" class="button-department-delete" (click)="openModalDelete(schedule.scheduleId)">
+                    <button type="button" class="button-department-delete">
                       <div style="display:flex;align-items:center; justify-content:center; gap:5px; color:#046af0e7;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
                           <path d="M20.5001 6H3.5" stroke="#eb3414" stroke-width="1.5" stroke-linecap="round"/>
@@ -390,6 +401,90 @@
   </div>
 
 </div>
+
+
+<!-- MODAIS SCHEDULING -->
+
+<!-- MODAL REGISTER SCHEDULING -->
+<div class="modal-register-container" *ngIf="modalSchedulingRegister" (click)="closeScheduleModalRegister()">
+  <div class="modal-register" onclick="event.stopPropagation()">
+
+    <div class="modal-register-header-container">
+      <div class="modal-register-header">
+        <div class="modal-register-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 16 16" fill="none">
+            <g fill="#0e90e6dc">
+            <path d="M6.834.33a2.25 2.25 0 012.332 0l5.25 3.182A2.25 2.25 0 0115.5 5.436V6A.75.75 0 0114 6v-.564a.75.75 0 00-.361-.642l-5.25-3.181a.75.75 0 00-.778 0l-5.25 3.181A.75.75 0 002 5.436v5.128a.75.75 0 00.361.642l4.028 2.44a.75.75 0 11-.778 1.283l-4.027-2.44A2.25 2.25 0 01.5 10.563V5.436a2.25 2.25 0 011.084-1.924L6.834.33z"/>
+            <path fill-rule="evenodd" d="M11.749 7.325l.001-.042v-.286a.75.75 0 00-1.5 0v.286l.001.042a3.73 3.73 0 00-1.318.546.76.76 0 00-.03-.03l-.201-.203a.75.75 0 00-1.06 1.06l.201.203.03.028c-.26.394-.45.84-.547 1.319a.878.878 0 00-.04-.001H7a.75.75 0 000 1.5h.286l.038-.001c.097.48.286.926.547 1.32a.71.71 0 00-.028.027l-.202.202a.75.75 0 001.06 1.06l.203-.202a.695.695 0 00.025-.026c.395.261.842.45 1.322.548l-.001.036v.286a.75.75 0 001.5 0v-.286-.036c.48-.097.926-.287 1.32-.548l.026.026.202.203a.75.75 0 001.06-1.061l-.201-.202a.667.667 0 00-.028-.026c.261-.395.45-.842.547-1.321H15a.75.75 0 000-1.5h-.286l-.04.002a3.734 3.734 0 00-.547-1.319l.03-.028.202-.202a.75.75 0 00-1.06-1.061l-.203.202-.029.03a3.73 3.73 0 00-1.318-.545zM11 8.75A2.247 2.247 0 008.75 11 2.247 2.247 0 0011 13.25 2.247 2.247 0 0013.25 11 2.247 2.247 0 0011 8.75z" clip-rule="evenodd"/>
+            </g>
+          </svg>
+        </div>
+        <div class="modal-register-header-text">
+          <h2>Criar agendamento</h2>
+          <span >Preencha os campos abaixo para criar um agendamento.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalRegister()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form [formGroup]="registerScheduleForm" (ngSubmit)="registerCustomer()">
+
+      <div class="form-group">
+        <label class="form-label">Cliente</label>
+        <select class="form-select" formControlName="customerId" required>
+          <option value="">
+            Selecione um cliente
+          </option>
+          <option *ngFor="let customer of customerIdsAndNames()">
+            {{ customer.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Serviço</label>
+        <select class="form-select" formControlName="serviceManagementId" required>
+          <option value="">
+            Selecione um serviço
+          </option>
+          <option>
+            1
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Anotação</label>
+        <textarea
+          formControlName="note"
+          rows="7"
+          class="form-textarea"
+          placeholder="Breve descrição do agendamento..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Data e hora</label>
+        <input type="datetime-local" class="form-input" formControlName="scheduledDate">
+      </div>
+
+      <div class="separator"></div>
+
+      <div style="display: flex; justify-content: end; gap: 5px;">
+        <button type="submit" class="button-submit">Criar agendamento</button>
+        <button type="button" class="button-back" (click)="closeScheduleModalRegister()">Voltar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- MODAIS CUSTOMER-->
 
 <!-- MODAL REGISTER -->
 <div class="modal-register-container" *ngIf="modalCustomerRegister" (click)="closeCustomerModalRegister()">
