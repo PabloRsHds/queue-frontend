@@ -234,7 +234,7 @@
 
                 <div class="drop-down-delete" *ngIf="dropDown === i" (click)="$event.stopPropagation()">
                   <div style="display:flex;flex-direction:column;">
-                    <button type="button" class="button-department-delete">
+                    <button type="button" class="button-department-delete" (click)="openScheduleModalDelete(schedule.scheduleId)">
                       <div style="display:flex;align-items:center; justify-content:center; gap:5px; color:#046af0e7;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
                           <path d="M20.5001 6H3.5" stroke="#eb3414" stroke-width="1.5" stroke-linecap="round"/>
@@ -483,10 +483,52 @@
   </div>
 </div>
 
+<!-- MODAL DELETE SCHEDULING -->
+<div class="modal-delete-container" *ngIf="modalSchedulingDelete" (click)="closeScheduleModalDelete()">
+  <div class="modal-delete" onclick="event.stopPropagation()">
+
+    <div class="modal-delete-header-container">
+      <div class="modal-delete-header">
+        <div class="modal-delete-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24" fill="none">
+            <path d="M20.5001 6H3.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9.5 11L10 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.5 11L14 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#da1414" stroke-width="1.5"/>
+            <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="modal-delete-header-text">
+          <h2>Deletar agendamento</h2>
+          <span>Delete o agendamento escolhido abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalDelete()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-delete-content">
+      <p>Tem certeza que deseja deletar o cliente <strong>1</strong>?</p>
+      <p>Deleta-lo, apagará todos os seus agendamentos.</p>
+    </div>
+
+    <div class="separator"></div>
+    <div style="display: flex; justify-content: end; gap: 5px;">
+      <button type="button" class="button-delete" (click)="deleteSchedule()">Excluir</button>
+      <button type="button" class="button-back" (click)="closeScheduleModalDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- MODAIS CUSTOMER-->
 
-<!-- MODAL REGISTER -->
+<!-- MODAL REGISTER CUSTOMER -->
 <div class="modal-register-container" *ngIf="modalCustomerRegister" (click)="closeCustomerModalRegister()">
   <div class="modal-register" onclick="event.stopPropagation()">
 
@@ -576,7 +618,7 @@
   </div>
 </div>
 
-<!-- MODAL UPDATE -->
+<!-- MODAL UPDATE CUSTOMER -->
 <div class="modal-update-container" *ngIf="modalCustomerUpdate" (click)="closeCustomerModalUpdate()">
   <div class="modal-update" onclick="event.stopPropagation()">
 
@@ -670,7 +712,7 @@
   </div>
 </div>
 
-<!-- MODAL DELETE -->
+<!-- MODAL DELETE CUSTOMER -->
 <div class="modal-delete-container" *ngIf="modalCustomerDelete" (click)="closeCustomerModalDelete()">
   <div class="modal-delete" onclick="event.stopPropagation()">
 

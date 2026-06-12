@@ -33,8 +33,8 @@ import { ResponseScheduleDto } from '../../dtos/schedule/ResponseScheduleDto';
 })
 export class HttpService {
 
-  //private readonly API_URL = 'http://192.168.25.107:8080';
-  private readonly API_URL = 'http://192.168.1.4:8080';
+  private readonly API_URL = 'http://192.168.25.107:8080';
+  //private readonly API_URL = 'http://192.168.1.4:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -159,6 +159,10 @@ export class HttpService {
   // Scheduling
   public registerSchedule(request: CreateScheduleDto): Observable<ResponseScheduleDto> {
     return this.http.post<ResponseScheduleDto>(`${this.API_URL}/scheduling`, request);
+  }
+
+  public deleteSchedule(scheduleId: string): Observable<ResponseScheduleDto> {
+    return this.http.delete<ResponseScheduleDto>(`${this.API_URL}/scheduling/`+ scheduleId)
   }
 
   public getAllScheduling(page: number, size: number, search?: string, scheduleDate?: string | null ): Observable<PageResponse<ResponseAllSchedulesDto>> {

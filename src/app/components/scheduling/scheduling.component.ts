@@ -210,6 +210,14 @@ export class SchedulingComponent implements OnInit {
     this.modalSchedulingRegister = false;
   }
 
+  public openScheduleModalDelete(scheduleId: string) {
+    this.modalSchedulingDelete = true;
+  }
+
+  public closeScheduleModalDelete() {
+    this.modalSchedulingDelete = false;
+  }
+
   // ====== MODALS CUSTOMER =========
   public openCustomerModalRegister() {
     this.modalCustomerRegister = true;
@@ -376,6 +384,9 @@ export class SchedulingComponent implements OnInit {
     this.schedulingState.registerSchedule(this.registerScheduleForm.value);
   }
 
+  deleteSchedule() {
+    this.schedulingState.deleteSchedule('scheduleId');
+  }
 
   // ===================== CUSTOMER =====================
 

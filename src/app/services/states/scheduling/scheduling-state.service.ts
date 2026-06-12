@@ -26,12 +26,16 @@ export class ScheduleStateService {
   public registerMessage = signal('');
   public registerStatus = signal<'success' | 'error' | 'default'>('default');
 
+  public deleteMessage = signal('');
+  public deleteStatus = signal<'success' | 'error' | 'default'>('default');
+
   public scheduleTotalPages = computed(() =>
     Math.ceil(this.scheduleTotalElements() / this.scheduleSize)
   );
 
   // ===== METHODS =====
 
+  // Register Schedule
   registerSchedule(request: CreateScheduleDto) {
     this.http.registerSchedule(request).subscribe({
       next: () => {
@@ -46,6 +50,24 @@ export class ScheduleStateService {
     });
   }
 
+  // Delete Schedule
+  deleteSchedule(scheduleId: string) {
+    this.http.deleteSchedule(scheduleId).subscribe({
+
+      next: (response) => {
+        this.deleteMessage.set('Agendamento deletado com sucesso!');
+        this.registerStatus.set('success');
+        this.loadSchedules();
+      },
+
+      error: (error) => {
+        this.registerMessage.set('Erro ao deletar agendamento');
+        this.registerStatus.set('error');
+      }
+    })
+  }
+
+  // Load all schedules
   loadSchedules() {
     this.http.getAllScheduling(
       this.schedulePage(),
