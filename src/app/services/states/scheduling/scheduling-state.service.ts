@@ -2,6 +2,8 @@ import { CreateScheduleDto } from './../../../dtos/schedule/CreateScheduleDto';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { ResponseAllSchedulesDto } from '../../../dtos/schedule/ResponseAllSchedulesDto';
+import { ResponseScheduleDto } from '../../../dtos/schedule/ResponseScheduleDto';
+import { UpdateScheduleDto } from '../../../dtos/schedule/UpdateScheduleDto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class ScheduleStateService {
   // ===== STATES =====
 
   public schedules = signal<ResponseAllSchedulesDto[]>([]);
+  public scheduleInfo = signal<ResponseScheduleDto | null>(null);
 
   // ===== PAGINATION =====
   public schedulePage = signal(0);
@@ -25,6 +28,9 @@ export class ScheduleStateService {
   // ===== MESSAGES =====
   public registerMessage = signal('');
   public registerStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public updateMessage = signal('');
+  public updateStatus = signal<'success' | 'error' | 'default'>('default');
 
   public deleteMessage = signal('');
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
@@ -50,19 +56,34 @@ export class ScheduleStateService {
     });
   }
 
+  // Update Schedule
+  updateSchedule(request: UpdateScheduleDto) {
+    this.http.updateSchedule(request).subscribe({
+      next: () => {
+        this.updateMessage.set('Agendamento atualizado com sucesso!');
+        this.updateStatus.set('success');
+        this.loadSchedules();
+      },
+      error: () => {
+        this.updateMessage.set('Erro ao atualizar agendamento');
+        this.updateStatus.set('error');
+      }
+    });
+  }
+
   // Delete Schedule
   deleteSchedule(scheduleId: string) {
     this.http.deleteSchedule(scheduleId).subscribe({
 
       next: (response) => {
         this.deleteMessage.set('Agendamento deletado com sucesso!');
-        this.registerStatus.set('success');
+        this.deleteStatus.set('success');
         this.loadSchedules();
       },
 
       error: (error) => {
-        this.registerMessage.set('Erro ao deletar agendamento');
-        this.registerStatus.set('error');
+        this.deleteMessage.set('Erro ao deletar agendamento');
+        this.deleteStatus.set('error');
       }
     })
   }
@@ -78,6 +99,15 @@ export class ScheduleStateService {
       next: response => {
         this.schedules.set(response.content);
         this.scheduleTotalElements.set(response.totalElements);
+      }
+    });
+  }
+
+  getScheduleById(scheduleId: string) {
+    this.http.getScheduleById(scheduleId).subscribe({
+      next: response => {
+        this.scheduleInfo.set(response);
+        console.log(response);
       }
     });
   }
@@ -117,5 +147,10 @@ export class ScheduleStateService {
   // RESETS
   resetStatus() {
     this.registerStatus.set('default');
+    this.deleteStatus.set('default');
+  }
+
+  resetScheduleInfo() {
+    this.scheduleInfo.set(null);
   }
 }

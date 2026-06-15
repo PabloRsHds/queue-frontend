@@ -64,6 +64,7 @@ export class SchedulingComponent implements OnInit {
 
   // ==== SCHEDULES STATES ====
   public schedules = this.schedulingState.schedules;
+  public scheduleInfo = this.schedulingState.scheduleInfo;
   public schedulePage = this.schedulingState.schedulePage;
   public scheduleTotalPages = this.schedulingState.scheduleTotalPages;
   public scheduleTotalElements = this.schedulingState.scheduleTotalElements;
@@ -87,6 +88,15 @@ export class SchedulingComponent implements OnInit {
       scheduledDate: [''],
     });
 
+    this.updateScheduleForm = this.fb.group({
+      scheduleId: [''],
+      customerId: [''],
+      serviceManagementId: [''],
+      note: [''],
+      scheduledDate: [''],
+      status: ['']
+    });
+
     this.registerCustomerForm = this.fb.group({
       name: [''],
       cpf: [''],
@@ -103,6 +113,21 @@ export class SchedulingComponent implements OnInit {
       email: [''],
       phone: [''],
     });
+
+
+    effect(() => {
+      if (this.scheduleInfo() !== null) {
+
+        this.updateScheduleForm.patchValue({
+          scheduleId: this.scheduleInfo()?.scheduleId,
+          customerId: this.scheduleInfo()?.customerId,
+          serviceManagementId: this.scheduleInfo()?.serviceManagementId,
+          note: this.scheduleInfo()?.note,
+          scheduledDate: this.scheduleInfo()?.scheduledDate,
+          status: this.scheduleInfo()?.status
+        });
+      }
+    })
 
     effect(() => {
       if (this.customerInfo() !== null) {
@@ -131,6 +156,30 @@ export class SchedulingComponent implements OnInit {
 
       if (this.schedulingState.registerStatus() === 'error') {
         this.snackBar.open(this.schedulingState.registerMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.schedulingState.resetStatus();
+      }
+    })
+
+    effect(() => {
+
+      if (this.schedulingState.updateStatus() === 'success') {
+        this.snackBar.open(this.schedulingState.updateMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.updateScheduleForm.reset();
+        this.serviceNamesAndDepartments.set([]);
+        this.customerIdsAndNames.set([]);
+        this.modalSchedulingUpdate = false;
+        this.schedulingState.resetScheduleInfo();
+        this.schedulingState.resetStatus();
+      }
+
+      if (this.schedulingState.updateStatus() === 'error') {
+        this.snackBar.open(this.schedulingState.updateMessage(), 'Fechar', {
           duration: 3000,
           panelClass: ['snackbar-error']
         });
@@ -179,6 +228,26 @@ export class SchedulingComponent implements OnInit {
     });
 
     effect(() => {
+      if (this.schedulingState.deleteStatus() === 'success') {
+        this.snackBar.open(this.schedulingState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.modalSchedulingDelete = false;
+        this.schedulingState.resetStatus();
+        this.schedulingState.resetScheduleInfo();
+      }
+
+      if (this.schedulingState.deleteStatus() === 'error') {
+        this.snackBar.open(this.schedulingState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.schedulingState.resetStatus();
+      }
+    })
+
+    effect(() => {
       if (this.customerState.deleteCustomerStatus() === 'success') {
         this.snackBar.open(this.customerState.deleteCustomerMessage(), 'Fechar', {
           duration: 3000,
@@ -210,12 +279,27 @@ export class SchedulingComponent implements OnInit {
     this.modalSchedulingRegister = false;
   }
 
+  public openScheduleModalUpdate(scheduleId: string) {
+    this.schedulingState.getScheduleById(scheduleId);
+    this.customerState.loadCustomerIdsAndNames();
+    this.serviceState.loadServiceNamesAndDepartments();
+    this.modalSchedulingUpdate = true;
+  }
+
+  public closeScheduleModalUpdate() {
+    this.modalSchedulingUpdate = false;
+    this.updateScheduleForm.reset();
+    this.scheduleInfo.set(null);
+  }
+
   public openScheduleModalDelete(scheduleId: string) {
+    this.schedulingState.getScheduleById(scheduleId);
     this.modalSchedulingDelete = true;
   }
 
   public closeScheduleModalDelete() {
     this.modalSchedulingDelete = false;
+    this.scheduleInfo.set(null);
   }
 
   // ====== MODALS CUSTOMER =========
@@ -227,7 +311,7 @@ export class SchedulingComponent implements OnInit {
     this.modalCustomerRegister = false;
   }
 
-  public openModalUpdate(customerId: string) {
+  public openCustomerModalUpdate(customerId: string) {
     this.customerState.getInfoCustomer(customerId);
     this.modalCustomerUpdate = true;
   }
@@ -237,7 +321,7 @@ export class SchedulingComponent implements OnInit {
     this.customerState.resetCustomerInfo();
   }
 
-  public openModalDelete(customerId: string) {
+  public openCustomerModalDelete(customerId: string) {
     this.modalCustomerDelete = true;
     this.customerState.getInfoCustomer(customerId);
   }
@@ -384,8 +468,13 @@ export class SchedulingComponent implements OnInit {
     this.schedulingState.registerSchedule(this.registerScheduleForm.value);
   }
 
-  deleteSchedule() {
-    this.schedulingState.deleteSchedule('scheduleId');
+  updateSchedule() {
+    console.log(this.updateScheduleForm.value);
+    this.schedulingState.updateSchedule(this.updateScheduleForm.value);
+  }
+
+  deleteSchedule(scheduleId: string) {
+    this.schedulingState.deleteSchedule(scheduleId);
   }
 
   // ===================== CUSTOMER =====================
@@ -412,11 +501,17 @@ export class SchedulingComponent implements OnInit {
 
   public getStatusSchedule(status: string) {
     if (status === 'SCHEDULED') return 'Agendado';
-    if (status === 'CONFIRMED') return 'Confirmado';
-    if (status === 'FINISHED') return 'Finalizado';
-    if (status === 'CANCELLED') return 'Cancelado';
-    if (status === 'MISSED') return 'Atrasado';
+    if (status === 'PRESENT') return 'Presente';
+    if (status === 'CANCELED') return 'Cancelado';
+    if (status === 'ABSENT') return 'Ausente';
+    return '';
+  }
 
+  public getStatusClass(status: string): string {
+    if (status === 'SCHEDULED') return 'status-scheduled';
+    if (status === 'PRESENT') return 'status-present';
+    if (status === 'CANCELED') return 'status-canceled';
+    if (status === 'ABSENT') return 'status-absent';
     return '';
   }
 }

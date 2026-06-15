@@ -27,14 +27,15 @@ import { ResponseAllSchedulesDto } from '../../dtos/schedule/ResponseAllSchedule
 import { ResponseCustomerIdsAndNames } from '../../dtos/customer/ResponseCustomerIdsAndNames';
 import { CreateScheduleDto } from '../../dtos/schedule/CreateScheduleDto';
 import { ResponseScheduleDto } from '../../dtos/schedule/ResponseScheduleDto';
+import { UpdateScheduleDto } from '../../dtos/schedule/UpdateScheduleDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.25.107:8080';
-  //private readonly API_URL = 'http://192.168.1.4:8080';
+  //private readonly API_URL = 'http://192.168.25.107:8080';
+  private readonly API_URL = 'http://192.168.1.9:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -161,6 +162,10 @@ export class HttpService {
     return this.http.post<ResponseScheduleDto>(`${this.API_URL}/scheduling`, request);
   }
 
+  public updateSchedule(request: UpdateScheduleDto): Observable<ResponseScheduleDto> {
+    return this.http.patch<ResponseScheduleDto>(`${this.API_URL}/scheduling`, request);
+  }
+
   public deleteSchedule(scheduleId: string): Observable<ResponseScheduleDto> {
     return this.http.delete<ResponseScheduleDto>(`${this.API_URL}/scheduling/`+ scheduleId)
   }
@@ -169,5 +174,9 @@ export class HttpService {
     return this.http.get<PageResponse<ResponseAllSchedulesDto>>(
       `${this.API_URL}/scheduling?page=${page}&size=${size}&search=${search ?? ''}&scheduleDate=${scheduleDate ?? ''}`
     );
+  }
+
+  public getScheduleById(scheduleId: string): Observable<ResponseScheduleDto> {
+    return this.http.get<ResponseScheduleDto>(`${this.API_URL}/scheduling/${scheduleId}`);
   }
 }

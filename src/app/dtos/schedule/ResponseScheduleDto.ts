@@ -7,6 +7,6 @@ export interface ResponseScheduleDto {
   serviceManagementName: string;
   scheduledDate: string;
   status: string;
-  notes: string;
+  note: string;
   createdAt: string;
 }

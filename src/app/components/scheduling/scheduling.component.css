@@ -649,6 +649,29 @@ body {
   background-color: rgba(255, 99, 71, 0.089);
 }
 
+.button-department-ticket {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 8px;
+  background-color: white;
+  border: 1px solid #b4b4b486;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+}
+
+.button-department-ticket span {
+  color: #bd8b01;
+}
+
+.button-department-ticket:hover {
+  background-color: rgba(255, 221, 71, 0.192);
+}
+
+
 .button-menu-table {
   display: flex;
   align-items: center;
@@ -897,6 +920,38 @@ body {
   outline: none;
   border-color: #1292e7;
   box-shadow: 0 0 0 3px rgba(45, 90, 142, 0.12);
+}
+
+.status-scheduled {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.status-present {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.status-canceled {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.status-absent {
+  background-color: #e2e3e5;
+  color: #383d41;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 .form-textarea {
