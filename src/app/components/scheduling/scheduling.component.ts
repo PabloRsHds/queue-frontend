@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerStateService } from '../../services/states/customer/customer-state.service';
 import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
+import { TicketStateService } from '../../services/states/ticket/ticket-state.service';
 
 @Component({
   selector: 'app-scheduling',
@@ -22,6 +23,7 @@ export class SchedulingComponent implements OnInit {
   private customerState = inject(CustomerStateService);
   private schedulingState = inject(ScheduleStateService);
   private serviceState = inject(ServiceManagementService);
+  private ticketState = inject(TicketStateService);
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
 
@@ -41,6 +43,10 @@ export class SchedulingComponent implements OnInit {
   modalCustomerUpdate = false;
   modalCustomerDelete = false;
   modalCustomerView = false;
+
+  // MODAL TICKET
+  modalTicket = false;
+  modalTicketPrinting = false;
 
   // Form Customers
   registerCustomerForm!: FormGroup;
@@ -266,6 +272,27 @@ export class SchedulingComponent implements OnInit {
         this.customerState.resetStatus();
       }
     })
+
+    effect(() => {
+
+      if (this.ticketState.createStatus() === 'success') {
+        this.snackBar.open(this.ticketState.createMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.ticketState.resetStatus();
+        this.modalTicket = false;
+        this.modalTicketPrinting = true;
+      }
+
+      if (this.ticketState.createStatus() === 'error') {
+        this.snackBar.open(this.ticketState.createMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.ticketState.resetStatus();
+      }
+    })
   }
 
   // ====== MODALS SCHEDULE =========
@@ -339,6 +366,19 @@ export class SchedulingComponent implements OnInit {
   public closeCustomerModalView() {
     this.modalCustomerView = false;
     this.customerState.resetCustomerInfo();
+  }
+
+  public openTicketModal(scheduleId: string) {
+    this.modalTicket = true;
+    this.schedulingState.getScheduleById(scheduleId);
+  }
+
+  public closeTicketModal() {
+    this.modalTicket = false;
+  }
+
+  public closeTicketPrintingModal() {
+    this.modalTicketPrinting = false;
   }
 
   // ===================== SEARCH =====================
@@ -494,7 +534,21 @@ export class SchedulingComponent implements OnInit {
     this.customerState.deleteCustomer(customerId);
   }
 
-  // Handle
+  // ================= TICKET ============================
+  createTicket() {
+
+    if (this.scheduleInfo() === null) return;
+
+    this.ticketState.createTicket(
+      {
+        customerId: this.scheduleInfo()?.customerId ?? '',
+        serviceManagementId: this.scheduleInfo()?.serviceManagementId ?? '',
+        scheduleId: this.scheduleInfo()?.scheduleId ?? '',
+        priority: 'NORMAL'
+      });
+  }
+
+  // ================= HANDLE ============================
   public handleTable(table: string) {
     this.table.set(table);
   }

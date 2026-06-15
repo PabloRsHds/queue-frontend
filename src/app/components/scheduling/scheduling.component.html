@@ -236,7 +236,11 @@
                 <div class="drop-down-delete" *ngIf="dropDown === i" (click)="$event.stopPropagation()">
                   <div style="display:flex;flex-direction:column;">
 
-                    <button type="button" class="button-department-ticket" *ngIf="schedule.status === 'PRESENT'">
+                    <button type="button" 
+                      class="button-department-ticket" 
+                      *ngIf="schedule.status === 'PRESENT'"
+                      (click)="openTicketModal(schedule.scheduleId)"
+                    >
                       <div style="display:flex;align-items:center; justify-content:center; gap:5px; color:#046af0e7;">
                         <svg version="1.1" id="Layer_1" width="15px" height="15px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
                           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -933,6 +937,51 @@
 
     <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
       <button type="button" class="button-back" (click)="closeCustomerModalView()">Fechar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL TICKET -->
+
+<div class="modal-ticket-container" *ngIf="modalTicket" (click)="closeTicketModal()">
+  <div class="modal-ticket" onclick="event.stopPropagation()">
+
+    <div class="modal-ticket-header-container">
+      <div class="modal-view-header">
+        <h2>Gerar Ticket</h2>
+      </div>
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeTicketModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div style="padding: 10px; margin-bottom: 25px;">
+      <p>Deseja gerar um ticket, para o cliente <span style="font-weight: bold;">{{this.scheduleInfo()?.customerName }}</span> </p>
+      <p>Prioridade do atendimento: 0</p>
+    </div>
+
+    <div style="display: flex; justify-content: end; gap: 5px;">
+      <button type="submit" class="button-submit" (click)="createTicket()">Gerar ticket</button>
+      <button type="button" class="button-back" (click)="closeCustomerModalUpdate()">Voltar</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-ticket-container" *ngIf="modalTicketPrinting" (click)="closeTicketPrintingModal()">
+  <div class="modal-ticket" onclick="event.stopPropagation()">
+
+    <div class="modal-ticket-header-container">
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeTicketPrintingModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
 
   </div>

@@ -28,14 +28,16 @@ import { ResponseCustomerIdsAndNames } from '../../dtos/customer/ResponseCustome
 import { CreateScheduleDto } from '../../dtos/schedule/CreateScheduleDto';
 import { ResponseScheduleDto } from '../../dtos/schedule/ResponseScheduleDto';
 import { UpdateScheduleDto } from '../../dtos/schedule/UpdateScheduleDto';
+import { CreateTicketDto } from '../../dtos/ticket/CreateTicketDto';
+import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  //private readonly API_URL = 'http://192.168.25.107:8080';
-  private readonly API_URL = 'http://192.168.1.9:8080';
+  private readonly API_URL = 'http://192.168.25.107:8080';
+  //private readonly API_URL = 'http://192.168.1.9:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -178,5 +180,10 @@ export class HttpService {
 
   public getScheduleById(scheduleId: string): Observable<ResponseScheduleDto> {
     return this.http.get<ResponseScheduleDto>(`${this.API_URL}/scheduling/${scheduleId}`);
+  }
+
+  // Ticket
+  public createTicket(request: CreateTicketDto): Observable<ResponseTicketDto> {
+    return this.http.post<ResponseTicketDto>(`${this.API_URL}/tickets`, request);
   }
 }
