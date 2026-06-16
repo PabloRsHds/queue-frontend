@@ -30,7 +30,8 @@ export class SchedulingComponent implements OnInit {
   // Variables
   dropDown: number | null = null;
   itemsPerPage = 4;
-  public table = signal<string>('Scheduling');
+  table = signal<string>('Scheduling');
+  currentDate = new Date();
 
   // MODAIS SCHEDULING
   modalSchedulingRegister = false;
@@ -283,6 +284,7 @@ export class SchedulingComponent implements OnInit {
         this.ticketState.resetStatus();
         this.modalTicket = false;
         this.modalTicketPrinting = true;
+        this.printTicket();
       }
 
       if (this.ticketState.createStatus() === 'error') {
@@ -567,5 +569,11 @@ export class SchedulingComponent implements OnInit {
     if (status === 'CANCELED') return 'status-canceled';
     if (status === 'ABSENT') return 'status-absent';
     return '';
+  }
+
+  public printTicket(): void {
+    setTimeout(() => {
+      window.print();
+    }, 100);
   }
 }

@@ -36,8 +36,8 @@ import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.25.107:8080';
-  //private readonly API_URL = 'http://192.168.1.9:8080';
+  //private readonly API_URL = 'http://192.168.25.107:8080';
+  private readonly API_URL = 'http://192.168.1.12:8080';
 
   constructor(private http: HttpClient) { }
 

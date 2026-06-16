@@ -236,8 +236,8 @@
                 <div class="drop-down-delete" *ngIf="dropDown === i" (click)="$event.stopPropagation()">
                   <div style="display:flex;flex-direction:column;">
 
-                    <button type="button" 
-                      class="button-department-ticket" 
+                    <button type="button"
+                      class="button-department-ticket"
                       *ngIf="schedule.status === 'PRESENT'"
                       (click)="openTicketModal(schedule.scheduleId)"
                     >
@@ -378,14 +378,46 @@
   <div class="pagination">
 
     <span class="pagination-info" *ngIf="this.table() === 'Scheduling'">
-      Mostrando {{ getStartIndex() }} - {{ getEndIndex() }} de 0
+      Mostrando {{ getStartIndex() }} - {{ getEndIndex() }} de {{ scheduleTotalElements() }}
     </span>
 
     <span class="pagination-info" *ngIf="this.table() === 'Customers'">
       Mostrando {{ getStartIndex() }} - {{ getEndIndex() }} de {{ customerTotalElements() }}
     </span>
 
-    <div class="pagination-buttons">
+    <div class="pagination-buttons" *ngIf="this.table() === 'Scheduling'">
+      <!-- PREV -->
+      <button
+        class="page-btn"
+        (click)="previousPage()"
+        [disabled]="schedulePage() === 0"
+        >
+        <svg viewBox="0 0 24 24">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <!-- PAGES -->
+      <button
+        *ngFor="let p of getPagesArray()"
+        class="page-btn"
+        [class.active]="p === schedulePage()"
+        (click)="goToPage(p)">
+
+        {{ p + 1 }}
+      </button>
+      <!-- NEXT -->
+      <button
+        class="page-btn"
+        (click)="nextPage()"
+        [disabled]="schedulePage() + 1 >= scheduleTotalPages()"
+        >
+        <svg viewBox="0 0 24 24">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <div class="pagination-buttons" *ngIf="this.table() === 'Customers'">
       <!-- PREV -->
       <button
         class="page-btn"
@@ -962,6 +994,9 @@
     <div style="padding: 10px; margin-bottom: 25px;">
       <p>Deseja gerar um ticket, para o cliente <span style="font-weight: bold;">{{this.scheduleInfo()?.customerName }}</span> </p>
       <p>Prioridade do atendimento: 0</p>
+      <div *ngIf="this.scheduleInfo()?.ticketId !== null">
+        <p>Usuário já possuí um ticket, deseja gerar um novo?</p>
+      </div>
     </div>
 
     <div style="display: flex; justify-content: end; gap: 5px;">
@@ -972,16 +1007,50 @@
   </div>
 </div>
 
+<!-- Fica oculto na tela -->
 <div class="modal-ticket-container" *ngIf="modalTicketPrinting" (click)="closeTicketPrintingModal()">
-  <div class="modal-ticket" onclick="event.stopPropagation()">
+  <div class="modal-ticket-print" onclick="event.stopPropagation()">
 
-    <div class="modal-ticket-header-container">
+    <div class="modal-ticket-print-header-container">
       <button class="dept-modal-close" aria-label="Fechar" (click)="closeTicketPrintingModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
+    </div>
+
+    <div class="ticket-print-company">
+      <h4>Torre & CIA</h4>
+    </div>
+
+    <div class="ticket-print-number">
+      <h1>002</h1>
+    </div>
+
+    <div class="ticket-print-info">
+      <p>{{ this.scheduleInfo()?.serviceManagementName }}</p>
+      <p>{{ this.scheduleInfo()?.scheduledDate | date:'dd/MM/yyyy' }}</p>
+      <p>Hora de chegada {{ currentDate | date:'HH:mm' }}</p>
+    </div>
+
+    <div class="ticket-print-line">
+      ==================
+    </div>
+
+    <!-- Botão que aparece APENAS na tela (será escondido na impressão) -->
+    <div class="ticket-print-footer screen-only">
+      <button type="button" class="button-submit" (click)="printTicket()">Imprimir ticket</button>
+    </div>
+
+    <!-- Mensagem que aparece APENAS na impressão (escondida na tela) -->
+    <div class="ticket-print-footer print-only">
+      <p>Obrigado pela presenca!</p>
+      <p>Por favor, aguarde até ser chamado(a)</p>
+    </div>
+
+    <div class="ticket-print-barcode">
+      ||||||||||||||||||||||||||||||||||||||||||||||
     </div>
 
   </div>
