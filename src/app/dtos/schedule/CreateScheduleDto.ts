@@ -2,6 +2,6 @@ export interface CreateScheduleDto {
 
   customerId: string;
   serviceManagementId: string;
-  note: string;
+  priority: string;
   scheduledDate: string;
 }

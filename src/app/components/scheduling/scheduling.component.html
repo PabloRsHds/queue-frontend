@@ -510,12 +510,18 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Anotação</label>
-        <textarea
-          formControlName="note"
-          rows="7"
-          class="form-textarea"
-          placeholder="Breve descrição do agendamento..."></textarea>
+        <label class="form-label">Prioridade</label>
+        <select class="form-select" formControlName="priority" required>
+          <option value="">
+            Selecione a prioridade
+          </option>
+          <option value="NORMAL">
+            Normal
+          </option>
+          <option value="PRIORITY">
+            Prioridade
+          </option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -586,13 +592,18 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Anotação</label>
-        <textarea
-          formControlName="note"
-          rows="5"
-          class="form-textarea"
-          placeholder="...">
-          </textarea>
+        <label class="form-label">Prioridade</label>
+        <select class="form-select" formControlName="priority" required>
+          <option value="">
+            Selecione a prioridade
+          </option>
+          <option value="NORMAL">
+            Normal
+          </option>
+          <option value="PRIORITY">
+            Prioridade
+          </option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -1025,7 +1036,7 @@
     </div>
 
     <div class="ticket-print-number">
-      <h1>002</h1>
+      <h1>{{ this.ticketInfo()?.code }}</h1>
     </div>
 
     <div class="ticket-print-info">

@@ -77,6 +77,10 @@ export class SchedulingComponent implements OnInit {
   public scheduleTotalElements = this.schedulingState.scheduleTotalElements;
   public scheduleSearch = this.schedulingState.scheduleSearch;
 
+  // ==== TICKET STATES =====
+  public ticketInfo = this.ticketState.ticketInfo;
+
+  // ==== STATES ====
   public customerId = signal<string>('');
   public serviceManagementId = signal<string>('');
 
@@ -91,7 +95,7 @@ export class SchedulingComponent implements OnInit {
     this.registerScheduleForm = this.fb.group({
       customerId: [''],
       serviceManagementId: [''],
-      note: [''],
+      priority: [''],
       scheduledDate: [''],
     });
 
@@ -99,7 +103,7 @@ export class SchedulingComponent implements OnInit {
       scheduleId: [''],
       customerId: [''],
       serviceManagementId: [''],
-      note: [''],
+      priority: [''],
       scheduledDate: [''],
       status: ['']
     });
@@ -129,7 +133,7 @@ export class SchedulingComponent implements OnInit {
           scheduleId: this.scheduleInfo()?.scheduleId,
           customerId: this.scheduleInfo()?.customerId,
           serviceManagementId: this.scheduleInfo()?.serviceManagementId,
-          note: this.scheduleInfo()?.note,
+          priority: this.scheduleInfo()?.priority,
           scheduledDate: this.scheduleInfo()?.scheduledDate,
           status: this.scheduleInfo()?.status
         });
