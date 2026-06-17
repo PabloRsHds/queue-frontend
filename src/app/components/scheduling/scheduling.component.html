@@ -32,7 +32,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">1</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ this.scheduleTotalElements() }}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de agendamentos</div>
         </div>
       </div>
@@ -51,29 +51,12 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">1</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">0</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Agendamentos concluídos</div>
         </div>
       </div>
     </div>
-    <div class="stat-card">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:55px;height:55px;background:#d3daffd7;;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg height="40px" width="40px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 58 58" xml:space="preserve" fill="#000000">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier"> <g>
-              <g> <circle style="fill:#f7f8f8;" cx="29" cy="29" r="29"></circle>
-                <path style="fill:#545E73;" d="M29,4c13.785,0,25,11.215,25,25S42.785,54,29,54S4,42.785,4,29S15.215,4,29,4 M29,0 C12.984,0,0,12.984,0,29s12.984,29,29,29s29-12.984,29-29S45.016,0,29,0L29,0z"></path> <g> <path style="fill:#8697CB;" d="M29,5.879c-0.552,0-1,0.447-1,1v1c0,0.553,0.448,1,1,1s1-0.447,1-1v-1 C30,6.326,29.552,5.879,29,5.879z"></path> <path style="fill:#8697CB;" d="M29,48.879c-0.552,0-1,0.447-1,1v1c0,0.553,0.448,1,1,1s1-0.447,1-1v-1 C30,49.326,29.552,48.879,29,48.879z"></path> <path style="fill:#8697CB;" d="M51,27.879h-1c-0.552,0-1,0.447-1,1s0.448,1,1,1h1c0.552,0,1-0.447,1-1S51.552,27.879,51,27.879z"></path> <path style="fill:#8697CB;" d="M8,27.879H7c-0.552,0-1,0.447-1,1s0.448,1,1,1h1c0.552,0,1-0.447,1-1S8.552,27.879,8,27.879z"></path> <path style="fill:#8697CB;" d="M43.849,12.615l-0.707,0.707c-0.391,0.391-0.391,1.023,0,1.414 c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l0.707-0.707c0.391-0.391,0.391-1.023,0-1.414 S44.24,12.224,43.849,12.615z"></path> <path style="fill:#8697CB;" d="M13.444,43.021l-0.707,0.707c-0.391,0.391-0.391,1.023,0,1.414 c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l0.707-0.707c0.391-0.391,0.391-1.023,0-1.414 S13.834,42.631,13.444,43.021z"></path> <path style="fill:#8697CB;" d="M44.556,43.021c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l0.707,0.707 c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293c0.391-0.391,0.391-1.023,0-1.414L44.556,43.021z"></path> <path style="fill:#8697CB;" d="M14.151,12.615c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l0.707,0.707 c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293c0.391-0.391,0.391-1.023,0-1.414L14.151,12.615z"></path> </g> <path style="fill:#545E73;" d="M26,29.879h-8c-0.552,0-1-0.447-1-1s0.448-1,1-1h8c0.552,0,1,0.447,1,1S26.552,29.879,26,29.879z"></path> <path style="fill:#545E73;" d="M29,26.879c-0.552,0-1-0.447-1-1v-11c0-0.553,0.448-1,1-1s1,0.447,1,1v11 C30,26.432,29.552,26.879,29,26.879z"></path> <path style="fill:#545E73;" d="M29,32.879c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S31.206,32.879,29,32.879z M29,26.879 c-1.103,0-2,0.897-2,2s0.897,2,2,2s2-0.897,2-2S30.103,26.879,29,26.879z"></path> </g> <g> <path style="fill:#EFC41A;" d="M55.15,58H31.46c-0.955,0-1.55-1.036-1.069-1.861l11.845-20.306c0.478-0.819,1.66-0.819,2.138,0 l11.845,20.306C56.7,56.964,56.105,58,55.15,58z"></path> <path style="fill:#FFFFFF;" d="M43.39,51c-0.552,0-1-0.448-1-1v-8c0-0.552,0.448-1,1-1s1,0.448,1,1v8 C44.39,50.552,43.942,51,43.39,51z"></path> <path style="fill:#FFFFFF;" d="M43.39,55c-0.26,0-0.52-0.11-0.71-0.29c-0.18-0.19-0.29-0.45-0.29-0.71c0-0.26,0.11-0.52,0.29-0.71 c0.38-0.37,1.04-0.37,1.42,0c0.18,0.19,0.29,0.45,0.29,0.71c0,0.26-0.11,0.52-0.29,0.71C43.91,54.89,43.66,55,43.39,55z"></path> </g> </g>
-              </g>
-          </svg>
-        </div>
-        <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">0</div>
-          <div style="font-size:12px;color:#64748b; margin-top: 3px">Agendamentos pendentes</div>
-        </div>
-      </div>
-    </div>
+
     <div class="stat-card">
       <div style="display:flex;align-items:center;gap:12px;">
         <div style="width:55px;height:55px;background:#ff767644;border-radius:10px;display:flex;align-items:center;justify-content:center;">
@@ -179,7 +162,7 @@
 
       <ng-container *ngIf="schedules().length > 0">
         <tr *ngFor="let schedule of schedules(), let i = index">
-          <td class="td-name">
+          <td class="td-name" (click)="openScheduleModalView(schedule.scheduleId, schedule.customerId)">
             <div class="td-name-container">
 
               <div class="td-name-background-schedule">
@@ -196,15 +179,15 @@
 
             </div>
           </td>
-          <td data-label="Data e Hora">
+          <td data-label="Data e Hora" (click)="openScheduleModalView(schedule.scheduleId, schedule.customerId)">
             <strong>{{ schedule.scheduleDate | date:'dd/MM/yyyy HH:mm' }}</strong>
           </td>
 
-          <td data-label="Serviço">
+          <td data-label="Serviço" (click)="openScheduleModalView(schedule.scheduleId, schedule.customerId)">
             <strong>{{ schedule.serviceManagementName }}</strong>
           </td>
 
-          <td data-label="Status">
+          <td data-label="Status" (click)="openScheduleModalView(schedule.scheduleId, schedule.customerId)">
             <strong [ngClass]="getStatusClass(schedule.status)">
               {{ getStatusSchedule(schedule.status) }}
             </strong>
@@ -685,6 +668,62 @@
 </div>
 
 
+<!-- MODAL VIEW  SCHEDULE -->
+<div class="modal-view-container" *ngIf="modalSchedulingView" (click)="closeScheduleModalView()">
+  <div class="modal-view" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': customerInfo()?.updatedAt != null}">
+
+    <div class="modal-view-header-container">
+      <div class="modal-view-header">
+        <div class="modal-view-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#0957b1" width="40px" height="40px" viewBox="0 0 1920 1920">
+              <path d="M960 1489.82c-348.474 0-668.545-202.323-841.298-529.918C291.455 632.306 611.526 429.984 960 429.984s668.545 202.322 841.298 529.918C1628.545 1287.497 1308.474 1489.82 960 1489.82Zm948.342-553.552C1720.645 558.648 1357.332 324 960 324c-397.333 0-760.645 234.648-948.342 612.268L0 959.902l11.658 23.634c187.697 377.62 551.01 612.268 948.342 612.268 397.333 0 760.645-234.648 948.342-612.268L1920 959.902l-11.658-23.634ZM960 1171.869c-116.9 0-211.967-95.067-211.967-211.967 0-116.9 95.067-211.967 211.967-211.967 116.9 0 211.967 95.067 211.967 211.967 0 116.9-95.067 211.967-211.967 211.967m0-529.918c-175.297 0-317.951 142.654-317.951 317.951 0 175.297 142.654 317.95 317.951 317.95 175.297 0 317.951-142.653 317.951-317.95S1135.297 641.951 960 641.951" fill-rule="evenodd"/>
+          </svg>
+        </div>
+        <div class="modal-view-header-text">
+          <h2>Detalhes do agendamento</h2>
+          <span >Vizualize as informações do agendamento abaixo.</span>
+        </div>
+      </div>
+
+      <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalView()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+
+      <div class="info-row">
+        <span class="label">Nome do cliente</span>
+        <span class="value">{{scheduleInfo()?.customerName}}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Data do agendamento</span>
+        <span class="value">{{scheduleInfo()?.scheduledDate | date: 'dd/MM/yyyy HH:mm'}}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Prioridade</span>
+        <span class="value">{{scheduleInfo()?.priority}}</span>
+      </div>
+
+      <div class="info-row" *ngIf="scheduleInfo()?.ticketId != null">
+        <span class="label">Código do ticket</span>
+        <span class="value">{{customerInfo()?.ticketCode}}</span>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
+      <button type="button" class="button-back" (click)="closeScheduleModalView()">Fechar</button>
+    </div>
+
+  </div>
+</div>
+
 <!-- MODAIS CUSTOMER-->
 
 <!-- MODAL REGISTER CUSTOMER -->
@@ -986,13 +1025,12 @@
 </div>
 
 <!-- MODAL TICKET -->
-
 <div class="modal-ticket-container" *ngIf="modalTicket" (click)="closeTicketModal()">
   <div class="modal-ticket" onclick="event.stopPropagation()">
 
     <div class="modal-ticket-header-container">
       <div class="modal-view-header">
-        <h2>Gerar Ticket</h2>
+        <h2>Gerênciar Ticket</h2>
       </div>
       <button class="dept-modal-close" aria-label="Fechar" (click)="closeTicketModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1003,16 +1041,66 @@
     </div>
 
     <div style="padding: 10px; margin-bottom: 25px;">
-      <p>Deseja gerar um ticket, para o cliente <span style="font-weight: bold;">{{this.scheduleInfo()?.customerName }}</span> </p>
-      <p>Prioridade do atendimento: 0</p>
-      <div *ngIf="this.scheduleInfo()?.ticketId !== null">
-        <p>Usuário já possuí um ticket, deseja gerar um novo?</p>
+      <p>Cliente: <span style="font-weight: bold;">{{this.scheduleInfo()?.customerName }}</span> </p>
+      <p>Prioridade do atendimento:
+        <span *ngIf="this.scheduleInfo()?.priority == 'NORMAL'" style="font-weight: bold;">Normal</span>
+        <span *ngIf="this.scheduleInfo()?.priority == 'PRIORITY'" style="font-weight: bold;">Prioridade</span>
+      </p>
+      <div class="ticket-print-line">
+        ===========================================
       </div>
     </div>
 
-    <div style="display: flex; justify-content: end; gap: 5px;">
-      <button type="submit" class="button-submit" (click)="createTicket()">Gerar ticket</button>
-      <button type="button" class="button-back" (click)="closeCustomerModalUpdate()">Voltar</button>
+    <div class="modal-ticket-content">
+
+      <div class="ticket-option">
+        <div class="ticket-icon-background-create">
+          <svg viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000" width="40px" height="40px">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M938.666667 426.666667v-149.333334c0-46.933333-38.4-85.333333-85.333334-85.333333h-117.333333c0 17.066667-14.933333 32-32 32s-32-14.933333-32-32H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v149.333334c46.933333 0 85.333333 38.4 85.333334 85.333333s-38.4 85.333333-85.333334 85.333333v149.333334c0 46.933333 38.4 85.333333 85.333334 85.333333h501.333333c0-17.066667 14.933333-32 32-32s32 14.933333 32 32H853.333333c46.933333 0 85.333333-38.4 85.333334-85.333333v-149.333334c-46.933333 0-85.333333-38.4-85.333334-85.333333s38.4-85.333333 85.333334-85.333333zM704 757.333333c-17.066667 0-32-14.933333-32-32s14.933333-32 32-32 32 14.933333 32 32-14.933333 32-32 32z m0-106.666666c-17.066667 0-32-14.933333-32-32s14.933333-32 32-32 32 14.933333 32 32-14.933333 32-32 32z m0-106.666667c-17.066667 0-32-14.933333-32-32s14.933333-32 32-32 32 14.933333 32 32-14.933333 32-32 32z m0-106.666667c-17.066667 0-32-14.933333-32-32s14.933333-32 32-32 32 14.933333 32 32-14.933333 32-32 32z m0-106.666666c-17.066667 0-32-14.933333-32-32s14.933333-32 32-32 32 14.933333 32 32-14.933333 32-32 32z" fill="#246dff"></path></g>
+          </svg>
+        </div>
+        <div class="ticket-option-info">
+          <h5>Gerar ticket</h5>
+          <p *ngIf="scheduleInfo()?.ticketId == null">Cria um ticket para o cliente.</p>
+          <p *ngIf="scheduleInfo()?.ticketId !== null">Cria um novo ticket para o cliente.</p>
+        </div>
+
+        <button
+          type="button"
+          class="button-ticket-create"
+          (click)="createTicket()">
+          Gerar ticket
+        </button>
+      </div>
+
+      <div class="ticket-option" *ngIf="scheduleInfo()?.ticketId !== null">
+        <div class="ticket-icon-background-delete">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="40px" height="40px">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="tomato" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+          </svg>
+        </div>
+        <div class="ticket-option-info">
+          <h5>Excluir ticket</h5>
+          <p>Remove o ticket atual deste cliente.</p>
+        </div>
+
+        <button
+          type="button"
+          class="button-ticket-delete"
+          >
+          Excluir ticket
+        </button>
+      </div>
+
+    </div>
+
+    <div class="ticket-footer">
+      <button
+        type="button"
+        class="button-back"
+        (click)="closeTicketModal()">
+        Cancelar
+      </button>
     </div>
 
   </div>

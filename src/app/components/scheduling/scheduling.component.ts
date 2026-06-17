@@ -335,6 +335,17 @@ export class SchedulingComponent implements OnInit {
     this.scheduleInfo.set(null);
   }
 
+  public openScheduleModalView(scheduleId: string, customerId: string) {
+    this.customerState.getInfoCustomer(customerId);
+    this.schedulingState.getScheduleById(scheduleId);
+    this.modalSchedulingView = true;
+  }
+
+  public closeScheduleModalView() {
+    this.modalSchedulingView = false;
+    this.scheduleInfo.set(null);
+  }
+
   // ====== MODALS CUSTOMER =========
   public openCustomerModalRegister() {
     this.modalCustomerRegister = true;
