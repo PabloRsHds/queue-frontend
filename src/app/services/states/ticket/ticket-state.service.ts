@@ -17,11 +17,13 @@ export class TicketStateService {
   public createStatus = signal<'success' | 'error' | 'default'>('default');
   public createMessage = signal('');
 
+  public deleteStatus = signal<'success' | 'error' | 'default'>('default');
+  public deleteMessage = signal('');
+
 
   createTicket(request: CreateTicketDto) {
 
     this.http.createTicket(request).subscribe({
-
       next: (response) => {
         this.createStatus.set('success');
         this.createMessage.set('Ticket criado com sucesso!');
@@ -34,9 +36,26 @@ export class TicketStateService {
     })
   }
 
+  deleteTicket(request: string) {
+
+    this.http.deleteTicket(request).subscribe({
+
+      next: (response) => {
+
+        this.deleteStatus.set('success');
+        this.deleteMessage.set('Ticket deletado com sucesso!');
+      },
+      error: (error) => {
+        this.deleteStatus.set('error');
+        this.deleteMessage.set('Erro ao deletar ticket');
+      }
+    })
+  }
+
 
   // RESETS
   resetStatus() {
     this.createStatus.set('default');
+    this.deleteStatus.set('default');
   }
 }

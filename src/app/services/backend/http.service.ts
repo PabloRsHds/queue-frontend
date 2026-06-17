@@ -36,8 +36,8 @@ import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
 })
 export class HttpService {
 
-  //private readonly API_URL = 'http://192.168.25.107:8080';
-  private readonly API_URL = 'http://192.168.1.10:8080';
+  private readonly API_URL = 'http://192.168.25.107:8080';
+  //private readonly API_URL = 'http://192.168.1.10:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -185,5 +185,10 @@ export class HttpService {
   // Ticket
   public createTicket(request: CreateTicketDto): Observable<ResponseTicketDto> {
     return this.http.post<ResponseTicketDto>(`${this.API_URL}/tickets`, request);
+  }
+
+
+  public deleteTicket(ticketId: string): Observable<ResponseTicketDto> {
+    return this.http.delete<ResponseTicketDto>(`${this.API_URL}/tickets/`+ ticketId)
   }
 }

@@ -147,6 +147,7 @@ export class ScheduleStateService {
   // RESETS
   resetStatus() {
     this.registerStatus.set('default');
+    this.updateStatus.set('default')
     this.deleteStatus.set('default');
   }
 

@@ -181,12 +181,12 @@ export class SchedulingComponent implements OnInit {
           duration: 3000,
           panelClass: ['snackbar-success']
         });
+        this.schedulingState.resetStatus();
         this.updateScheduleForm.reset();
         this.serviceNamesAndDepartments.set([]);
         this.customerIdsAndNames.set([]);
         this.modalSchedulingUpdate = false;
         this.schedulingState.resetScheduleInfo();
-        this.schedulingState.resetStatus();
       }
 
       if (this.schedulingState.updateStatus() === 'error') {
@@ -256,7 +256,7 @@ export class SchedulingComponent implements OnInit {
         });
         this.schedulingState.resetStatus();
       }
-    })
+    });
 
     effect(() => {
       if (this.customerState.deleteCustomerStatus() === 'success') {
@@ -276,7 +276,7 @@ export class SchedulingComponent implements OnInit {
         });
         this.customerState.resetStatus();
       }
-    })
+    });
 
     effect(() => {
 
@@ -298,7 +298,29 @@ export class SchedulingComponent implements OnInit {
         });
         this.ticketState.resetStatus();
       }
-    })
+    });
+
+    effect(() => {
+
+      if (this.ticketState.deleteStatus() === 'success') {
+        this.snackBar.open(this.ticketState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        this.ticketState.resetStatus();
+        this.modalTicket = false;
+        this.modalTicketPrinting = true;
+        this.printTicket();
+      }
+
+      if (this.ticketState.deleteStatus() === 'error') {
+        this.snackBar.open(this.ticketState.deleteMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+        this.ticketState.resetStatus();
+      }
+    });
   }
 
   // ====== MODALS SCHEDULE =========
@@ -526,7 +548,6 @@ export class SchedulingComponent implements OnInit {
   }
 
   updateSchedule() {
-    console.log(this.updateScheduleForm.value);
     this.schedulingState.updateSchedule(this.updateScheduleForm.value);
   }
 
@@ -565,6 +586,12 @@ export class SchedulingComponent implements OnInit {
       });
   }
 
+  deleteTicket(ticketId: string) {
+
+    if (ticketId === '') return;
+    this.ticketState.deleteTicket(ticketId);
+  }
+
   // ================= HANDLE ============================
   public handleTable(table: string) {
     this.table.set(table);
@@ -590,5 +617,25 @@ export class SchedulingComponent implements OnInit {
     setTimeout(() => {
       window.print();
     }, 100);
+  }
+
+  public getDocumentosForTable(): string {
+
+    if (this.customerInfo() == null) return '';
+
+    if (this.customerInfo()?.cpf !== null) {
+      const cpf = this.customerInfo()?.cpf;
+      return cpf ?? '';
+    
+    } else if (this.customerInfo()?.rg !== null) {
+      const rg = this.customerInfo()?.rg
+      return rg ?? '';
+    
+    } else if (this.customerInfo()?.phone !== null) {
+      const phone = this.customerInfo()?.phone
+      return phone ?? '';
+    }
+
+    return '';
   }
 }
