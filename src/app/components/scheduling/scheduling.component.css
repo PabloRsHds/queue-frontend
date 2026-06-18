@@ -889,7 +889,34 @@ body {
    ======================================== */
 
 .form-group {
+  position: relative;
   margin-bottom: 1.25rem;
+}
+
+.autocomplete-list {
+  position: absolute;
+  width: 100%;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.418);
+  border-bottom: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #070c14;
+  transition: all 0.2s;
+  background: #fff;
+  font-family: 'Inter', sans-serif;
+  z-index: 1000;
+}
+
+.autocomplete-item {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.autocomplete-item:hover {
+  background: #f1f5f9;
 }
 
 .form-label {
@@ -905,7 +932,7 @@ body {
 .form-textarea {
   width: 100%;
   padding: 12px 14px;
-  border: 2px solid #e2e8f0;
+  border: 1px solid #e2e8f0;
   border-radius: 5px;
   font-size: 0.9rem;
   color: #7d7d7d;
@@ -1109,6 +1136,7 @@ body {
   width: 120px;
   background: #ffffff;
   cursor: pointer;
+  z-index: 1000;
 }
 
 /* ========================================

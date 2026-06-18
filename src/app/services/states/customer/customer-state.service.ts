@@ -18,6 +18,7 @@ export class CustomerStateService {
   public customers = signal<ResponseAllCustomersDto[]>([]);
   public customerInfo = signal<ResponseCustomerInfoDto | null>(null);
   public customerIdsAndNames = signal<ResponseCustomerIdsAndNames[]>([]);
+  public customerSuggestions = signal<ResponseAllCustomersDto[]>([]);
 
   // ===== MESSAGES =====
 
@@ -62,6 +63,16 @@ export class CustomerStateService {
         this.customerIdsAndNames.set(response);
       }
     });
+  }
+
+  searchCustomers(search: string) {
+
+    this.http.getAllCustomers(0, 5, search).subscribe({
+      next: response => {
+        this.customerSuggestions.set(response.content);
+      }
+    });
+
   }
 
   getInfoCustomer(customerId: string) {

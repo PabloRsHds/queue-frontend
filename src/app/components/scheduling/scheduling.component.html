@@ -32,7 +32,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ this.scheduleTotalElements() }}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">0</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de agendamentos do dia</div>
         </div>
       </div>
@@ -144,7 +144,7 @@
   <table class="dept-table" *ngIf="table() === 'Scheduling'">
     <thead>
       <tr>
-        <th>Nome</th>
+        <th>Documento</th>
         <th>Data Hora</th>
         <th>Serviço</th>
         <th>Status</th>
@@ -174,7 +174,7 @@
               </div>
 
               <div style="display:flex;flex-direction:column;gap:5px;">
-                <strong>cpf</strong>
+                <strong>{{ getDocumentForTableSchedule(schedule.customerCpf, schedule.customerRg, schedule.customerPhone, schedule.customerEmail)}}</strong>
               </div>
 
             </div>
@@ -470,14 +470,26 @@
 
       <div class="form-group">
         <label class="form-label">Cliente</label>
-        <select class="form-select" formControlName="customerId" required>
-          <option value="">
-            Selecione um cliente
-          </option>
-          <option *ngFor="let customer of customerIdsAndNames()" value="{{ customer.customerId }}">
-            {{ customer.name }}
-          </option>
-        </select>
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Digite nome, CPF, RG ou telefone"
+          formControlName="customerId"
+          [value]="searchCustomerInput"
+          (input)="onCustomerSearch($event)"
+        >
+        <div
+          class="autocomplete-list"
+          *ngIf="this.customerSuggestions().length > 0"
+        >
+          <div
+            class="autocomplete-item"
+            *ngFor="let customer of this.customerSuggestions()"
+            (click)="selectCustomer(customer)"
+          >
+            <strong>{{ customer.name }}</strong>
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -558,11 +570,26 @@
 
       <div class="form-group">
         <label class="form-label">Cliente</label>
-        <select class="form-select" formControlName="customerId" required>
-          <option *ngFor="let customer of customerIdsAndNames()" value="{{ customer.customerId }}">
-            {{ customer.name }}
-          </option>
-        </select>
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Digite nome, CPF, RG ou telefone"
+          formControlName="customerId"
+          [value]="updateCustomerSearch"
+          (input)="onUpdateCustomerSearch($event)"
+        >
+        <div
+          class="autocomplete-list"
+          *ngIf="this.customerSuggestions().length > 0"
+        >
+          <div
+            class="autocomplete-item"
+            *ngFor="let customer of this.customerSuggestions()"
+            (click)="selectUpdateCustomer(customer)"
+          >
+            <strong>{{ customer.name }}</strong>
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -708,7 +735,7 @@
 
       <div class="info-row">
         <span class="label">Prioridade</span>
-        <span class="value">{{scheduleInfo()?.priority}}</span>
+        <span class="value">{{ getNamePriority(scheduleInfo()?.priority ?? '')}}</span>
       </div>
 
       <div class="info-row" *ngIf="scheduleInfo()?.ticketId != null">

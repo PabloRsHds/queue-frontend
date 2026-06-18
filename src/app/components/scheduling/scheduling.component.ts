@@ -6,6 +6,7 @@ import { CustomerStateService } from '../../services/states/customer/customer-st
 import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 import { TicketStateService } from '../../services/states/ticket/ticket-state.service';
+import { ResponseAllCustomersDto } from '../../dtos/customer/ResponseAllCustomersDto';
 
 @Component({
   selector: 'app-scheduling',
@@ -32,6 +33,8 @@ export class SchedulingComponent implements OnInit {
   itemsPerPage = 4;
   table = signal<string>('Scheduling');
   currentDate = new Date();
+  searchCustomerInput = '';
+  updateCustomerSearch = '';
 
   // MODAIS SCHEDULING
   modalSchedulingRegister = false;
@@ -68,6 +71,7 @@ export class SchedulingComponent implements OnInit {
   public customerTotalElements = this.customerState.customerTotalElements;
   public customerSearch = this.customerState.customerSearch;
   public customerIdsAndNames = this.customerState.customerIdsAndNames;
+  public customerSuggestions = this.customerState.customerSuggestions;
 
   // ==== SCHEDULES STATES ====
   public schedules = this.schedulingState.schedules;
@@ -127,18 +131,28 @@ export class SchedulingComponent implements OnInit {
 
 
     effect(() => {
-      if (this.scheduleInfo() !== null) {
 
-        this.updateScheduleForm.patchValue({
-          scheduleId: this.scheduleInfo()?.scheduleId,
-          customerId: this.scheduleInfo()?.customerId,
-          serviceManagementId: this.scheduleInfo()?.serviceManagementId,
-          priority: this.scheduleInfo()?.priority,
-          scheduledDate: this.scheduleInfo()?.scheduledDate,
-          status: this.scheduleInfo()?.status
-        });
-      }
-    })
+      const schedule = this.scheduleInfo();
+      const customers = this.customerIdsAndNames();
+
+      if (!schedule) return;
+
+      this.updateScheduleForm.patchValue({
+        scheduleId: schedule.scheduleId,
+        customerId: schedule.customerId,
+        serviceManagementId: schedule.serviceManagementId,
+        priority: schedule.priority,
+        scheduledDate: schedule.scheduledDate,
+        status: schedule.status
+      });
+
+      const customer = customers.find(
+        c => c.customerId === schedule.customerId
+      );
+
+      this.updateCustomerSearch = customer?.name ?? '';
+
+    });
 
     effect(() => {
       if (this.customerInfo() !== null) {
@@ -344,7 +358,9 @@ export class SchedulingComponent implements OnInit {
   public closeScheduleModalUpdate() {
     this.modalSchedulingUpdate = false;
     this.updateScheduleForm.reset();
+    this.customerIdsAndNames.set([]);
     this.scheduleInfo.set(null);
+    this.updateCustomerSearch = '';
   }
 
   public openScheduleModalDelete(scheduleId: string) {
@@ -619,23 +635,73 @@ export class SchedulingComponent implements OnInit {
     }, 100);
   }
 
-  public getDocumentosForTable(): string {
+  public getNamePriority(priority: string) {
+    if (priority === 'NORMAL') return 'Normal';
+    if (priority === 'PRIORITY') return 'Prioridade';
+    return '';
+  }
 
-    if (this.customerInfo() == null) return '';
+  public getDocumentForTableSchedule(cpf: string, rg: string, phone: string, email: string): string {
 
-    if (this.customerInfo()?.cpf !== null) {
-      const cpf = this.customerInfo()?.cpf;
-      return cpf ?? '';
-    
-    } else if (this.customerInfo()?.rg !== null) {
-      const rg = this.customerInfo()?.rg
-      return rg ?? '';
-    
-    } else if (this.customerInfo()?.phone !== null) {
-      const phone = this.customerInfo()?.phone
-      return phone ?? '';
+    if (cpf !== '') return cpf;
+    if (rg !== '') return rg;
+    if (phone !== '') return phone;
+    if (email !== '') return email;
+    return '';
+  }
+
+  // Método para proucurar usuário pelo input
+  onCustomerSearch(event: Event) {
+
+    const value = (event.target as HTMLInputElement).value;
+
+    this.searchCustomerInput = value;
+
+    if (value.trim().length < 2) {
+      this.customerSuggestions.set([]);
+      return;
     }
 
-    return '';
+    this.customerState.searchCustomers(value);
+  }
+
+  selectCustomer(customer: ResponseAllCustomersDto) {
+
+    this.searchCustomerInput = customer.name;
+
+    this.registerScheduleForm.patchValue({
+      customerId: customer.customerId
+    });
+
+    this.updateScheduleForm.patchValue({
+      customerId: customer.customerId
+    });
+
+    this.customerSuggestions.set([]);
+  }
+
+  onUpdateCustomerSearch(event: Event) {
+
+    const value = (event.target as HTMLInputElement).value;
+
+    this.updateCustomerSearch = value;
+
+    if (value.trim().length < 2) {
+      this.customerState.customerSuggestions.set([]);
+      return;
+    }
+
+    this.customerState.searchCustomers(value);
+  }
+
+  selectUpdateCustomer(customer: ResponseAllCustomersDto) {
+
+    this.updateCustomerSearch = customer.name;
+
+    this.updateScheduleForm.patchValue({
+      customerId: customer.customerId
+    });
+
+    this.customerState.customerSuggestions.set([]);
   }
 }
