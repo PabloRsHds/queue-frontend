@@ -35,6 +35,9 @@ export class ScheduleStateService {
   public deleteMessage = signal('');
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
+  // ===== STATISTCS =======
+  public countSchedulingOfDay = signal<number>(0);
+
   public scheduleTotalPages = computed(() =>
     Math.ceil(this.scheduleTotalElements() / this.scheduleSize)
   );
@@ -48,6 +51,7 @@ export class ScheduleStateService {
         this.registerMessage.set('Agendamento realizado com sucesso!');
         this.registerStatus.set('success');
         this.loadSchedules();
+        this.statiscsCountSchedulingOfDay();
       },
       error: () => {
         this.registerMessage.set('Erro ao realizar agendamento');
@@ -79,6 +83,7 @@ export class ScheduleStateService {
         this.deleteMessage.set('Agendamento deletado com sucesso!');
         this.deleteStatus.set('success');
         this.loadSchedules();
+        this.statiscsCountSchedulingOfDay();
       },
 
       error: (error) => {
@@ -86,6 +91,16 @@ export class ScheduleStateService {
         this.deleteStatus.set('error');
       }
     })
+  }
+
+  // Statistics
+  statiscsCountSchedulingOfDay() {
+    this.http.getCountSchedulingOfDay().subscribe({
+      next: response => {
+        console.log(response);
+        this.countSchedulingOfDay.set(response);
+      }
+    });
   }
 
   // Load all schedules
