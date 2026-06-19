@@ -36,6 +36,7 @@ export class SchedulingComponent implements OnInit {
   currentDate = new Date();
   searchCustomerInput = '';
   updateCustomerSearch = '';
+  selectedDate = new Date().toLocaleDateString('en-CA');
 
   // MODAIS SCHEDULING
   modalSchedulingRegister = false;

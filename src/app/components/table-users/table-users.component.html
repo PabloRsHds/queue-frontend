@@ -10,7 +10,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{statistics()?.totalElements}}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{statistics()?.totalElements ?? 0 }}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de usuários cadastrados</div>
         </div>
       </div>
@@ -23,9 +23,9 @@
             <div style="font-size:12px;color:#64748b;">Ativos</div>
           </div>
           <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-            {{ statistics()?.totalElementsActive }}
+            {{ statistics()?.totalElementsActive ?? 0}}
           </div>
-          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageActive }} % do total</div>
+          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageActive ?? 0}} % do total</div>
         </div>
       </div>
     </div>
@@ -38,9 +38,9 @@
             <div style="font-size:12px;color:#64748b;">Inativos</div>
           </div>
           <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-            {{ statistics()?.totalElementsInactive }}
+            {{ statistics()?.totalElementsInactive ?? 0 }}
           </div>
-          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageInactive }} % do total</div>
+          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageInactive ?? 0 }} % do total</div>
         </div>
       </div>
     </div>
@@ -58,7 +58,8 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{statistics()?.admins}}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{statistics()?.admins ?? 0}}</div>
+          <div *ngIf="(statistics()?.admins ?? 0) == 0" style="font-size:12px;color:#64748b; margin-top: 3px">Administradores</div>
           <div *ngIf="(statistics()?.admins ?? 0) == 1" style="font-size:12px;color:#64748b; margin-top: 3px">Administrador</div>
           <div *ngIf="(statistics()?.admins ?? 0) >= 2" style="font-size:12px;color:#64748b; margin-top: 3px">Administradores</div>
         </div>

@@ -1,0 +1,254 @@
+<!-- PAINEL DE ATENDIMENTO PAGE -->
+<div class="fade-in page-container">
+  <!-- Stats Row -->
+  <div class="stat-cards-grid">
+    <div class="stat-card">
+      <div class="stat-card-content">
+        <div class="stat-card-icon-wrapper" style="background:#dcfce7;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="stat-label">Em espera</div>
+          <div class="stat-value">0</div>
+          <div class="stat-sub">pessoas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-content">
+        <div class="stat-card-icon-wrapper" style="background:#dbeafe;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="stat-label">Sendo atendido</div>
+          <div class="stat-value">1</div>
+          <div class="stat-sub">agora</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-content">
+        <div class="stat-card-icon-wrapper" style="background:#fef3c7;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div>
+          <div class="stat-label">Tempo médio de espera</div>
+          <div class="stat-value">00:07:35</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-content">
+        <div class="stat-card-icon-wrapper" style="background:#ede9fe;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="stat-label">Tempo médio de atendimento</div>
+          <div class="stat-value">00:07:35</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-content">
+        <div class="stat-card-icon-wrapper" style="background:#dbeafe;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+            <path d="M22 12h-4l-3 9-4-18-3 9H2"/>
+          </svg>
+        </div>
+        <div>
+          <div class="stat-label">Atendimentos hoje</div>
+          <div class="stat-value">38</div>
+          <div class="stat-sub">realizados</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="main-content-grid">
+    <!-- Queue Column -->
+    <div class="section-card scroll-card">
+      <div class="card-header">
+        <h3 class="card-title">Fila de espera</h3>
+      </div>
+      <div class="card-tabs-wrapper">
+        <div class="queue-tabs">
+          <div class="queue-tab active" onclick="switchQueueTab(this)">Todos <span class="queue-tab-count">12</span></div>
+          <div class="queue-tab" onclick="switchQueueTab(this)">
+            Prioridade
+            <span class="queue-tab-count">2</span>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-area">
+        <div class="table-header-row">
+          <span>Posição</span>
+          <span>Senha</span>
+          <span>Nome</span>
+          <span>Serviço</span>
+          <span>Chegada</span>
+        </div>
+        <div id="queueList"></div>
+      </div>
+      <button class="load-more-btn" onclick="loadMoreQueue()">
+        Ver mais na fila
+      </button>
+    </div>
+
+    <!-- Middle Column -->
+    <div class="middle-column">
+      <!-- Current Call -->
+      <div class="section-card">
+        <div class="card-header">
+          <h3 class="card-title">Chamada atual</h3>
+        </div>
+        <div class="card-body">
+          <div class="current-call-card pulse-active">
+            <div class="call-status">Atendendo</div>
+            <div class="call-senhas">A123</div>
+            <div class="call-guiche">Guichê 01</div>
+            <div class="call-client-name">João Silva</div>
+            <div class="call-client-service">Atendimento ao Cliente</div>
+            <div class="call-timer-wrapper">
+              <div class="call-time-label">Tempo de atendimento</div>
+              <div class="call-time-value" id="currentCallTimer">00:05:32</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="section-card">
+        <div class="card-body actions-card">
+          <h3 class="actions-title">Ações rápidas</h3>
+          <div class="actions-grid">
+            <button class="action-btn-primary" onclick="finishService()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Finalizar atendimento
+            </button>
+            <button class="action-btn-secondary" onclick="callNext()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              Chamar próximo
+            </button>
+            <button class="action-btn-danger" onclick="cancelService()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+              Cancelar atendimento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-column">
+      <!-- Next Call -->
+      <div class="section-card">
+        <div class="card-header">
+          <h3 class="card-title">Próxima chamada</h3>
+        </div>
+        <div class="card-body">
+          <div class="next-call-card">
+            <div class="next-label">Próximo da fila</div>
+            <div class="next-senha">F045</div>
+            <div class="next-name">Maria Oliveira</div>
+            <div class="next-dept">Financeiro</div>
+            <button class="call-now-btn" onclick="callNext()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              Chamar agora
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div class="section-card scroll-card">
+        <div class="card-header history-header">
+          <h3 class="card-title">Histórico de chamadas</h3>
+          <a href="#" class="view-all-link">Ver todos</a>
+        </div>
+        <div class="scroll-area">
+          <div>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+            <p>teste1</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <div class="bottom-container">
+      <div class="bottom-item">
+        <div class="status-dot blue"></div>
+        <span class="bottom-label">Guichê 01</span>
+      </div>
+      <div class="bottom-item">
+        <span class="bottom-text">Atendimento ao Cliente</span>
+      </div>
+      <div class="bottom-item">
+        <div class="status-dot green"></div>
+        <span class="status-text">Online</span>
+      </div>
+      <div class="bottom-item vertical">
+        <span class="bottom-sub">Atendente</span>
+        <span class="bottom-value">Admin</span>
+      </div>
+      <div class="bottom-item vertical">
+        <span class="bottom-sub">Início do expediente</span>
+        <span class="bottom-value">08:00</span>
+      </div>
+      <div class="bottom-item vertical">
+        <span class="bottom-sub">Intervalo</span>
+        <span class="bottom-value">12:00 - 13:00</span>
+      </div>
+    </div>
+    <button class="end-shift-btn" onclick="endShift()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="15 9 9 15"/>
+        <polyline points="9 9 15 15"/>
+      </svg>
+      Encerrar expediente
+    </button>
+  </div>
+</div>
