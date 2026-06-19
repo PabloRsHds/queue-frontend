@@ -1591,7 +1591,7 @@ body {
   background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
   border-radius: 20px;
   padding: 30px;
-  width: 450px;
+  width: 500px;
   max-width: 90%;
   box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   position: relative;
@@ -1657,8 +1657,8 @@ body {
   border-bottom: 2px dashed #e2e8f0;
 }
 
-.ticket-print-company h3 {
-  font-size: 1.8rem;
+.ticket-print-company h4 {
+  font-size: 1.6rem;
   font-weight: 700;
   color: #1e293b;
   margin: 0 0 5px 0;
@@ -1678,7 +1678,7 @@ body {
 }
 
 .ticket-print-number h1 {
-  font-size: 5rem;
+  font-size: 4rem;
   font-weight: 800;
   color: #1463da;
   margin: 0;
@@ -1690,7 +1690,6 @@ body {
   text-align: center;
   margin: 25px 0;
   padding: 15px;
-  background: #f8fafc;
   border-radius: 12px;
 }
 
@@ -1765,7 +1764,7 @@ body {
     font-size: 3.5rem;
   }
 
-  .ticket-print-company h3 {
+  .ticket-print-company h4 {
     font-size: 1.5rem;
   }
 
@@ -1840,10 +1839,11 @@ body {
   .ticket-print-number h1 {
     color: black;
     font-size: 60pt !important;
+    margin: 20px !important;
   }
 
-  .ticket-print-company h3 {
-    font-size: 24pt !important;
+  .ticket-print-company h4 {
+    font-size: 20pt !important;
   }
 
   .ticket-print-info p {
@@ -1852,7 +1852,13 @@ body {
 
   .ticket-print-info p,
   .ticket-print-footer p {
-    font-size: 14pt !important;
+    font-size: 18pt !important;
+  }
+
+  .ticket-print-info-name {
+    margin-bottom: 20px !important;
+    font-size: 20pt !important;
+    font-weight: bold !important;
   }
 
   .ticket-print-footer {

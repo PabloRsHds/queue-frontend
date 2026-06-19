@@ -4,6 +4,7 @@ import { HttpService } from '../../backend/http.service';
 import { ResponseAllSchedulesDto } from '../../../dtos/schedule/ResponseAllSchedulesDto';
 import { ResponseScheduleDto } from '../../../dtos/schedule/ResponseScheduleDto';
 import { UpdateScheduleDto } from '../../../dtos/schedule/UpdateScheduleDto';
+import { ResponseScheduleStatisticsDto } from '../../../dtos/schedule/ResponseScheduleStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class ScheduleStateService {
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
   // ===== STATISTCS =======
-  public countSchedulingOfDay = signal<number>(0);
+  public scheduleStatistics = signal<ResponseScheduleStatisticsDto | null>(null);
 
   public scheduleTotalPages = computed(() =>
     Math.ceil(this.scheduleTotalElements() / this.scheduleSize)
@@ -51,7 +52,7 @@ export class ScheduleStateService {
         this.registerMessage.set('Agendamento realizado com sucesso!');
         this.registerStatus.set('success');
         this.loadSchedules();
-        this.statiscsCountSchedulingOfDay();
+        this.loadScheduleStatistics();
       },
       error: () => {
         this.registerMessage.set('Erro ao realizar agendamento');
@@ -67,6 +68,7 @@ export class ScheduleStateService {
         this.updateMessage.set('Agendamento atualizado com sucesso!');
         this.updateStatus.set('success');
         this.loadSchedules();
+        this.loadScheduleStatistics();
       },
       error: () => {
         this.updateMessage.set('Erro ao atualizar agendamento');
@@ -83,7 +85,7 @@ export class ScheduleStateService {
         this.deleteMessage.set('Agendamento deletado com sucesso!');
         this.deleteStatus.set('success');
         this.loadSchedules();
-        this.statiscsCountSchedulingOfDay();
+        this.loadScheduleStatistics();
       },
 
       error: (error) => {
@@ -94,11 +96,11 @@ export class ScheduleStateService {
   }
 
   // Statistics
-  statiscsCountSchedulingOfDay() {
-    this.http.getCountSchedulingOfDay().subscribe({
+  loadScheduleStatistics() {
+    this.http.getScheduleStatistics().subscribe({
       next: response => {
         console.log(response);
-        this.countSchedulingOfDay.set(response);
+        this.scheduleStatistics.set(response);
       }
     });
   }

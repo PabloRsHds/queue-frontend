@@ -32,7 +32,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ countSchedulingOfDay() }}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.schedulingOfDay ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de agendamentos do dia</div>
         </div>
       </div>
@@ -40,18 +40,13 @@
     <div class="stat-card">
       <div style="display:flex;align-items:center;gap:12px;">
         <div style="width:55px;height:55px;background:#a8ff7644;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" xml:space="preserve" fill="#000000" width="40px" height="40px">
+          <svg fill="#13aa1d" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" stroke="#13aa1d" width="40px" height="40px">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier">
-              <circle style="fill:#25AE88;" cx="25" cy="25" r="25"></circle>
-              <polyline style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" points=" 38,15 22,33 12,25 ">
-              </polyline>
-            </g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M 33.7169 50.6051 C 45.9141 50.6051 56.0000 40.4968 56.0000 28.2994 C 56.0000 16.1245 45.8920 5.9937 33.6944 5.9937 C 22.4180 5.9937 12.9611 14.6419 11.5909 25.5365 C 12.1749 25.5365 12.7365 25.5814 13.2981 25.6712 C 13.9944 25.7611 14.6908 25.9183 15.3646 26.1205 C 16.4204 16.9332 24.1926 9.8124 33.6944 9.8124 C 43.9598 9.8124 52.1812 18.0563 52.2037 28.2994 C 52.2037 33.0840 50.4294 37.3969 47.5090 40.6765 C 44.1171 37.8461 39.0406 35.9593 33.6944 35.9593 C 31.1785 35.9593 28.3258 36.4984 25.6751 37.4418 C 25.8324 38.2954 25.9222 39.1715 25.9222 40.0475 C 25.9222 42.9902 25.0012 45.7531 23.4513 48.0668 C 26.5287 49.6616 30.0329 50.6051 33.7169 50.6051 Z M 33.6944 32.0956 C 38.0073 32.0956 41.2644 28.3668 41.2644 23.6720 C 41.2644 19.2469 37.9399 15.4057 33.6944 15.4057 C 29.4714 15.4057 26.1244 19.2469 26.1244 23.6720 C 26.1244 28.3668 29.4040 32.0956 33.6944 32.0956 Z M 11.4112 51.4587 C 17.6783 51.4587 22.8224 46.3372 22.8224 40.0475 C 22.8224 33.8028 17.6783 28.6363 11.4112 28.6363 C 5.1665 28.6363 0 33.8028 0 40.0475 C 0 46.3372 5.1665 51.4587 11.4112 51.4587 Z M 10.0634 46.7415 C 9.7040 46.7415 9.2547 46.5842 8.9627 46.2698 L 4.6498 41.5301 C 4.4926 41.3504 4.3803 40.9685 4.3803 40.6540 C 4.3803 39.8903 4.9868 39.2838 5.7505 39.2838 C 6.1998 39.2838 6.5592 39.4860 6.8063 39.7555 L 9.9960 43.2148 L 15.9487 34.9709 C 16.1958 34.6115 16.6001 34.3644 17.0943 34.3644 C 17.8356 34.3644 18.4870 34.9484 18.4870 35.7122 C 18.4870 35.9593 18.3747 36.2513 18.1725 36.5433 L 11.2090 46.2248 C 10.9844 46.5393 10.5351 46.7415 10.0634 46.7415 Z"></path></g>
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">0</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.customerPresent ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Clientes presentes</div>
         </div>
       </div>
@@ -60,14 +55,13 @@
     <div class="stat-card">
       <div style="display:flex;align-items:center;gap:12px;">
         <div style="width:55px;height:55px;background:#ff767644;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg height="40px" width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.001 512.001" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier"> <path style="fill:#FF6465;" d="M256.001,512c141.384,0,255.999-114.615,255.999-256.001C512.001,114.615,397.386,0,256.001,0 S0.001,114.615,0.001,256.001S114.616,512,256.001,512z"></path>
-              <path style="opacity:0.1;enable-background:new ;" d="M68.873,256.001c0-129.706,96.466-236.866,221.564-253.688 C279.172,0.798,267.681,0,256.001,0C114.616,0,0.001,114.615,0.001,256.001S114.616,512.001,256,512.001 c11.68,0,23.171-0.798,34.436-2.313C165.339,492.865,68.873,385.705,68.873,256.001z"></path> <path style="fill:#FFFFFF;" d="M313.391,256.001l67.398-67.398c4.899-4.899,4.899-12.842,0-17.74l-39.65-39.65 c-4.899-4.899-12.842-4.899-17.74,0l-67.398,67.398l-67.398-67.398c-4.899-4.899-12.842-4.899-17.74,0l-39.65,39.65 c-4.899,4.899-4.899,12.842,0,17.74l67.398,67.398l-67.398,67.398c-4.899,4.899-4.899,12.842,0,17.741l39.65,39.65 c4.899,4.899,12.842,4.899,17.74,0l67.398-67.398L323.4,380.79c4.899,4.899,12.842,4.899,17.74,0l39.65-39.65 c4.899-4.899,4.899-12.842,0-17.741L313.391,256.001z"></path> </g>
+          <svg fill="#e02f10" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" stroke="#e02f10" width="40px" height="40px">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M 33.7169 50.6051 C 45.9141 50.6051 56.0000 40.4968 56.0000 28.2994 C 56.0000 16.1245 45.8920 5.9937 33.6944 5.9937 C 22.4180 5.9937 12.9611 14.6419 11.5909 25.5365 C 12.1749 25.5365 12.7365 25.5814 13.2981 25.6712 C 13.9944 25.7611 14.6908 25.9183 15.3646 26.1205 C 16.4204 16.9332 24.1926 9.8124 33.6944 9.8124 C 43.9598 9.8124 52.1812 18.0563 52.2037 28.2994 C 52.2037 33.0840 50.4294 37.3969 47.5090 40.6765 C 44.1171 37.8461 39.0406 35.9593 33.6944 35.9593 C 31.1785 35.9593 28.3258 36.4984 25.6751 37.4418 C 25.8324 38.2954 25.9222 39.1715 25.9222 40.0475 C 25.9222 42.9902 25.0012 45.7531 23.4513 48.0668 C 26.5287 49.6616 30.0329 50.6051 33.7169 50.6051 Z M 33.6944 32.0956 C 38.0073 32.0956 41.2644 28.3668 41.2644 23.6720 C 41.2644 19.2469 37.9399 15.4057 33.6944 15.4057 C 29.4714 15.4057 26.1244 19.2469 26.1244 23.6720 C 26.1244 28.3668 29.4040 32.0956 33.6944 32.0956 Z M 11.4112 51.4587 C 17.6783 51.4587 22.8224 46.3372 22.8224 40.0475 C 22.8224 33.8028 17.6783 28.6363 11.4112 28.6363 C 5.1665 28.6363 0 33.8028 0 40.0475 C 0 46.3372 5.1665 51.4587 11.4112 51.4587 Z M 8.0866 45.3488 C 7.5251 45.9328 6.6940 45.8205 6.1548 45.3039 C 5.6382 44.7872 5.5483 43.9336 6.1099 43.3720 L 9.5018 39.9801 L 6.3795 36.8353 C 5.8853 36.3187 5.8853 35.4651 6.3795 34.9934 C 6.8737 34.5217 7.6823 34.4992 8.1990 34.9934 L 11.3662 38.1157 L 14.7357 34.7238 C 15.2973 34.1622 16.1508 34.2746 16.6675 34.7912 C 17.1841 35.3303 17.2965 36.1614 16.7349 36.7230 L 13.3430 40.1149 L 16.4653 43.2597 C 16.9595 43.7764 16.9595 44.6075 16.4653 45.0792 C 15.9711 45.5509 15.1400 45.5734 14.6234 45.0792 L 11.5010 41.9793 Z"></path></g>
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">0</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.schedulingCanceled ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Agendamentos cancelados</div>
         </div>
       </div>
@@ -76,14 +70,13 @@
     <div class="stat-card">
       <div style="display:flex;align-items:center;gap:12px;">
         <div style="width:55px;height:55px;background:#cecece54;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-          <svg height="40px" width="40px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.001 512.001" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier"> <path style="fill:#FF6465;" d="M256.001,512c141.384,0,255.999-114.615,255.999-256.001C512.001,114.615,397.386,0,256.001,0 S0.001,114.615,0.001,256.001S114.616,512,256.001,512z"></path>
-              <path style="opacity:0.1;enable-background:new ;" d="M68.873,256.001c0-129.706,96.466-236.866,221.564-253.688 C279.172,0.798,267.681,0,256.001,0C114.616,0,0.001,114.615,0.001,256.001S114.616,512.001,256,512.001 c11.68,0,23.171-0.798,34.436-2.313C165.339,492.865,68.873,385.705,68.873,256.001z"></path> <path style="fill:#FFFFFF;" d="M313.391,256.001l67.398-67.398c4.899-4.899,4.899-12.842,0-17.74l-39.65-39.65 c-4.899-4.899-12.842-4.899-17.74,0l-67.398,67.398l-67.398-67.398c-4.899-4.899-12.842-4.899-17.74,0l-39.65,39.65 c-4.899,4.899-4.899,12.842,0,17.74l67.398,67.398l-67.398,67.398c-4.899,4.899-4.899,12.842,0,17.741l39.65,39.65 c4.899,4.899,12.842,4.899,17.74,0l67.398-67.398L323.4,380.79c4.899,4.899,12.842,4.899,17.74,0l39.65-39.65 c4.899-4.899,4.899-12.842,0-17.741L313.391,256.001z"></path> </g>
+          <svg fill="#3b3b3b" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" stroke="#3b3b3b" width="40px" height="40px">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M 33.7169 50.6051 C 45.9141 50.6051 56.0000 40.4968 56.0000 28.2994 C 56.0000 16.1245 45.8920 5.9937 33.6944 5.9937 C 22.4180 5.9937 12.9611 14.6419 11.5909 25.5365 C 12.1749 25.5365 12.7365 25.5814 13.2981 25.6712 C 13.9944 25.7611 14.6908 25.9183 15.3646 26.1205 C 16.4204 16.9332 24.1926 9.8124 33.6944 9.8124 C 43.9598 9.8124 52.1812 18.0563 52.2037 28.2994 C 52.2037 33.0840 50.4294 37.3969 47.5090 40.6765 C 44.1171 37.8461 39.0406 35.9593 33.6944 35.9593 C 31.1785 35.9593 28.3258 36.4984 25.6751 37.4418 C 25.8324 38.2954 25.9222 39.1715 25.9222 40.0475 C 25.9222 42.9902 25.0012 45.7531 23.4513 48.0668 C 26.5287 49.6616 30.0329 50.6051 33.7169 50.6051 Z M 33.6944 32.0956 C 38.0073 32.0956 41.2644 28.3668 41.2644 23.6720 C 41.2644 19.2469 37.9399 15.4057 33.6944 15.4057 C 29.4714 15.4057 26.1244 19.2469 26.1244 23.6720 C 26.1244 28.3668 29.4040 32.0956 33.6944 32.0956 Z M 11.4112 51.4587 C 17.6783 51.4587 22.8224 46.3372 22.8224 40.0475 C 22.8224 33.8028 17.6783 28.6363 11.4112 28.6363 C 5.1665 28.6363 0 33.8028 0 40.0475 C 0 46.3372 5.1665 51.4587 11.4112 51.4587 Z M 11.4112 41.8446 C 10.6699 41.8446 10.1308 41.3504 10.1083 40.6091 L 9.9286 34.4093 C 9.9062 33.5333 10.5127 32.9268 11.4112 32.9268 C 12.3321 32.9268 12.9162 33.5333 12.8937 34.4093 L 12.7140 40.6091 C 12.6916 41.3504 12.1749 41.8446 11.4112 41.8446 Z M 11.4112 47.2132 C 10.4003 47.2132 9.5692 46.3821 9.5692 45.3712 C 9.5692 44.3604 10.4003 43.5293 11.4112 43.5293 C 12.4445 43.5293 13.2531 44.3604 13.2531 45.3712 C 13.2531 46.3821 12.4445 47.2132 11.4112 47.2132 Z"></path></g>
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">0</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.absentCustomer ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Clientes ausentes</div>
         </div>
       </div>
@@ -756,7 +749,7 @@
 
       <div class="info-row" *ngIf="scheduleInfo()?.ticketId != null">
         <span class="label">Código do ticket</span>
-        <span class="value">{{customerInfo()?.ticketCode}}</span>
+        <span class="value">{{scheduleInfo()?.ticketCode}}</span>
       </div>
     </div>
 
@@ -1164,7 +1157,7 @@
     </div>
 
     <div class="ticket-print-company">
-      <h4>Torre & CIA</h4>
+      <h4>Torre e Cia</h4>
     </div>
 
     <div class="ticket-print-number">
@@ -1172,7 +1165,7 @@
     </div>
 
     <div class="ticket-print-info">
-      <p>{{ this.scheduleInfo()?.serviceManagementName }}</p>
+      <p class="ticket-print-info-name">{{ this.scheduleInfo()?.serviceManagementName }}</p>
       <p>{{ this.scheduleInfo()?.scheduledDate | date:'dd/MM/yyyy' }}</p>
       <p>Hora de chegada {{ currentDate | date:'HH:mm' }}</p>
     </div>

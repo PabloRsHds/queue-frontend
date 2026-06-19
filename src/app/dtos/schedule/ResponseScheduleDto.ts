@@ -6,6 +6,7 @@ export interface ResponseScheduleDto {
   serviceManagementId: string;
   serviceManagementName: string;
   ticketId: string;
+  ticketCode: string;
   priority: string;
   scheduledDate: string;
   status: string;
