@@ -77,13 +77,16 @@
   position: relative;
   z-index: 1;
 }
-.brand-logo-icon {
-
-}
 
 .brand-logo-icon img {
   width: 70px;
   height: 50px;
+  margin-bottom: 15px;
+}
+
+.brand-logo-icon .image-mobile {
+  width: 165px;
+  height: 120px;
   margin-bottom: 15px;
 }
 
@@ -265,7 +268,8 @@
 
 @media (max-width: 767px) {
   .login-branding { display: none;}
-  .login-form-side { width: 100%; height: 100vh; }
+  .login-form-side { width: 100%; max-height: 100dvh; padding: 0px 15%; background: #f8fafc00;}
+  .login-form-header { margin-bottom: 0px; }
   .login-form-header h1 { font-size: 20px; }
   .login-container {
     width: 100vw;
@@ -273,10 +277,39 @@
     min-height: 100vh;
     border-radius: 0;
   }
-  .brand-logo { display: flex; flex-direction: column; justify-content: center; text-align: center; margin-bottom: 60px; gap: 10px;}
-  .brand-logo-text { font-size: 30px;}
-  .brand-logo-sub { font-size: 15px;}
-  .brand-logo-icon { width: 60px; height: 60px; }
+  .brand-logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+    gap: 0px;
+  }
+  .brand-logo-text { font-size: 30px; color: rgb(248, 251, 255); }
+  .brand-logo-sub { font-size: 15px; font-weight: 530; color: #337ce3; }
+  .brand-logo-icon { width: 180px; height: 85px; }
+  .brand-logo-icon .image-mobile { width: 110px; height: 80px; }
+  .login-form-header h1 { font-size: 20px; color: #0c111f; }
+  .login-form-header p { font-size: 13px; margin-bottom: 30px; }
+  form {
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: white;
+  }
+
+  .login-form-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    font-size: 15px;
+    color: white;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-side { padding: 0px 3%;; }
 }
 
 .fade-in { animation: fadeInUp 0.5s ease-out; }

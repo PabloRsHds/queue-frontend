@@ -32,9 +32,14 @@ export class LoginComponent {
   // Constructor
   constructor() {
 
+    const emailOrUsername = localStorage.getItem('emailOrUsername');
+    const password = localStorage.getItem('password');
+    const rememberMe = localStorage.getItem('rememberMe');
+
     this.loginForm = this.fb.group({
-      emailOrUsername: [''],
-      password: ['']
+      emailOrUsername: [emailOrUsername ?? ''],
+      password: [password ?? ''],
+      rememberMe: [rememberMe]
     });
 
     effect(() => {
@@ -64,7 +69,22 @@ export class LoginComponent {
 
   // Login
   login() {
-    this.loginState.login(this.loginForm.value);
+
+    const emailOrUsername = this.loginForm.value.emailOrUsername;
+    const password = this.loginForm.value.password;
+    const rememberMe = this.loginForm.value.rememberMe;
+
+    if (rememberMe) {
+      localStorage.setItem('emailOrUsername', emailOrUsername);
+      localStorage.setItem('password', password);
+      localStorage.setItem('rememberMe', 'true');
+    } else {
+      localStorage.removeItem('emailOrUsername');
+      localStorage.removeItem('password');
+      localStorage.removeItem('rememberMe');
+    }
+
+    this.loginState.login({ emailOrUsername, password });
   }
 
   // Add event listenr
