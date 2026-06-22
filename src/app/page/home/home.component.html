@@ -200,7 +200,7 @@
                       <div style="display:flex;align-items:center;gap:8px; margin-top:5px;">
                         <a href="#" class="active-section-servico">Início</a>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="display:inline;vertical-align:middle;"><polyline points="9 18 15 12 9 6"/></svg>
-                        <span style="color:#64748b;font-size:13px;font-weight:600;">Painel de atendimento</span>
+                        <span style="color:#64748b;font-size:13px;font-weight:600;">Painel</span>
                       </div>
                     </div>
 
@@ -364,7 +364,7 @@
                               </svg>
                           </div>
                           <div>
-                              <div class="stat-number">92</div>
+                              <div class="stat-number">{{ this.attendentStatistics()?.countAttendancesOfDay ?? 0}}</div>
                               <div class="stat-label">Atendimentos hoje</div>
                           </div>
                       </div>

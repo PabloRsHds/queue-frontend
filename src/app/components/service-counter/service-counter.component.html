@@ -11,8 +11,8 @@
         </div>
         <div>
           <div class="stat-label">Em espera</div>
-          <div class="stat-value">0</div>
-          <div class="stat-sub">pessoas</div>
+          <div class="stat-value">{{this.statistics()?.countAttendancesWaiting ?? 0}}</div>
+          <div class="stat-sub">clientes</div>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
         </div>
         <div>
           <div class="stat-label">Sendo atendido</div>
-          <div class="stat-value">1</div>
+          <div class="stat-value">{{this.statistics()?.countAttendancesInProgress ?? 0}}</div>
           <div class="stat-sub">agora</div>
         </div>
       </div>
@@ -42,7 +42,7 @@
         </div>
         <div>
           <div class="stat-label">Tempo médio de espera</div>
-          <div class="stat-value">00:07:35</div>
+          <div class="stat-value">{{this.statistics()?.averageWaitingTime ?? '00:00:00'}}</div>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@
         </div>
         <div>
           <div class="stat-label">Tempo médio de atendimento</div>
-          <div class="stat-value">00:07:35</div>
+          <div class="stat-value">{{this.statistics()?.averageServiceTime ?? '00:00:00'}}</div>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@
         </div>
         <div>
           <div class="stat-label">Atendimentos hoje</div>
-          <div class="stat-value">38</div>
+          <div class="stat-value">{{this.statistics()?.countAttendancesOfDay ?? 0}}</div>
           <div class="stat-sub">realizados</div>
         </div>
       </div>
@@ -101,7 +101,9 @@
           <span>Serviço</span>
           <span>Chegada</span>
         </div>
-        <div id="queueList"></div>
+        <div *ngFor="let item of tickets()">
+          {{ item.code }}
+        </div>
       </div>
       <button class="load-more-btn" onclick="loadMoreQueue()">
         Ver mais na fila
@@ -118,14 +120,25 @@
         <div class="card-body">
           <div class="current-call-card pulse-active">
             <div class="call-status">Atendendo</div>
-            <div class="call-senhas">A123</div>
+            <div class="call-senhas">{{ this.tickets()[0]?.code}}</div>
             <div class="call-guiche">Guichê 01</div>
-            <div class="call-client-name">João Silva</div>
-            <div class="call-client-service">Atendimento ao Cliente</div>
-            <div class="call-timer-wrapper">
+            <div class="call-client-name">{{ this.tickets()[0]?.customerName}}</div>
+            <div class="call-client-service">{{ this.tickets()[0]?.serviceManagementName}}</div>
+            <div class="call-timer-wrapper" *ngIf="this.tickets()[0]?.finishAttendance === null">
               <div class="call-time-label">Tempo de atendimento</div>
-              <div class="call-time-value" id="currentCallTimer">00:05:32</div>
+              <div class="call-time-value" id="currentCallTimer">{{ currentTimer() }}</div>
             </div>
+
+            <div class="call-timer-wrapper" *ngIf="this.tickets()[0]?.finishAttendance === null">
+              <div class="call-time-label">Tempo de espera</div>
+              <div class="call-time-value" id="currentCallTimer">{{ this.tickets()[0]?.finishAttendance | date: 'HH:mm:ss'}}</div>
+            </div>
+
+            <div class="call-timer-wrapper" *ngIf="this.tickets()[0]?.finishAttendance !== null">
+              <div class="call-time-label">Tempo de espera</div>
+              <div class="call-time-value" id="currentCallTimer">{{ this.tickets()[0]?.attendanceTime }}</div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -135,19 +148,19 @@
         <div class="card-body actions-card">
           <h3 class="actions-title">Ações rápidas</h3>
           <div class="actions-grid">
-            <button class="action-btn-primary" onclick="finishService()">
+            <button class="action-btn-primary">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
               Finalizar atendimento
             </button>
-            <button class="action-btn-secondary" onclick="callNext()">
+            <button class="action-btn-secondary">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>
               Chamar próximo
             </button>
-            <button class="action-btn-danger" onclick="cancelService()">
+            <button class="action-btn-danger">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="15" y1="9" x2="9" y2="15"/>
@@ -170,10 +183,10 @@
         <div class="card-body">
           <div class="next-call-card">
             <div class="next-label">Próximo da fila</div>
-            <div class="next-senha">F045</div>
-            <div class="next-name">Maria Oliveira</div>
-            <div class="next-dept">Financeiro</div>
-            <button class="call-now-btn" onclick="callNext()">
+            <div class="next-senha">{{this.tickets()[1]?.code}}</div>
+            <div class="next-name">{{this.tickets()[1]?.customerName}}</div>
+            <div class="next-dept">{{this.tickets()[1]?.serviceManagementName}}</div>
+            <button class="call-now-btn" >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>

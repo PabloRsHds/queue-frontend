@@ -1,8 +1,8 @@
 import { ResponseScheduleStatisticsDto } from './../../dtos/schedule/ResponseScheduleStatisticsDto';
 import { PageResponse } from '../../dtos/page/PageResponse';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { ResponseServiceManagementDto } from '../../dtos/services/ResponseServiceManagementDto';
 import { ResponseDepartmentDto } from '../../dtos/department/ResponseDepartmentDto';
 import { CreateDepartmentDto } from '../../dtos/department/CreateDepartmentDto';
@@ -31,14 +31,19 @@ import { ResponseScheduleDto } from '../../dtos/schedule/ResponseScheduleDto';
 import { UpdateScheduleDto } from '../../dtos/schedule/UpdateScheduleDto';
 import { CreateTicketDto } from '../../dtos/ticket/CreateTicketDto';
 import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
+import { ResponseAttendanceStatisticsDto } from '../../dtos/statistics/ResponseAttendanceStatisticsDto';
+import { ResponseTicketsForAttendanceDto } from '../../dtos/attendance/ResponseTicketsForAttendanceDto';
+import { ResponseTokensDto } from '../../dtos/login/ResponseTokensDto';
+import { LoginDto } from '../../dtos/login/LoginDto';
+import { TokensDto } from '../../dtos/login/TokensDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.25.107:8080';
-  //private readonly API_URL = 'http://192.168.1.4:8080';
+  //private readonly API_URL = 'http://192.168.25.107:8080';
+  private readonly API_URL = 'http://192.168.1.4:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -194,5 +199,34 @@ export class HttpService {
 
   public deleteTicket(ticketId: string): Observable<ResponseTicketDto> {
     return this.http.delete<ResponseTicketDto>(`${this.API_URL}/tickets/`+ ticketId)
+  }
+
+  public getTicketsForAttendance(): Observable<ResponseTicketsForAttendanceDto[]> {
+    return this.http.get<ResponseTicketsForAttendanceDto[]>(`${this.API_URL}/tickets/tickets-for-attendance`);
+  }
+
+  // Attendance
+  public getAttendanceStatistics(): Observable<ResponseAttendanceStatisticsDto> {
+    return this.http.get<ResponseAttendanceStatisticsDto>(`${this.API_URL}/attendances/statistics`);
+  }
+
+  // Login
+  public login(request: LoginDto): Observable<ResponseTokensDto> {
+    return this.http.post<ResponseTokensDto>(`${this.API_URL}/login`, request);
+  }
+
+  public refreshTokens(tokens: TokensDto): Observable<ResponseTokensDto> {
+    return this.http.post<ResponseTokensDto>(`${this.API_URL}/refresh-tokens`, tokens).pipe(
+
+      catchError((err: HttpErrorResponse) => {
+
+        let errorMsg = 'Serviço de refresh tokens está fora do ar';
+
+        if (err.error?.message) {
+          errorMsg = err.error.message;
+        }
+        return throwError(() => new Error(errorMsg));
+      })
+    );
   }
 }

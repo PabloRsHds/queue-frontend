@@ -10,8 +10,9 @@ import { GraphicComponent } from "../../components/graphic/graphic.component";
 import { ConfigComponent } from "../../components/config/config.component";
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
 import { UserStateService } from '../../services/states/user/user-state.service';
-import { ServiceCounterComponent } from "../../components/service-counter/service-counter/service-counter.component";
+import { ServiceCounterComponent } from "../../components/service-counter/service-counter.component";
 import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
+import { AttendentStateService } from '../../services/states/attendent/attendent-state.service';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,7 @@ export class HomeComponent {
   public ServiceManagementState = inject(ServiceManagementService);
   public userState = inject(UserStateService);
   public scheduleState = inject(ScheduleStateService);
+  public attendentState = inject(AttendentStateService);
 
   public openAside = false;
 
@@ -36,6 +38,7 @@ export class HomeComponent {
   public totalServices = this.ServiceManagementState.statistics;
   public totalUsers = this.userState.statistics;
   public scheduleStatistics = this.scheduleState.scheduleStatistics
+  public attendentStatistics = this.attendentState.statistics
 
   ngOnInit(){
     this.departmentState.loadStatistics();
