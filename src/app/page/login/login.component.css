@@ -272,6 +272,10 @@
     min-height: 100vh;
     border-radius: 0;
   }
+  .brand-logo { display: flex; flex-direction: column; justify-content: center; text-align: center; margin-bottom: 60px; gap: 10px;}
+  .brand-logo-text { font-size: 30px;}
+  .brand-logo-sub { font-size: 15px;}
+  .brand-logo-icon { width: 60px; height: 60px; }
 }
 
 .fade-in { animation: fadeInUp 0.5s ease-out; }

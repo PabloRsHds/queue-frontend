@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, HostListener, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginStateService } from '../../services/states/login/login-state.service';
@@ -19,6 +19,9 @@ export class LoginComponent {
   public fb = inject(FormBuilder);
   public snackBar = inject(MatSnackBar);
   public router = inject(Router);
+
+  // States
+  isMobile = signal(window.innerWidth < 768);
 
   // Variables
   viewPassword = false;
@@ -62,6 +65,12 @@ export class LoginComponent {
   // Login
   login() {
     this.loginState.login(this.loginForm.value);
+  }
+
+  // Add event listenr
+  @HostListener('window:resize')
+  onResize() {
+    this.isMobile.set(window.innerWidth < 768);
   }
 
 }
