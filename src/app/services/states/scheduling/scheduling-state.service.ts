@@ -39,6 +39,9 @@ export class ScheduleStateService {
   // ===== STATISTCS =======
   public scheduleStatistics = signal<ResponseScheduleStatisticsDto | null>(null);
 
+  // ======== MODAL ========
+  public modalSchedulingRegister = signal<Boolean>(false);
+
   public scheduleTotalPages = computed(() =>
     Math.ceil(this.scheduleTotalElements() / this.scheduleSize)
   );

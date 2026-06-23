@@ -29,7 +29,7 @@ export class TableUsersComponent implements OnInit {
   public totalElements = this.userState.totalElements;
 
   // Modals
-  public modalRegister: boolean = false;
+  public modalRegister = this.userState.modalRegister;
   public modalUpdate: boolean = false;
   public modalDelete: boolean = false;
   public modalView: boolean = false;
@@ -98,7 +98,7 @@ export class TableUsersComponent implements OnInit {
         this.userState.resetStatus();
         this.registerForm.reset();
         this.currentStep = 1;
-        this.modalRegister = false;
+        this.modalRegister.set(false);
       }
 
       if (this.userState.registerStatus() === 'error') {
@@ -304,7 +304,7 @@ export class TableUsersComponent implements OnInit {
 
   nextStep() {
 
-    if (this.modalRegister) {
+    if (this.modalRegister()) {
 
       const step1Fields = ['name', 'surname', 'email', 'username', 'password', 'confirmPassword'];
 
@@ -425,12 +425,12 @@ export class TableUsersComponent implements OnInit {
 
   // =========== Modals ===========
   public openModalRegister(): void {
-    this.modalRegister = true;
+    this.modalRegister.set(true);
     this.serviceState.loadServiceNamesAndDepartments();
   }
 
   public closeModalRegister(): void {
-    this.modalRegister = false;
+    this.modalRegister.set(false);
     this.registerForm.reset();
     this.currentStep = 1;
   }
@@ -560,7 +560,7 @@ export class TableUsersComponent implements OnInit {
   // =========== Lifecycle ===========
   @HostListener('window:keydown.escape', ['$event'])
   onEscapePressed(event: Event): void {
-    if (this.modalRegister) this.closeModalRegister();
+    if (this.modalRegister()) this.closeModalRegister();
     if (this.modalUpdate) this.closeModalUpdate();
     if (this.modalDelete) this.closeModalDelete();
     if (this.modalView) this.closeModalView();

@@ -42,6 +42,9 @@ export class UserStateService {
 
   public search = signal('');
 
+  // =========== MODAL =============
+  public modalRegister = signal<Boolean>(false);
+
   // Create user
   registerUser(request: RequestUserDto) {
     this.http.createUser(request).subscribe({

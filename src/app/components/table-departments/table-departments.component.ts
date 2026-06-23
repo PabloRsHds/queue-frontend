@@ -1,4 +1,4 @@
-import { Component, effect, HostListener, inject, OnInit } from '@angular/core';
+import { Component, effect, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,12 +28,13 @@ export class TableDepartmentsComponent implements OnInit {
   public totalPages = this.departmentState.totalPages;
   public totalElements = this.departmentState.totalElements;
 
+
   // Variables
   private itemsPerPage = 4;
 
   // variables Modals
   public dropDown: number | null = null;
-  public modalRegister: boolean = false;
+  public modalRegister = this.departmentState.modalRegister;
   public modalUpdate: boolean = false;
   public modalDelete: boolean = false;
   public modalView: boolean = false;
@@ -162,11 +163,11 @@ export class TableDepartmentsComponent implements OnInit {
   // ====== Modals ========
   openModalRegister() {
     this.initializeRegisterForm();
-    this.modalRegister = true;
+    this.modalRegister.set(true);
   }
 
   closeModalRegister() {
-    this.modalRegister = false;
+    this.modalRegister.set(false);
   }
 
   openModalUpdate(departmentId: string) {

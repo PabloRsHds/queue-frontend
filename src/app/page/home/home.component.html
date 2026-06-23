@@ -386,7 +386,8 @@
                       </div>
                       <div class="card-body">
                           <div class="quick-access-grid">
-                              <div class="quick-item">
+
+                            <div class="quick-item" (click)="functionActive('department')">
                                   <div class="quick-item-icon blue">
                                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                           <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
@@ -400,7 +401,8 @@
                                       <span>Cadastrar departamento</span>
                                   </div>
                               </div>
-                              <div class="quick-item">
+
+                              <div class="quick-item" (click)="functionActive('service')">
                                   <div class="quick-item-icon green">
                                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                           <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
@@ -413,7 +415,8 @@
                                       <span>Criar serviço e vincular</span>
                                   </div>
                               </div>
-                              <div class="quick-item">
+
+                              <div class="quick-item" (click)="functionActive('user')">
                                   <div class="quick-item-icon purple">
                                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
@@ -427,7 +430,8 @@
                                       <span>Adicionar usuário ao sistema</span>
                                   </div>
                               </div>
-                              <div class="quick-item">
+
+                              <div class="quick-item" (click)="functionActive('scheduling')">
                                   <div class="quick-item-icon orange">
                                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
@@ -441,6 +445,7 @@
                                       <span>Criar agendamento</span>
                                   </div>
                               </div>
+
                               <div class="quick-item">
                                   <div class="quick-item-icon cyan">
                                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

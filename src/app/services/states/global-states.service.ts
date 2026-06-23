@@ -6,6 +6,7 @@ import { Injectable, signal } from '@angular/core';
 export class GlobalStatesService {
 
   public activeSection = signal<string>('inicio');
+  public activeFunction = signal<string>('');
   public openModalTableService = signal<boolean>(false);
 
   public openCardDepartment = signal<boolean>(false);

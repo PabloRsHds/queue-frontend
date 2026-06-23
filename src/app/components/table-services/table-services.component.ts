@@ -41,7 +41,7 @@ export class TableServicesComponent implements OnInit{
 
   // variables Modals
   public dropDown: number | null = null;
-  public modalRegister: boolean = false;
+  public modalRegister = this.serviceState.modalRegister;
   public modalUpdate: boolean = false;
   public modalDelete: boolean = false;
   public modalView: boolean = false;
@@ -75,7 +75,7 @@ export class TableServicesComponent implements OnInit{
 
         this.registerForm.reset();
         this.serviceState.resetStatus();
-        this.modalRegister = false;
+        this.modalRegister.set(false);
 
         this.snackBar.open(this.serviceState.registerMessage(), 'Fechar', {
           duration: 3000,
@@ -228,11 +228,11 @@ export class TableServicesComponent implements OnInit{
   openModalRegister() {
     this.initializeRegisterForm();
     this.deparmentState.loadDepartmentNames();
-    this.modalRegister = true;
+    this.modalRegister.set(true);
   }
 
   closeModalRegister() {
-    this.modalRegister = false;
+    this.modalRegister.set(false);
     this.deparmentState.resetDepartmentNames();
   }
 

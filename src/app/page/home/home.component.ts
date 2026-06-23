@@ -13,6 +13,7 @@ import { UserStateService } from '../../services/states/user/user-state.service'
 import { ServiceCounterComponent } from "../../components/service-counter/service-counter.component";
 import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
 import { AttendentStateService } from '../../services/states/attendent/attendent-state.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +35,7 @@ export class HomeComponent {
 
   // States
   public activeSection = this.globalState.activeSection;
+  public activeFunction = this.globalState.activeFunction;
   public totalDepartments = this.departmentState.statistics;
   public totalServices = this.ServiceManagementState.statistics;
   public totalUsers = this.userState.statistics;
@@ -52,6 +54,37 @@ export class HomeComponent {
 
     if (window.innerWidth <= 768) {
       this.openAside = false;
+    }
+  }
+
+  functionActive(section: string) {
+    this.activeSection.set(section);
+
+    if (section === 'department') {
+
+      timer(500).subscribe(() => {
+        this.departmentState.modalRegister.set(true);
+      });
+    }
+
+    if (section === 'service') {
+
+      timer(500).subscribe(() => {
+        this.ServiceManagementState.modalRegister.set(true);
+      });
+    }
+
+    if (section === 'user') {
+
+      timer(500).subscribe(() => {
+        this.userState.modalRegister.set(true);
+      });
+    }
+
+    if (section === 'scheduling') {
+      timer(500).subscribe(() => {
+        this.scheduleState.modalSchedulingRegister.set(true);
+      });
     }
   }
 }

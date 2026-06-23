@@ -25,6 +25,10 @@ export class DepartmentStateService {
   public departmentNames = signal<ResponseDepartmentNamesDto[] | null>(null);
   public statistics = signal<ResponseStatisticsDto | null>(null);
 
+
+  // Modal
+  public modalRegister = signal<Boolean>(false);
+
   // ===================== LOADING =====================
 
   public loading = signal(false);

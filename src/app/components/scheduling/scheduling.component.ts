@@ -39,7 +39,7 @@ export class SchedulingComponent implements OnInit {
   selectedDate = new Date().toLocaleDateString('en-CA');
 
   // MODAIS SCHEDULING
-  modalSchedulingRegister = false;
+  modalSchedulingRegister = this.schedulingState.modalSchedulingRegister;
   modalSchedulingUpdate = false;
   modalSchedulingDelete = false;
   modalSchedulingView = false;
@@ -177,7 +177,7 @@ export class SchedulingComponent implements OnInit {
           duration: 3000,
           panelClass: ['snackbar-success']
         });
-        this.modalSchedulingRegister = false;
+        this.modalSchedulingRegister.set(false);
         this.registerScheduleForm.reset();
         this.schedulingState.resetStatus();
       }
@@ -342,13 +342,13 @@ export class SchedulingComponent implements OnInit {
 
   // ====== MODALS SCHEDULE =========
   public openScheduleModalRegister() {
-    this.modalSchedulingRegister = true;
+    this.modalSchedulingRegister.set(true);
     this.customerState.loadCustomerIdsAndNames();
     this.serviceState.loadServiceNamesAndDepartments();
   }
 
   public closeScheduleModalRegister() {
-    this.modalSchedulingRegister = false;
+    this.modalSchedulingRegister.set(false);
   }
 
   public openScheduleModalUpdate(scheduleId: string) {

@@ -40,6 +40,9 @@ export class ServiceManagementService {
   // ===== SEARCH =====
   public search = signal<string>('');
 
+  // ===== MODAL =====
+  public modalRegister = signal<Boolean>(false);
+
   // ===== Register =======
   registerServiceManagenent(request : CreateServiceManagementDto) {
 
