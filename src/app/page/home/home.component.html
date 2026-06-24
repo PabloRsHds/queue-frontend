@@ -303,13 +303,11 @@
 
                   <div class="stat-card">
                       <div class="stat-card-header">
-                          <div class="stat-icon purple">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                  <line x1="16" y1="2" x2="16" y2="6"/>
-                                  <line x1="8" y1="2" x2="8" y2="6"/>
-                                  <line x1="3" y1="10" x2="21" y2="10"/>
-                              </svg>
+                          <div style="width:50px;height:50px;background:#e2c3ff44;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+                              <svg fill="#7715c6" width="25px" height="25px"  version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 502.4 502.4" xml:space="preserve" stroke="#7715c6">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g>
+                                  <path d="M481.066,52.8h-78.933V21.867c0-11.733-9.6-21.333-21.333-21.333s-21.333,9.6-21.333,21.333V52.8h-217.6V21.867 c0-11.733-9.6-21.333-21.333-21.333S99.2,10.133,99.2,21.867V52.8H21.333C9.6,52.8,0,62.4,0,74.133v406.4 c0,11.733,9.6,21.333,21.333,21.333H480c11.733,0,21.333-9.6,22.4-20.267V74.133C502.4,62.4,492.8,52.8,481.066,52.8z M41.6,460.267V94.4h57.6v21.333c0,11.733,9.6,21.333,21.333,21.333s20.267-8.533,21.333-20.267V94.4h217.6v21.333 c0,11.733,9.6,21.333,21.333,21.333s21.333-8.533,21.333-20.267V94.4h57.6v365.867H41.6z"></path> </g> </g> <g> <g> <path d="M227.2,379.2h-96c2.133-8.534,6.4-13.867,12.8-19.2c6.4-5.333,13.867-10.667,21.333-16c8.533-5.333,16-10.667,25.6-17.067 c8.533-5.333,17.067-11.733,24.533-19.2c17.067-14.933,24.533-30.933,24.533-48c0-16-6.4-29.867-18.133-40.533 s-26.667-14.933-44.8-14.933c-22.4,0-42.667,4.267-60.8,13.867c-4.267,2.133-6.4,5.333-6.4,9.6s1.067,6.4,3.2,8.533 c2.133,2.133,4.267,3.2,6.4,3.2s4.267,0,6.4-1.067c14.933-6.4,30.933-9.6,46.933-9.6c14.933,0,26.667,3.2,34.133,9.6 c3.2,3.2,5.333,6.4,7.467,10.667c1.067,4.267,2.133,9.6,2.133,16s-3.2,12.8-8.533,19.2c-5.333,6.4-11.733,12.8-20.267,18.133 c-8.533,6.4-17.067,11.733-26.667,18.133s-18.133,11.733-26.667,19.2c-8.533,6.4-14.933,13.867-20.267,21.333 c-5.333,7.467-8.533,16-8.533,26.667c0,4.267,1.067,7.467,4.267,10.667c3.2,2.133,6.4,4.267,10.667,4.267H227.2 c3.2,0,6.4-1.067,8.533-3.2c2.133-2.133,3.2-5.333,3.2-8.533c0-3.2-1.067-6.4-3.2-8.533 C233.599,380.267,230.399,379.2,227.2,379.2z"></path> </g> </g> <g> <g> <path d="M403.199,377.067c-2.133-2.133-5.333-3.2-8.533-3.2h-27.733v-153.6c0-3.2-1.067-6.4-4.267-9.6 c-2.133-2.133-5.333-4.267-9.6-4.267h-5.333c-2.133,0-5.333,1.067-7.467,2.133l-37.333,19.2c-4.267,2.133-7.467,5.333-7.467,9.6 s1.067,7.467,3.2,9.6c2.133,2.133,4.267,3.2,7.467,3.2c2.133,0,4.267,0,5.333-1.067c1.067,0,2.133-1.067,3.2-1.067l27.733-13.867 v139.733h-33.067c-3.2,0-6.4,1.067-8.533,3.2c-2.133,2.133-3.2,5.333-3.2,8.533c0,3.2,1.067,6.4,3.2,8.533 c2.133,2.133,5.333,3.2,8.533,3.2h85.333c3.2,0,6.4-1.067,8.533-3.2c2.133-2.133,3.2-5.333,3.2-8.533 C406.399,382.4,405.332,379.2,403.199,377.067z"></path> </g> </g> </g></svg>
                           </div>
                           <div>
                               <div class="stat-number">{{ this.scheduleStatistics()?.schedulingOfDay ?? 0}}</div>
@@ -326,13 +324,11 @@
 
                   <div class="stat-card">
                       <div class="stat-card-header">
-                          <div class="stat-icon orange">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                  <circle cx="9" cy="7" r="4"/>
-                                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                              </svg>
+                          <div style="width:50px;height:50px;background:#fde8283b;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+                            <svg viewBox="0 0 28 28" width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000" stroke="#000000">
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>icon/28/icon-userg</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="out" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <path d="M18.6666667,12.8333333 C20.6033333,12.8333333 22.155,11.27 22.155,9.33333333 C22.155,7.39666667 20.6033333,5.83333333 18.6666667,5.83333333 C16.73,5.83333333 15.1666667,7.39666667 15.1666667,9.33333333 C15.1666667,11.27 16.73,12.8333333 18.6666667,12.8333333 L18.6666667,12.8333333 L18.6666667,12.8333333 Z M9.33333333,12.8333333 C11.27,12.8333333 12.8216667,11.27 12.8216667,9.33333333 C12.8216667,7.39666667 11.27,5.83333333 9.33333333,5.83333333 C7.39666667,5.83333333 5.83333333,7.39666667 5.83333333,9.33333333 C5.83333333,11.27 7.39666667,12.8333333 9.33333333,12.8333333 L9.33333333,12.8333333 L9.33333333,12.8333333 Z M9.33333333,15.1666667 C6.615,15.1666667 1.16666667,16.5316667 1.16666667,19.25 L1.16666667,22.1666667 L17.5,22.1666667 L17.5,19.25 C17.5,16.5316667 12.0516667,15.1666667 9.33333333,15.1666667 L9.33333333,15.1666667 L9.33333333,15.1666667 Z M18.6666667,15.1666667 C18.3283333,15.1666667 17.9433333,15.19 17.535,15.225 C18.8883333,16.205 19.8333333,17.5233333 19.8333333,19.25 L19.8333333,22.1666667 L26.8333333,22.1666667 L26.8333333,19.25 C26.8333333,16.5316667 21.385,15.1666667 18.6666667,15.1666667 L18.6666667,15.1666667 L18.6666667,15.1666667 Z" id="path" fill="#d6a800" sketch:type="MSShapeGroup"> </path> </g> </g>
+                            </svg>
                           </div>
                           <div>
                               <div class="stat-number">{{ totalUsers()?.totalElementsActive || 0 }}</div>
@@ -349,9 +345,9 @@
 
                   <div class="stat-card">
                       <div class="stat-card-header">
-                          <div class="stat-icon cyan">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                          <div style="width:50px;height:50px;background:#fd28283b;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+                              <svg viewBox="0 0 512 512" width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>support</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="support" fill="#b10b0b" transform="translate(42.666667, 42.666667)"> <path d="M379.734355,174.506667 C373.121022,106.666667 333.014355,-2.13162821e-14 209.067688,-2.13162821e-14 C85.1210217,-2.13162821e-14 45.014355,106.666667 38.4010217,174.506667 C15.2012632,183.311569 -0.101643453,205.585799 0.000508304259,230.4 L0.000508304259,260.266667 C0.000508304259,293.256475 26.7445463,320 59.734355,320 C92.7241638,320 119.467688,293.256475 119.467688,260.266667 L119.467688,230.4 C119.360431,206.121456 104.619564,184.304973 82.134355,175.146667 C86.4010217,135.893333 107.307688,42.6666667 209.067688,42.6666667 C310.827688,42.6666667 331.521022,135.893333 335.787688,175.146667 C313.347976,184.324806 298.68156,206.155851 298.667688,230.4 L298.667688,260.266667 C298.760356,283.199651 311.928618,304.070103 332.587688,314.026667 C323.627688,330.88 300.801022,353.706667 244.694355,360.533333 C233.478863,343.50282 211.780225,336.789048 192.906491,344.509658 C174.032757,352.230268 163.260418,372.226826 167.196286,392.235189 C171.132153,412.243552 188.675885,426.666667 209.067688,426.666667 C225.181549,426.577424 239.870491,417.417465 247.041022,402.986667 C338.561022,392.533333 367.787688,345.386667 376.961022,317.653333 C401.778455,309.61433 418.468885,286.351502 418.134355,260.266667 L418.134355,230.4 C418.23702,205.585799 402.934114,183.311569 379.734355,174.506667 Z M76.8010217,260.266667 C76.8010217,269.692326 69.1600148,277.333333 59.734355,277.333333 C50.3086953,277.333333 42.6676884,269.692326 42.6676884,260.266667 L42.6676884,230.4 C42.6676884,224.302667 45.9205765,218.668499 51.2010216,215.619833 C56.4814667,212.571166 62.9872434,212.571166 68.2676885,215.619833 C73.5481336,218.668499 76.8010217,224.302667 76.8010217,230.4 L76.8010217,260.266667 Z M341.334355,230.4 C341.334355,220.97434 348.975362,213.333333 358.401022,213.333333 C367.826681,213.333333 375.467688,220.97434 375.467688,230.4 L375.467688,260.266667 C375.467688,269.692326 367.826681,277.333333 358.401022,277.333333 C348.975362,277.333333 341.334355,269.692326 341.334355,260.266667 L341.334355,230.4 Z"> </path> </g> </g> </g>
                               </svg>
                           </div>
                           <div>
@@ -380,11 +376,11 @@
 
                             <div class="quick-item" (click)="functionActive('department')">
                                   <div class="quick-item-icon blue">
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
-                                          <path d="M9 22v-4h6v4"/>
-                                          <line x1="12" y1="10" x2="12" y2="14"/>
-                                          <line x1="10" y1="12" x2="14" y2="12"/>
+                                      <svg fill="#ffffff" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier"> <g> <polygon points="9 4.1 5.9 4.1 5.9 1 4.1 1 4.1 4.1 1 4.1 1 5.9 4.1 5.9 4.1 9 5.9 9 5.9 5.9 9 5.9 9 4.1"></polygon> </g>
+                                      </g>
                                       </svg>
                                   </div>
                                   <div class="quick-item-text">
@@ -395,10 +391,11 @@
 
                               <div class="quick-item" (click)="functionActive('service')">
                                   <div class="quick-item-icon green">
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                                          <line x1="12" y1="10" x2="12" y2="14"/>
-                                          <line x1="10" y1="12" x2="14" y2="12"/>
+                                      <svg fill="#ffffff" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier"> <g> <polygon points="9 4.1 5.9 4.1 5.9 1 4.1 1 4.1 4.1 1 4.1 1 5.9 4.1 5.9 4.1 9 5.9 9 5.9 5.9 9 5.9 9 4.1"></polygon> </g>
+                                      </g>
                                       </svg>
                                   </div>
                                   <div class="quick-item-text">
@@ -408,12 +405,12 @@
                               </div>
 
                               <div class="quick-item" (click)="functionActive('user')">
-                                  <div class="quick-item-icon purple">
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                          <circle cx="9" cy="7" r="4"/>
-                                          <line x1="19" y1="8" x2="19" y2="14"/>
-                                          <line x1="22" y1="11" x2="16" y2="11"/>
+                                  <div class="quick-item-icon yellow">
+                                      <svg fill="#ffffff" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier"> <g> <polygon points="9 4.1 5.9 4.1 5.9 1 4.1 1 4.1 4.1 1 4.1 1 5.9 4.1 5.9 4.1 9 5.9 9 5.9 5.9 9 5.9 9 4.1"></polygon> </g>
+                                      </g>
                                       </svg>
                                   </div>
                                   <div class="quick-item-text">
@@ -423,12 +420,12 @@
                               </div>
 
                               <div class="quick-item" (click)="functionActive('scheduling')">
-                                  <div class="quick-item-icon orange">
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                          <line x1="16" y1="2" x2="16" y2="6"/>
-                                          <line x1="8" y1="2" x2="8" y2="6"/>
-                                          <line x1="3" y1="10" x2="21" y2="10"/>
+                                  <div class="quick-item-icon purple">
+                                      <svg fill="#ffffff" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier"> <g> <polygon points="9 4.1 5.9 4.1 5.9 1 4.1 1 4.1 4.1 1 4.1 1 5.9 4.1 5.9 4.1 9 5.9 9 5.9 5.9 9 5.9 9 4.1"></polygon> </g>
+                                      </g>
                                       </svg>
                                   </div>
                                   <div class="quick-item-text">
@@ -438,10 +435,11 @@
                               </div>
 
                               <div class="quick-item">
-                                  <div class="quick-item-icon cyan">
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <polygon points="5 3 19 12 5 21 5 3"/>
-                                      </svg>
+                                  <div class="quick-item-icon red">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.4086 9.35258C23.5305 10.5065 23.5305 13.4935 21.4086 14.6474L8.59662 21.6145C6.53435 22.736 4 21.2763 4 18.9671L4 5.0329C4 2.72368 6.53435 1.26402 8.59661 2.38548L21.4086 9.35258Z" fill="#ffffff"></path> </g>
+                                    </svg>
                                   </div>
                                   <div class="quick-item-text">
                                       <strong>Iniciar atendimento</strong>
@@ -449,11 +447,9 @@
                                   </div>
                               </div>
                               <div class="quick-item">
-                                  <div class="quick-item-icon indigo">
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                          <line x1="8" y1="21" x2="16" y2="21"/>
-                                          <line x1="12" y1="17" x2="12" y2="21"/>
+                                  <div class="quick-item-icon black">
+                                      <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 97.766 97.767" xml:space="preserve" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M85.948,0H11.733C6.947,0,3.079,3.621,3.079,8.406v57.911c0,4.803,3.868,8.877,8.654,8.877h30.66v9.586H31.009 c-4.358,0-8.108,3.537-8.108,7.881v5.106h51.955V92.66c0-4.344-3.344-7.881-7.689-7.881H55.374v-9.586h30.574 c4.786,0,8.74-4.076,8.74-8.877V8.406C94.688,3.621,90.734,0,85.948,0z M81.689,62.21H15.937V12.989h65.751L81.689,62.21 L81.689,62.21z"></path> <path d="M37.03,49.98h23.709c5.072,0,9.197-4.125,9.197-9.198c0-4.644-3.459-8.495-7.938-9.112 c-0.605-0.083-1.158-0.392-1.548-0.863c-1.728-2.092-4.334-3.366-7.099-3.366c-0.051,0-0.104,0-0.154,0.001 c-0.514,0.009-1.012-0.144-1.432-0.436c-1.717-1.193-3.751-1.836-5.876-1.836c-3.849,0-7.287,2.119-9.063,5.378 c-0.344,0.631-0.948,1.079-1.652,1.223c-4.186,0.86-7.344,4.573-7.344,9.01C27.831,45.855,31.958,49.98,37.03,49.98z"></path> </g> </g>
+                                      </g>
                                       </svg>
                                   </div>
                                   <div class="quick-item-text">

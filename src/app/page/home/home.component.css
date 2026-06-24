@@ -549,7 +549,7 @@ app-config {
   border-radius: 10px;
   padding: 16px 14px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   cursor: pointer;
   transition: all 0.2s;
@@ -562,21 +562,16 @@ app-config {
 }
 
 .quick-item-icon {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: #006effe0;
+  border: 1px solid #9cc8ff;
 }
-
-.quick-item-icon.blue { background: #e8f0fe; color: #2563eb; }
-.quick-item-icon.green { background: #e8f5e8; color: #16a34a; }
-.quick-item-icon.purple { background: #f3e8ff; color: #7c3aed; }
-.quick-item-icon.orange { background: #fef3c7; color: #d97706; }
-.quick-item-icon.cyan { background: #e0f7fa; color: #0891b2; }
-.quick-item-icon.indigo { background: #e8e8ff; color: #4f46e5; }
 
 .quick-item-icon svg {
   width: 18px;
