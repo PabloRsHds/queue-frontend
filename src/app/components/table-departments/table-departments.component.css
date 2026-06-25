@@ -1122,9 +1122,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #9ff98421;
+  background-color: #e60e0e12;
   padding: 15px;
-  border: 1px solid #419717;
+  border: 1px solid #e60e0e80;
   border-radius: 10px;
 
 }
@@ -1267,9 +1267,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1463da1c;
+  background-color: #e60e0e12;
   padding: 15px;
-  border: 1px solid #0957b179;
+  border: 1px solid #e60e0e80;
   border-radius: 10px;
 }
 
