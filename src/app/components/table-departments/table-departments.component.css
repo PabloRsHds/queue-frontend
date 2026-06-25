@@ -451,22 +451,17 @@ body {
   gap: 15px;
 }
 
-.td-name-background-0,
-.td-name-background-1,
-.td-name-background-2,
-.td-name-background-3 {
+.td-name-background {
   width: 45px;
   height: 45px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.td-name-background-0 { background: #ff66002a; }
-.td-name-background-1 { background: #90ee9546; }
-.td-name-background-2 { background: #aae5fc5e; }
-.td-name-background-3 { background: #fcbbbb62; }
+.td-name-background { background: #ff767644; }
 
 /* Status */
 .td-status-active {
@@ -581,6 +576,15 @@ body {
 }
 
 /* Botões de formulário */
+
+.modal-register-footer,
+.modal-update-footer,
+.modal-delete-footer {
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+}
+
 .button-submit {
   font-weight: 550;
   padding: 14px 30px;
@@ -778,7 +782,7 @@ body {
    ======================================== */
 
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 25px;
 }
 
 .form-label {
@@ -786,7 +790,7 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
   color: #374151;
-  margin-bottom: 8px;
+  margin-bottom: 13px;
 }
 
 .form-input,
@@ -1036,14 +1040,14 @@ body {
 .modal-register {
   background: #fff;
   border-radius: 10px;
-  padding: 30px;
+  padding: 20px 30px 30px 30px;
   width: 550px;
 }
 
 .modal-register-header-container {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   gap: 20px;
 }
 
@@ -1055,17 +1059,17 @@ body {
 .modal-register-header-text {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 
 .modal-register-header-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #0e7ee612;
+  background-color: #e60e0e12;
   padding: 15px;
-  border: 1px solid #0e90e680;
-  border-radius: 50px;
+  border: 1px solid #e60e0e80;
+  border-radius: 10px;
 }
 
 .modal-register-header span {
@@ -1090,7 +1094,7 @@ body {
 .modal-update {
   background: #fff;
   border-radius: 10px;
-  padding: 30px;
+  padding: 20px 30px 30px 30px;
   width: 550px;
 }
 
@@ -1098,7 +1102,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   gap: 20px;
 }
 
@@ -1121,7 +1125,8 @@ body {
   background-color: #9ff98421;
   padding: 15px;
   border: 1px solid #419717;
-  border-radius: 50px;
+  border-radius: 10px;
+
 }
 
 .modal-update-header span {
@@ -1146,15 +1151,42 @@ body {
 .modal-delete {
   background: #fff;
   border-radius: 10px;
-  padding: 30px;
+  padding: 20px 30px 30px 30px;
   width: 550px;
+}
+
+.modal-delete-info {
+  margin: 20px 0;
+  padding: 15px;
+  text-align: start;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px
+}
+
+.modal-delete-info strong{
+  color: #030311;
+}
+
+.modal-delete-info span{
+  text-indent: 10px;
+}
+
+.modal-delete-info .modal-delete-info-name{
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.modal-delete-info .modal-delete-info-status{
+  display: flex;
+  gap: 10px;
 }
 
 .modal-delete-header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
   gap: 20px;
 }
 
@@ -1177,13 +1209,12 @@ body {
   background-color: #da141413;
   padding: 15px;
   border: 1px solid #da1414;
-  border-radius: 50px;
+  border-radius: 10px;
 }
 
 .modal-delete-content {
   font-size: 1.1rem;
   color: #64748b;
-  text-align: center;
 }
 
 .modal-delete-header span {
@@ -1216,7 +1247,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
   gap: 20px;
 }
 
@@ -1239,7 +1270,7 @@ body {
   background-color: #1463da1c;
   padding: 15px;
   border: 1px solid #0957b179;
-  border-radius: 50px;
+  border-radius: 10px;
 }
 
 .modal-view-content {
@@ -1315,6 +1346,7 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: background 0.2s;
+  flex-shrink: 0;
 }
 
 .dept-modal-close:hover {
@@ -1577,11 +1609,18 @@ body {
     padding: 14px;
   }
   /* Modais responsivos */
+
+  .modal-register-header-icon {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
   .modal-register,
   .modal-update,
   .modal-delete,
   .modal-view {
-    width: 100%;
+    border-radius: 0px;
+    min-width: 100%;
     height: 100vh;
     scrollbar-width: none;
     overflow-y: auto;
@@ -1600,12 +1639,43 @@ body {
   }
   .dept-modal-close {
     align-items: center;
+    flex-shrink: 0;
   }
   .modal-register-header-container,
   .modal-update-header-container,
   .modal-delete-header-container,
   .modal-view-header-container {
     align-items: center;
+  }
+
+  .modal-register-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-update-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-delete-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-submit {
+    width: 100%;
+    margin-right: 0px;
+  }
+
+  .button-delete {
+    width: 100%;
+    margin-right: 0px;
+  }
+
+  .button-back {
+    width: 100%;
+    margin-right: 0px;
   }
 }
 

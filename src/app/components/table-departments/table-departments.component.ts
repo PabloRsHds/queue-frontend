@@ -39,6 +39,9 @@ export class TableDepartmentsComponent implements OnInit {
   public modalDelete: boolean = false;
   public modalView: boolean = false;
 
+  // States
+  isMobile = signal(window.innerWidth < 768);
+
   // Form register
   public registerForm!: FormGroup;
 
@@ -291,6 +294,7 @@ export class TableDepartmentsComponent implements OnInit {
       this.closeDropDown();
     }
   }
+
   openDropDown(index: number) {
 
     if (this.dropDown === index) {
@@ -303,6 +307,13 @@ export class TableDepartmentsComponent implements OnInit {
 
   closeDropDown() {
     this.dropDown = null;
+  }
+
+  // ======== TABLETS / MOBILES ==========
+  // Add event listenr
+  @HostListener('window:resize')
+  onResize() {
+    this.isMobile.set(window.innerWidth < 768);
   }
 
 }

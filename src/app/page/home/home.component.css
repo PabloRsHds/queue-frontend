@@ -874,7 +874,7 @@ app-config {
 /* ============================================
   RESPONSIVE - SMALLER TABLET (max-width: 992px)
   ============================================ */
-@media (max-width: 992px) {
+@media (max-width: 1050px) {
   .stats-grid {
       grid-template-columns: repeat(2, 1fr);
   }
