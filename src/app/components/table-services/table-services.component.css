@@ -281,14 +281,14 @@ body {
 }
 
 .new-service-card:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: #3bf65a;
+  background: #effff5;
 }
 
 .new-service-icon {
   width: 55px;
   height: 55px;
-  background: #dbeafe;
+  background: #ddfedb;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -299,13 +299,13 @@ body {
 .new-service-icon svg {
   width: 22px;
   height: 22px;
-  stroke: #3b82f6;
+  stroke: #0f7709;
 }
 
 .new-service-text {
   font-size: 18px;
   font-weight: 700;
-  color: #3b82f6;
+  color: #0f7709;
 }
 
 .new-service-sub {
@@ -461,7 +461,7 @@ body {
   flex-shrink: 0;
 }
 
-.td-name-background { background: #dcfce7; }
+.td-name-background { background: #0084ff2a; }
 
 /* Status */
 .td-status-active {
@@ -526,12 +526,12 @@ body {
 
 .button-department-update:hover {
   color: #f7f7f7;
-  background: #99c5ff1e;
-  border: 1px solid #348ad1be;
+  background: #ea8c000e;
+  border: 1px solid #ea8c00cb;
 }
 
 .button-department-update span {
-  color: #046af0e7;
+  color: #EA8C00;
 }
 
 .button-department-delete {
@@ -554,6 +554,7 @@ body {
 
 .button-department-delete:hover {
   background-color: rgba(255, 99, 71, 0.089);
+  border: 1px solid #eb3414be;
 }
 
 .button-menu-table {
@@ -579,21 +580,41 @@ body {
 .button-submit {
   font-weight: 550;
   padding: 14px 30px;
-  border: 1px solid #0650a5;
+  border: 1px solid #24931e;
   border-radius: 10px;
   margin-right: 5px;
   font-size: 0.9rem;
   color: #ffffff;
   transition: all 0.2s;
-  background: #0667d4;
-  font-family: 'Inter', sans-serif;
+  background: #3ba536;
+  font-family: "Inter", sans-serif;
   cursor: pointer;
 }
 
 .button-submit:hover {
   border: 1px solid #e2e8f0;
   color: #f7f7f7;
-  background: #0650a5;
+  background: #24931e;
+}
+
+.button-update {
+  font-weight: 550;
+  padding: 14px 30px;
+  border: 1px solid #c97d0b;
+  border-radius: 10px;
+  margin-right: 5px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  transition: all 0.2s;
+  background: #EA8C00;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+}
+
+.button-update:hover {
+  border: 1px solid #c97d0b;
+  color: #f7f7f7;
+  background: #c97d0b;
 }
 
 .button-delete {
@@ -1067,11 +1088,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #4be60e12;
+  background-color: #ddfedb9c;
   padding: 15px;
-  border: 1px solid rgba(14, 230, 68, 0.502);
+  border: 1px solid #0f860986;
   border-radius: 10px;
-  flex-shrink: 0;
 }
 
 .modal-register-header span {
@@ -1124,9 +1144,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #9ff98421;
+  background-color: #f7d9ac2e;
   padding: 15px;
-  border: 1px solid #419717;
+  border: 1px solid #EA8C00;
   border-radius: 10px;
 }
 
@@ -1268,9 +1288,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #9ff98421;
+  background-color: #0e7ee612;
   padding: 15px;
-  border: 1px solid #419717;
+  border: 1px solid #0e7ee680;
   border-radius: 10px;
 }
 
@@ -1656,6 +1676,11 @@ body {
   }
 
   .button-submit {
+    width: 100%;
+    margin-right: 0px;
+  }
+
+  .button-update {
     width: 100%;
     margin-right: 0px;
   }
