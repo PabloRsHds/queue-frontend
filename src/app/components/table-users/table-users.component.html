@@ -364,7 +364,8 @@
                     <label class="form-label">Telefone <span class="optional">(Opcional)</span></label>
                     <input type="number" class="form-input" placeholder="(00) 00000-0000" formControlName="phone">
                   </div>
-                  <div class="section-divider"><h3>Credenciais de acesso</h3></div>
+                  <div class="section-divider">
+                    <h3 style="margin-bottom: 15px;">Credenciais de acesso</h3></div>
                   <div class="form-group form-group-full">
                     <label class="form-label">Nome de usuário <span class="required">*</span></label>
                     <input type="text" class="form-input" placeholder="Ex: joao.silva" formControlName="username">
@@ -374,7 +375,13 @@
                     <div class="input-with-icon">
                       <input [type]="showPassword ? 'text' : 'password'" class="form-input" placeholder="••••••••" formControlName="password">
                       <button type="button" class="input-icon-btn" type="button" (click)="togglePassword()">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" *ngIf="!showPassword">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="showPassword">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                        </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2.99902 3L20.999 21M9.8433 9.91364C9.32066 10.4536 8.99902 11.1892 8.99902 12C8.99902 13.6569 10.3422 15 11.999 15C12.8215 15 13.5667 14.669 14.1086 14.133M6.49902 6.64715C4.59972 7.90034 3.15305 9.78394 2.45703 12C3.73128 16.0571 7.52159 19 11.9992 19C13.9881 19 15.8414 18.4194 17.3988 17.4184M10.999 5.04939C11.328 5.01673 11.6617 5 11.9992 5C16.4769 5 20.2672 7.94291 21.5414 12C21.2607 12.894 20.8577 13.7338 20.3522 14.5" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -383,7 +390,13 @@
                     <div class="input-with-icon">
                       <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-input" placeholder="••••••••" formControlName="confirmPassword">
                       <button type="button" class="input-icon-btn" (click)="toggleConfirmPassword()">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" *ngIf="!showConfirmPassword">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="showConfirmPassword">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                        </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2.99902 3L20.999 21M9.8433 9.91364C9.32066 10.4536 8.99902 11.1892 8.99902 12C8.99902 13.6569 10.3422 15 11.999 15C12.8215 15 13.5667 14.669 14.1086 14.133M6.49902 6.64715C4.59972 7.90034 3.15305 9.78394 2.45703 12C3.73128 16.0571 7.52159 19 11.9992 19C13.9881 19 15.8414 18.4194 17.3988 17.4184M10.999 5.04939C11.328 5.01673 11.6617 5 11.9992 5C16.4769 5 20.2672 7.94291 21.5414 12C21.2607 12.894 20.8577 13.7338 20.3522 14.5" stroke="#b8b8b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                        </svg>
                       </button>
                     </div>
                   </div>

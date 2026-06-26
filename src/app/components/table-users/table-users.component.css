@@ -2157,7 +2157,7 @@
   font-size: 16px;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .form-subtitle {
@@ -2282,7 +2282,7 @@
 
 @media (max-width: 769px) {
   .permissions-layout {
-      gap: 0px;
+      gap: 25px;
   }
 }
 
