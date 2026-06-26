@@ -266,7 +266,6 @@ body {
 /* ========================================
    NOVO SERVIÇO CARD
    ======================================== */
-
 .new-service-card {
   border: 2px dashed #d1d5db;
   border-radius: 12px;
@@ -281,14 +280,14 @@ body {
 }
 
 .new-service-card:hover {
-  border-color: #3bf65a;
-  background: #effff5;
+  border-color: #3bbbf6;
+  background: #effaff;
 }
 
 .new-service-icon {
   width: 55px;
   height: 55px;
-  background: #ddfedb;
+  background: #dbf1fe;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -299,13 +298,13 @@ body {
 .new-service-icon svg {
   width: 22px;
   height: 22px;
-  stroke: #0f7709;
+  stroke: #095477;
 }
 
 .new-service-text {
   font-size: 18px;
   font-weight: 700;
-  color: #0f7709;
+  color: #094f77;
 }
 
 .new-service-sub {
@@ -580,13 +579,13 @@ body {
 .button-submit {
   font-weight: 550;
   padding: 14px 30px;
-  border: 1px solid #24931e;
+  border: 1px solid #176914;
   border-radius: 10px;
   margin-right: 5px;
   font-size: 0.9rem;
   color: #ffffff;
   transition: all 0.2s;
-  background: #3ba536;
+  background: #20811c;
   font-family: "Inter", sans-serif;
   cursor: pointer;
 }
