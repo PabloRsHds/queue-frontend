@@ -11,7 +11,7 @@
         </div>
         <div>
           <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ statistics()?.totalElements ?? 0 }}</div>
-          <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de serviços cadastrados</div>
+          <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de serviços</div>
         </div>
       </div>
     </div>
@@ -218,28 +218,26 @@
 <div class="modal-register-container" *ngIf="modalRegister()" (click)="closeModalRegister()">
   <div class="modal-register" onclick="event.stopPropagation()">
 
-    <div style="display: flex; justify-content: end; margin-bottom: 30px">
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalRegister()" >
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
-    <div class="modal-register-header-container">
-      <div class="modal-register-header">
-        <div class="modal-register-header-icon">
-          <svg viewBox="0 0 16 16" width="35px" height="35px" xmlns="http://www.w3.org/2000/svg" fill="#0f7709" class="bi bi-plus" stroke="#0f7709" stroke-width="0.00016">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier">
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path> </g>
+    <div class="modal-register-top">
+      <div style="display: flex; justify-content: end; padding: 20px">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalRegister()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-register-header-text">
-          <h2>Cadastrar serviço</h2>
-          <span >Preencha os campos abaixo para cadastrar um novo serviço.</span>
+        </button>
+      </div>
+
+      <div class="modal-register-header-container">
+        <div class="modal-register-header">
+          <div class="modal-register-header-icon">
+            <svg viewBox="0 0 32 32" version="1.1" width="30px" height="30px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>plus</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-362.000000, -1037.000000)" fill="#ffffff"> <path d="M390,1049 L382,1049 L382,1041 C382,1038.79 380.209,1037 378,1037 C375.791,1037 374,1038.79 374,1041 L374,1049 L366,1049 C363.791,1049 362,1050.79 362,1053 C362,1055.21 363.791,1057 366,1057 L374,1057 L374,1065 C374,1067.21 375.791,1069 378,1069 C380.209,1069 382,1067.21 382,1065 L382,1057 L390,1057 C392.209,1057 394,1055.21 394,1053 C394,1050.79 392.209,1049 390,1049" id="plus" sketch:type="MSShapeGroup"> </path> </g> </g> </g>
+            </svg>
+          </div>
+          <div class="modal-register-header-text">
+            <h2>Cadastrar serviço</h2>
+            <span >Preencha os campos abaixo para cadastrar um novo serviço.</span>
+          </div>
         </div>
       </div>
     </div>
@@ -251,7 +249,7 @@
           formControlName="name"
           type="text"
           class="form-input"
-          placeholder="Ex: RH"
+          placeholder="Digite o nome do serviço..."
           required>
       </div>
 
@@ -261,7 +259,7 @@
           formControlName="code"
           type="text"
           class="form-input"
-          placeholder="Ex: 00E3"
+          placeholder="Digite o código do serviço..."
           required>
       </div>
 
@@ -271,7 +269,7 @@
           formControlName="description"
           rows="6"
           class="form-textarea"
-          placeholder="Breve descrição do departamento..."></textarea>
+          placeholder="Breve descrição do serviço..."></textarea>
       </div>
 
       <div class="form-group">
@@ -289,10 +287,28 @@
       <div class="separator"></div>
 
       <div class="modal-register-footer">
-        <button type="submit" class="button-submit">Salvar</button>
-        <button type="button" class="button-back" (click)="closeModalRegister()">Voltar</button>
+        <button type="submit" class="button-submit">
+          Salvar
+        </button>
+        <button type="button" class="button-back" (click)="closeModalRegister()">
+          Voltar
+        </button>
       </div>
     </form>
+
+    <div style="padding: 20px 30px;">
+      <div class="modal-register-info">
+        <div class="modal-register-info-1">
+          <svg viewBox="0 0 24 24" width="20px" height="20px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#0d682b" stroke-width="1.5"></circle> <path d="M12 17V11" stroke="#0d682b" stroke-width="1.5" stroke-linecap="round"></path> <circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)" fill="#0d682b"></circle> </g>
+          </svg>
+          <strong>Dica:</strong>
+        </div>
+
+        <div class="modal-register-info-2">
+          <span>Cadastre um departamento antes de cadastrar um serviço.</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -337,7 +353,7 @@
               formControlName="name"
               type="text"
               class="form-input"
-              placeholder="Ex: RH"
+              placeholder="Digite o nome do serviço..."
               required>
           </div>
         </div>
@@ -349,7 +365,7 @@
               formControlName="code"
               type="text"
               class="form-input"
-              placeholder="Ex: RH"
+              placeholder="Digite o código do serviço..."
               required>
           </div>
         </div>
@@ -361,7 +377,7 @@
           formControlName="description"
           rows="5"
           class="form-textarea"
-          placeholder="Breve descrição do departamento..."></textarea>
+          placeholder="Breve descrição do serviço..."></textarea>
       </div>
 
       <div style="display: flex; gap: 18px; ">
