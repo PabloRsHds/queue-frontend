@@ -223,29 +223,27 @@
 <div class="modal-register-container" *ngIf="modalRegister()" (click)="closeModalRegister()">
   <div class="modal-register" onclick="event.stopPropagation()">
 
-    <div style="display: flex; justify-content: end; margin-bottom: 30px">
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalRegister()" >
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
-    <div class="modal-register-header-container">
-      <div class="modal-register-header">
-        <div class="modal-register-header-icon">
-          <svg viewBox="0 0 16 16" width="35px" height="35px" xmlns="http://www.w3.org/2000/svg" fill="#0f7709" class="bi bi-plus" stroke="#0f7709" stroke-width="0.00016">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier">
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path> </g>
+    <div class="modal-register-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalRegister()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-register-header-text">
-          <h2>Novo departamento</h2>
+        </button>
+      </div>
 
-          <span >Preencha os campos abaixo para cadastrar um novo departamento.</span>
+      <div class="modal-register-header-container">
+        <div class="modal-register-header">
+          <div class="modal-register-header-icon">
+            <svg viewBox="0 0 32 32" version="1.1" width="30px" height="30px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>plus</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-362.000000, -1037.000000)" fill="#ffffff"> <path d="M390,1049 L382,1049 L382,1041 C382,1038.79 380.209,1037 378,1037 C375.791,1037 374,1038.79 374,1041 L374,1049 L366,1049 C363.791,1049 362,1050.79 362,1053 C362,1055.21 363.791,1057 366,1057 L374,1057 L374,1065 C374,1067.21 375.791,1069 378,1069 C380.209,1069 382,1067.21 382,1065 L382,1057 L390,1057 C392.209,1057 394,1055.21 394,1053 C394,1050.79 392.209,1049 390,1049" id="plus" sketch:type="MSShapeGroup"> </path> </g> </g> </g>
+            </svg>
+          </div>
+          <div class="modal-register-header-text">
+            <h2>Novo departamento</h2>
+
+            <span >Preencha os campos abaixo para cadastrar um novo departamento.</span>
+          </div>
         </div>
       </div>
     </div>
@@ -277,6 +275,20 @@
         <button type="button" class="button-back" (click)="closeModalRegister()">Voltar</button>
       </div>
     </form>
+
+    <div style="padding: 20px 30px;">
+      <div class="modal-register-info">
+        <div class="modal-register-info-1">
+          <svg viewBox="0 0 24 24" width="20px" height="20px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#0d682b" stroke-width="1.5"></circle> <path d="M12 17V11" stroke="#0d682b" stroke-width="1.5" stroke-linecap="round"></path> <circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)" fill="#0d682b"></circle> </g>
+          </svg>
+          <strong>Dica:</strong>
+        </div>
+
+        <div class="modal-register-info-2">
+          <span>Cadastre um departamento para vincular serviços a ele.</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -284,33 +296,35 @@
 <div class="modal-update-container" *ngIf="modalUpdate" (click)="closeModalUpdate()">
   <div class="modal-update" onclick="event.stopPropagation()">
 
-    <div style="display: flex; justify-content: end; margin-bottom: 30px">
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalUpdate()" >
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
-    <div class="modal-update-header-container">
-      <div class="modal-update-header">
-        <div class="modal-update-header-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="35px" height="35px">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 4H6C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V12M9 15V12.5L17.75 3.75C18.4404 3.05964 19.5596 3.05964 20.25 3.75V3.75C20.9404 4.44036 20.9404 5.55964 20.25 6.25L15.5 11L11.5 15H9Z" stroke="#EA8C00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+    <div class="modal-update-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalUpdate()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-update-header-text">
-          <h2>Alterar departamento</h2>
-          <span >Altere as informações do departamento abaixo.</span>
+        </button>
+      </div>
+
+      <div class="modal-update-header-container">
+        <div class="modal-update-header">
+          <div class="modal-update-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1213 2.70705C19.9497 1.53548 18.0503 1.53547 16.8787 2.70705L15.1989 4.38685L7.29289 12.2928C7.16473 12.421 7.07382 12.5816 7.02986 12.7574L6.02986 16.7574C5.94466 17.0982 6.04451 17.4587 6.29289 17.707C6.54127 17.9554 6.90176 18.0553 7.24254 17.9701L11.2425 16.9701C11.4184 16.9261 11.5789 16.8352 11.7071 16.707L19.5556 8.85857L21.2929 7.12126C22.4645 5.94969 22.4645 4.05019 21.2929 2.87862L21.1213 2.70705ZM18.2929 4.12126C18.6834 3.73074 19.3166 3.73074 19.7071 4.12126L19.8787 4.29283C20.2692 4.68336 20.2692 5.31653 19.8787 5.70705L18.8622 6.72357L17.3068 5.10738L18.2929 4.12126ZM15.8923 6.52185L17.4477 8.13804L10.4888 15.097L8.37437 15.6256L8.90296 13.5112L15.8923 6.52185ZM4 7.99994C4 7.44766 4.44772 6.99994 5 6.99994H10C10.5523 6.99994 11 6.55223 11 5.99994C11 5.44766 10.5523 4.99994 10 4.99994H5C3.34315 4.99994 2 6.34309 2 7.99994V18.9999C2 20.6568 3.34315 21.9999 5 21.9999H16C17.6569 21.9999 19 20.6568 19 18.9999V13.9999C19 13.4477 18.5523 12.9999 18 12.9999C17.4477 12.9999 17 13.4477 17 13.9999V18.9999C17 19.5522 16.5523 19.9999 16 19.9999H5C4.44772 19.9999 4 19.5522 4 18.9999V7.99994Z" fill="#ffffff"></path> </g>
+            </svg>
+          </div>
+          <div class="modal-update-header-text">
+            <h2>Alterar departamento</h2>
+            <span >Altere as informações do departamento abaixo.</span>
+          </div>
         </div>
       </div>
     </div>
 
     <form [formGroup]="updateForm" (ngSubmit)="updateDepartment()">
 
-      <div style="display: flex; gap: 18px; ">
+      <div class="form-group-name-status">
 
         <div style="flex: 1;">
           <div class="form-group">
@@ -319,7 +333,7 @@
               formControlName="name"
               type="text"
               class="form-input"
-              placeholder="Ex: RH"
+              placeholder="Digite o nome do departamento..."
               required>
           </div>
         </div>
@@ -357,6 +371,21 @@
         <button type="button" class="button-back" (click)="closeModalUpdate()">Voltar</button>
       </div>
     </form>
+
+    <div style="padding: 20px 30px;">
+      <div class="modal-update-info">
+        <div class="modal-update-info-1">
+          <svg viewBox="-0.5 0 25 25" fill="none" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 21.5C17.1086 21.5 21.25 17.3586 21.25 12.25C21.25 7.14137 17.1086 3 12 3C6.89137 3 2.75 7.14137 2.75 12.25C2.75 17.3586 6.89137 21.5 12 21.5Z" stroke="#EA8C00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.9309 8.15005C12.9256 8.39231 12.825 8.62272 12.6509 8.79123C12.4767 8.95974 12.2431 9.05271 12.0008 9.05002C11.8242 9.04413 11.6533 8.98641 11.5093 8.884C11.3652 8.7816 11.2546 8.63903 11.1911 8.47415C11.1275 8.30927 11.1139 8.12932 11.152 7.95675C11.19 7.78419 11.278 7.6267 11.405 7.50381C11.532 7.38093 11.6923 7.29814 11.866 7.26578C12.0397 7.23341 12.2192 7.25289 12.3819 7.32181C12.5446 7.39072 12.6834 7.506 12.781 7.65329C12.8787 7.80057 12.9308 7.97335 12.9309 8.15005ZM11.2909 16.5301V11.1501C11.2882 11.0556 11.3046 10.9615 11.3392 10.8736C11.3738 10.7857 11.4258 10.7057 11.4922 10.6385C11.5585 10.5712 11.6378 10.518 11.7252 10.4822C11.8126 10.4464 11.9064 10.4286 12.0008 10.43C12.094 10.4299 12.1863 10.4487 12.272 10.4853C12.3577 10.5218 12.4352 10.5753 12.4997 10.6426C12.5642 10.7099 12.6143 10.7895 12.6472 10.8767C12.6801 10.9639 12.6949 11.0569 12.6908 11.1501V16.5301C12.6908 16.622 12.6727 16.713 12.6376 16.7979C12.6024 16.8828 12.5508 16.96 12.4858 17.025C12.4208 17.09 12.3437 17.1415 12.2588 17.1767C12.1738 17.2119 12.0828 17.23 11.9909 17.23C11.899 17.23 11.8079 17.2119 11.723 17.1767C11.6381 17.1415 11.5609 17.09 11.4959 17.025C11.4309 16.96 11.3793 16.8828 11.3442 16.7979C11.309 16.713 11.2909 16.622 11.2909 16.5301Z" fill="#EA8C00"></path> </g>
+          </svg>
+          <strong>Dica:</strong>
+        </div>
+
+        <div class="modal-update-info-2">
+          <span>Atualize o departamento com os dados corretos.</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -364,54 +393,80 @@
 <div class="modal-delete-container" *ngIf="modalDelete" (click)="closeModalDelete()">
   <div class="modal-delete" onclick="event.stopPropagation()">
 
-    <div style="display: flex; justify-content: end; margin-bottom: 30px">
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalDelete()" >
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>\
-        </svg>
-      </button>
-    </div>
-
-    <div class="modal-delete-header-container">
-      <div class="modal-delete-header">
-        <div class="modal-delete-header-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" viewBox="0 0 24 24" fill="none">
-            <path d="M20.5001 6H3.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M9.5 11L10 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M14.5 11L14 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#da1414" stroke-width="1.5"/>
-            <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+    <div class="modal-delete-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalDelete()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>\
           </svg>
-        </div>
-        <div class="modal-delete-header-text">
-          <h2>Deletar departamento</h2>
-          <span>Delete o departamento escolhido abaixo.</span>
+        </button>
+      </div>
+
+      <div class="modal-delete-header-container">
+        <div class="modal-delete-header">
+          <div class="modal-delete-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" width="35px" height="35px" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+            </svg>
+          </div>
+          <div class="modal-delete-header-text">
+            <h2>Deletar departamento</h2>
+            <span>Delete o departamento escolhido abaixo.</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="modal-delete-content">
-      <p>Tem certeza que deseja deletar o departamento:</p>
+    <div style="margin: 0px 30px">
+      <div class="modal-delete-content">
 
-      <div class="modal-delete-info">
-        <div class="modal-delete-info-name">
-          <strong>Nome:</strong> <p>{{ this.departmentInfo()?.name }}</p>
+        <div class="modal-delete-top-info">
+
+          <div style="display: flex; align-items: center;">
+            <svg viewBox="-0.5 0 25 25" width="35px" height="35px" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 21.5C17.1086 21.5 21.25 17.3586 21.25 12.25C21.25 7.14137 17.1086 3 12 3C6.89137 3 2.75 7.14137 2.75 12.25C2.75 17.3586 6.89137 21.5 12 21.5Z" stroke="#ec1313" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.9309 8.15005C12.9256 8.39231 12.825 8.62272 12.6509 8.79123C12.4767 8.95974 12.2431 9.05271 12.0008 9.05002C11.8242 9.04413 11.6533 8.98641 11.5093 8.884C11.3652 8.7816 11.2546 8.63903 11.1911 8.47415C11.1275 8.30927 11.1139 8.12932 11.152 7.95675C11.19 7.78419 11.278 7.6267 11.405 7.50381C11.532 7.38093 11.6923 7.29814 11.866 7.26578C12.0397 7.23341 12.2192 7.25289 12.3819 7.32181C12.5446 7.39072 12.6834 7.506 12.781 7.65329C12.8787 7.80057 12.9308 7.97335 12.9309 8.15005ZM11.2909 16.5301V11.1501C11.2882 11.0556 11.3046 10.9615 11.3392 10.8736C11.3738 10.7857 11.4258 10.7057 11.4922 10.6385C11.5585 10.5712 11.6378 10.518 11.7252 10.4822C11.8126 10.4464 11.9064 10.4286 12.0008 10.43C12.094 10.4299 12.1863 10.4487 12.272 10.4853C12.3577 10.5218 12.4352 10.5753 12.4997 10.6426C12.5642 10.7099 12.6143 10.7895 12.6472 10.8767C12.6801 10.9639 12.6949 11.0569 12.6908 11.1501V16.5301C12.6908 16.622 12.6727 16.713 12.6376 16.7979C12.6024 16.8828 12.5508 16.96 12.4858 17.025C12.4208 17.09 12.3437 17.1415 12.2588 17.1767C12.1738 17.2119 12.0828 17.23 11.9909 17.23C11.899 17.23 11.8079 17.2119 11.723 17.1767C11.6381 17.1415 11.5609 17.09 11.4959 17.025C11.4309 16.96 11.3793 16.8828 11.3442 16.7979C11.309 16.713 11.2909 16.622 11.2909 16.5301Z" fill="#ec1313"></path> </g>
+            </svg>
+          </div>
+
+          <div class="modal-delete-top-info-text">
+            <p style="font-weight: bold; color: #c21010;">Tem certeza que deseja deletar o departamento?</p>
+            <p style=" color: #050614;">Todos os serviços relacionados a ele serão deletados.</p>
+          </div>
         </div>
 
-        <div class="modal-delete-info-status">
-          <strong>Status:</strong> <p>{{ this.departmentInfo()?.active ? 'Ativo' : 'Inativo' }}</p>
+        <div class="modal-delete-info">
+          <div class="modal-delete-info-name">
+            <strong>Nome:</strong> <p>{{ this.departmentInfo()?.name ?? '-' }}</p>
+          </div>
+
+          <div class="modal-delete-info-status">
+            <strong>Status:</strong> <p>{{ this.departmentInfo()?.active ? 'Ativo' : 'Inativo' }}</p>
+          </div>
         </div>
+
       </div>
 
-      <p>Deleta-lo, apagará todos os seus serviços.</p>
+      <div class="separator"></div>
+      <div class="modal-delete-footer">
+        <button type="button" class="button-delete" (click)="deleteDepartment(this.departmentInfo()?.departmentId ?? '')">Excluir</button>
+        <button type="button" class="button-back" (click)="closeModalDelete()">Cancelar</button>
+      </div>
     </div>
 
-    <div class="separator"></div>
-    <div class="modal-delete-footer">
-      <button type="button" class="button-delete" (click)="deleteDepartment(this.departmentInfo()?.departmentId ?? '')">Excluir</button>
-      <button type="button" class="button-back" (click)="closeModalDelete()">Cancelar</button>
+    <div style="padding: 20px 30px;">
+      <div class="modal-delete-bottom-info">
+        <div class="modal-delete-bottom-info-1">
+          <svg viewBox="-0.5 0 25 25" width="20px" height="20px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 21.5C17.1086 21.5 21.25 17.3586 21.25 12.25C21.25 7.14137 17.1086 3 12 3C6.89137 3 2.75 7.14137 2.75 12.25C2.75 17.3586 6.89137 21.5 12 21.5Z" stroke="#ec1313" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.9309 8.15005C12.9256 8.39231 12.825 8.62272 12.6509 8.79123C12.4767 8.95974 12.2431 9.05271 12.0008 9.05002C11.8242 9.04413 11.6533 8.98641 11.5093 8.884C11.3652 8.7816 11.2546 8.63903 11.1911 8.47415C11.1275 8.30927 11.1139 8.12932 11.152 7.95675C11.19 7.78419 11.278 7.6267 11.405 7.50381C11.532 7.38093 11.6923 7.29814 11.866 7.26578C12.0397 7.23341 12.2192 7.25289 12.3819 7.32181C12.5446 7.39072 12.6834 7.506 12.781 7.65329C12.8787 7.80057 12.9308 7.97335 12.9309 8.15005ZM11.2909 16.5301V11.1501C11.2882 11.0556 11.3046 10.9615 11.3392 10.8736C11.3738 10.7857 11.4258 10.7057 11.4922 10.6385C11.5585 10.5712 11.6378 10.518 11.7252 10.4822C11.8126 10.4464 11.9064 10.4286 12.0008 10.43C12.094 10.4299 12.1863 10.4487 12.272 10.4853C12.3577 10.5218 12.4352 10.5753 12.4997 10.6426C12.5642 10.7099 12.6143 10.7895 12.6472 10.8767C12.6801 10.9639 12.6949 11.0569 12.6908 11.1501V16.5301C12.6908 16.622 12.6727 16.713 12.6376 16.7979C12.6024 16.8828 12.5508 16.96 12.4858 17.025C12.4208 17.09 12.3437 17.1415 12.2588 17.1767C12.1738 17.2119 12.0828 17.23 11.9909 17.23C11.899 17.23 11.8079 17.2119 11.723 17.1767C11.6381 17.1415 11.5609 17.09 11.4959 17.025C11.4309 16.96 11.3793 16.8828 11.3442 16.7979C11.309 16.713 11.2909 16.622 11.2909 16.5301Z" fill="#ec1313"></path> </g>
+          </svg>
+          <strong>Dica:</strong>
+        </div>
+
+        <div class="modal-delete-bottom-info-2">
+          <span>Esta ação não poderá ser desfeita.</span>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -420,25 +475,26 @@
 <div class="modal-view-container" *ngIf="modalView" (click)="closeModalView()">
   <div class="modal-view" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': departmentInfo()?.updatedAt != null}">
 
-    <div style="display: flex; justify-content: end; margin-bottom: 30px">
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalView()" >
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
-    <div class="modal-view-header-container">
-      <div class="modal-view-header">
-        <div class="modal-view-header-icon">
-          <svg height="35px" width="35px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#3d8fdb;} </style> <g> <path class="st0" d="M511.58,252.219c-0.403-1.756-0.807-2.737-1.17-3.647c-0.727-1.7-1.424-2.982-2.239-4.437 c-3.006-5.228-7.831-12.309-14.444-21.216c-9.872-13.273-23.47-30.09-38.871-46.686c-15.417-16.596-32.518-32.939-49.93-45.279 c-24.624-17.426-48.569-30.976-73.091-40.184C307.33,81.555,282.246,76.77,256,76.785c-26.246-0.015-51.33,4.77-75.836,13.986 c-24.53,9.207-48.466,22.757-73.09,40.176c-25.899,18.408-51.401,45.729-71.098,69.46c-9.825,11.866-18.106,22.798-24.078,31.325 c-2.999,4.272-5.403,7.926-7.254,11.011c-0.933,1.567-1.716,2.966-2.468,4.533c-0.38,0.799-0.744,1.622-1.147,2.776 c-0.198,0.586-0.412,1.266-0.609,2.168c-0.19,0.91-0.412,2.033-0.42,3.781c0.008,1.741,0.229,2.872,0.42,3.781 c0.395,1.756,0.807,2.729,1.17,3.646c0.728,1.701,1.424,2.983,2.239,4.43c3.006,5.229,7.831,12.316,14.444,21.223 c9.864,13.274,23.469,30.098,38.871,46.694c15.417,16.596,32.519,32.931,49.93,45.271c24.624,17.426,48.561,30.969,73.09,40.184 c24.506,9.208,49.59,14.002,75.836,13.986c26.246,0.016,51.33-4.777,75.836-13.986c24.522-9.215,48.466-22.757,73.091-40.176 c25.898-18.408,51.401-45.729,71.098-69.46c9.824-11.866,18.106-22.798,24.078-31.325c2.998-4.279,5.402-7.926,7.254-11.019 c0.934-1.566,1.717-2.967,2.468-4.525c0.372-0.799,0.744-1.622,1.147-2.785c0.198-0.586,0.412-1.258,0.609-2.159 c0.19-0.91,0.412-2.04,0.42-3.781C511.992,254.252,511.771,253.129,511.58,252.219z M440.61,303.209 c-16.706,19.064-36.577,38.824-54.399,51.394c-23.011,16.287-44.558,28.334-65.758,36.292 c-21.223,7.95-42.106,11.906-64.453,11.921c-22.346-0.015-43.23-3.97-64.452-11.921c-21.2-7.958-42.748-20.005-65.758-36.292 c-21.738-15.315-46.354-41.244-64.856-63.67c-9.287-11.209-17.134-21.58-22.505-29.252c-1.511-2.159-2.768-4.026-3.852-5.68 c6.36-9.769,20.171-28.263,36.814-47.2c16.706-19.072,36.577-38.824,54.399-51.409c23.011-16.28,44.559-28.327,65.758-36.284 c21.223-7.95,42.106-11.905,64.452-11.921c22.347,0.016,43.23,3.97,64.453,11.921c21.2,7.958,42.747,20.005,65.758,36.292 c21.738,15.322,46.355,41.252,64.856,63.67c9.287,11.217,17.134,21.588,22.506,29.252c1.51,2.16,2.768,4.027,3.852,5.68 C471.064,265.77,457.253,284.264,440.61,303.209z"></path> <path class="st0" d="M256,141.697c-63.14,0-114.303,51.187-114.303,114.303c0,63.132,51.164,114.303,114.303,114.303 S370.303,319.133,370.303,256C370.303,192.884,319.14,141.697,256,141.697z M256,309.071c-29.308,0-53.062-23.763-53.062-53.07 c0-29.308,23.754-53.054,53.062-53.054c5.766,0,11.296,0.941,16.493,2.634l-7.435,22.758c-1.907,5.806-0.609,12.166,3.409,16.77 c4.019,4.58,10.157,6.708,16.152,5.609l23.525-4.344c0.578,3.117,0.918,6.337,0.918,9.627 C309.062,285.308,285.308,309.071,256,309.071z"></path> </g> </g>
+    <div class="modal-view-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalView()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-view-header-text">
-          <h2>Detalhes do departamento</h2>
-          <span >Vizualize as informações do departamento abaixo.</span>
+        </button>
+      </div>
+
+      <div class="modal-view-header-container">
+        <div class="modal-view-header">
+          <div class="modal-view-header-icon">
+            <svg viewBox="0 0 24 24" width="35px" height="35px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.335 11.4069L22.2682 11.0474L21.335 11.4069ZM21.335 12.5932L20.4018 12.2337L21.335 12.5932ZM2.66492 11.4068L1.73175 11.0474L2.66492 11.4068ZM2.66492 12.5932L1.73175 12.9526L2.66492 12.5932ZM3.5981 11.7663C4.89784 8.39171 8.17084 6 12 6V4C7.31641 4 3.31889 6.92667 1.73175 11.0474L3.5981 11.7663ZM12 6C15.8291 6 19.1021 8.39172 20.4018 11.7663L22.2682 11.0474C20.681 6.92668 16.6835 4 12 4V6ZM20.4018 12.2337C19.1021 15.6083 15.8291 18 12 18V20C16.6835 20 20.681 17.0733 22.2682 12.9526L20.4018 12.2337ZM12 18C8.17084 18 4.89784 15.6083 3.5981 12.2337L1.73175 12.9526C3.31889 17.0733 7.31641 20 12 20V18ZM20.4018 11.7663C20.4597 11.9165 20.4597 12.0835 20.4018 12.2337L22.2682 12.9526C22.5043 12.3396 22.5043 11.6604 22.2682 11.0474L20.4018 11.7663ZM1.73175 11.0474C1.49567 11.6604 1.49567 12.3396 1.73175 12.9526L3.5981 12.2337C3.54022 12.0835 3.54022 11.9165 3.5981 11.7663L1.73175 11.0474Z" fill="#ffffff"></path> <circle cx="12" cy="12" r="3" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g>
+            </svg>
+          </div>
+          <div class="modal-view-header-text">
+            <h2>Detalhes do departamento</h2>
+            <span >Vizualize as informações do departamento abaixo.</span>
+          </div>
         </div>
       </div>
     </div>
@@ -447,30 +503,53 @@
     <div class="modal-body">
 
       <div class="info-row">
-        <span class="label">Nome do departamento</span>
-        <span class="value">{{departmentInfo()?.name}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 1024 1024" width="30px" height="30px" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M749.7 585.3l-164.6 91.4v182.9L749.7 951l164.6-91.4V676.7l-164.6-91.4z m91.4 231.2l-91.4 50.8-91.4-50.8v-96.8l91.4-50.8 91.4 50.8v96.8z" fill="#2270c3"></path><path d="M735.667582 801.904773a36.6 36.6 0 1 0 28.012427-67.627982 36.6 36.6 0 1 0-28.012427 67.627982Z" fill="#2270c3"></path><path d="M219.4 731.4H256v-73.1h-36.6V365.7H256v-73.1h-36.6V146.3h585v402.4h73.2V73.1H146.3v219.5h-36.6v73.1h36.6v292.6h-36.6v73.1h36.6v219.5h399.8v-73.2H219.4z" fill="#2270c3"></path><path d="M329.2 256h402.3v73.1H329.2zM329.2 438.9h402.3V512H329.2zM329.2 621.7h182.9v73.1H329.2z" fill="#2270c3"></path></g>
+          </svg>
+          <span class="label">Nome do departamento</span>
+        </div>
+        <span class="value">{{departmentInfo()?.name ?? '-'}}</span>
       </div>
 
       <div class="info-row">
-        <span class="label">Descrição</span>
-        <span class="value">{{departmentInfo()?.description}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 16 16" width="30px" height="30px" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2,3 L14,3 C14.5522847,3 15,3.44771525 15,4 C15,4.55228475 14.5522847,5 14,5 L2,5 C1.44771525,5 1,4.55228475 1,4 C1,3.44771525 1.44771525,3 2,3 Z" fill="#2574b1"></path> <path d="M2,7 L14,7 C14.5522847,7 15,7.44771525 15,8 C15,8.55228475 14.5522847,9 14,9 L2,9 C1.44771525,9 1,8.55228475 1,8 C1,7.44771525 1.44771525,7 2,7 Z" fill="#2574b1"></path> <path d="M1.88888889,11 L8.11111111,11 C8.60203089,11 9,11.4477153 9,12 C9,12.5522847 8.60203089,13 8.11111111,13 L1.88888889,13 C1.39796911,13 1,12.5522847 1,12 C1,11.4477153 1.39796911,11 1.88888889,11 Z" fill="#2574b1"></path> </g>
+          </svg>
+          <span class="label">Descrição</span>
+        </div>
+        <span class="value">{{departmentInfo()?.description ?? '-'}}</span>
       </div>
 
       <div class="info-row">
-        <span class="label">Serviços associados</span>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg fill="#3584c0" width="30px" height="30px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#3584c0"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M2,14H5V11H2Zm9,0h3V11H11ZM2,5H5V2H2Zm9-3V5h3V2ZM6.5,5h3V2h-3Zm0,9h3V11h-3ZM11,9.5h3v-3H11Zm-4.5,0h3v-3h-3ZM2,9.5H5v-3H2Z"></path> </g> </g>
+          </svg>
+          <span class="label">Serviços associados</span>
+        </div>
 
         <div class="departments-container">
           <span
             class="service-tag"
+            *ngIf="(departmentInfo()?.services?.length ?? 0) < 1"
+          >
+            -
+          </span>
+          <span
+            class="service-tag"
             *ngFor="let service of departmentInfo()?.services"
           >
-            {{ service }}
+            {{ service}}
           </span>
         </div>
       </div>
 
       <div class="info-row">
-        <span class="label">Status</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 24 24" width="30px" height="30px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2.45001 14.97C3.52001 18.41 6.40002 21.06 9.98002 21.79" stroke="#2364b3" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M2.04999 10.98C2.55999 5.93 6.81998 2 12 2C17.18 2 21.44 5.94 21.95 10.98" stroke="#2364b3" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14.01 21.8C17.58 21.07 20.45 18.45 21.54 15.02" stroke="#2364b3" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+          </svg>
+          <span class="label">Status</span>
+        </div>
 
         <div *ngIf="departmentInfo()?.active" style="display: flex; align-items: center;">
           <div class="td-status-active-view">
@@ -489,17 +568,26 @@
       </div>
 
       <div class="info-row">
-        <span class="label">Dia de criação</span>
-        <span class="value">{{departmentInfo()?.createdAt}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 20 20" width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="layer1"> <path d="M 9.1992188 0.00390625 L 8.5976562 0.0390625 L 7.9980469 0.10742188 L 7.9980469 1.1210938 L 8.5976562 1.0429688 L 9.1992188 1.0039062 L 9.8007812 1.0039062 L 10.402344 1.0429688 L 11 1.1210938 L 11 0.10742188 L 10.402344 0.0390625 L 9.8007812 0.00390625 L 9.1992188 0.00390625 z M 9.3457031 2.0019531 L 8.734375 2.0351562 L 8.125 2.1113281 L 7.5214844 2.2324219 L 6.9316406 2.3964844 L 6.3535156 2.6035156 L 5.7929688 2.8515625 L 5.2480469 3.1386719 L 4.7304688 3.4648438 L 4.234375 3.828125 L 3.765625 4.2246094 L 3.328125 4.6542969 L 2.9238281 5.1152344 L 2.5527344 5.6035156 L 2.2167969 6.1191406 L 1.9179688 6.6542969 L 1.6621094 7.2128906 L 1.4433594 7.7851562 L 1.2695312 8.3730469 L 1.1386719 8.9746094 L 1.0488281 9.5820312 L 1.0058594 10.193359 L 1.0058594 10.808594 L 1.0488281 11.417969 L 1.1386719 12.025391 L 1.2695312 12.626953 L 1.4433594 13.212891 L 1.6621094 13.787109 L 1.9179688 14.345703 L 2.2167969 14.880859 L 2.5527344 15.396484 L 2.9238281 15.884766 L 3.328125 16.345703 L 3.765625 16.775391 L 4.234375 17.171875 L 4.7304688 17.535156 L 5.2480469 17.861328 L 5.7929688 18.148438 L 6.3535156 18.394531 L 6.9316406 18.603516 L 7.5214844 18.765625 L 8.125 18.888672 L 8.734375 18.964844 L 9.3457031 18.998047 L 9.9609375 18.988281 L 10.572266 18.933594 L 11.175781 18.832031 L 11.773438 18.689453 L 12.357422 18.505859 L 12.927734 18.277344 L 13.480469 18.009766 L 14.011719 17.703125 L 14.521484 17.357422 L 15.001953 16.976562 L 15.455078 16.564453 L 15.876953 16.117188 L 16.265625 15.642578 L 16.619141 15.142578 L 16.9375 14.617188 L 17.212891 14.068359 L 17.451172 13.501953 L 17.646484 12.921875 L 17.800781 12.326172 L 17.910156 11.724609 L 17.976562 11.113281 L 18 10.5 L 17.976562 9.8867188 L 17.910156 9.2753906 L 17.800781 8.6738281 L 17.646484 8.078125 L 17.451172 7.4980469 L 17.212891 6.9316406 L 16.9375 6.3828125 L 16.619141 5.8574219 L 16.265625 5.3574219 L 15.876953 4.8808594 L 15.455078 4.4355469 L 15.001953 4.0214844 L 14.521484 3.6425781 L 14.011719 3.296875 L 13.480469 2.9902344 L 12.927734 2.7226562 L 12.357422 2.4960938 L 11.773438 2.3105469 L 11.175781 2.1679688 L 10.572266 2.0683594 L 9.9609375 2.0117188 L 9.3457031 2.0019531 z M 2.8164062 2.4023438 L 2.3164062 2.84375 L 1.84375 3.3164062 L 1.4003906 3.8164062 L 2.1113281 4.5273438 L 2.4375 4.1445312 L 2.7832031 3.7832031 L 3.1445312 3.4375 L 3.5253906 3.1132812 L 2.8164062 2.4023438 z M 16.183594 2.4023438 L 15.472656 3.1132812 L 15.853516 3.4375 L 16.216797 3.7832031 L 16.5625 4.1445312 L 16.884766 4.5273438 L 17.595703 3.8164062 L 17.15625 3.3164062 L 16.683594 2.84375 L 16.183594 2.4023438 z M 9.6445312 3.0019531 L 10.224609 3.0351562 L 10.800781 3.1152344 L 11.369141 3.2363281 L 11.927734 3.4042969 L 12.46875 3.6132812 L 12.996094 3.8632812 L 13.498047 4.1542969 L 13.978516 4.484375 L 14.431641 4.8496094 L 14.853516 5.2480469 L 15.244141 5.6796875 L 15.599609 6.1386719 L 15.919922 6.6230469 L 16.201172 7.1328125 L 16.441406 7.6621094 L 16.640625 8.2109375 L 16.798828 8.7714844 L 16.910156 9.3417969 L 16.976562 9.9199219 L 17 10.5 L 16.976562 11.080078 L 16.910156 11.658203 L 16.798828 12.228516 L 16.640625 12.789062 L 16.441406 13.335938 L 16.201172 13.865234 L 15.919922 14.375 L 15.599609 14.861328 L 15.244141 15.322266 L 14.853516 15.751953 L 14.431641 16.150391 L 13.978516 16.515625 L 13.498047 16.845703 L 12.996094 17.136719 L 12.46875 17.386719 L 11.927734 17.595703 L 11.369141 17.763672 L 10.800781 17.886719 L 10.224609 17.964844 L 9.6445312 17.998047 L 9.0644531 17.988281 L 8.484375 17.929688 L 7.9121094 17.828125 L 7.3496094 17.683594 L 6.7988281 17.496094 L 6.2636719 17.265625 L 5.75 16.996094 L 5.2578125 16.683594 L 4.7910156 16.337891 L 4.3535156 15.955078 L 3.9453125 15.539062 L 3.5722656 15.09375 L 3.234375 14.621094 L 2.9335938 14.123047 L 2.671875 13.603516 L 2.453125 13.064453 L 2.2753906 12.509766 L 2.140625 11.943359 L 2.0507812 11.369141 L 2.0058594 10.791016 L 2.0058594 10.208984 L 2.0507812 9.6289062 L 2.140625 9.0546875 L 2.2753906 8.4902344 L 2.453125 7.9355469 L 2.671875 7.3964844 L 2.9335938 6.8769531 L 3.234375 6.3789062 L 3.5722656 5.9042969 L 3.9453125 5.4609375 L 4.3535156 5.0449219 L 4.7910156 4.6621094 L 5.2578125 4.3144531 L 5.75 4.0039062 L 6.2636719 3.734375 L 6.7988281 3.5039062 L 7.3496094 3.3164062 L 7.9121094 3.1699219 L 8.484375 3.0703125 L 9.0644531 3.0117188 L 9.6445312 3.0019531 z M 8.9980469 4 L 8.9980469 11 L 9.9980469 11 L 9.9980469 4 L 8.9980469 4 z " style="fill:#2469b2; fill-opacity:1; stroke:none; stroke-width:0px;"></path> </g> </g>
+          </svg>
+          <span class="label">Data de criação</span>
+        </div>
+        <span class="value">{{departmentInfo()?.createdAt ?? '-'}}</span>
       </div>
 
       <div class="info-row" *ngIf="departmentInfo()?.updatedAt != null">
-        <span class="label">Última atualização</span>
-        <span class="value">{{departmentInfo()?.updatedAt}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 48 48" width="30px" height="30px" enable-background="new 0 0 48 48" id="Layer_4" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" stroke="#000000" stroke-width="0.00048000000000000007"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <polygon fill="#2873b8" points="25.916,8 25.916,23.359 32.992,30.434 30.164,33.262 21.9,25 21.916,24.982 21.916,8 "></polygon> <path d="M2.216,34.139H0v4.746h2.216c0.271,1.059,0.711,2.051,1.306,2.934l-1.521,1.522l2.693,2.691l1.544-1.543 c0.852,0.554,1.797,0.972,2.808,1.23v2.216h4.761V45.72c1.033-0.267,2.002-0.694,2.867-1.269l1.486,1.484l2.692-2.691l-1.485-1.484 c0.572-0.863,1-1.83,1.268-2.861h2.218v-4.776h-2.218c-0.262-1.007-0.677-1.951-1.23-2.8l1.448-1.449l-2.692-2.691l-1.426,1.424 c-0.879-0.59-1.865-1.028-2.918-1.301v-2.221h-4.78v2.221c-1.03,0.268-1.994,0.693-2.858,1.266l-1.483-1.485l-2.693,2.694 l1.484,1.484C2.909,32.131,2.481,33.104,2.216,34.139z M7.51,36.511c0-2.163,1.754-3.917,3.916-3.917 c2.164,0,3.918,1.754,3.918,3.917s-1.754,3.917-3.918,3.917C9.264,40.428,7.51,38.674,7.51,36.511z" fill="#2873b8"></path> <path d="M0.025,22.997v2.007C0.012,24.67,0,24.336,0,24S0.012,23.33,0.025,22.997z" fill="#2873b8"></path> <path d="M35.012,2.665C33.524,1.9,31.993,1.318,30.443,0.89c-0.074-0.021-0.149-0.04-0.225-0.06 c-0.362-0.096-0.726-0.186-1.091-0.264c-0.225-0.05-0.451-0.095-0.679-0.138c-0.199-0.037-0.399-0.071-0.599-0.103 c-0.354-0.058-0.71-0.109-1.069-0.151c-0.027-0.003-0.056-0.006-0.084-0.009C25.811,0.064,24.913,0,24,0 C11.11,0,0.598,10.162,0.027,22.911h4.028C4.624,12.375,13.322,4,24,4c0.416,0,0.828,0.013,1.236,0.039l0.007,0.021 c0.928,0.054,1.856,0.177,2.78,0.362c0.184,0.038,0.367,0.076,0.548,0.119c0.106,0.024,0.212,0.05,0.317,0.076 c1.484,0.379,2.902,0.922,4.235,1.609l0.021-0.021c0.012,0.006,0.024,0.011,0.036,0.018c4.233,2.179,7.354,5.662,9.136,9.704 l-0.026,0.026C43.382,18.415,44,21.132,44,24c0,11.046-8.954,20-20,20v4c9.3,0,17.358-5.293,21.343-13.027l0.028,0.015 C51.435,23.2,46.797,8.73,35.012,2.665z" fill="#2873b8"></path> </g> </g>
+          </svg>
+          <span class="label">Data de atualização</span>
+        </div>
+        <span class="value">{{departmentInfo()?.updatedAt ?? '-'}}</span>
       </div>
     </div>
 
-    <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
+    <div style="margin: 30px 30px; height: 1px; background-color: #e2e8f0;" ></div>
+    <div class="modal-view-footer">
       <button type="button" class="button-back" (click)="closeModalView()">Fechar</button>
     </div>
 
