@@ -1126,12 +1126,12 @@
 
 
 <!-- MODAL VIEW -->
-<div class="modal-view-container" *ngIf="!modalCustomerView" (click)="closeCustomerModalView()">
+<div class="modal-view-container" *ngIf="modalCustomerView" (click)="closeCustomerModalView()">
   <div class="modal-view" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': customerInfo()?.updatedAt != null}">
 
     <div class="modal-view-top">
       <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
-        <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalView()" >
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeCustomerModalView()" >
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -1238,7 +1238,7 @@
 
     <div class="modal-ticket-top">
       <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
-        <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalView()" >
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeTicketModal()" >
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -1261,7 +1261,7 @@
     </div>
 
     <div class="ticket-body">
-      <div>
+      <div style="margin: 0px 20px">
 
         <div class="info-row">
           <div style="display: flex; align-items: center; gap: 8px;">
@@ -1278,14 +1278,16 @@
           </svg>
             <span class="label">Prioridade</span>
           </div>
-          <span *ngIf="this.scheduleInfo()?.priority == null">-</span>
-          <span *ngIf="this.scheduleInfo()?.priority == 'NORMAL'" style="font-weight: bold;">Normal</span>
-          <span *ngIf="this.scheduleInfo()?.priority == 'PRIORITY'" style="font-weight: bold;">Prioridade</span>
+          <span class="value" *ngIf="this.scheduleInfo()?.priority == null">-</span>
+          <span class="value" *ngIf="this.scheduleInfo()?.priority == 'NORMAL'">Normal</span>
+          <span class="value" *ngIf="this.scheduleInfo()?.priority == 'PRIORITY'">Prioridade</span>
         </div>
 
-        <div class="ticket-print-line">
-          =================================================================================================================================
-        </div>
+
+      </div>
+
+      <div class="ticket-print-line">
+        =================================================================================================================================
       </div>
 
       <div class="modal-ticket-content">

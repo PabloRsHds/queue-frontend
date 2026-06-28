@@ -517,7 +517,8 @@
           </svg>
           <span class="label">Descrição</span>
         </div>
-        <span class="value">{{departmentInfo()?.description ?? '-'}}</span>
+        <span class="value" *ngIf="departmentInfo()?.description != null">{{departmentInfo()?.description}}</span>
+        <span class="value" *ngIf="departmentInfo()?.description == null">-</span>
       </div>
 
       <div class="info-row">
