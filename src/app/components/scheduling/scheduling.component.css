@@ -758,7 +758,6 @@ body {
   padding: 14px 30px;
   border: 1px solid #c5c5c5;
   border-radius: 10px;
-  margin-right: 5px;
   font-size: 0.9rem;
   color: #212a33;
   transition: all 0.2s;
@@ -1183,34 +1182,6 @@ body {
   pointer-events: auto;
 }
 
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  width: 480px;
-  max-width: 90vw;
-  max-height: 90vh;
-  overflow-y: auto;
-  transform: scale(0.95);
-  transition: transform 0.2s;
-}
-
-.modal-overlay.show .modal {
-  transform: scale(1);
-}
-
-.modal h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.modal p {
-  font-size: 14px;
-  color: #64748b;
-  margin-bottom: 24px;
-}
-
 /* Modal Register */
 .modal-register-container {
   position: fixed;
@@ -1611,12 +1582,13 @@ body {
   background: rgb(53 77 97 / 34%);
   z-index: 9999;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  overflow-y: auto;
 }
 
 .modal-view {
-  background: #fff;
+  background: #ffffff;
   border-radius: 10px;
   width: 600px;
 }
@@ -1711,8 +1683,7 @@ body {
 .modal-ticket {
   background: #fff;
   border-radius: 10px;
-  padding: 30px;
-  width: 500px;
+  width: 600px;
 }
 
 .modal-ticket-header-container {
@@ -1762,13 +1733,20 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 18px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   border: 1px solid #e2e8f0;
+  background-color: #cfe7ff34;
   border-radius: 10px;
 }
 
 .ticket-option:hover {
   background: #f8fafc;
+}
+
+.ticket-option-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .ticket-option-danger:hover {
@@ -1828,13 +1806,15 @@ body {
 
 .button-ticket-create {
   display: flex;
-  padding: 8px 5px;
+  padding: 8px 10px;
   border: 1px solid rgb(29, 97, 223);
-  background-color: #1178ffde;
+  background-color: #1B6BFC;
   font-size: 0.9rem;
   color: #f7f7f7;
+  font-weight: 500;
   border-radius: 5px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .button-ticket-create:hover {
@@ -1843,17 +1823,86 @@ body {
 
 .button-ticket-delete {
   display: flex;
-  padding: 8px 5px;
+  padding: 8px 10px;
   border: 1px solid rgb(167, 32, 45);
   background-color: #dc2626;
   font-size: 0.9rem;
   color: #f7f7f7;
   border-radius: 5px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .button-ticket-delete:hover {
   background-color: rgb(167, 32, 45);
+}
+
+.modal-ticket-top {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.modal-ticket-top ::after {
+  content: "";
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  border-radius: 100%;
+
+  background: rgba(178, 208, 253, 0.021);
+
+  top: -200px;
+  right: -200px;
+
+  pointer-events: none;
+}
+
+.modal-ticket-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 0px 30px 30px 30px;
+}
+
+.modal-ticket-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.modal-ticket-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.modal-ticket-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #126cbfe0;
+  padding: 15px;
+  border-radius: 999px;
+}
+
+.modal-ticket-content {
+  font-size: 1.2rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.modal-ticket-header span {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.ticket-body {
+  margin: 0px 30px
 }
 
 /*****/
@@ -1906,10 +1955,11 @@ body {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  z-index: 100;
 }
 
 .dept-modal-close:hover {
-  background: #e2e8f0;
+  background: #e9ebee;
   transform: rotate(90deg);
 }
 
@@ -1985,8 +2035,10 @@ body {
   color: #cbd5e1;
   font-family: monospace;
   letter-spacing: 1px;
-  margin: 20px 0 10px 0;
+  margin: 20px 0px;
   font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 /* Adicione mais informações se necessário */
@@ -2371,28 +2423,15 @@ body {
   }
 }
 
-/**/
-@media (max-height: 900px) {
-
-  .modal-register {
-    overflow-y: auto;
-    max-height: 95vh;
-  }
-}
-
-@media (max-height: 900px) and (max-width: 768px) {
-  .modal-register {
-    overflow-y: auto;
-    max-height: 100vh;
-  }
-}
 
 /* Mobile médio */
 @media (max-width: 900px) {
 
   .modal-register,
   .modal-update,
-  .modal-delete {
+  .modal-delete,
+  .modal-view,
+  .modal-ticket {
     width: 550px;
   }
 
@@ -2527,12 +2566,14 @@ body {
   .modal-register,
   .modal-update,
   .modal-delete,
-  .modal-view {
+  .modal-view,
+  .modal-ticket {
     width: 100%;
-    min-height: 100vh;
     border-radius: 0px;
+    max-height: 100vh;
     overflow-y: auto;
   }
+
   .modal-register-header-text span,
   .modal-update-header-text span,
   .modal-delete-header-text span,
@@ -2644,6 +2685,18 @@ body {
   .modal-body {
     margin: 0px 20px;
   }
+
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view,
+  .modal-ticket {
+    width: 100%;
+    border-radius: 0px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 /* Mobile extra pequeno */
@@ -2654,16 +2707,69 @@ body {
   .stats-grid {
     grid-template-columns: 1fr !important;
   }
-  .modal {
-    padding: 20px;
-    margin: 16px;
-  }
 
   .modal-register form,
   .modal-update form,
   .modal-delete form,
-  .modal-body {
+  .modal-body,
+  .ticket-body {
     margin: 0px 10px;
+  }
+
+  .modal-ticket-header-container {
+    padding: 30px 30px 30px 30px;
+  }
+
+  .ticket-option {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ticket-option-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ticket-option-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .ticket-option-info h5 {
+    margin-bottom: 0px;
+  }
+
+  .button-ticket-create {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  .button-ticket-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view,
+  .modal-ticket {
+    width: 100%;
+    border-radius: 0px;
+    min-height: 100vh;
+    overflow-y: auto;
   }
 }
 
