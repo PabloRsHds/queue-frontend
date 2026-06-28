@@ -1999,6 +1999,10 @@ body {
     flex-direction: column;
     justify-content: center;
   }
+
+  .modal-body {
+    margin: 0px 20px;
+  }
 }
 
 /* Mobile extra pequeno */
@@ -2015,7 +2019,9 @@ body {
   }
 
   .modal-register form,
-  .modal-update form {
+  .modal-update form,
+  .modal-delete form,
+  .modal-body {
     margin: 0px 10px;
   }
 }
