@@ -871,8 +871,7 @@ body {
 
 .modal-register-footer,
 .modal-update-footer,
-.modal-delete-footer,
-.modal-view-footer {
+.modal-delete-footer {
   display: flex;
   justify-content: end;
   gap: 5px;

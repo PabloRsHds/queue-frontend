@@ -641,7 +641,7 @@ export class SchedulingComponent implements OnInit {
   public getNamePriority(priority: string) {
     if (priority === 'NORMAL') return 'Normal';
     if (priority === 'PRIORITY') return 'Prioridade';
-    return '';
+    return '-';
   }
 
   public getDocumentForTableSchedule(cpf: string, rg: string, phone: string, email: string): string {
