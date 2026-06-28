@@ -833,28 +833,28 @@
 <div class="modal-register-container" *ngIf="modalCustomerRegister" (click)="closeCustomerModalRegister()">
   <div class="modal-register" onclick="event.stopPropagation()">
 
-    <div class="modal-register-header-container">
-      <div class="modal-register-header">
-        <div class="modal-register-header-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 16 16" fill="none">
-            <g fill="#0e90e6dc">
-            <path d="M6.834.33a2.25 2.25 0 012.332 0l5.25 3.182A2.25 2.25 0 0115.5 5.436V6A.75.75 0 0114 6v-.564a.75.75 0 00-.361-.642l-5.25-3.181a.75.75 0 00-.778 0l-5.25 3.181A.75.75 0 002 5.436v5.128a.75.75 0 00.361.642l4.028 2.44a.75.75 0 11-.778 1.283l-4.027-2.44A2.25 2.25 0 01.5 10.563V5.436a2.25 2.25 0 011.084-1.924L6.834.33z"/>
-            <path fill-rule="evenodd" d="M11.749 7.325l.001-.042v-.286a.75.75 0 00-1.5 0v.286l.001.042a3.73 3.73 0 00-1.318.546.76.76 0 00-.03-.03l-.201-.203a.75.75 0 00-1.06 1.06l.201.203.03.028c-.26.394-.45.84-.547 1.319a.878.878 0 00-.04-.001H7a.75.75 0 000 1.5h.286l.038-.001c.097.48.286.926.547 1.32a.71.71 0 00-.028.027l-.202.202a.75.75 0 001.06 1.06l.203-.202a.695.695 0 00.025-.026c.395.261.842.45 1.322.548l-.001.036v.286a.75.75 0 001.5 0v-.286-.036c.48-.097.926-.287 1.32-.548l.026.026.202.203a.75.75 0 001.06-1.061l-.201-.202a.667.667 0 00-.028-.026c.261-.395.45-.842.547-1.321H15a.75.75 0 000-1.5h-.286l-.04.002a3.734 3.734 0 00-.547-1.319l.03-.028.202-.202a.75.75 0 00-1.06-1.061l-.203.202-.029.03a3.73 3.73 0 00-1.318-.545zM11 8.75A2.247 2.247 0 008.75 11 2.247 2.247 0 0011 13.25 2.247 2.247 0 0013.25 11 2.247 2.247 0 0011 8.75z" clip-rule="evenodd"/>
-            </g>
+    <div class="modal-register-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeCustomerModalRegister()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-register-header-text">
-          <h2>Cadastrar cliente</h2>
-          <span >Preencha os campos abaixo para cadastrar um novo cliente.</span>
-        </div>
+        </button>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeCustomerModalRegister()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <div class="modal-register-header-container">
+        <div class="modal-register-header">
+          <div class="modal-register-header-icon">
+            <svg viewBox="0 0 32 32" version="1.1" width="30px" height="30px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>plus</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-362.000000, -1037.000000)" fill="#ffffff"> <path d="M390,1049 L382,1049 L382,1041 C382,1038.79 380.209,1037 378,1037 C375.791,1037 374,1038.79 374,1041 L374,1049 L366,1049 C363.791,1049 362,1050.79 362,1053 C362,1055.21 363.791,1057 366,1057 L374,1057 L374,1065 C374,1067.21 375.791,1069 378,1069 C380.209,1069 382,1067.21 382,1065 L382,1057 L390,1057 C392.209,1057 394,1055.21 394,1053 C394,1050.79 392.209,1049 390,1049" id="plus" sketch:type="MSShapeGroup"> </path> </g> </g> </g>
+            </svg>
+          </div>
+          <div class="modal-register-header-text">
+            <h2>Cadastrar cliente</h2>
+            <span>Preencha os campos abaixo para cadastrar um novo cliente.</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <form [formGroup]="registerCustomerForm" (ngSubmit)="registerCustomer()">
@@ -911,11 +911,30 @@
 
       <div class="separator"></div>
 
-      <div style="display: flex; justify-content: end; gap: 5px;">
-        <button type="submit" class="button-submit">Salvar</button>
-        <button type="button" class="button-back" (click)="closeCustomerModalRegister()">Voltar</button>
+      <div class="modal-register-footer">
+        <button type="submit" class="button-submit">
+          Salvar
+        </button>
+        <button type="button" class="button-back" (click)="closeCustomerModalRegister()">
+          Voltar
+        </button>
       </div>
     </form>
+
+    <div style="padding: 20px 30px;">
+      <div class="modal-register-info">
+        <div class="modal-register-info-1">
+          <svg viewBox="0 0 24 24" width="20px" height="20px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#0d682b" stroke-width="1.5"></circle> <path d="M12 17V11" stroke="#0d682b" stroke-width="1.5" stroke-linecap="round"></path> <circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)" fill="#0d682b"></circle> </g>
+          </svg>
+          <strong>Dica:</strong>
+        </div>
+
+        <div class="modal-register-info-2">
+          <span>Cadastre os documentos do cliente para facilitar o atendimento.</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -923,32 +942,30 @@
 <div class="modal-update-container" *ngIf="modalCustomerUpdate" (click)="closeCustomerModalUpdate()">
   <div class="modal-update" onclick="event.stopPropagation()">
 
-    <div class="modal-update-header-container">
-      <div class="modal-update-header">
-        <div class="modal-update-header-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 64 64" stroke-width="3" stroke="#419717" fill="none">
-            <polyline points="45.56 46.83 45.56 56.26 7.94 56.26 7.94 20.6 19.9 7.74 45.56 7.74 45.56 21.29"/>
-            <polyline points="19.92 7.74 19.9 20.6 7.94 20.6"/>
-            <line x1="13.09" y1="47.67" x2="31.1" y2="47.67"/>
-            <line x1="13.09" y1="41.14" x2="29.1" y2="41.14"/>
-            <line x1="13.09" y1="35.04" x2="33.1" y2="35.04"/>
-            <line x1="13.09" y1="28.94" x2="39.1" y2="28.94"/>
-            <path d="M34.45,43.23l.15,4.3a.49.49,0,0,0,.62.46l4.13-1.11a.54.54,0,0,0,.34-.23L57.76,22.21a1.23,1.23,0,0,0-.26-1.72l-3.14-2.34a1.22,1.22,0,0,0-1.72.26L34.57,42.84A.67.67,0,0,0,34.45,43.23Z"/>
-            <line x1="50.2" y1="21.7" x2="55.27" y2="25.57"/>
+    <div class="modal-update-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalUpdate()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-update-header-text">
-          <h2>Alterar cliente</h2>
-          <span >Altere as informações do cliente abaixo.</span>
-        </div>
+        </button>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeCustomerModalUpdate()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <div class="modal-update-header-container">
+        <div class="modal-update-header">
+          <div class="modal-update-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1213 2.70705C19.9497 1.53548 18.0503 1.53547 16.8787 2.70705L15.1989 4.38685L7.29289 12.2928C7.16473 12.421 7.07382 12.5816 7.02986 12.7574L6.02986 16.7574C5.94466 17.0982 6.04451 17.4587 6.29289 17.707C6.54127 17.9554 6.90176 18.0553 7.24254 17.9701L11.2425 16.9701C11.4184 16.9261 11.5789 16.8352 11.7071 16.707L19.5556 8.85857L21.2929 7.12126C22.4645 5.94969 22.4645 4.05019 21.2929 2.87862L21.1213 2.70705ZM18.2929 4.12126C18.6834 3.73074 19.3166 3.73074 19.7071 4.12126L19.8787 4.29283C20.2692 4.68336 20.2692 5.31653 19.8787 5.70705L18.8622 6.72357L17.3068 5.10738L18.2929 4.12126ZM15.8923 6.52185L17.4477 8.13804L10.4888 15.097L8.37437 15.6256L8.90296 13.5112L15.8923 6.52185ZM4 7.99994C4 7.44766 4.44772 6.99994 5 6.99994H10C10.5523 6.99994 11 6.55223 11 5.99994C11 5.44766 10.5523 4.99994 10 4.99994H5C3.34315 4.99994 2 6.34309 2 7.99994V18.9999C2 20.6568 3.34315 21.9999 5 21.9999H16C17.6569 21.9999 19 20.6568 19 18.9999V13.9999C19 13.4477 18.5523 12.9999 18 12.9999C17.4477 12.9999 17 13.4477 17 13.9999V18.9999C17 19.5522 16.5523 19.9999 16 19.9999H5C4.44772 19.9999 4 19.5522 4 18.9999V7.99994Z" fill="#ffffff"></path> </g>
+            </svg>
+          </div>
+          <div class="modal-update-header-text">
+            <h2>Alterar cliente</h2>
+            <span>Altere as informações do cliente abaixo.</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <form [formGroup]="updateCustomerForm" (ngSubmit)="updateCustomer()">
@@ -1005,11 +1022,26 @@
 
       <div class="separator"></div>
 
-      <div style="display: flex; justify-content: end; gap: 5px;">
-        <button type="submit" class="button-submit">Salvar</button>
+      <div class="modal-update-footer">
+        <button type="submit" class="button-update">Salvar Alterações</button>
         <button type="button" class="button-back" (click)="closeCustomerModalUpdate()">Voltar</button>
       </div>
     </form>
+
+    <div style="padding: 20px 30px;">
+      <div class="modal-update-info">
+        <div class="modal-update-info-1">
+          <svg viewBox="-0.5 0 25 25" fill="none" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 21.5C17.1086 21.5 21.25 17.3586 21.25 12.25C21.25 7.14137 17.1086 3 12 3C6.89137 3 2.75 7.14137 2.75 12.25C2.75 17.3586 6.89137 21.5 12 21.5Z" stroke="#EA8C00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.9309 8.15005C12.9256 8.39231 12.825 8.62272 12.6509 8.79123C12.4767 8.95974 12.2431 9.05271 12.0008 9.05002C11.8242 9.04413 11.6533 8.98641 11.5093 8.884C11.3652 8.7816 11.2546 8.63903 11.1911 8.47415C11.1275 8.30927 11.1139 8.12932 11.152 7.95675C11.19 7.78419 11.278 7.6267 11.405 7.50381C11.532 7.38093 11.6923 7.29814 11.866 7.26578C12.0397 7.23341 12.2192 7.25289 12.3819 7.32181C12.5446 7.39072 12.6834 7.506 12.781 7.65329C12.8787 7.80057 12.9308 7.97335 12.9309 8.15005ZM11.2909 16.5301V11.1501C11.2882 11.0556 11.3046 10.9615 11.3392 10.8736C11.3738 10.7857 11.4258 10.7057 11.4922 10.6385C11.5585 10.5712 11.6378 10.518 11.7252 10.4822C11.8126 10.4464 11.9064 10.4286 12.0008 10.43C12.094 10.4299 12.1863 10.4487 12.272 10.4853C12.3577 10.5218 12.4352 10.5753 12.4997 10.6426C12.5642 10.7099 12.6143 10.7895 12.6472 10.8767C12.6801 10.9639 12.6949 11.0569 12.6908 11.1501V16.5301C12.6908 16.622 12.6727 16.713 12.6376 16.7979C12.6024 16.8828 12.5508 16.96 12.4858 17.025C12.4208 17.09 12.3437 17.1415 12.2588 17.1767C12.1738 17.2119 12.0828 17.23 11.9909 17.23C11.899 17.23 11.8079 17.2119 11.723 17.1767C11.6381 17.1415 11.5609 17.09 11.4959 17.025C11.4309 16.96 11.3793 16.8828 11.3442 16.7979C11.309 16.713 11.2909 16.622 11.2909 16.5301Z" fill="#EA8C00"></path> </g>
+          </svg>
+          <strong>Dica:</strong>
+        </div>
+
+        <div class="modal-update-info-2">
+        <span>Qualquer alteração será aplicada imediamente.</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1017,41 +1049,78 @@
 <div class="modal-delete-container" *ngIf="modalCustomerDelete" (click)="closeCustomerModalDelete()">
   <div class="modal-delete" onclick="event.stopPropagation()">
 
-    <div class="modal-delete-header-container">
-      <div class="modal-delete-header">
-        <div class="modal-delete-header-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24" fill="none">
-            <path d="M20.5001 6H3.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M9.5 11L10 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M14.5 11L14 16" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#da1414" stroke-width="1.5"/>
-            <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#da1414" stroke-width="1.5" stroke-linecap="round"/>
+    <div class="modal-delete-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalDelete()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-delete-header-text">
-          <h2>Deletar cliente</h2>
-          <span>Delete o cliente escolhido abaixo.</span>
-        </div>
+        </button>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeCustomerModalDelete()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <div class="modal-delete-header-container">
+        <div class="modal-delete-header">
+          <div class="modal-delete-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" width="35px" height="35px" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+            </svg>
+          </div>
+          <div class="modal-delete-header-text">
+            <h2>Deletar cliente</h2>
+            <span>Delete o cliente escolhido abaixo.</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="modal-delete-content">
-      <p>Tem certeza que deseja deletar o cliente <strong>{{customerInfo()?.name}}</strong>?</p>
-      <p>Deleta-lo, apagará todos os seus agendamentos.</p>
+    <div style="margin: 0px 30px">
+      <div class="modal-delete-content">
+        <div class="modal-delete-top-info">
+          <div style="display: flex; align-items: center;">
+            <svg viewBox="-0.5 0 25 25" width="35px" height="35px" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 21.5C17.1086 21.5 21.25 17.3586 21.25 12.25C21.25 7.14137 17.1086 3 12 3C6.89137 3 2.75 7.14137 2.75 12.25C2.75 17.3586 6.89137 21.5 12 21.5Z" stroke="#ec1313" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.9309 8.15005C12.9256 8.39231 12.825 8.62272 12.6509 8.79123C12.4767 8.95974 12.2431 9.05271 12.0008 9.05002C11.8242 9.04413 11.6533 8.98641 11.5093 8.884C11.3652 8.7816 11.2546 8.63903 11.1911 8.47415C11.1275 8.30927 11.1139 8.12932 11.152 7.95675C11.19 7.78419 11.278 7.6267 11.405 7.50381C11.532 7.38093 11.6923 7.29814 11.866 7.26578C12.0397 7.23341 12.2192 7.25289 12.3819 7.32181C12.5446 7.39072 12.6834 7.506 12.781 7.65329C12.8787 7.80057 12.9308 7.97335 12.9309 8.15005ZM11.2909 16.5301V11.1501C11.2882 11.0556 11.3046 10.9615 11.3392 10.8736C11.3738 10.7857 11.4258 10.7057 11.4922 10.6385C11.5585 10.5712 11.6378 10.518 11.7252 10.4822C11.8126 10.4464 11.9064 10.4286 12.0008 10.43C12.094 10.4299 12.1863 10.4487 12.272 10.4853C12.3577 10.5218 12.4352 10.5753 12.4997 10.6426C12.5642 10.7099 12.6143 10.7895 12.6472 10.8767C12.6801 10.9639 12.6949 11.0569 12.6908 11.1501V16.5301C12.6908 16.622 12.6727 16.713 12.6376 16.7979C12.6024 16.8828 12.5508 16.96 12.4858 17.025C12.4208 17.09 12.3437 17.1415 12.2588 17.1767C12.1738 17.2119 12.0828 17.23 11.9909 17.23C11.899 17.23 11.8079 17.2119 11.723 17.1767C11.6381 17.1415 11.5609 17.09 11.4959 17.025C11.4309 16.96 11.3793 16.8828 11.3442 16.7979C11.309 16.713 11.2909 16.622 11.2909 16.5301Z" fill="#ec1313"></path> </g>
+            </svg>
+          </div>
+
+          <div class="modal-delete-top-info-text">
+            <p style="font-weight: bold; color: #c21010;">Tem certeza que deseja deletar o cliente?</p>
+            <p style=" color: #050614;">Todos os agendamentos relacionados a ele serão deletados.</p>
+          </div>
+        </div>
+
+        <div class="modal-delete-info">
+          <div class="modal-delete-info-name">
+            <strong>Nome do cliente:</strong> <p>{{ this.customerInfo()?.name ?? '-'}}</p>
+          </div>
+
+          <div class="modal-delete-info-status">
+            <strong>Data de cadastro:</strong> <p>{{ this.customerInfo()?.createdAt ?? '-'}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="separator"></div>
+      <div style="display: flex; justify-content: end; gap: 5px;">
+        <button type="button" class="button-delete" (click)="deleteCustomer(this.customerInfo()?.customerId ?? '')">Excluir</button>
+        <button type="button" class="button-back" (click)="closeCustomerModalDelete()">Cancelar</button>
+      </div>
     </div>
 
-    <div class="separator"></div>
-    <div style="display: flex; justify-content: end; gap: 5px;">
-      <button type="button" class="button-delete" (click)="deleteCustomer(this.customerInfo()?.customerId ?? '')">Excluir</button>
-      <button type="button" class="button-back" (click)="closeCustomerModalDelete()">Cancelar</button>
+    <div style="padding: 20px 30px;">
+      <div class="modal-delete-bottom-info">
+        <div class="modal-delete-bottom-info-1">
+          <svg viewBox="-0.5 0 25 25" width="20px" height="20px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 21.5C17.1086 21.5 21.25 17.3586 21.25 12.25C21.25 7.14137 17.1086 3 12 3C6.89137 3 2.75 7.14137 2.75 12.25C2.75 17.3586 6.89137 21.5 12 21.5Z" stroke="#ec1313" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.9309 8.15005C12.9256 8.39231 12.825 8.62272 12.6509 8.79123C12.4767 8.95974 12.2431 9.05271 12.0008 9.05002C11.8242 9.04413 11.6533 8.98641 11.5093 8.884C11.3652 8.7816 11.2546 8.63903 11.1911 8.47415C11.1275 8.30927 11.1139 8.12932 11.152 7.95675C11.19 7.78419 11.278 7.6267 11.405 7.50381C11.532 7.38093 11.6923 7.29814 11.866 7.26578C12.0397 7.23341 12.2192 7.25289 12.3819 7.32181C12.5446 7.39072 12.6834 7.506 12.781 7.65329C12.8787 7.80057 12.9308 7.97335 12.9309 8.15005ZM11.2909 16.5301V11.1501C11.2882 11.0556 11.3046 10.9615 11.3392 10.8736C11.3738 10.7857 11.4258 10.7057 11.4922 10.6385C11.5585 10.5712 11.6378 10.518 11.7252 10.4822C11.8126 10.4464 11.9064 10.4286 12.0008 10.43C12.094 10.4299 12.1863 10.4487 12.272 10.4853C12.3577 10.5218 12.4352 10.5753 12.4997 10.6426C12.5642 10.7099 12.6143 10.7895 12.6472 10.8767C12.6801 10.9639 12.6949 11.0569 12.6908 11.1501V16.5301C12.6908 16.622 12.6727 16.713 12.6376 16.7979C12.6024 16.8828 12.5508 16.96 12.4858 17.025C12.4208 17.09 12.3437 17.1415 12.2588 17.1767C12.1738 17.2119 12.0828 17.23 11.9909 17.23C11.899 17.23 11.8079 17.2119 11.723 17.1767C11.6381 17.1415 11.5609 17.09 11.4959 17.025C11.4309 16.96 11.3793 16.8828 11.3442 16.7979C11.309 16.713 11.2909 16.622 11.2909 16.5301Z" fill="#ec1313"></path> </g>
+          </svg>
+          <strong>Dica:</strong>
+        </div>
+
+        <div class="modal-delete-bottom-info-2">
+          <span>Esta ação não poderá ser desfeita.</span>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -1060,67 +1129,103 @@
 <div class="modal-view-container" *ngIf="modalCustomerView" (click)="closeCustomerModalView()">
   <div class="modal-view" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': customerInfo()?.updatedAt != null}">
 
-    <div class="modal-view-header-container">
-      <div class="modal-view-header">
-        <div class="modal-view-header-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#0957b1" width="40px" height="40px" viewBox="0 0 1920 1920">
-              <path d="M960 1489.82c-348.474 0-668.545-202.323-841.298-529.918C291.455 632.306 611.526 429.984 960 429.984s668.545 202.322 841.298 529.918C1628.545 1287.497 1308.474 1489.82 960 1489.82Zm948.342-553.552C1720.645 558.648 1357.332 324 960 324c-397.333 0-760.645 234.648-948.342 612.268L0 959.902l11.658 23.634c187.697 377.62 551.01 612.268 948.342 612.268 397.333 0 760.645-234.648 948.342-612.268L1920 959.902l-11.658-23.634ZM960 1171.869c-116.9 0-211.967-95.067-211.967-211.967 0-116.9 95.067-211.967 211.967-211.967 116.9 0 211.967 95.067 211.967 211.967 0 116.9-95.067 211.967-211.967 211.967m0-529.918c-175.297 0-317.951 142.654-317.951 317.951 0 175.297 142.654 317.95 317.951 317.95 175.297 0 317.951-142.653 317.951-317.95S1135.297 641.951 960 641.951" fill-rule="evenodd"/>
+    <div class="modal-view-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 0px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeScheduleModalView()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </div>
-        <div class="modal-view-header-text">
-          <h2>Detalhes do cliente</h2>
-          <span >Vizualize as informações do cliente abaixo.</span>
-        </div>
+        </button>
       </div>
 
-      <button class="dept-modal-close" aria-label="Fechar" (click)="closeCustomerModalView()">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <div class="modal-view-header-container">
+        <div class="modal-view-header">
+          <div class="modal-view-header-icon">
+            <svg viewBox="0 0 24 24" width="35px" height="35px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.335 11.4069L22.2682 11.0474L21.335 11.4069ZM21.335 12.5932L20.4018 12.2337L21.335 12.5932ZM2.66492 11.4068L1.73175 11.0474L2.66492 11.4068ZM2.66492 12.5932L1.73175 12.9526L2.66492 12.5932ZM3.5981 11.7663C4.89784 8.39171 8.17084 6 12 6V4C7.31641 4 3.31889 6.92667 1.73175 11.0474L3.5981 11.7663ZM12 6C15.8291 6 19.1021 8.39172 20.4018 11.7663L22.2682 11.0474C20.681 6.92668 16.6835 4 12 4V6ZM20.4018 12.2337C19.1021 15.6083 15.8291 18 12 18V20C16.6835 20 20.681 17.0733 22.2682 12.9526L20.4018 12.2337ZM12 18C8.17084 18 4.89784 15.6083 3.5981 12.2337L1.73175 12.9526C3.31889 17.0733 7.31641 20 12 20V18ZM20.4018 11.7663C20.4597 11.9165 20.4597 12.0835 20.4018 12.2337L22.2682 12.9526C22.5043 12.3396 22.5043 11.6604 22.2682 11.0474L20.4018 11.7663ZM1.73175 11.0474C1.49567 11.6604 1.49567 12.3396 1.73175 12.9526L3.5981 12.2337C3.54022 12.0835 3.54022 11.9165 3.5981 11.7663L1.73175 11.0474Z" fill="#ffffff"></path> <circle cx="12" cy="12" r="3" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g>
+            </svg>
+          </div>
+          <div class="modal-view-header-text">
+            <h2>Detalhes do cliente</h2>
+            <span>Vizualize as informações do cliente abaixo.</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Body -->
     <div class="modal-body">
 
       <div class="info-row">
-        <span class="label">Nome do cliente</span>
-        <span class="value">{{customerInfo()?.name}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg height="30px" width="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#327fc8;} </style> <g> <path class="st0" d="M194.651,414.476c16.23,0,61.349,0,61.349,0s45.111,0,61.35,0c16.222,0,23.587-23.603,14.198-40.285 c-7.072-12.572-18.659-26.826-37.516-34.921c-10.793,7.556-23.905,12-38.032,12c-14.143,0-27.238-4.444-38.032-12 c-18.864,8.095-30.444,22.349-37.523,34.921C171.064,390.873,178.421,414.476,194.651,414.476z"></path> <path class="st0" d="M256,335.476c27.714,0,50.167-22.444,50.167-50.159v-12.016c0-27.714-22.452-50.174-50.167-50.174 c-27.714,0-50.174,22.46-50.174,50.174v12.016C205.826,313.032,228.286,335.476,256,335.476z"></path> <path class="st0" d="M404.977,56.889h-75.834v16.254c0,31.365-25.524,56.889-56.889,56.889h-32.508 c-31.365,0-56.889-25.524-56.889-56.889V56.889h-75.833c-25.445,0-46.072,20.627-46.072,46.071v362.969 c0,25.444,20.627,46.071,46.072,46.071h297.952c25.444,0,46.071-20.627,46.071-46.071V102.96 C451.048,77.516,430.421,56.889,404.977,56.889z M402.286,463.238H109.714V150.349h292.572V463.238z"></path> <path class="st0" d="M239.746,113.778h32.508c22.406,0,40.635-18.23,40.635-40.635V40.635C312.889,18.23,294.659,0,272.254,0 h-32.508c-22.405,0-40.635,18.23-40.635,40.635v32.508C199.111,95.547,217.341,113.778,239.746,113.778z M231.619,40.635 c0-4.492,3.635-8.127,8.127-8.127h32.508c4.493,0,8.127,3.635,8.127,8.127v16.254c0,4.492-3.634,8.127-8.127,8.127h-32.508 c-4.492,0-8.127-3.635-8.127-8.127V40.635z"></path> </g> </g>
+          </svg>
+          <span class="label">Nome do cliente</span>
+        </div>
+
+        <span class="value">{{customerInfo()?.name ?? '-'}}</span>
       </div>
 
       <div class="info-row">
-        <span class="label">Cpf</span>
-        <span class="value">{{customerInfo()?.cpf}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="-0.5 0 25 25" width="30px" height="30px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.505 22H5.495C5.225 22 4.995 21.78 4.995 21.5V3.5C4.995 3.23 5.215 3 5.495 3H18.505C18.775 3 19.005 3.22 19.005 3.5V21.51C18.995 21.78 18.775 22 18.505 22Z" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.995 19H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 10H14.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 12H14.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 8H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 6H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 14H13.425" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+          </svg>
+          <span class="label">Cpf</span>
+        </div>
+        <span class="value">{{customerInfo()?.cpf ?? '-'}}</span>
       </div>
 
       <div class="info-row">
-        <span class="label">Rg</span>
-        <span class="value">{{customerInfo()?.rg}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="-0.5 0 25 25" width="30px" height="30px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.505 22H5.495C5.225 22 4.995 21.78 4.995 21.5V3.5C4.995 3.23 5.215 3 5.495 3H18.505C18.775 3 19.005 3.22 19.005 3.5V21.51C18.995 21.78 18.775 22 18.505 22Z" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.995 19H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 10H14.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 12H14.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 8H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 6H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 14H13.425" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+          </svg>
+          <span class="label">Rg</span>
+        </div>
+
+        <span class="value">{{customerInfo()?.rg ?? '-'}}</span>
       </div>
 
       <div class="info-row">
-        <span class="label">Phone</span>
-        <span class="value">{{customerInfo()?.phone}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="-0.5 0 25 25" width="30px" height="30px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.505 22H5.495C5.225 22 4.995 21.78 4.995 21.5V3.5C4.995 3.23 5.215 3 5.495 3H18.505C18.775 3 19.005 3.22 19.005 3.5V21.51C18.995 21.78 18.775 22 18.505 22Z" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.995 19H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 10H14.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 12H14.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 8H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 6H15.995" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7.995 14H13.425" stroke="#277eb4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+          </svg>
+          <span class="label">Phone</span>
+        </div>
+        <span class="value">{{customerInfo()?.phone ?? '-'}}</span>
       </div>
 
       <div class="info-row">
-        <span class="label">E-mail</span>
-        <span class="value">{{customerInfo()?.email}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 24 24" width="30px" height="30px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 5.25L3 6V18L3.75 18.75H20.25L21 18V6L20.25 5.25H3.75ZM4.5 7.6955V17.25H19.5V7.69525L11.9999 14.5136L4.5 7.6955ZM18.3099 6.75H5.68986L11.9999 12.4864L18.3099 6.75Z" fill="#2466bc"></path> </g>
+          </svg>
+          <span class="label">E-mail</span>
+        </div>
+        <span class="value">{{customerInfo()?.email ?? '-'}}</span>
       </div>
 
       <div class="info-row">
-        <span class="label">Dia de criação</span>
-        <span class="value">{{customerInfo()?.createdAt}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 20 20" width="30px" height="30px" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="layer1"> <path d="M 9.1992188 0.00390625 L 8.5976562 0.0390625 L 7.9980469 0.10742188 L 7.9980469 1.1210938 L 8.5976562 1.0429688 L 9.1992188 1.0039062 L 9.8007812 1.0039062 L 10.402344 1.0429688 L 11 1.1210938 L 11 0.10742188 L 10.402344 0.0390625 L 9.8007812 0.00390625 L 9.1992188 0.00390625 z M 9.3457031 2.0019531 L 8.734375 2.0351562 L 8.125 2.1113281 L 7.5214844 2.2324219 L 6.9316406 2.3964844 L 6.3535156 2.6035156 L 5.7929688 2.8515625 L 5.2480469 3.1386719 L 4.7304688 3.4648438 L 4.234375 3.828125 L 3.765625 4.2246094 L 3.328125 4.6542969 L 2.9238281 5.1152344 L 2.5527344 5.6035156 L 2.2167969 6.1191406 L 1.9179688 6.6542969 L 1.6621094 7.2128906 L 1.4433594 7.7851562 L 1.2695312 8.3730469 L 1.1386719 8.9746094 L 1.0488281 9.5820312 L 1.0058594 10.193359 L 1.0058594 10.808594 L 1.0488281 11.417969 L 1.1386719 12.025391 L 1.2695312 12.626953 L 1.4433594 13.212891 L 1.6621094 13.787109 L 1.9179688 14.345703 L 2.2167969 14.880859 L 2.5527344 15.396484 L 2.9238281 15.884766 L 3.328125 16.345703 L 3.765625 16.775391 L 4.234375 17.171875 L 4.7304688 17.535156 L 5.2480469 17.861328 L 5.7929688 18.148438 L 6.3535156 18.394531 L 6.9316406 18.603516 L 7.5214844 18.765625 L 8.125 18.888672 L 8.734375 18.964844 L 9.3457031 18.998047 L 9.9609375 18.988281 L 10.572266 18.933594 L 11.175781 18.832031 L 11.773438 18.689453 L 12.357422 18.505859 L 12.927734 18.277344 L 13.480469 18.009766 L 14.011719 17.703125 L 14.521484 17.357422 L 15.001953 16.976562 L 15.455078 16.564453 L 15.876953 16.117188 L 16.265625 15.642578 L 16.619141 15.142578 L 16.9375 14.617188 L 17.212891 14.068359 L 17.451172 13.501953 L 17.646484 12.921875 L 17.800781 12.326172 L 17.910156 11.724609 L 17.976562 11.113281 L 18 10.5 L 17.976562 9.8867188 L 17.910156 9.2753906 L 17.800781 8.6738281 L 17.646484 8.078125 L 17.451172 7.4980469 L 17.212891 6.9316406 L 16.9375 6.3828125 L 16.619141 5.8574219 L 16.265625 5.3574219 L 15.876953 4.8808594 L 15.455078 4.4355469 L 15.001953 4.0214844 L 14.521484 3.6425781 L 14.011719 3.296875 L 13.480469 2.9902344 L 12.927734 2.7226562 L 12.357422 2.4960938 L 11.773438 2.3105469 L 11.175781 2.1679688 L 10.572266 2.0683594 L 9.9609375 2.0117188 L 9.3457031 2.0019531 z M 2.8164062 2.4023438 L 2.3164062 2.84375 L 1.84375 3.3164062 L 1.4003906 3.8164062 L 2.1113281 4.5273438 L 2.4375 4.1445312 L 2.7832031 3.7832031 L 3.1445312 3.4375 L 3.5253906 3.1132812 L 2.8164062 2.4023438 z M 16.183594 2.4023438 L 15.472656 3.1132812 L 15.853516 3.4375 L 16.216797 3.7832031 L 16.5625 4.1445312 L 16.884766 4.5273438 L 17.595703 3.8164062 L 17.15625 3.3164062 L 16.683594 2.84375 L 16.183594 2.4023438 z M 9.6445312 3.0019531 L 10.224609 3.0351562 L 10.800781 3.1152344 L 11.369141 3.2363281 L 11.927734 3.4042969 L 12.46875 3.6132812 L 12.996094 3.8632812 L 13.498047 4.1542969 L 13.978516 4.484375 L 14.431641 4.8496094 L 14.853516 5.2480469 L 15.244141 5.6796875 L 15.599609 6.1386719 L 15.919922 6.6230469 L 16.201172 7.1328125 L 16.441406 7.6621094 L 16.640625 8.2109375 L 16.798828 8.7714844 L 16.910156 9.3417969 L 16.976562 9.9199219 L 17 10.5 L 16.976562 11.080078 L 16.910156 11.658203 L 16.798828 12.228516 L 16.640625 12.789062 L 16.441406 13.335938 L 16.201172 13.865234 L 15.919922 14.375 L 15.599609 14.861328 L 15.244141 15.322266 L 14.853516 15.751953 L 14.431641 16.150391 L 13.978516 16.515625 L 13.498047 16.845703 L 12.996094 17.136719 L 12.46875 17.386719 L 11.927734 17.595703 L 11.369141 17.763672 L 10.800781 17.886719 L 10.224609 17.964844 L 9.6445312 17.998047 L 9.0644531 17.988281 L 8.484375 17.929688 L 7.9121094 17.828125 L 7.3496094 17.683594 L 6.7988281 17.496094 L 6.2636719 17.265625 L 5.75 16.996094 L 5.2578125 16.683594 L 4.7910156 16.337891 L 4.3535156 15.955078 L 3.9453125 15.539062 L 3.5722656 15.09375 L 3.234375 14.621094 L 2.9335938 14.123047 L 2.671875 13.603516 L 2.453125 13.064453 L 2.2753906 12.509766 L 2.140625 11.943359 L 2.0507812 11.369141 L 2.0058594 10.791016 L 2.0058594 10.208984 L 2.0507812 9.6289062 L 2.140625 9.0546875 L 2.2753906 8.4902344 L 2.453125 7.9355469 L 2.671875 7.3964844 L 2.9335938 6.8769531 L 3.234375 6.3789062 L 3.5722656 5.9042969 L 3.9453125 5.4609375 L 4.3535156 5.0449219 L 4.7910156 4.6621094 L 5.2578125 4.3144531 L 5.75 4.0039062 L 6.2636719 3.734375 L 6.7988281 3.5039062 L 7.3496094 3.3164062 L 7.9121094 3.1699219 L 8.484375 3.0703125 L 9.0644531 3.0117188 L 9.6445312 3.0019531 z M 8.9980469 4 L 8.9980469 11 L 9.9980469 11 L 9.9980469 4 L 8.9980469 4 z " style="fill:#2469b2; fill-opacity:1; stroke:none; stroke-width:0px;"></path> </g> </g>
+          </svg>
+          <span class="label">Data do criação</span>
+        </div>
+
+        <span class="value">{{customerInfo()?.createdAt ?? '-'}}</span>
       </div>
 
       <div class="info-row" *ngIf="customerInfo()?.updatedAt != null">
-        <span class="label">Última atualização</span>
-        <span class="value">{{customerInfo()?.updatedAt}}</span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 48 48" width="30px" height="30px" enable-background="new 0 0 48 48" id="Layer_4" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" stroke="#000000" stroke-width="0.00048000000000000007"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <polygon fill="#2873b8" points="25.916,8 25.916,23.359 32.992,30.434 30.164,33.262 21.9,25 21.916,24.982 21.916,8 "></polygon> <path d="M2.216,34.139H0v4.746h2.216c0.271,1.059,0.711,2.051,1.306,2.934l-1.521,1.522l2.693,2.691l1.544-1.543 c0.852,0.554,1.797,0.972,2.808,1.23v2.216h4.761V45.72c1.033-0.267,2.002-0.694,2.867-1.269l1.486,1.484l2.692-2.691l-1.485-1.484 c0.572-0.863,1-1.83,1.268-2.861h2.218v-4.776h-2.218c-0.262-1.007-0.677-1.951-1.23-2.8l1.448-1.449l-2.692-2.691l-1.426,1.424 c-0.879-0.59-1.865-1.028-2.918-1.301v-2.221h-4.78v2.221c-1.03,0.268-1.994,0.693-2.858,1.266l-1.483-1.485l-2.693,2.694 l1.484,1.484C2.909,32.131,2.481,33.104,2.216,34.139z M7.51,36.511c0-2.163,1.754-3.917,3.916-3.917 c2.164,0,3.918,1.754,3.918,3.917s-1.754,3.917-3.918,3.917C9.264,40.428,7.51,38.674,7.51,36.511z" fill="#2873b8"></path> <path d="M0.025,22.997v2.007C0.012,24.67,0,24.336,0,24S0.012,23.33,0.025,22.997z" fill="#2873b8"></path> <path d="M35.012,2.665C33.524,1.9,31.993,1.318,30.443,0.89c-0.074-0.021-0.149-0.04-0.225-0.06 c-0.362-0.096-0.726-0.186-1.091-0.264c-0.225-0.05-0.451-0.095-0.679-0.138c-0.199-0.037-0.399-0.071-0.599-0.103 c-0.354-0.058-0.71-0.109-1.069-0.151c-0.027-0.003-0.056-0.006-0.084-0.009C25.811,0.064,24.913,0,24,0 C11.11,0,0.598,10.162,0.027,22.911h4.028C4.624,12.375,13.322,4,24,4c0.416,0,0.828,0.013,1.236,0.039l0.007,0.021 c0.928,0.054,1.856,0.177,2.78,0.362c0.184,0.038,0.367,0.076,0.548,0.119c0.106,0.024,0.212,0.05,0.317,0.076 c1.484,0.379,2.902,0.922,4.235,1.609l0.021-0.021c0.012,0.006,0.024,0.011,0.036,0.018c4.233,2.179,7.354,5.662,9.136,9.704 l-0.026,0.026C43.382,18.415,44,21.132,44,24c0,11.046-8.954,20-20,20v4c9.3,0,17.358-5.293,21.343-13.027l0.028,0.015 C51.435,23.2,46.797,8.73,35.012,2.665z" fill="#2873b8"></path> </g> </g>
+          </svg>
+          <span class="label">Data de atualização</span>
+        </div>
+
+        <span class="value">{{customerInfo()?.updatedAt ?? '-'}}</span>
       </div>
     </div>
 
-    <div style="display: flex; justify-content: end; gap: 5px; margin-top: 20px">
+    <div style="margin: 30px 30px; height: 1px; background-color: #e2e8f0;" ></div>
+    <div class="modal-view-footer">
       <button type="button" class="button-back" (click)="closeCustomerModalView()">Fechar</button>
     </div>
 
