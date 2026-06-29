@@ -1251,6 +1251,17 @@
   }
   .modal-footer .btn-cancel,
   .modal-footer .btn-primary { width: 100%; justify-content: center; }
+
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view {
+    width: 100%;
+    border-radius: 0px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 /* Modal Delete */
@@ -1697,6 +1708,17 @@
   .modal-title h2 {
     font-size: 18px;
   }
+
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view {
+    width: 100%;
+    border-radius: 0px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 /* Mobile extra pequeno */
@@ -1706,6 +1728,17 @@
   }
   .stats-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view {
+    width: 100%;
+    border-radius: 0px;
+    max-height: 100vh;
+    overflow-y: auto;
   }
 }
 
@@ -2670,7 +2703,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .review-header h3 {
       font-size: 16px;
   }

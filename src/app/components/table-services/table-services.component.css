@@ -1956,6 +1956,16 @@ body {
     gap: 0px;
   }
 
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view {
+    width: 100%;
+    border-radius: 0px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
 
 }
 
@@ -2002,6 +2012,17 @@ body {
   .modal-body {
     margin: 0px 20px;
   }
+
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view {
+    width: 100%;
+    border-radius: 0px;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 /* Mobile extra pequeno */
@@ -2022,6 +2043,17 @@ body {
   .modal-delete form,
   .modal-body {
     margin: 0px 10px;
+  }
+
+  /* Modais responsivos */
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view {
+    width: 100%;
+    border-radius: 0px;
+    max-height: 100vh;
+    overflow-y: auto;
   }
 }
 

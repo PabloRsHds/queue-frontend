@@ -326,8 +326,6 @@ export class SchedulingComponent implements OnInit {
         });
         this.ticketState.resetStatus();
         this.modalTicket = false;
-        this.modalTicketPrinting = true;
-        this.printTicket();
       }
 
       if (this.ticketState.deleteStatus() === 'error') {
@@ -369,6 +367,7 @@ export class SchedulingComponent implements OnInit {
   public openScheduleModalDelete(scheduleId: string) {
     this.schedulingState.getScheduleById(scheduleId);
     this.modalSchedulingDelete = true;
+    this.closeDropDown();
   }
 
   public closeScheduleModalDelete() {
@@ -409,6 +408,7 @@ export class SchedulingComponent implements OnInit {
   public openCustomerModalDelete(customerId: string) {
     this.modalCustomerDelete = true;
     this.customerState.getInfoCustomer(customerId);
+    this.closeDropDown();
   }
 
   public closeCustomerModalDelete() {
@@ -429,6 +429,7 @@ export class SchedulingComponent implements OnInit {
   public openTicketModal(scheduleId: string) {
     this.modalTicket = true;
     this.schedulingState.getScheduleById(scheduleId);
+    this.closeDropDown();
   }
 
   public closeTicketModal() {
