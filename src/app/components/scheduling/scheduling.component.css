@@ -537,7 +537,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2e89d415;
+  background: #0084ff2a;
   color: #64748b;
   font-size: 1.3rem;
   font-weight: 700;
@@ -550,7 +550,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ccf0ff;
+  background: #0084ff2a;
   color: #64748b;
   font-size: 1.3rem;
   font-weight: 700;
@@ -619,12 +619,12 @@ body {
 
 .button-department-update:hover {
   color: #f7f7f7;
-  background: #99c5ff1e;
-  border: 1px solid #348ad1be;
+  background: #ea8c000e;
+  border: 1px solid #ea8c00cb;
 }
 
 .button-department-update span {
-  color: #046af0e7;
+  color: #EA8C00;
 }
 
 .button-department-delete {
@@ -647,6 +647,7 @@ body {
 
 .button-department-delete:hover {
   background-color: rgba(255, 99, 71, 0.089);
+  border: 1px solid #eb3414be;
 }
 
 .button-department-ticket {
@@ -664,11 +665,12 @@ body {
 }
 
 .button-department-ticket span {
-  color: #bd8b01;
+  color: #0162bd;
 }
 
 .button-department-ticket:hover {
-  background-color: rgba(255, 221, 71, 0.192);
+  border: 1px solid #0162bdbe;
+  background-color: rgba(71, 157, 255, 0.089);
 }
 
 
