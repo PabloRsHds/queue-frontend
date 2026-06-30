@@ -310,6 +310,10 @@
 
 @media (max-width: 480px) {
   .login-form-side { padding: 0px 3%;; }
+
+  form {
+    padding: 40px 30px;
+  }
 }
 
 .fade-in { animation: fadeInUp 0.5s ease-out; }

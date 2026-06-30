@@ -1,7 +1,15 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './page/home/home.component';
+import { LoginComponent } from './page/login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
 
-  {path:'', pathMatch:'full', redirectTo:'login'},
-  {path:'login', loadChildren: () => import('./router/router/router-routing.module').then(m => m.RouterRoutingModule)}
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+  { path: 'login', component: LoginComponent,  },
+
+  { path: 'home', component: HomeComponent },
+
+  { path: '**', redirectTo: 'login' }
 ];

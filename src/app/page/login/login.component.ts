@@ -51,7 +51,7 @@ export class LoginComponent {
           panelClass: ['snackbar-success']
         });
 
-        this.router.navigate(['/login/home']);
+        this.router.navigate(['/home']);
 
         this.loginState.resetStatus();
       }

@@ -50,11 +50,40 @@ export class HomeComponent {
   public userId = localStorage.getItem('accessToken');
   public dialog: boolean = false;
 
+  // Auth
+  public admin:boolean = false;
+  public manager:boolean = false;
+  public reception:boolean = false;
+  public attendant:boolean = false;
+  
   ngOnInit(){
     this.userState.getUserByToken();
     this.departmentState.loadStatistics();
     this.ServiceManagementState.loadStatistics();
     this.userState.loadStatistics();
+  }
+
+  constructor() {
+
+    effect(() => {
+
+      if (this.userLogged()?.role === 'ADMIN') {
+        this.admin = true;
+      }
+
+      if (this.userLogged()?.role === 'MANAGER') {
+        this.manager = true;
+      }
+
+      if (this.userLogged()?.role === 'RECEPTION') {
+        this.reception = true;
+      }
+
+      if (this.userLogged()?.role === 'ATTENDENT') {
+        this.attendant = true;
+      }
+
+    })
   }
 
   // Methods
@@ -102,7 +131,7 @@ export class HomeComponent {
       case 'MANAGER': return 'Gerente';
       case 'ATTENDANT': return 'Atendente';
       case 'RECEPTION': return 'Recepcionista';
-      default: return 'Gerente';
+      default: return 'Administrador';
     }
   }
 
@@ -117,5 +146,10 @@ export class HomeComponent {
       { duration: 3000, panelClass: ['snackbar-success'] },
     );
     this.router.navigate(['/login']);
+  }
+
+  authorization() {
+
+
   }
 }
