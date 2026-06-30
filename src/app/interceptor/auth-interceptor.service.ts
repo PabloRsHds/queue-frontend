@@ -92,5 +92,5 @@ function isTokenExpired(token: string): boolean {
 function logout(router: Router) {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-  router.navigate(['my-bank.com.br/login']);
+  router.navigate(['/login']);
 }

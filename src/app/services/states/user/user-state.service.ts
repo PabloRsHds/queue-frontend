@@ -17,6 +17,7 @@ export class UserStateService {
 
   // Signals
   public users = signal<ResponseAllUsersDto[]>([]);
+  public userLogged = signal<ResponseUserInfoDto | null>(null);
   public userInfo = signal<ResponseUserInfoDto | null>(null);
 
   public statistics = signal<ResponseUserStatisticsDto | null>(null);
@@ -120,6 +121,15 @@ export class UserStateService {
     this.http.getUserById(userId).subscribe({
       next: (response) => {
         this.userInfo.set(response);
+      }
+    })
+  }
+
+  // Get user by token
+  getUserByToken() {
+    this.http.getUserByToken().subscribe({
+      next: (response) => {
+        this.userLogged.set(response);
       }
     })
   }

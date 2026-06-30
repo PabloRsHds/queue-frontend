@@ -1202,6 +1202,7 @@ body {
   background: #ffffff;
   border-radius: 10px;
   width: 600px;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-register-top {
@@ -1315,6 +1316,7 @@ body {
   background: #ffffff;
   border-radius: 10px;
   width: 600px;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-update-top {
@@ -1438,6 +1440,7 @@ body {
   background: #fff;
   border-radius: 10px;
   width: 600px;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-delete-header-container {
@@ -1593,6 +1596,7 @@ body {
   background: #ffffff;
   border-radius: 10px;
   width: 600px;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-view-top {
@@ -1686,6 +1690,7 @@ body {
   background: #fff;
   border-radius: 10px;
   width: 600px;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-ticket-header-container {
@@ -2781,4 +2786,16 @@ body {
 
 .backdrop {
   background: rgb(255, 255, 255);
+}
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

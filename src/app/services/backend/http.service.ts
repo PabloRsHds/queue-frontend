@@ -1,6 +1,6 @@
 import { ResponseScheduleStatisticsDto } from './../../dtos/schedule/ResponseScheduleStatisticsDto';
 import { PageResponse } from '../../dtos/page/PageResponse';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ResponseServiceManagementDto } from '../../dtos/services/ResponseServiceManagementDto';
@@ -132,6 +132,13 @@ export class HttpService {
 
   public getUserById(userId: string): Observable<ResponseUserInfoDto> {
     return this.http.get<ResponseUserInfoDto>(`${this.API_URL}/users/${userId}`);
+  }
+
+  public getUserByToken(): Observable<ResponseUserInfoDto> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    });
+    return this.http.get<ResponseUserInfoDto>(`${this.API_URL}/users/token`, {headers});
   }
 
   public getUserStatistics(): Observable<ResponseUserStatisticsDto> {

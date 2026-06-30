@@ -928,6 +928,7 @@
   border-radius: 10px;
   padding: 30px;
   width: 550px;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-register-header-container {
@@ -1006,6 +1007,7 @@
   border-radius: 10px;
   width: 700px;
   overflow-y: auto;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-update.attendent {
@@ -1310,6 +1312,7 @@
   background: #fff;
   border-radius: 10px;
   width: 600px;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-delete-header-container {
@@ -1475,6 +1478,7 @@
   width: 600px;
   max-height: 90vh;
   overflow-y: auto;
+  animation: modalShow 220ms ease-out;
 }
 
 .modal-view-top {
@@ -3327,4 +3331,17 @@
   position: absolute;
   opacity: 0;
   pointer-events: none;
+}
+
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

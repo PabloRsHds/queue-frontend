@@ -366,14 +366,15 @@ app-config {
 }
 
 .user-info strong {
-  font-size: 13px;
+  font-size: 14px;
+  margin-bottom: 3px;
   color: #0f172a;
   font-weight: 600;
 }
 
 .user-info span {
   font-size: 11px;
-  color: #94a3b8;
+  color: #6b6b6b;
 }
 
 .user-profile .chevron {
@@ -858,6 +859,93 @@ app-config {
   z-index: 99;
 }
 
+/* Dialog */
+
+.dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog-menu {
+  position: absolute;
+  top: 55px;
+  right: 40px;
+  width: 200px;
+  background: #fff;
+  border: 1px solid #b9b9b9b4;
+  border-radius: 5px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-menu-item {
+  padding: 6px 8px;
+}
+
+.dialog-menu-item span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.btn-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  padding: 8px 8px;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: #a7c2f770;
+  border-radius: 5px;
+}
+
+.btn-logout span {
+  font-weight: 600;
+  color: #0b101b;
+}
+
+.separator {
+  height: 1px;
+  background: #e2e8f0;
+  width: 100%;
+  margin: 15px 0px 5px 0px;
+  cursor: default;
+}
+
+.dept-modal-close {
+  border: 1px solid #c2c2c29a;
+  background-color: white;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dept-modal-close:hover {
+  background: rgba(18, 30, 48, 0.055);
+  border: 1px solid #c2c2c2b0;
+}
+
+.dept-modal-close svg {
+  width: 20px;
+  height: 20px;
+  stroke: #0c1016;
+}
+
 /* ============================================
   RESPONSIVE - TABLET (max-width: 1200px)
   ============================================ */
@@ -931,10 +1019,6 @@ app-config {
   }
 
   .search-box {
-      display: none;
-  }
-
-  .user-info {
       display: none;
   }
 
@@ -1026,14 +1110,26 @@ app-config {
   .tip-illustration {
       order: -1;
   }
+
+  .dialog-menu {
+    position: static;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+
+  .dept-modal-close {
+    display: flex;
+  }
 }
 
 /* ============================================
   RESPONSIVE - SMALL MOBILE (max-width: 480px)
   ============================================ */
-@media (max-width: 480px) {
+@media (max-width: 479px) {
   .stats-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 8px;
   }
 
