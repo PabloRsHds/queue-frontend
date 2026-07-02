@@ -10,16 +10,17 @@
     </div>
 
     <ul class="nav-menu">
-      <li class="nav-item active">
-        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+
+      <li class="nav-item" [class.active]="this.navItem === 'profile'" (click)="navItemChange('profile')">
+        <svg viewBox="0 0 24 24" width="20px" height="20px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#2575c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
         </svg>
         <div class="nav-content">
           <div class="nav-label">Dados do perfil</div>
           <div class="nav-description">Suas informações pessoais</div>
         </div>
       </li>
-      <li class="nav-item">
+
+      <li class="nav-item" [class.active]="this.navItem === 'security'" (click)="navItemChange('security')">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
         </svg>
@@ -29,7 +30,7 @@
         </div>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item" [class.active]="this.navItem === 'integrations'" (click)="navItemChange('integrations')">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
         </svg>
@@ -40,113 +41,172 @@
       </li>
     </ul>
 
-    <button class="btn-change-password">
-      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-      </svg>
-      Alterar senha
-    </button>
   </aside>
 
   <!-- Main Content -->
-  <main class="main-content">
-    <div class="content-header">
-      <div>
-        <h1 class="content-title">Dados do perfil</h1>
-        <p class="content-subtitle">Gerencie suas informações pessoais e de contato.</p>
-      </div>
-    </div>
+  <form [formGroup]="profileForm" >
 
-    <!-- Personal Information -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#2575c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
-          </svg>
-        </div>
-        <h2 class="section-title">Informações pessoais</h2>
-      </div>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">Nome completo <span class="required">*</span></label>
-          <input type="text" class="form-input" value="Admin">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">E-mail <span class="required">*</span></label>
-          <input type="email" class="form-input" value="admin@torrecia.com.br">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Telefone</label>
-          <input type="tel" class="form-input" value="(11) 99999-9999">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Departamento <span class="required">*</span></label>
-          <select class="form-select">
-            <option>Administrativo</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Cargo / Função</label>
-          <input type="text" class="form-input" value="Administrador">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Perfil de acesso <span class="required">*</span></label>
-          <select class="form-select">
-            <option>Administrador</option>
-          </select>
+    <main class="main-content" *ngIf="this.navItem === 'profile'">
+      <div class="content-header">
+        <div>
+          <h1 class="content-title">Dados do perfil</h1>
+          <p class="content-subtitle">Gerencie suas informações pessoais e de contato.</p>
         </div>
       </div>
-    </div>
 
-    <!-- Photo and Status -->
-    <div class="column">
-
+      <!-- Personal Information -->
       <div class="section">
         <div class="section-header">
           <div class="section-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#2575c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
             </svg>
           </div>
-          <h2 class="section-title">Status da conta</h2>
+          <h2 class="section-title">Informações pessoais</h2>
         </div>
 
-        <div class="status-list">
-          <div class="status-item">
-            <span class="status-label">Status</span>
-            <span class="status-badge">Ativo</span>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Nome </label>
+            <input type="text" class="form-input" formControlName="name" readonly>
           </div>
-          <div class="status-item">
-            <span class="status-label">Último acesso</span>
-            <span class="status-value">24/05/2025 às 10:24</span>
+
+          <div class="form-group">
+            <label class="form-label">E-mail </label>
+            <input type="email" class="form-input" formControlName="email" readonly>
           </div>
-          <div class="status-item">
-            <span class="status-label">Conta criada em</span>
-            <span class="status-value">12/03/2024 às 08:15</span>
+
+          <div class="form-group">
+            <label class="form-label">Telefone <span class="required">*</span></label>
+            <input type="tel" class="form-input" formControlName="phone" placeholder="(00) 00000-0000">
           </div>
-          <div class="status-item">
-            <span class="status-label">Última alteração</span>
-            <span class="status-value">20/05/2025 às 16:42</span>
+
+          <div class="form-group">
+            <label class="form-label">Perfil de acesso</label>
+            <input type="text" class="form-input" formControlName="role" readonly>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Photo and Status -->
+      <div class="column">
+
+        <div class="section">
+          <div class="section-header">
+            <div class="section-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <h2 class="section-title">Status da conta</h2>
+          </div>
+
+          <div class="status-list">
+            <div class="status-item">
+              <span class="status-label">Status</span>
+              <span class="status-badge" *ngIf="this.userLogged()?.active">Ativo</span>
+              <span class="status-inactive" *ngIf="!this.userLogged()?.active">Inativo</span>
+            </div>
+
+            <div class="status-item">
+              <span class="status-label">Conta criada em</span>
+              <span class="status-value">{{ this.userLogged()?.createdAt?.replace(' ', ' às ') ?? '-' }}</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Última alteração</span>
+              <span class="status-value">{{ this.userLogged()?.updatedAt?.replace(' ', ' às ') ?? '-'}}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Action Buttons -->
-    <div class="action-buttons">
-      <button class="btn btn-secondary">Cancelar</button>
-      <button class="btn btn-primary">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
-        </svg>
-        Salvar alterações
-      </button>
-    </div>
-  </main>
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+        <button type="submit" class="btn btn-primary">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+          </svg>
+          Salvar alterações
+        </button>
+      </div>
+    </main>
+
+
+    <main class="main-content" *ngIf="this.navItem === 'security'">
+      <div class="content-header">
+        <div>
+          <h1 class="content-title">Dados do segurança</h1>
+          <p class="content-subtitle">Gerencie suas informações de segurança</p>
+        </div>
+      </div>
+
+      <!-- Personal Information -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h2 class="section-title">Informações de segurança</h2>
+        </div>
+
+        <div class="card-password">
+
+          <div class="body-card-password">
+
+            <div class="body-card-left">
+              <svg viewBox="0 0 24 24" width="35px" height="35px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.17157 5.17157C2 6.34315 2 8.22876 2 12C2 15.7712 2 17.6569 3.17157 18.8284C4.34315 20 6.22876 20 10 20H14C17.7712 20 19.6569 20 20.8284 18.8284C22 17.6569 22 15.7712 22 12C22 8.22876 22 6.34315 20.8284 5.17157C19.6569 4 17.7712 4 14 4H10C6.22876 4 4.34315 4 3.17157 5.17157ZM8 13C8.55228 13 9 12.5523 9 12C9 11.4477 8.55228 11 8 11C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13ZM13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12ZM16 13C16.5523 13 17 12.5523 17 12C17 11.4477 16.5523 11 16 11C15.4477 11 15 11.4477 15 12C15 12.5523 15.4477 13 16 13Z" fill="#1d77d7"></path> </g>
+              </svg>
+              <div>
+                <p>Password</p>
+                <span>Configuração</span>
+              </div>
+            </div>
+
+            <div>
+              <button type="button" class="btn-password" [class.active]="showPassword" (click)="showPassword = !showPassword">
+                Alterar
+              </button>
+            </div>
+
+          </div>
+
+          <div class="inputs-password-container" *ngIf="showPassword">
+
+            <div class="form-group">
+              <label class="form-label">Senha antiga </label>
+              <input type="password" class="form-input" placeholder="************">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nova senha </label>
+              <input type="password" class="form-input" placeholder="************">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Confirmar senha </label>
+              <input type="password" class="form-input" placeholder="************">
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+        <button type="submit" class="btn btn-primary">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+          </svg>
+          Salvar alterações
+        </button>
+      </div>
+
+    </main>
+
+  </form>
 </div>
