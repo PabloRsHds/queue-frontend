@@ -1814,7 +1814,7 @@ body {
   .dept-table .td-name {
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: row-reverse;
   }
   .dept-table .td-name-container {
     gap: 20px;
