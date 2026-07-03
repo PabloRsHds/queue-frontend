@@ -1,57 +1,33 @@
 <!-- RELATÓRIOS PAGE -->
-<div id="page-relatorios" class="fade-in" style="padding:24px 32px;">
-  <!-- Header -->
-  <div style="margin-bottom:24px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div style="width:40px;height:40px;background:#ede9fe;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-      </div>
-      <div>
-        <h1 style="font-size:20px;font-weight:700;color:#1e293b;">Relatórios</h1>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#64748b;margin-top:2px;">
-          <a href="#" onclick="navigateTo('dashboard')" style="color:#64748b;text-decoration:none;">Início</a>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          <span style="color:#1e293b;font-weight:500;">Relatórios</span>
-        </div>
-      </div>
-    </div>
-    <button class="btn-export" onclick="exportReport()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Exportar
-    </button>
-  </div>
+<div class="fade-in" >
 
-  <div style="display:grid;grid-template-columns:220px 1fr;gap:20px;">
+  <div class="section-container">
     <!-- Left Nav -->
     <div class="section-card" style="align-self:start;position:sticky;top:88px;">
       <div class="report-nav" style="padding:8px;">
-        <a class="active" onclick="switchReportTab(this)">
+        <a [class.active]="this.navItem === 'General'" (click)="navItemChange('General')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
           Visão geral
         </a>
-        <a onclick="switchReportTab(this)">
+        <a [class.active]="this.navItem === 'Customer Service'" (click)="navItemChange('Customer Service')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Atendimentos
         </a>
-        <a onclick="switchReportTab(this)">
+        <a [class.active]="this.navItem === 'Desing'" (click)="navItemChange('Desing')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           Desempenho
         </a>
-        <a onclick="switchReportTab(this)">
+        <a [class.active]="this.navItem === 'Queue'" (click)="navItemChange('Queue')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           Fila de espera
         </a>
-        <a onclick="switchReportTab(this)">
+        <a [class.active]="this.navItem === 'Services'" (click)="navItemChange('Services')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           Serviços
         </a>
-        <a onclick="switchReportTab(this)">
+        <a [class.active]="this.navItem === 'Users'" (click)="navItemChange('Users')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           Usuários
-        </a>
-        <a onclick="switchReportTab(this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Exportações
         </a>
       </div>
     </div>

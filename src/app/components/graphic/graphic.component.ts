@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class GraphicComponent {
 
+  public navItem:string = 'General';
+
+  public navItemChange(item: string) {
+    this.navItem = item;
+  }
 }
