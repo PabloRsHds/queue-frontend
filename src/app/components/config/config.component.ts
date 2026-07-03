@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UserStateService } from '../../services/states/user/user-state.service';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angul
   templateUrl: './config.component.html',
   styleUrl: './config.component.css'
 })
-export class ConfigComponent {
+export class ConfigComponent implements OnInit {
 
   // Injections
   public fb = inject(FormBuilder);
@@ -24,6 +24,10 @@ export class ConfigComponent {
   // Form
   public profileForm!: FormGroup;
 
+  ngOnInit(): void {
+    this.userState.getUserByToken();
+  }
+
   constructor() {
 
     const user = this.userLogged();
@@ -33,9 +37,9 @@ export class ConfigComponent {
       email: [user?.email],
       phone: [user?.phone],
       role: [this.getRoleDisplayName(user?.role ?? '')],
+      counterNumber: [user?.counterNumber],
     });
   }
-
 
   public getRoleDisplayName(role: string): string {
     switch (role) {

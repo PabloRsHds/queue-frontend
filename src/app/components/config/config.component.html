@@ -136,7 +136,7 @@
     <main class="main-content" *ngIf="this.navItem === 'security'">
       <div class="content-header">
         <div>
-          <h1 class="content-title">Dados do segurança</h1>
+          <h1 class="content-title">Segurança</h1>
           <p class="content-subtitle">Gerencie suas informações de segurança</p>
         </div>
       </div>
@@ -206,6 +206,59 @@
         </button>
       </div>
 
+    </main>
+
+    <main class="main-content" *ngIf="this.navItem === 'integrations'">
+
+      <div class="content-header">
+        <div>
+          <h1 class="content-title">Integrações</h1>
+          <p class="content-subtitle">Visualize suas integrações</p>
+        </div>
+      </div>
+
+      <div class="section" *ngIf="(this.userLogged()?.counterNumber ?? 0) > 0">
+        <div class="section-header">
+          <div class="section-icon">
+            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#3687d3;} </style> <g> <path class="st0" d="M464,0H48C21.492,0,0,21.492,0,48v416c0,26.508,21.492,48,48,48h416c26.508,0,48-21.492,48-48V48 C512,21.492,490.508,0,464,0z M444.664,35c10.492,0,19,8.508,19,19s-8.508,19-19,19s-19-8.508-19-19S434.172,35,444.664,35z M374.164,35c10.492,0,19,8.508,19,19s-8.508,19-19,19s-19-8.508-19-19S363.672,35,374.164,35z M303.664,35 c10.492,0,19,8.508,19,19s-8.508,19-19,19s-19-8.508-19-19S293.172,35,303.664,35z M472,464c0,4.406-3.586,8-8,8H48 c-4.414,0-8-3.594-8-8V104h432V464z"></path> <rect x="112" y="192" class="st0" width="288" height="32"></rect> <rect x="112" y="272" class="st0" width="288" height="32"></rect> <rect x="112" y="352" class="st0" width="152" height="32"></rect> </g> </g>
+            </svg>
+          </div>
+          <h2 class="section-title">Guichê</h2>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Número do guichê </label>
+            <input type="number" class="form-input" formControlName="counterNumber" readonly>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="#2784be"> <path d="M6.834.33a2.25 2.25 0 012.332 0l5.25 3.182A2.25 2.25 0 0115.5 5.436V6A.75.75 0 0114 6v-.564a.75.75 0 00-.361-.642l-5.25-3.181a.75.75 0 00-.778 0l-5.25 3.181A.75.75 0 002 5.436v5.128a.75.75 0 00.361.642l4.028 2.44a.75.75 0 11-.778 1.283l-4.027-2.44A2.25 2.25 0 01.5 10.563V5.436a2.25 2.25 0 011.084-1.924L6.834.33z"></path> <path fill-rule="evenodd" d="M11.749 7.325l.001-.042v-.286a.75.75 0 00-1.5 0v.286l.001.042a3.73 3.73 0 00-1.318.546.76.76 0 00-.03-.03l-.201-.203a.75.75 0 00-1.06 1.06l.201.203.03.028c-.26.394-.45.84-.547 1.319a.878.878 0 00-.04-.001H7a.75.75 0 000 1.5h.286l.038-.001c.097.48.286.926.547 1.32a.71.71 0 00-.028.027l-.202.202a.75.75 0 001.06 1.06l.203-.202a.695.695 0 00.025-.026c.395.261.842.45 1.322.548l-.001.036v.286a.75.75 0 001.5 0v-.286-.036c.48-.097.926-.287 1.32-.548l.026.026.202.203a.75.75 0 001.06-1.061l-.201-.202a.667.667 0 00-.028-.026c.261-.395.45-.842.547-1.321H15a.75.75 0 000-1.5h-.286l-.04.002a3.734 3.734 0 00-.547-1.319l.03-.028.202-.202a.75.75 0 00-1.06-1.061l-.203.202-.029.03a3.73 3.73 0 00-1.318-.545zM11 8.75A2.247 2.247 0 008.75 11 2.247 2.247 0 0011 13.25 2.247 2.247 0 0013.25 11 2.247 2.247 0 0011 8.75z" clip-rule="evenodd"></path> </g> </g>
+            </svg>
+          </div>
+          <h2 class="section-title">Serviços</h2>
+        </div>
+
+        <div style="display: grid; gap: 20px;">
+
+          <div class="review-grid">
+            <div class="review-field full-width">
+              <div class="review-field-label">Serviços vinculados</div>
+              <div class="review-tags">
+                <span class="review-tag green" *ngFor="let serviceName of userLogged()?.serviceNames">
+                  {{ serviceName || '-' }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </main>
 
   </form>
