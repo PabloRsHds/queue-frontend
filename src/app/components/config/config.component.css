@@ -751,3 +751,10 @@ body {
 }
 
 .review-tag.green { background: #dcfce7; color: #16a34a; }
+
+.review-not-services {
+
+  padding: 30px 15px;
+  background: aliceblue;
+  border-radius: 10px; 
+}
