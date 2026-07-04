@@ -91,7 +91,7 @@ body {
 
 .nav-item.active {
   background: #eff6ff;
-  color: #3b82f6;
+  color: #3B82F6;
 }
 
 .nav-icon {
@@ -116,7 +116,7 @@ body {
 }
 
 .nav-item.active .nav-description {
-  color: #3b82f6;
+  color: #1957bb;
 }
 
 .btn-change-password {
@@ -636,9 +636,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .profile-container {
-    padding: 16px;
-  }
 
   .main-content {
     padding: 20px;
@@ -671,9 +668,6 @@ body {
 }
 
 @media (max-width: 480px) {
-  .profile-container {
-    padding: 12px;
-  }
 
   .main-content {
     padding: 16px;
@@ -756,5 +750,5 @@ body {
 
   padding: 30px 15px;
   background: aliceblue;
-  border-radius: 10px; 
+  border-radius: 10px;
 }
