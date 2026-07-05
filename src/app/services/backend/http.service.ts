@@ -36,6 +36,7 @@ import { ResponseTicketsForAttendanceDto } from '../../dtos/attendance/ResponseT
 import { ResponseTokensDto } from '../../dtos/login/ResponseTokensDto';
 import { LoginDto } from '../../dtos/login/LoginDto';
 import { TokensDto } from '../../dtos/login/TokensDto';
+import { ResponseDepartmentDashBoardDto } from '../../dtos/department/statistics/ResponseDepartmentDashBoardDto';
 
 @Injectable({
   providedIn: 'root'
@@ -75,8 +76,8 @@ export class HttpService {
     return this.http.get<ResponseGetDepartmentDto[]>(`${this.API_URL}/departments/names`);
   }
 
-  public getDepartmentStatistics(): Observable<ResponseStatisticsDto> {
-    return this.http.get<ResponseStatisticsDto>(`${this.API_URL}/departments/statistics`);
+  public getDepartmentStatistics(): Observable<ResponseDepartmentDashBoardDto> {
+    return this.http.get<ResponseDepartmentDashBoardDto>(`${this.API_URL}/departments/statistics`);
   }
 
   // Services
@@ -224,7 +225,7 @@ export class HttpService {
   }
 
   public refreshTokens(tokens: TokensDto): Observable<ResponseTokensDto> {
-    return this.http.post<ResponseTokensDto>(`${this.API_URL}/refresh-tokens`, tokens).pipe(
+    return this.http.post<ResponseTokensDto>(`${this.API_URL}/login/refresh-tokens`, tokens).pipe(
 
       catchError((err: HttpErrorResponse) => {
 

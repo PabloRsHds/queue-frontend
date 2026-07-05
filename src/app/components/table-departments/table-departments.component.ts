@@ -22,7 +22,8 @@ export class TableDepartmentsComponent implements OnInit {
   public departments = this.departmentState.departments;
   public departmentInfo = this.departmentState.departmentInfo;
 
-  public statistics = this.departmentState.statistics;
+  public totalDepartments = this.departmentState.countTotalDepartment;
+  public percentageByDepartment = this.departmentState.getPercentagesByDepartment;
 
   public page = this.departmentState.page;
   public totalPages = this.departmentState.totalPages;

@@ -39,7 +39,7 @@ export class HomeComponent {
   public userLogged = this.userState.userLogged;
   public activeSection = this.globalState.activeSection;
   public activeFunction = this.globalState.activeFunction;
-  public totalDepartments = this.departmentState.statistics;
+  public totalDepartments = this.departmentState.countTotalDepartment;
   public totalServices = this.ServiceManagementState.statistics;
   public totalUsers = this.userState.statistics;
   public scheduleStatistics = this.scheduleState.scheduleStatistics

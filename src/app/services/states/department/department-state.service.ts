@@ -7,7 +7,9 @@ import { ResponseDepartmentDto } from '../../../dtos/department/ResponseDepartme
 import { CreateDepartmentDto } from '../../../dtos/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../../../dtos/department/UpdateDepartmentDto';
 import { ResponseDepartmentNamesDto } from '../../../dtos/department/ResponseDepartmentNamesDto';
-import { ResponseStatisticsDto } from '../../../dtos/statistics/ResponseStatisticsDto';
+import { ResponseCountTotalDepartmentsStatisticsDto } from '../../../dtos/department/statistics/ResponseCountTotalDepartmentsStatisticsDto';
+import { ResponseCountServicesByDepartmentsStatisticsDto } from '../../../dtos/department/statistics/ResponseCountServicesByDepartmentsStatisticsDto';
+import { ResponseDepartmentPercentagesStatisticsDto } from '../../../dtos/department/statistics/ResponseDepartmentPercentagesStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,11 @@ export class DepartmentStateService {
   public departments = signal<ResponseDepartmentDto[]>([]);
   public departmentInfo = signal<ResponseGetDepartmentDto | null>(null);
   public departmentNames = signal<ResponseDepartmentNamesDto[] | null>(null);
-  public statistics = signal<ResponseStatisticsDto | null>(null);
+
+  // Statistics
+  public countServicesByDepartment  = signal<ResponseCountServicesByDepartmentsStatisticsDto[] | null>(null);
+  public countTotalDepartment = signal<ResponseCountTotalDepartmentsStatisticsDto | null>(null);
+  public getPercentagesByDepartment = signal<ResponseDepartmentPercentagesStatisticsDto | null>(null);
 
 
   // Modal
@@ -87,7 +93,9 @@ export class DepartmentStateService {
 
     this.http.getDepartmentStatistics().subscribe({
       next: (response) => {
-        this.statistics.set(response);
+        this.countServicesByDepartment.set(response.countServicesByDepartments);
+        this.countTotalDepartment.set(response.countTotalDepartmentsStatistics);
+        this.getPercentagesByDepartment.set(response.departmentPercentagesStatistics);
       }
     })
   }

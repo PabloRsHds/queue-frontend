@@ -597,14 +597,14 @@ body {
 }
 
 .btn-primary {
-  background: #3b82f6;
-  border: 1px solid #3b82f6;
-  color: white;
+  background: #EA8C00;
+  border: 1px solid #c97d0b;
+  color: rgb(255, 255, 255);
 }
 
 .btn-primary:hover {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: #c97d0b;
+  border-color: #c97d0b;
 }
 
 .btn-primary svg {
