@@ -5,7 +5,9 @@ import { Injectable, signal } from '@angular/core';
 })
 export class GlobalStatesService {
 
-  public activeSection = signal<string>('inicio');
+  public activeSectionValue = localStorage.getItem('activeSection');
+
+  public activeSection = signal<string>(this.activeSectionValue || 'inicio');
   public activeFunction = signal<string>('');
   public openModalTableService = signal<boolean>(false);
 

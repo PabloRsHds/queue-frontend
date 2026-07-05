@@ -59,6 +59,7 @@ export class HomeComponent {
 
   // Methods
   setActive(section: string) {
+    localStorage.setItem('activeSection', section);
     this.activeSection.set(section);
 
     if (window.innerWidth <= 768) {
