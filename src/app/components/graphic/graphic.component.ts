@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { UserStateService } from '../../services/states/user/user-state.service';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
 import { ApexAxisChartSeries, ApexChart,ApexXAxis, ApexDataLabels, ApexPlotOptions} from "ng-apexcharts";
+import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
+
 import { ChartComponent } from 'ng-apexcharts';
 
 
@@ -27,6 +29,7 @@ export class GraphicComponent {
   // Injections
   public userState = inject(UserStateService);
   public departmentState = inject(DepartmentStateService);
+  public serviceState = inject(ServiceManagementService);
 
   // States
   public userLogged = this.userState.userLogged;
@@ -36,6 +39,9 @@ export class GraphicComponent {
   public percentageByDepartment = this.departmentState.getPercentagesByDepartment;
   public countServicesByDepartment = this.departmentState.countServicesByDepartment;
   public departmentsCreatedByMonth = this.departmentState.departmentsCreatedByMonth;
+
+  // Service statistics
+  public statistics = this.serviceState.statistics;
 
   ngOnInit(): void {
     this.departmentState.loadStatistics();
