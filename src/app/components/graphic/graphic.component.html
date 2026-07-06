@@ -122,6 +122,26 @@
           </div>
 
         </div>
+
+        <div class="section-card">
+
+          <div style="padding:20px;border-bottom:1px solid #e2e8f0;">
+            <h3 style="font-size:14px;font-weight:700;color:#1e293b;">Departamentos criados por mês</h3>
+          </div>
+
+          <apx-chart
+            *ngIf="chartOptions"
+            [series]="chartOptions.series"
+
+            [chart]="chartOptions.chart"
+
+            [xaxis]="chartOptions.xaxis"
+
+            [dataLabels]="chartOptions.dataLabels">
+
+          </apx-chart>
+        </div>
+
       </div>
 
     </div>

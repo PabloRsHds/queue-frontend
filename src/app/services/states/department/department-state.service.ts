@@ -10,6 +10,7 @@ import { ResponseDepartmentNamesDto } from '../../../dtos/department/ResponseDep
 import { ResponseCountTotalDepartmentsStatisticsDto } from '../../../dtos/department/statistics/ResponseCountTotalDepartmentsStatisticsDto';
 import { ResponseCountServicesByDepartmentsStatisticsDto } from '../../../dtos/department/statistics/ResponseCountServicesByDepartmentsStatisticsDto';
 import { ResponseDepartmentPercentagesStatisticsDto } from '../../../dtos/department/statistics/ResponseDepartmentPercentagesStatisticsDto';
+import { ResponseDepartmentsCreatedByMonthStatisticsDto } from '../../../dtos/department/statistics/ResponseDepartmentsCreatedByMonthStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +28,10 @@ export class DepartmentStateService {
   public departmentNames = signal<ResponseDepartmentNamesDto[] | null>(null);
 
   // Statistics
-  public countServicesByDepartment  = signal<ResponseCountServicesByDepartmentsStatisticsDto[] | null>(null);
+  public countServicesByDepartment  = signal<ResponseCountServicesByDepartmentsStatisticsDto[] | null>([]);
   public countTotalDepartment = signal<ResponseCountTotalDepartmentsStatisticsDto | null>(null);
   public getPercentagesByDepartment = signal<ResponseDepartmentPercentagesStatisticsDto | null>(null);
+  public departmentsCreatedByMonth = signal<ResponseDepartmentsCreatedByMonthStatisticsDto[] | null>([]);
 
 
   // Modal
@@ -96,6 +98,7 @@ export class DepartmentStateService {
         this.countServicesByDepartment.set(response.countServicesByDepartments);
         this.countTotalDepartment.set(response.countTotalDepartmentsStatistics);
         this.getPercentagesByDepartment.set(response.departmentPercentagesStatistics);
+        this.departmentsCreatedByMonth.set(response.departmentsCreatedByMonthStatistics);
       }
     })
   }
