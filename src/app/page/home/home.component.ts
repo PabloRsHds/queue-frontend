@@ -40,7 +40,7 @@ export class HomeComponent {
   public activeSection = this.globalState.activeSection;
   public activeFunction = this.globalState.activeFunction;
   public totalDepartments = this.departmentState.countTotalDepartment;
-  public totalServices = this.ServiceManagementState.statistics;
+  public totalServices = this.ServiceManagementState.countTotalServicesStatistics;
   public totalUsers = this.userState.statistics;
   public scheduleStatistics = this.scheduleState.scheduleStatistics
   public attendentStatistics = this.attendentState.statistics

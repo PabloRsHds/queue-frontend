@@ -41,7 +41,8 @@ export class GraphicComponent {
   public departmentsCreatedByMonth = this.departmentState.departmentsCreatedByMonth;
 
   // Service statistics
-  public statistics = this.serviceState.statistics;
+  public totalServices = this.serviceState.countTotalServicesStatistics;
+  public percentage = this.serviceState.servicePercentagesStatistics;
 
   ngOnInit(): void {
     this.departmentState.loadStatistics();

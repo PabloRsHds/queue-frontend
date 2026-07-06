@@ -4,8 +4,14 @@ import { CreateServiceManagementDto } from '../../../dtos/services/CreateService
 import { ResponseServiceManagementDto } from '../../../dtos/services/ResponseServiceManagementDto';
 import { UpdateServiceManagementDto } from '../../../dtos/services/UpdateServiceManagementDto';
 import { ResponseGetServiceByIdDto } from '../../../dtos/services/ResponseGetServiceByIdDto';
-import { ResponseStatisticsDto } from '../../../dtos/statistics/ResponseStatisticsDto';
 import { ResponseServiceNamesAndDepartments } from '../../../dtos/services/ResponseServiceNamesAndDepartments';
+import { ResponseCountTotalServicesStatisticsDto } from '../../../dtos/services/statistics/ResponseCountTotalServicesStatisticsDto';
+import { ResponseSchedulesByServiceStatisticsDto } from '../../../dtos/services/statistics/ResponseSchedulesByServiceStatisticsDto';
+import { ResponseServicePercentagesStatisticsDto } from '../../../dtos/services/statistics/ResponseServicePercentagesStatisticsDto';
+import { ResponseServicesByDepartmentStatisticsDto } from '../../../dtos/services/statistics/ResponseServicesByDepartmentStatisticsDto';
+import { ResponseServicesCreatedByMonthStatisticsDto } from '../../../dtos/services/statistics/ResponseServicesCreatedByMonthStatisticsDto';
+import { ResponseTicketsByServiceStatisticsDto } from '../../../dtos/services/statistics/ResponseTicketsByServiceStatisticsDto';
+import { ResponseUsersByServiceStatisticsDto } from '../../../dtos/services/statistics/ResponseUsersByServiceStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +36,6 @@ export class ServiceManagementService {
   public deleteMessage = signal('');
 
   public serviceInfo = signal<ResponseGetServiceByIdDto | null>(null);
-  public statistics = signal<ResponseStatisticsDto | null>(null);
 
   // ===== PAGINATION =====
   public page = signal<number>(0);
@@ -42,6 +47,15 @@ export class ServiceManagementService {
 
   // ===== MODAL =====
   public modalRegister = signal<Boolean>(false);
+
+  // Statistics
+  public countTotalServicesStatistics = signal<ResponseCountTotalServicesStatisticsDto | null>(null);
+  public servicePercentagesStatistics = signal<ResponseServicePercentagesStatisticsDto | null>(null);
+  public servicesCreatedByMonth = signal<ResponseServicesCreatedByMonthStatisticsDto[] | null>([]);
+  public servicesByDepartment = signal<ResponseServicesByDepartmentStatisticsDto[] | null>([]);
+  public usersByService = signal<ResponseUsersByServiceStatisticsDto[] | null>([]);
+  public schedulesByService = signal<ResponseSchedulesByServiceStatisticsDto[] | null>([]);
+  public ticketsByService = signal<ResponseTicketsByServiceStatisticsDto[] | null>([]);
 
   // ===== Register =======
   registerServiceManagenent(request : CreateServiceManagementDto) {
@@ -135,7 +149,14 @@ export class ServiceManagementService {
 
     this.http.getServiceStatistics().subscribe({
       next: (response) => {
-        this.statistics.set(response);
+
+        this.countTotalServicesStatistics.set(response.countTotalServicesStatistics);
+        this.servicePercentagesStatistics.set(response.servicePercentagesStatistics);
+        this.servicesCreatedByMonth.set(response.servicesCreatedByMonth);
+        this.servicesByDepartment.set(response.servicesByDepartment);
+        this.usersByService.set(response.usersByService);
+        this.schedulesByService.set(response.schedulesByService);
+        this.ticketsByService.set(response.ticketsByService);
       }
     })
   }

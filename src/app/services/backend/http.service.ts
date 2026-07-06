@@ -37,15 +37,16 @@ import { ResponseTokensDto } from '../../dtos/login/ResponseTokensDto';
 import { LoginDto } from '../../dtos/login/LoginDto';
 import { TokensDto } from '../../dtos/login/TokensDto';
 import { ResponseDepartmentDashBoardDto } from '../../dtos/department/statistics/ResponseDepartmentDashBoardDto';
+import { ResponseServiceDashBoardDto } from '../../dtos/services/statistics/ResponseServiceDashBoardDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private readonly API_URL = 'http://192.168.25.107:8080';
+  //private readonly API_URL = 'http://192.168.25.107:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
-  //private readonly API_URL = 'http://192.168.1.2:8080';
+  private readonly API_URL = 'http://192.168.1.2:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -109,8 +110,8 @@ export class HttpService {
     );
   }
 
-  public getServiceStatistics(): Observable<ResponseStatisticsDto> {
-    return this.http.get<ResponseStatisticsDto>(`${this.API_URL}/services/statistics`);
+  public getServiceStatistics(): Observable<ResponseServiceDashBoardDto> {
+    return this.http.get<ResponseServiceDashBoardDto>(`${this.API_URL}/services/statistics`);
   }
 
   // Users

@@ -34,7 +34,10 @@ export class TableServicesComponent implements OnInit{
   public page = this.serviceState.page;
   public totalPages = this.serviceState.totalPages;
   public totalElements = this.serviceState.totalElements;
-  public statistics = this.serviceState.statistics;
+
+  // Metrics
+  public totalServices = this.serviceState.countTotalServicesStatistics;
+  public percentage = this.serviceState.servicePercentagesStatistics;
 
    // Form update
   public updateForm!: FormGroup;

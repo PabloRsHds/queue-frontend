@@ -10,7 +10,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ statistics()?.totalElements ?? 0 }}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalServices()?.totalElements ?? 0 }}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Serviços Cadastrados</div>
         </div>
       </div>
@@ -23,9 +23,9 @@
             <div style="font-size:12px;color:#64748b;">Ativos</div>
           </div>
           <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-            {{ statistics()?.totalElementsActive ?? 0 }}
+            {{ totalServices()?.totalElementsActive ?? 0 }}
           </div>
-          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageActive ?? 0 }}% do total</div>
+          <div style="font-size:11px;color:#6c6e72;">{{ percentage()?.percentageActive ?? 0 }}% do total</div>
         </div>
       </div>
     </div>
@@ -37,9 +37,9 @@
             <div style="font-size:12px;color:#64748b;">Inativos</div>
           </div>
           <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-            {{ statistics()?.totalElementsInactive ?? 0}}
+            {{ totalServices()?.totalElementsInactive ?? 0}}
           </div>
-          <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageInactive ?? 0}}% do total</div>
+          <div style="font-size:11px;color:#6c6e72;">{{ percentage()?.percentageInactive ?? 0}}% do total</div>
         </div>
       </div>
     </div>

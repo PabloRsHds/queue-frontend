@@ -40,7 +40,7 @@
           </svg>
           Clientes
         </a>
-        
+
       </div>
     </div>
 
@@ -128,13 +128,13 @@
           </div>
 
           <div *ngIf="(this.totalDepartments()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
-            
+
             <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
               <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
               </svg>
               <span style="font-size: 14px; color: #64748b;">Nenhum departamento foi criado ainda.</span>
             </div>
-            
+
           </div>
 
         </div>
@@ -158,13 +158,13 @@
           </apx-chart>
 
           <div *ngIf="(this.totalDepartments()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
-            
+
             <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
               <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
               </svg>
               <span style="font-size: 14px; color: #64748b;">Nenhum departamento foi criado ainda.</span>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -182,12 +182,12 @@
               </svg>
             </div>
             <div>
-              <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ statistics()?.totalElements ?? 0 }}</div>
+              <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalServices()?.totalElements ?? 0 }}</div>
               <div style="font-size:12px;color:#64748b; margin-top: 3px">Serviços Cadastrados</div>
             </div>
           </div>
         </div>
-        
+
         <div class="stat-card">
           <div style="display:flex;align-items:center;gap:12px;">
             <div>
@@ -196,13 +196,13 @@
                 <div style="font-size:12px;color:#64748b;">Ativos</div>
               </div>
               <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-                {{ statistics()?.totalElementsActive ?? 0 }}
+                {{ totalServices()?.totalElementsActive ?? 0 }}
               </div>
-              <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageActive ?? 0 }}% do total</div>
+              <div style="font-size:11px;color:#6c6e72;">{{ percentage()?.percentageActive ?? 0 }}% do total</div>
             </div>
           </div>
         </div>
-        
+
         <div class="stat-card">
           <div style="display:flex;align-items:center;gap:12px;">
             <div>
@@ -211,9 +211,9 @@
                 <div style="font-size:12px;color:#64748b;">Inativos</div>
               </div>
               <div style="font-size:22px;font-weight:700;color:#1e293b; margin: 5px 0px">
-                {{ statistics()?.totalElementsInactive ?? 0}}
+                {{ totalServices()?.totalElementsInactive ?? 0}}
               </div>
-              <div style="font-size:11px;color:#6c6e72;">{{ statistics()?.percentageInactive ?? 0}}% do total</div>
+              <div style="font-size:11px;color:#6c6e72;">{{ percentage()?.percentageInactive ?? 0}}% do total</div>
             </div>
           </div>
         </div>
@@ -246,13 +246,13 @@
           </div>
 
           <div *ngIf="(this.totalDepartments()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
-            
+
             <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
               <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
               </svg>
               <span style="font-size: 14px; color: #64748b;">Nenhum departamento foi criado ainda.</span>
             </div>
-            
+
           </div>
 
         </div>
@@ -276,13 +276,13 @@
           </apx-chart>
 
           <div *ngIf="(this.totalDepartments()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
-            
+
             <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
               <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
               </svg>
               <span style="font-size: 14px; color: #64748b;">Nenhum departamento foi criado ainda.</span>
             </div>
-            
+
           </div>
         </div>
       </div>
