@@ -11,6 +11,32 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
   gap:20px;
 }
 
+.graphic-card {
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  max-height: 35vh;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
 .sidebar { background: #0f2540; width: 260px; min-height: 100vh; position: fixed; left: 0; top: 0; z-index: 50; transition: transform 0.3s ease; overflow-y: auto; }
 .sidebar a { color: #94a3b8; padding: 10px 16px; display: flex; align-items: center; gap: 12px; font-size: 14px; transition: all 0.2s; border-radius: 8px; margin: 2px 8px; cursor: pointer; text-decoration: none; }
 .sidebar a:hover { background: rgba(255,255,255,0.08); color: #e2e8f0; }
