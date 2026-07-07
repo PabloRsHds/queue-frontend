@@ -25,6 +25,7 @@ export class GraphicComponent {
 
   // Gráficos
   public chartOptions!: ChartOptions;
+  public chartServiceOptions!: ChartOptions;
 
   // Injections
   public userState = inject(UserStateService);
@@ -43,6 +44,11 @@ export class GraphicComponent {
   // Service statistics
   public totalServices = this.serviceState.countTotalServicesStatistics;
   public percentage = this.serviceState.servicePercentagesStatistics;
+  public servicesCreatedByMonth = this.serviceState.servicesCreatedByMonth;
+  public servicesByDepartment = this.serviceState.servicesByDepartment;
+  public usersByService = this.serviceState.usersByService;
+  public schedulesByService = this.serviceState.schedulesByService;
+  public ticketsByService = this.serviceState.ticketsByService;
 
   ngOnInit(): void {
     this.departmentState.loadStatistics();
@@ -64,6 +70,37 @@ export class GraphicComponent {
         series: [{
           name: 'Departamentos',
           data: data.map(x => x.totalDepartments)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        xaxis: {
+          categories: data.map(x => x.monthName)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+    });
+
+    effect(() => {
+
+      const data = this.servicesCreatedByMonth();
+
+      console.log("Effect:", data);
+
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      this.chartServiceOptions = {
+        series: [{
+          name: 'Serviços',
+          data: data.map(x => x.totalServices)
         }],
         chart: {
           type: 'bar',
