@@ -22,7 +22,8 @@ export class TableUsersComponent implements OnInit {
   public users = this.userState.users;
   public userInfo = this.userState.userInfo;
   public serviceNamesAndDepartments = this.serviceState.serviceNamesAndDepartments;
-  public statistics = this.userState.statistics;
+  public totalUsers = this.userState.countTotalUsersStatistics;
+  public percentage = this.userState.userPercentagesStatistics;
 
   public page = this.userState.page;
   public totalPages = this.userState.totalPages;

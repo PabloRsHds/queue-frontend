@@ -11,10 +11,8 @@ import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepar
 import { UpdateDepartmentDto } from '../../dtos/department/UpdateDepartmentDto';
 import { UpdateServiceManagementDto } from '../../dtos/services/UpdateServiceManagementDto';
 import { ResponseGetServiceByIdDto } from '../../dtos/services/ResponseGetServiceByIdDto';
-import { ResponseStatisticsDto } from '../../dtos/statistics/ResponseStatisticsDto';
 import { ResponseUserDto } from '../../dtos/users/ResponseUserDto';
 import { ResponseAllUsersDto } from '../../dtos/users/ResponseAllUsersDto';
-import { ResponseUserStatisticsDto } from '../../dtos/statistics/ResponseUserStatisticsDto';
 import { RequestUserDto } from '../../dtos/users/RequestUserDto';
 import { ResponseServiceNamesAndDepartments } from '../../dtos/services/ResponseServiceNamesAndDepartments';
 import { ResponseUserInfoDto } from '../../dtos/users/ResponseUserInfoDto';
@@ -38,6 +36,7 @@ import { LoginDto } from '../../dtos/login/LoginDto';
 import { TokensDto } from '../../dtos/login/TokensDto';
 import { ResponseDepartmentDashBoardDto } from '../../dtos/department/statistics/ResponseDepartmentDashBoardDto';
 import { ResponseServiceDashBoardDto } from '../../dtos/services/statistics/ResponseServiceDashBoardDto';
+import { ResponseUserDashBoardDto } from '../../dtos/users/statistics/ResponseUserDashBoardDto';
 
 @Injectable({
   providedIn: 'root'
@@ -144,8 +143,8 @@ export class HttpService {
     return this.http.get<ResponseUserInfoDto>(`${this.API_URL}/users/token`, {headers});
   }
 
-  public getUserStatistics(): Observable<ResponseUserStatisticsDto> {
-    return this.http.get<ResponseUserStatisticsDto>(`${this.API_URL}/users/statistics`);
+  public getUserStatistics(): Observable<ResponseUserDashBoardDto> {
+    return this.http.get<ResponseUserDashBoardDto>(`${this.API_URL}/users/statistics`);
   }
 
   // CUSTOMERS

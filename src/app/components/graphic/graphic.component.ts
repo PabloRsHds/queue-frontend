@@ -26,6 +26,7 @@ export class GraphicComponent {
   // Gráficos
   public chartOptions!: ChartOptions;
   public chartServiceOptions!: ChartOptions;
+  public chartUserOptions!: ChartOptions;
 
   // Injections
   public userState = inject(UserStateService);
@@ -43,15 +44,24 @@ export class GraphicComponent {
 
   // Service statistics
   public totalServices = this.serviceState.countTotalServicesStatistics;
-  public percentage = this.serviceState.servicePercentagesStatistics;
+  public percentageServices = this.serviceState.servicePercentagesStatistics;
   public servicesCreatedByMonth = this.serviceState.servicesCreatedByMonth;
   public servicesByDepartment = this.serviceState.servicesByDepartment;
   public usersByService = this.serviceState.usersByService;
   public schedulesByService = this.serviceState.schedulesByService;
   public ticketsByService = this.serviceState.ticketsByService;
 
+  // User statistics
+  public totalUsers = this.userState.countTotalUsersStatistics;
+  public percentageUsers = this.userState.userPercentagesStatistics;
+  public countServicesByUsers = this.userState.countServicesByUsers;
+  public countRoleByUsers = this.userState.countRoleByUsers;
+  public usersCreatedByMonth = this.userState.usersCreatedByMonthStatistics;
+
   ngOnInit(): void {
     this.departmentState.loadStatistics();
+    this.serviceState.loadStatistics();
+    this.userState.loadStatistics();
   }
 
   constructor() {
@@ -118,12 +128,52 @@ export class GraphicComponent {
       };
     });
 
+    effect(() => {
+
+      const data = this.usersCreatedByMonth();
+
+      console.log("Effect:", data);
+
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      this.chartUserOptions = {
+        series: [{
+          name: 'Usuarios',
+          data: data.map(x => x.totalUsers)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        xaxis: {
+          categories: data.map(x => x.monthName)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+    });
+
   };
 
   public navItem:string = 'General';
 
   public navItemChange(item: string) {
     this.navItem = item;
+  }
+
+  public getRoleDisplayName(role: string): string {
+    switch (role) {
+      case 'MANAGER': return 'Gerente';
+      case 'ATTENDANT': return 'Atendente';
+      case 'RECEPTION': return 'Recepcionista';
+      default: return 'Administrador';
+    }
   }
 
 }

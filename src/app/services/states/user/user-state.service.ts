@@ -1,11 +1,14 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
-import { ResponseUserDto } from '../../../dtos/users/ResponseUserDto';
 import { ResponseAllUsersDto } from '../../../dtos/users/ResponseAllUsersDto';
-import { ResponseUserStatisticsDto } from '../../../dtos/statistics/ResponseUserStatisticsDto';
 import { RequestUserDto } from '../../../dtos/users/RequestUserDto';
 import { ResponseUserInfoDto } from '../../../dtos/users/ResponseUserInfoDto';
 import { UpdateUserDto } from '../../../dtos/users/UpdateUserDto';
+import { ResponseCountTotalUsersStatisticsDto } from '../../../dtos/users/statistics/ResponseCountTotalUsersStatisticsDto';
+import { ResponseUserPercentagesStatisticsDto } from '../../../dtos/users/statistics/ResponseUserPercentagesStatisticsDto';
+import { ResponseUsersCreatedByMonthStatisticsDto } from '../../../dtos/users/statistics/ResponseUsersCreatedByMonthStatisticsDto';
+import { ResponseServicesByUserStatisticsDto } from '../../../dtos/users/statistics/ResponseServicesByUserStatisticsDto';
+import { ResponseUsersByRoleStatisticsDto } from '../../../dtos/users/statistics/ResponseUsersByRoleStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +23,6 @@ export class UserStateService {
   public userLogged = signal<ResponseUserInfoDto | null>(null);
   public userInfo = signal<ResponseUserInfoDto | null>(null);
 
-  public statistics = signal<ResponseUserStatisticsDto | null>(null);
-
   // Messages
   public registerMessage = signal('');
   public registerStatus = signal<'success' | 'error' | 'default'>('default');
@@ -29,6 +30,13 @@ export class UserStateService {
   public updateStatus = signal<'success' | 'error' | 'default'>('default');
   public deleteMessage = signal('');
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
+
+  // Metricas
+  public countTotalUsersStatistics = signal<ResponseCountTotalUsersStatisticsDto | null>(null);
+  public userPercentagesStatistics = signal<ResponseUserPercentagesStatisticsDto | null>(null);
+  public usersCreatedByMonthStatistics = signal<ResponseUsersCreatedByMonthStatisticsDto[] | null>([]);
+  public countServicesByUsers = signal<ResponseServicesByUserStatisticsDto[] | null>([]);
+  public countRoleByUsers = signal<ResponseUsersByRoleStatisticsDto[] | null>([]);
 
   // ===================== PAGINATION =====================
 
@@ -111,7 +119,11 @@ export class UserStateService {
   loadStatistics() {
     this.http.getUserStatistics().subscribe({
       next: (response) => {
-        this.statistics.set(response);
+        this.countTotalUsersStatistics.set(response.countTotalUsersStatistics);
+        this.userPercentagesStatistics.set(response.userPercentagesStatistics);
+        this.usersCreatedByMonthStatistics.set(response.usersCreatedByMonthStatistics);
+        this.countServicesByUsers.set(response.countServicesByUsers);
+        this.countRoleByUsers.set(response.countRoleByUsers);
       }
     })
   }
