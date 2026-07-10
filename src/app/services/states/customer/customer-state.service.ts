@@ -5,6 +5,8 @@ import { ResponseCustomerInfoDto } from "../../../dtos/customer/ResponseCustomer
 import { ResponseCustomerIdsAndNames } from "../../../dtos/customer/ResponseCustomerIdsAndNames";
 import { CreateCustomerDto } from "../../../dtos/customer/CreateCustomerDto";
 import { UpdateCustomerDto } from "../../../dtos/customer/UpdateCustomerDto";
+import { ResponseCountTotalCustomersStatisticsDto } from "../../../dtos/customer/statistics/ResponseCountTotalCustomersStatisticsDto";
+import { ResponseCustomersCreatedByMonthStatisticsDto } from "../../../dtos/customer/statistics/ResponseCustomersCreatedByMonthStatisticsDto";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,10 @@ export class CustomerStateService {
 
   public deleteCustomerMessage = signal('');
   public deleteCustomerStatus = signal<'success' | 'error' | 'default'>('default');
+
+  // ==== STATISTICS =====
+  public totalCustomers = signal<ResponseCountTotalCustomersStatisticsDto | null>(null);
+  public totalCustomersByMonth = signal<ResponseCustomersCreatedByMonthStatisticsDto[] | []>([]);
 
   // ===== PAGINATION =====
 
@@ -81,6 +87,16 @@ export class CustomerStateService {
         this.customerInfo.set(response);
       }
     });
+  }
+
+  // ===== LOAD STATISTICS =====
+  loadStatistics() {
+    this.http.getCustomerStatistics().subscribe({
+      next: (response) => {
+        this.totalCustomers.set(response.countTotalCustomersStatistics);
+        this.totalCustomersByMonth.set(response.customersCreatedByMonthStatistics);
+      }
+    })
   }
 
   registerCustomer(request: CreateCustomerDto) {

@@ -37,6 +37,7 @@ import { TokensDto } from '../../dtos/login/TokensDto';
 import { ResponseDepartmentDashBoardDto } from '../../dtos/department/statistics/ResponseDepartmentDashBoardDto';
 import { ResponseServiceDashBoardDto } from '../../dtos/services/statistics/ResponseServiceDashBoardDto';
 import { ResponseUserDashBoardDto } from '../../dtos/users/statistics/ResponseUserDashBoardDto';
+import { ResponseCustomerDashBoardDto } from '../../dtos/customer/statistics/ResponseCustomerDashBoardDto';
 
 @Injectable({
   providedIn: 'root'
@@ -172,6 +173,10 @@ export class HttpService {
     return this.http.get<PageResponse<ResponseAllCustomersDto>>(
       `${this.API_URL}/customers?page=${page}&size=${size}&search=${search ?? ''}`
     );
+  }
+
+  public getCustomerStatistics(): Observable<ResponseCustomerDashBoardDto> {
+    return this.http.get<ResponseCustomerDashBoardDto>(`${this.API_URL}/customers/statistics`);
   }
 
   // Scheduling

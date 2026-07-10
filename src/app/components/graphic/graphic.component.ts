@@ -6,6 +6,7 @@ import { ApexAxisChartSeries, ApexChart,ApexXAxis, ApexDataLabels, ApexPlotOptio
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 
 import { ChartComponent } from 'ng-apexcharts';
+import { CustomerStateService } from '../../services/states/customer/customer-state.service';
 
 
 export type ChartOptions = {
@@ -27,11 +28,13 @@ export class GraphicComponent {
   public chartOptions!: ChartOptions;
   public chartServiceOptions!: ChartOptions;
   public chartUserOptions!: ChartOptions;
+  public chartCustomerOptions!: ChartOptions;
 
   // Injections
   public userState = inject(UserStateService);
   public departmentState = inject(DepartmentStateService);
   public serviceState = inject(ServiceManagementService);
+  public customerState = inject(CustomerStateService);
 
   // States
   public userLogged = this.userState.userLogged;
@@ -58,10 +61,15 @@ export class GraphicComponent {
   public countRoleByUsers = this.userState.countRoleByUsers;
   public usersCreatedByMonth = this.userState.usersCreatedByMonthStatistics;
 
+  // Customer statistics
+  public totalCustomers = this.customerState.totalCustomers;
+  public totalCustomersByMonth = this.customerState.totalCustomersByMonth;
+
   ngOnInit(): void {
     this.departmentState.loadStatistics();
     this.serviceState.loadStatistics();
     this.userState.loadStatistics();
+    this.customerState.loadStatistics();
   }
 
   constructor() {
@@ -142,6 +150,37 @@ export class GraphicComponent {
         series: [{
           name: 'Usuarios',
           data: data.map(x => x.totalUsers)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        xaxis: {
+          categories: data.map(x => x.monthName)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+    });
+
+    effect(() => {
+
+      const data = this.totalCustomersByMonth();
+
+      console.log("Effect:", data);
+
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      this.chartCustomerOptions = {
+        series: [{
+          name: 'Clientes',
+          data: data.map(x => x.totalCustomers)
         }],
         chart: {
           type: 'bar',
