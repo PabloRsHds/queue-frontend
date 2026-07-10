@@ -118,5 +118,7 @@ export class HomeComponent {
       { duration: 3000, panelClass: ['snackbar-success'] },
     );
     this.router.navigate(['/login']);
+    this.activeSection.set('inicio');
+    localStorage.setItem('activeSection', 'inicio');
   }
 }
