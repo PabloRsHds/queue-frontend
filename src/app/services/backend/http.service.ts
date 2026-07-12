@@ -1,4 +1,3 @@
-import { ResponseScheduleStatisticsDto } from './../../dtos/schedule/ResponseScheduleStatisticsDto';
 import { PageResponse } from '../../dtos/page/PageResponse';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -38,6 +37,7 @@ import { ResponseDepartmentDashBoardDto } from '../../dtos/department/statistics
 import { ResponseServiceDashBoardDto } from '../../dtos/services/statistics/ResponseServiceDashBoardDto';
 import { ResponseUserDashBoardDto } from '../../dtos/users/statistics/ResponseUserDashBoardDto';
 import { ResponseCustomerDashBoardDto } from '../../dtos/customer/statistics/ResponseCustomerDashBoardDto';
+import { ResponseScheduleDashBoardDto } from '../../dtos/schedule/statistics/ResponseScheduleDashBoardDto';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +46,7 @@ export class HttpService {
 
   //private readonly API_URL = 'http://192.168.25.107:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
-  private readonly API_URL = 'http://192.168.1.10:8080';
+  private readonly API_URL = 'http://192.168.1.5:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -202,8 +202,8 @@ export class HttpService {
     return this.http.get<ResponseScheduleDto>(`${this.API_URL}/scheduling/${scheduleId}`);
   }
 
-  public getScheduleStatistics(): Observable<ResponseScheduleStatisticsDto> {
-    return this.http.get<ResponseScheduleStatisticsDto>(`${this.API_URL}/scheduling/statistics`);
+  public getScheduleStatistics(): Observable<ResponseScheduleDashBoardDto> {
+    return this.http.get<ResponseScheduleDashBoardDto>(`${this.API_URL}/scheduling/statistics`);
   }
 
   // Ticket

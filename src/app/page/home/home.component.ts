@@ -42,7 +42,7 @@ export class HomeComponent {
   public totalDepartments = this.departmentState.countTotalDepartment;
   public totalServices = this.ServiceManagementState.countTotalServicesStatistics;
   public totalUsers = this.userState.countTotalUsersStatistics;
-  public scheduleStatistics = this.scheduleState.scheduleStatistics
+  public scheduleStatistics = this.scheduleState.scheduleCreatedByDay;
   public attendentStatistics = this.attendentState.statistics
 
   // Variables

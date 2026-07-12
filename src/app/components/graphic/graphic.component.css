@@ -111,6 +111,17 @@ body { font-family: 'Inter', sans-serif; background: #f8fafc; }
 /* Legend dot */
 .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
+.form-select {
+  padding: 3px 2px;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #7d7d7d;
+  transition: all 0.2s;
+  background: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
 @media (max-width: 1260px) {
 
   .stats-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 12px !important; }

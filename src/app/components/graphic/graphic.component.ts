@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserStateService } from '../../services/states/user/user-state.service';
 import { DepartmentStateService } from '../../services/states/department/department-state.service';
@@ -7,6 +7,7 @@ import { ServiceManagementService } from '../../services/states/serviceManagemen
 
 import { ChartComponent } from 'ng-apexcharts';
 import { CustomerStateService } from '../../services/states/customer/customer-state.service';
+import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
 
 
 export type ChartOptions = {
@@ -14,6 +15,16 @@ export type ChartOptions = {
   chart: ApexChart;
   xaxis: ApexXAxis;
   dataLabels: ApexDataLabels;
+};
+
+export type DonutChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  labels: string[];
+  colors: string[];
+  legend: ApexLegend;
+  dataLabels: ApexDataLabels;
+  responsive: ApexResponsive[];
 };
 
 @Component({
@@ -29,15 +40,21 @@ export class GraphicComponent {
   public chartServiceOptions!: ChartOptions;
   public chartUserOptions!: ChartOptions;
   public chartCustomerOptions!: ChartOptions;
+  public chartSchedulingMonthOptions!: ChartOptions;
+  public chartSchedulingWeekOptions!: ChartOptions;
+  public chartSchedulingHourOptions!: ChartOptions;
+  public chartSchedulingPriorityOptions!: DonutChartOptions;
 
   // Injections
   public userState = inject(UserStateService);
   public departmentState = inject(DepartmentStateService);
   public serviceState = inject(ServiceManagementService);
   public customerState = inject(CustomerStateService);
+  public schedulingState = inject(ScheduleStateService);
 
   // States
   public userLogged = this.userState.userLogged;
+  public selectValue = signal<string>('day');
 
   // Department statistics
   public totalDepartments = this.departmentState.countTotalDepartment;
@@ -61,6 +78,17 @@ export class GraphicComponent {
   public countRoleByUsers = this.userState.countRoleByUsers;
   public usersCreatedByMonth = this.userState.usersCreatedByMonthStatistics;
 
+  // Scheduling statistics
+  public totalScheduling = this.schedulingState.countTotalScheduleStatistics;
+  public percentageScheduling = this.schedulingState.schedulePercentagesStatistics;
+  public totalSchedulingByMonth = this.schedulingState.schedulesCreatedByMonth;
+  public totalSchedulingByWeek = this.schedulingState.schedulesCreatedByWeek;
+  public scheduleCreatedByDay = this.schedulingState.scheduleCreatedByDay;
+  public schedulesByHour = this.schedulingState.schedulesByHour;
+  public schedulesByDepartment = this.schedulingState.schedulesByDepartment;
+  public schedulesByServices = this.schedulingState.schedulesByService;
+  public schedulesByPriority = this.schedulingState.schedulesByPriority;
+
   // Customer statistics
   public totalCustomers = this.customerState.totalCustomers;
   public totalCustomersByMonth = this.customerState.totalCustomersByMonth;
@@ -69,6 +97,7 @@ export class GraphicComponent {
     this.departmentState.loadStatistics();
     this.serviceState.loadStatistics();
     this.userState.loadStatistics();
+    this.schedulingState.loadStatistics();
     this.customerState.loadStatistics();
   }
 
@@ -77,8 +106,6 @@ export class GraphicComponent {
     effect(() => {
 
       const data = this.departmentsCreatedByMonth();
-
-      console.log("Effect:", data);
 
       if (!data || data.length === 0) {
         return;
@@ -109,8 +136,6 @@ export class GraphicComponent {
 
       const data = this.servicesCreatedByMonth();
 
-      console.log("Effect:", data);
-
       if (!data || data.length === 0) {
         return;
       }
@@ -140,8 +165,6 @@ export class GraphicComponent {
 
       const data = this.usersCreatedByMonth();
 
-      console.log("Effect:", data);
-
       if (!data || data.length === 0) {
         return;
       }
@@ -169,9 +192,141 @@ export class GraphicComponent {
 
     effect(() => {
 
-      const data = this.totalCustomersByMonth();
+      const data = this.totalSchedulingByMonth();
 
-      console.log("Effect:", data);
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      this.chartSchedulingMonthOptions = {
+        series: [{
+          name: 'Agendamentos',
+          data: data.map(x => x.totalSchedules)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        xaxis: {
+          categories: data.map(x => x.monthName)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+    });
+
+    effect(() => {
+
+      const data = this.totalSchedulingByWeek();
+
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      this.chartSchedulingWeekOptions = {
+        series: [{
+          name: 'Agendamentos',
+          data: data.map(x => x.totalSchedules)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        xaxis: {
+          categories: data.map(x => x.weekDay)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+    });
+
+    effect(() => {
+
+      const data = this.schedulesByHour();
+
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      this.chartSchedulingHourOptions = {
+        series: [{
+          name: 'Agendamentos',
+          data: data.map(x => x.totalSchedules)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        xaxis: {
+          categories: data.map(x => `${x.hour.toString().padStart(2, '0')}h`)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+    });
+
+    effect(() => {
+
+      const data = this.schedulesByPriority();
+
+      if (!data || data.length === 0) {
+        return;
+      }
+
+      this.chartSchedulingPriorityOptions = {
+        series: data.map(x => x.totalSchedules),
+
+        chart: {
+          type: 'donut',
+          height: 300
+        },
+
+        labels: data.map(x => x.priority),
+
+        colors: [
+          '#3b82f6', // Azul
+          'tomato', // Verde
+          '#ef4444', // Vermelho
+          '#f59e0b'  // Amarelo (caso tenha uma 4ª prioridade)
+        ],
+
+        legend: {
+          position: 'bottom'
+        },
+
+        dataLabels: {
+          enabled: true
+        },
+
+        responsive: [{
+          breakpoint: 768,
+          options: {
+            chart: {
+              width: 300
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      };
+    })
+
+    effect(() => {
+
+      const data = this.totalCustomersByMonth();
 
       if (!data || data.length === 0) {
         return;
@@ -213,6 +368,10 @@ export class GraphicComponent {
       case 'RECEPTION': return 'Recepcionista';
       default: return 'Administrador';
     }
+  }
+
+  public getSelectValue(value: string) {
+    this.selectValue.set(value);
   }
 
 }

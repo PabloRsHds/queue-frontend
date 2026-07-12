@@ -9,7 +9,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.schedulingOfDay ?? 0}}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleCreatedByDay()?.schedulingOfDay ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de agendamentos</div>
         </div>
       </div>
@@ -21,7 +21,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.customerPresent ?? 0}}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleCreatedByDay()?.customerPresent ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Clientes presentes</div>
         </div>
       </div>
@@ -34,7 +34,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.schedulingCanceled ?? 0}}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleCreatedByDay()?.schedulingCanceled ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Agendamentos cancelados</div>
         </div>
       </div>
@@ -47,7 +47,7 @@
           </svg>
         </div>
         <div>
-          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleStatistics()?.absentCustomer ?? 0}}</div>
+          <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ scheduleCreatedByDay()?.absentCustomer ?? 0}}</div>
           <div style="font-size:12px;color:#64748b; margin-top: 3px">Clientes ausentes</div>
         </div>
       </div>

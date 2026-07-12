@@ -18,7 +18,7 @@ export class SchedulingComponent implements OnInit {
 
   ngOnInit() {
     this.customerState.loadCustomers();
-    this.schedulingState.loadScheduleStatistics();
+    this.schedulingState.loadSchedules();
   }
 
   // ==== Injections ====
@@ -82,7 +82,8 @@ export class SchedulingComponent implements OnInit {
   public scheduleTotalPages = this.schedulingState.scheduleTotalPages;
   public scheduleTotalElements = this.schedulingState.scheduleTotalElements;
   public scheduleSearch = this.schedulingState.scheduleSearch;
-  public scheduleStatistics = this.schedulingState.scheduleStatistics;
+
+  public scheduleCreatedByDay = this.schedulingState.scheduleCreatedByDay;
 
   // ==== TICKET STATES =====
   public ticketInfo = this.ticketState.ticketInfo;

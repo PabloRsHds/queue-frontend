@@ -5,6 +5,15 @@ import { ResponseAllSchedulesDto } from '../../../dtos/schedule/ResponseAllSched
 import { ResponseScheduleDto } from '../../../dtos/schedule/ResponseScheduleDto';
 import { UpdateScheduleDto } from '../../../dtos/schedule/UpdateScheduleDto';
 import { ResponseScheduleStatisticsDto } from '../../../dtos/schedule/ResponseScheduleStatisticsDto';
+import { ResponseCountTotalSchedulesStatisticsDto } from '../../../dtos/schedule/statistics/ResponseCountTotalSchedulesStatisticsDto';
+import { ResponseSchedulePercentagesStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulePercentagesStatisticsDto';
+import { ResponseSchedulesByDepartmentStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesByDepartmentStatisticsDto';
+import { ResponseSchedulesByHourStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesByHourStatisticsDto';
+import { ResponseSchedulesByPriorityStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesByPriorityStatisticsDto';
+import { ResponseSchedulesCreatedByDayStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesCreatedByDayStatisticsDto';
+import { ResponseSchedulesCreatedByMonthStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesCreatedByMonthStatisticsDto';
+import { ResponseSchedulesCreatedByWeekStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesCreatedByWeekStatisticsDto';
+import { ResponseSchedulesByServiceStatisticsDto } from '../../../dtos/services/statistics/ResponseSchedulesByServiceStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +46,15 @@ export class ScheduleStateService {
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
   // ===== STATISTCS =======
-  public scheduleStatistics = signal<ResponseScheduleStatisticsDto | null>(null);
+  public countTotalScheduleStatistics = signal<ResponseCountTotalSchedulesStatisticsDto | null>(null);
+  public schedulePercentagesStatistics = signal<ResponseSchedulePercentagesStatisticsDto | null>(null);
+  public schedulesCreatedByMonth = signal<ResponseSchedulesCreatedByMonthStatisticsDto[] | null>([]);
+  public schedulesCreatedByWeek = signal<ResponseSchedulesCreatedByWeekStatisticsDto[] | null>([]);
+  public scheduleCreatedByDay = signal<ResponseSchedulesCreatedByDayStatisticsDto | null>(null);
+  public schedulesByDepartment = signal<ResponseSchedulesByDepartmentStatisticsDto[] | null>([]);
+  public schedulesByService = signal<ResponseSchedulesByServiceStatisticsDto[] | null>([]);
+  public schedulesByPriority = signal<ResponseSchedulesByPriorityStatisticsDto[] | null>([]);
+  public schedulesByHour = signal<ResponseSchedulesByHourStatisticsDto[] | null>([]);
 
   // ======== MODAL ========
   public modalSchedulingRegister = signal<Boolean>(false);
@@ -55,7 +72,7 @@ export class ScheduleStateService {
         this.registerMessage.set('Agendamento realizado com sucesso!');
         this.registerStatus.set('success');
         this.loadSchedules();
-        this.loadScheduleStatistics();
+        this.loadStatistics();
       },
       error: () => {
         this.registerMessage.set('Erro ao realizar agendamento');
@@ -71,7 +88,7 @@ export class ScheduleStateService {
         this.updateMessage.set('Agendamento atualizado com sucesso!');
         this.updateStatus.set('success');
         this.loadSchedules();
-        this.loadScheduleStatistics();
+        this.loadStatistics();
       },
       error: () => {
         this.updateMessage.set('Erro ao atualizar agendamento');
@@ -88,7 +105,7 @@ export class ScheduleStateService {
         this.deleteMessage.set('Agendamento deletado com sucesso!');
         this.deleteStatus.set('success');
         this.loadSchedules();
-        this.loadScheduleStatistics();
+        this.loadStatistics();
       },
 
       error: (error) => {
@@ -99,11 +116,19 @@ export class ScheduleStateService {
   }
 
   // Statistics
-  loadScheduleStatistics() {
+  loadStatistics() {
     this.http.getScheduleStatistics().subscribe({
       next: response => {
         console.log(response);
-        this.scheduleStatistics.set(response);
+        this.countTotalScheduleStatistics.set(response.countTotalScheduleStatistics);
+        this.schedulePercentagesStatistics.set(response.schedulePercentagesStatistics);
+        this.schedulesCreatedByMonth.set(response.schedulesCreatedByMonth);
+        this.schedulesCreatedByWeek.set(response.schedulesCreatedByWeek);
+        this.scheduleCreatedByDay.set(response.scheduleCreatedByDay);
+        this.schedulesByDepartment.set(response.schedulesByDepartment);
+        this.schedulesByService.set(response.schedulesByService);
+        this.schedulesByPriority.set(response.schedulesByPriority);
+        this.schedulesByHour.set(response.schedulesByHour);
       }
     });
   }

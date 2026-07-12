@@ -5,10 +5,6 @@
     <!-- Left Nav -->
     <div class="section-card" style="align-self:start;position:sticky;top:88px;">
       <div class="report-nav" style="padding:8px;">
-        <a [class.active]="this.navItem === 'General'" (click)="navItemChange('General')" *ngIf="userLogged()?.role === 'ADMIN'">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Visão geral
-        </a>
         <a [class.active]="this.navItem === 'Service panel'" (click)="navItemChange('Service panel')">
           <svg fill="currentColor" stroke="none" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M503.467,29.867H8.533C3.823,29.867,0,33.69,0,38.4v341.333c0,4.71,3.823,8.533,8.533,8.533h494.933 c4.71,0,8.533-3.823,8.533-8.533V38.4C512,33.69,508.177,29.867,503.467,29.867z M486.409,371.2H25.6 c-4.71,0-8.533-3.823-8.533-8.533v-307.2c0-4.71,3.823-8.533,8.533-8.533h460.8c4.71,0,8.533,3.823,8.533,8.533l0.009,307.2 C494.942,367.377,491.119,371.2,486.409,371.2z"></path> </g> </g> <g> <g> <path d="M469.333,64H42.667c-4.71,0-8.533,3.823-8.533,8.533V345.6c0,4.71,3.823,8.533,8.533,8.533h426.667 c4.71,0,8.533-3.823,8.533-8.533V72.533C477.867,67.823,474.044,64,469.333,64z M51.2,337.067v-256h409.6l0.008,256H51.2z"></path> </g> </g> <g> <g> <path d="M384,465.067c-18.5,0-34.133-23.45-34.133-51.2c0-4.719-3.823-8.533-8.533-8.533H170.667c-4.71,0-8.533,3.814-8.533,8.533 c0,27.75-15.633,51.2-34.133,51.2c-4.71,0-8.533,3.814-8.533,8.533c0,4.719,3.823,8.533,8.533,8.533h256 c4.71,0,8.533-3.814,8.533-8.533C392.533,468.881,388.71,465.067,384,465.067z M161.826,465.067 c9.131-10.743,15.386-25.762,16.973-42.667h154.402c1.587,16.904,7.834,31.923,16.973,42.667H161.826z"></path> </g> </g> </g>
           </svg>
@@ -30,7 +26,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           Usuários
         </a>
-        <a [class.active]="this.navItem === 'Desing'" (click)="navItemChange('Desing')">
+        <a [class.active]="this.navItem === 'Scheduling'" (click)="navItemChange('Scheduling')">
           <svg fill="currentColor" stroke="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,14a1,1,0,1,0-1-1A1,1,0,0,0,12,14Zm5,0a1,1,0,1,0-1-1A1,1,0,0,0,17,14Zm-5,4a1,1,0,1,0-1-1A1,1,0,0,0,12,18Zm5,0a1,1,0,1,0-1-1A1,1,0,0,0,17,18ZM7,14a1,1,0,1,0-1-1A1,1,0,0,0,7,14ZM19,4H18V3a1,1,0,0,0-2,0V4H8V3A1,1,0,0,0,6,3V4H5A3,3,0,0,0,2,7V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V7A3,3,0,0,0,19,4Zm1,15a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V10H20ZM20,8H4V7A1,1,0,0,1,5,6H19a1,1,0,0,1,1,1ZM7,18a1,1,0,1,0-1-1A1,1,0,0,0,7,18Z"></path></g>
           </svg>
           Agendamentos
@@ -548,20 +544,286 @@
       </div>
     </div>
 
+    <!-- Content Scheduling -->
+    <div style="display:flex;flex-direction:column;gap:20px;" *ngIf="this.navItem === 'Scheduling'">
+      <!-- Stats Cards -->
+      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
 
+        <div class="stat-card">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:55px;height:55px;background:#0084ff2a;;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+              <svg version="1.1" width="35px" height="35px" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#247cb2;} </style> <g> <rect x="119.256" y="222.607" class="st0" width="50.881" height="50.885"></rect> <rect x="341.863" y="222.607" class="st0" width="50.881" height="50.885"></rect> <rect x="267.662" y="222.607" class="st0" width="50.881" height="50.885"></rect> <rect x="119.256" y="302.11" class="st0" width="50.881" height="50.885"></rect> <rect x="267.662" y="302.11" class="st0" width="50.881" height="50.885"></rect> <rect x="193.46" y="302.11" class="st0" width="50.881" height="50.885"></rect> <rect x="341.863" y="381.612" class="st0" width="50.881" height="50.885"></rect> <rect x="267.662" y="381.612" class="st0" width="50.881" height="50.885"></rect> <rect x="193.46" y="381.612" class="st0" width="50.881" height="50.885"></rect> <path class="st0" d="M439.277,55.046h-41.376v39.67c0,14.802-12.195,26.84-27.183,26.84h-54.025 c-14.988,0-27.182-12.038-27.182-26.84v-39.67h-67.094v39.297c0,15.008-12.329,27.213-27.484,27.213h-53.424 c-15.155,0-27.484-12.205-27.484-27.213V55.046H72.649c-26.906,0-48.796,21.692-48.796,48.354v360.246 c0,26.661,21.89,48.354,48.796,48.354h366.628c26.947,0,48.87-21.692,48.87-48.354V103.4 C488.147,76.739,466.224,55.046,439.277,55.046z M453.167,462.707c0,8.56-5.751,14.309-14.311,14.309H73.144 c-8.56,0-14.311-5.749-14.311-14.309V178.089h394.334V462.707z"></path> <path class="st0" d="M141.525,102.507h53.392c4.521,0,8.199-3.653,8.199-8.144v-73.87c0-11.3-9.27-20.493-20.666-20.493h-28.459 c-11.395,0-20.668,9.192-20.668,20.493v73.87C133.324,98.854,137.002,102.507,141.525,102.507z"></path> <path class="st0" d="M316.693,102.507h54.025c4.348,0,7.884-3.513,7.884-7.826V20.178C378.602,9.053,369.474,0,358.251,0H329.16 c-11.221,0-20.349,9.053-20.349,20.178v74.503C308.81,98.994,312.347,102.507,316.693,102.507z"></path> </g> </g>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalScheduling()?.totalElements ?? 0 }}</div>
+              <div style="font-size:12px;color:#64748b; margin-top: 3px">Total de agendamentos</div>
+            </div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:55px;height:55px;background:#a5eea044;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" width="35px" height="35px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 19.2857L15.8 21L20 17M4 21C4 17.134 7.13401 14 11 14C12.4872 14 13.8662 14.4638 15 15.2547M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#0f5d0e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:12px;color:#64748b; margin-bottom: 3px">Total de clientes presentes</div>
+              <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalScheduling()?.present ?? 0}}</div>
+              <div style="font-size:10px;color:#64748b; margin-top: 3px">{{ percentageScheduling()?.present ?? 0}}%</div>
+            </div>
+          </div>
+        </div>
 
+        <div class="stat-card">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:55px;height:55px;background:#ffcece44;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" width="35px" height="35px"  fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 16L20 21M20 16L15 21M11 14C7.13401 14 4 17.134 4 21H11M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#c81414" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:12px;color:#64748b; margin-bottom: 3px">Total de agendamentos cancelados</div>
+              <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalScheduling()?.canceled ?? 0}}</div>
+              <div style="font-size:10px;color:#64748b; margin-top: 3px">{{ percentageScheduling()?.canceled ?? 0}}%</div>
+            </div>
+          </div>
+        </div>
 
+        <div class="stat-card">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:55px;height:55px;background:#f1f5f9;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" width="35px" height="35px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 18L14 18M11 21H4C4 17.134 7.13401 14 11 14C11.695 14 12.3663 14.1013 13 14.2899M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:12px;color:#64748b; margin-bottom: 3px">Total de clientes ausentes</div>
+              <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalScheduling()?.absent ?? 0}}</div>
+              <div style="font-size:10px;color:#64748b; margin-top: 3px">{{ percentageScheduling()?.absent ?? 0}}%</div>
+            </div>
+          </div>
+        </div>
 
+        <div class="stat-card">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:55px;height:55px;background:#ffa40621;border-radius:10px;display:flex;align-items:center;justify-content:center; flex-shrink: 0;">
+              <svg viewBox="0 0 24 24" fill="none" width="35px" height="35px"xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 14.0709C11.6734 14.0242 11.3395 14 11 14C7.13401 14 4 17.134 4 21H14M17.997 18C18.997 17 19.997 16.6046 19.997 15.5C19.997 14.3954 19.1016 13.5 17.997 13.5C17.0651 13.5 16.282 14.1374 16.06 15M17.997 21H18.007M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#ebac00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:12px;color:#64748b; margin-bottom: 3px">Total de clientes pendentes</div>
+              <div style="font-size:22px;font-weight:700;color:#1e293b;">{{ totalScheduling()?.scheduled ?? 0}}</div>
+              <div style="font-size:10px;color:#64748b; margin-top: 3px">{{ percentageScheduling()?.scheduled ?? 0}}%</div>
+            </div>
+          </div>
+        </div>
 
+      </div>
 
+      <div class="charts-grid" style="display:grid;grid-template-columns:1fr;gap:20px;">
 
+        <div class="column-grid">
 
+          <!-- Agendamentos por mês -->
+          <div class="section-card">
 
+            <div style="padding:20px;border-bottom:1px solid #e2e8f0;">
+              <h3 style="font-size:14px;font-weight:700;color:#1e293b;">Agendamentos criados durante a semana</h3>
+            </div>
 
+            <apx-chart
+              *ngIf="chartSchedulingWeekOptions"
+              [series]="chartSchedulingWeekOptions.series"
 
+              [chart]="chartSchedulingWeekOptions.chart"
 
+              [xaxis]="chartSchedulingWeekOptions.xaxis"
 
+              [dataLabels]="chartSchedulingWeekOptions.dataLabels">
 
+            </apx-chart>
+
+            <div *ngIf="(this.totalUsers()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
+
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
+                </svg>
+                <span style="font-size: 14px; color: #64748b;">Nenhum agendamento foi criado ainda.</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Agendamentos por mês -->
+          <div class="section-card">
+
+            <div style="padding:20px;border-bottom:1px solid #e2e8f0;">
+              <h3 style="font-size:14px;font-weight:700;color:#1e293b;">Agendamentos criados por horário</h3>
+            </div>
+
+            <apx-chart
+              *ngIf="chartSchedulingHourOptions"
+              [series]="chartSchedulingHourOptions.series"
+
+              [chart]="chartSchedulingHourOptions.chart"
+
+              [xaxis]="chartSchedulingHourOptions.xaxis"
+
+              [dataLabels]="chartSchedulingHourOptions.dataLabels">
+
+            </apx-chart>
+
+            <div *ngIf="(this.totalUsers()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
+
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
+                </svg>
+                <span style="font-size: 14px; color: #64748b;">Nenhum agendamento foi criado ainda.</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="charts-grid" style="display:grid;grid-template-columns:1fr;gap:20px;">
+
+        <div class="column-grid">
+
+          <!-- Agendamentos por departamento -->
+          <div class="section-card">
+            <div style="padding:20px;border-bottom:1px solid #e2e8f0;">
+              <h3 style="font-size:14px;font-weight:700;color:#1e293b;">Agendamentos por departamento</h3>
+            </div>
+
+            <div class="graphic-card" *ngIf="(this.totalServices()?.totalElements ?? 0) > 0">
+
+              <div style="flex:1;display:flex;flex-direction:column;gap:8px;" *ngFor="let schedule of this.schedulesByDepartment()">
+                <div style="display:flex;align-items:center; justify-content:space-between;font-size:14px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div class="legend-dot" style="background:#3b82f6;"></div>
+                    <span style="color:#64748b; font-weight:600">{{ schedule.departmentName }}</span>
+                  </div>
+                  <div style="display:flex;gap:16px; align-items:center;">
+                    <span style="font-weight:700;color:#1e293b;">{{ schedule.totalSchedules}}</span>
+                    <span style="color:#94a3b8; font-size: 12px;">{{ schedule.percentage }}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="(this.totalServices()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
+
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
+                </svg>
+                <span style="font-size: 14px; color: #64748b;">Nenhum agendamento foi criado ainda.</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Agendamentos por serviço -->
+          <div class="section-card">
+            <div style="padding:20px;border-bottom:1px solid #e2e8f0;">
+              <h3 style="font-size:14px;font-weight:700;color:#1e293b;">Agendamentos por serviço</h3>
+            </div>
+
+            <div class="graphic-card" *ngIf="(this.totalServices()?.totalElements ?? 0) > 0">
+
+              <div style="flex:1;display:flex;flex-direction:column;gap:8px;" *ngFor="let schedule of this.schedulesByService()">
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:14px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div class="legend-dot" style="background:#3b82f6;"></div>
+                    <span style="color:#64748b; font-weight:600">{{ schedule.serviceName}}</span>
+                  </div>
+                  <div style="display:flex;gap:16px;align-items:center;">
+                    <span style="font-weight:700;color:#1e293b;">{{ schedule.totalSchedules}}</span>
+                    <span style="color:#94a3b8; font-size: 12px;">{{ schedule.percentage }}%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="(this.totalServices()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
+
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
+                </svg>
+                <span style="font-size: 14px; color: #64748b;">Nenhum usuário foi criado ainda.</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!--Grafico de agendamentos por mês-->
+        <div class="column-grid">
+
+          <div class="section-card">
+
+            <div style="padding:20px;border-bottom:1px solid #e2e8f0;">
+              <h3 style="font-size:14px;font-weight:700;color:#1e293b;">Agendamentos por prioridade</h3>
+            </div>
+
+            <div style="display: flex;align-items: center;justify-content: center; margin-top: 30px">
+              <apx-chart
+                [series]="chartSchedulingPriorityOptions.series"
+                [chart]="chartSchedulingPriorityOptions.chart"
+                [labels]="chartSchedulingPriorityOptions.labels"
+                [colors]="chartSchedulingPriorityOptions.colors"
+                [legend]="chartSchedulingPriorityOptions.legend"
+                [dataLabels]="chartSchedulingPriorityOptions.dataLabels"
+                [responsive]="chartSchedulingPriorityOptions.responsive">
+              </apx-chart>
+            </div>
+
+            <div *ngIf="(this.totalScheduling()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
+
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
+                </svg>
+                <span style="font-size: 14px; color: #64748b;">Nenhum agendamento foi criado ainda.</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="section-card">
+
+            <div style="padding:20px;border-bottom:1px solid #e2e8f0;">
+              <h3 style="font-size:14px;font-weight:700;color:#1e293b;">Agendamentos criados por mês</h3>
+            </div>
+
+            <apx-chart
+              *ngIf="chartSchedulingMonthOptions"
+              [series]="chartSchedulingMonthOptions.series"
+
+              [chart]="chartSchedulingMonthOptions.chart"
+
+              [xaxis]="chartSchedulingMonthOptions.xaxis"
+
+              [dataLabels]="chartSchedulingMonthOptions.dataLabels">
+
+            </apx-chart>
+
+            <div *ngIf="(this.totalScheduling()?.totalElements ?? 0) === 0" style="display:flex;align-items:center;justify-content:center;height:200px;">
+
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                <svg viewBox="0 0 24 24" width="40px" heigth="40px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"></path> </g>
+                </svg>
+                <span style="font-size: 14px; color: #64748b;">Nenhum agendamento foi criado ainda.</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
 
     <!-- Content Users -->
     <div style="display:flex;flex-direction:column;gap:20px;" *ngIf="this.navItem === 'Customers'">
