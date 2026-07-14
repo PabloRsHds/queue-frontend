@@ -28,7 +28,6 @@ import { ResponseScheduleDto } from '../../dtos/schedule/ResponseScheduleDto';
 import { UpdateScheduleDto } from '../../dtos/schedule/UpdateScheduleDto';
 import { CreateTicketDto } from '../../dtos/ticket/CreateTicketDto';
 import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
-import { ResponseAttendanceStatisticsDto } from '../../dtos/statistics/ResponseAttendanceStatisticsDto';
 import { ResponseTicketsForAttendanceDto } from '../../dtos/attendance/ResponseTicketsForAttendanceDto';
 import { ResponseTokensDto } from '../../dtos/login/ResponseTokensDto';
 import { LoginDto } from '../../dtos/login/LoginDto';
@@ -38,6 +37,7 @@ import { ResponseServiceDashBoardDto } from '../../dtos/services/statistics/Resp
 import { ResponseUserDashBoardDto } from '../../dtos/users/statistics/ResponseUserDashBoardDto';
 import { ResponseCustomerDashBoardDto } from '../../dtos/customer/statistics/ResponseCustomerDashBoardDto';
 import { ResponseScheduleDashBoardDto } from '../../dtos/schedule/statistics/ResponseScheduleDashBoardDto';
+import { ResponseAttendanceDashboardDto } from '../../dtos/attendance/statistics/ResponseAttendanceDashboardDto';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +45,9 @@ import { ResponseScheduleDashBoardDto } from '../../dtos/schedule/statistics/Res
 export class HttpService {
 
   //private readonly API_URL = 'http://192.168.25.107:8080';
+  private readonly API_URL = 'http://192.168.25.2:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
-  private readonly API_URL = 'http://192.168.1.5:8080';
+  //private readonly API_URL = 'http://192.168.1.5:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -220,8 +221,8 @@ export class HttpService {
   }
 
   // Attendance
-  public getAttendanceStatistics(): Observable<ResponseAttendanceStatisticsDto> {
-    return this.http.get<ResponseAttendanceStatisticsDto>(`${this.API_URL}/attendances/statistics`);
+  public getAttendanceStatistics(): Observable<ResponseAttendanceDashboardDto> {
+    return this.http.get<ResponseAttendanceDashboardDto>(`${this.API_URL}/attendances/statistics`);
   }
 
   // Login

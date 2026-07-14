@@ -11,7 +11,7 @@
         </div>
         <div>
           <div class="stat-label">Em espera</div>
-          <div class="stat-value">{{this.statistics()?.countAttendancesWaiting ?? 0}}</div>
+          <div class="stat-value">{{this.countTotalAttendances()?.countAttendancesWaiting ?? 0}}</div>
           <div class="stat-sub">clientes</div>
         </div>
       </div>
@@ -26,7 +26,7 @@
         </div>
         <div>
           <div class="stat-label">Sendo atendido</div>
-          <div class="stat-value">{{this.statistics()?.countAttendancesInProgress ?? 0}}</div>
+          <div class="stat-value">{{this.countTotalAttendances()?.countAttendancesInProgress ?? 0}}</div>
           <div class="stat-sub">agora</div>
         </div>
       </div>
@@ -42,7 +42,7 @@
         </div>
         <div>
           <div class="stat-label">Tempo médio de espera</div>
-          <div class="stat-value">{{this.statistics()?.averageWaitingTime ?? '00:00:00'}}</div>
+          <div class="stat-value">{{this.avarageWaitingTime()?.averageWaitingTime ?? '00:00:00'}}</div>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@
         </div>
         <div>
           <div class="stat-label">Tempo médio de atendimento</div>
-          <div class="stat-value">{{this.statistics()?.averageServiceTime ?? '00:00:00'}}</div>
+          <div class="stat-value">{{this.averageServiceTime()?.averageServiceTime ?? '00:00:00'}}</div>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@
         </div>
         <div>
           <div class="stat-label">Atendimentos hoje</div>
-          <div class="stat-value">{{this.statistics()?.countAttendancesOfDay ?? 0}}</div>
+          <div class="stat-value">{{this.countTotalAttendances()?.attendancesToday ?? 0}}</div>
           <div class="stat-sub">realizados</div>
         </div>
       </div>

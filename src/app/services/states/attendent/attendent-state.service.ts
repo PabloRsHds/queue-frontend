@@ -2,6 +2,16 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { ResponseAttendanceStatisticsDto } from '../../../dtos/statistics/ResponseAttendanceStatisticsDto';
 import { ResponseTicketsForAttendanceDto } from '../../../dtos/attendance/ResponseTicketsForAttendanceDto';
+import { ResponseCountTotalAttendancesStatisticsDto } from '../../../dtos/attendance/statistics/ResponseCountTotalAttendancesStatisticsDto';
+import { ResponseAverageServiceTimeStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageServiceTimeStatisticsDto';
+import { ResponseAttendancesByCustomerStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesByCustomerStatisticsDto';
+import { ResponseAttendancesByDepartmentStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesByDepartmentStatisticsDto';
+import { ResponseAttendancesByHourStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesByHourStatisticsDto';
+import { ResponseAttendancesByServiceStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesByServiceStatisticsDto';
+import { ResponseAttendancesByWeekStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesByWeekStatisticsDto';
+import { ResponseAttendancesCreatedByMonthStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesCreatedByMonthStatisticsDto';
+import { ResponseAverageAttendanceByUserStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageAttendanceByUserStatisticsDto';
+import { ResponseAverageWaitingTimeStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageWaitingTimeStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +21,20 @@ export class AttendentStateService {
   // Injections
   private http = inject(HttpService)
 
-  // States
-  public statistics = signal<ResponseAttendanceStatisticsDto | null>(null);
-  public tickets = signal<ResponseTicketsForAttendanceDto[] | []>([])
+  // Ticket States
+  public tickets = signal<ResponseTicketsForAttendanceDto[] | []>([]);
+
+  // Attendance States
+  public countTotalAttendances = signal<ResponseCountTotalAttendancesStatisticsDto | null>(null);
+  public averageWaitingTime = signal<ResponseAverageWaitingTimeStatisticsDto | null>(null);
+  public averageServiceTime = signal<ResponseAverageServiceTimeStatisticsDto | null>(null)
+  public averageAttendanceByUser = signal<ResponseAverageAttendanceByUserStatisticsDto[] | null>(null);
+  public attendancesCreatedByMonth = signal<ResponseAttendancesCreatedByMonthStatisticsDto[] | null>(null);
+  public attendancesByWeek = signal<ResponseAttendancesByWeekStatisticsDto[] | null>(null);
+  public attendancesByService = signal<ResponseAttendancesByServiceStatisticsDto[] | null>(null)
+  public attendancesByHour = signal<ResponseAttendancesByHourStatisticsDto[] | null>(null);
+  public attendancesByDepartment = signal<ResponseAttendancesByDepartmentStatisticsDto[] | null>(null)
+  public attendancesByCustomer = signal<ResponseAttendancesByCustomerStatisticsDto[] | null>(null);
 
   //variables
   public currentTimer = signal<string>('00:00:00');
@@ -22,7 +43,16 @@ export class AttendentStateService {
   getAttendentsStatistics() {
     return this.http.getAttendanceStatistics().subscribe({
       next: (response) => {
-        this.statistics.set(response);
+        this.countTotalAttendances.set(response.countTotalAttendances);
+        this.averageWaitingTime.set(response.averageWaitingTime);
+        this.averageServiceTime.set(response.averageServiceTime);
+        this.averageAttendanceByUser.set(response.averageAttendanceByUser);
+        this.attendancesCreatedByMonth.set(response.attendancesCreatedByMonth);
+        this.attendancesByWeek.set(response.attendancesByWeek);
+        this.attendancesByService.set(response.attendancesByService);
+        this.attendancesByHour.set(response.attendancesByHour);
+        this.attendancesByDepartment.set(response.attendancesByDepartment);
+        this.attendancesByCustomer.set(response.attendancesByCustomer);
       }
     });
   }

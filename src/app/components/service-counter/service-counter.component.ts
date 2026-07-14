@@ -14,7 +14,9 @@ export class ServiceCounterComponent implements OnInit {
   private attendentState = inject(AttendentStateService);
 
   // State
-  public statistics = this.attendentState.statistics
+  public countTotalAttendances = this.attendentState.countTotalAttendances;
+  public averageServiceTime = this.attendentState.averageServiceTime;
+  public avarageWaitingTime = this.attendentState.averageWaitingTime;
   public tickets = this.attendentState.tickets
   public currentTimer = this.attendentState.currentTimer
 

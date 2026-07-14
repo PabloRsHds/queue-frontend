@@ -59,7 +59,10 @@ export class GraphicComponent {
   public selectValue = signal<string>('day');
 
   // Attendent statistics
-  public attendentStatistics = this.attendentState.statistics;
+  public countTotalAttendances = this.attendentState.countTotalAttendances;
+  public avarageWaitingTime = this.attendentState.averageWaitingTime;
+  public averageServiceTime = this.attendentState.averageServiceTime;
+  public averageAttendanceByUsers = this.attendentState.averageAttendanceByUser;
 
   // Department statistics
   public totalDepartments = this.departmentState.countTotalDepartment;

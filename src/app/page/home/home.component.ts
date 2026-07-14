@@ -43,7 +43,7 @@ export class HomeComponent {
   public totalServices = this.ServiceManagementState.countTotalServicesStatistics;
   public totalUsers = this.userState.countTotalUsersStatistics;
   public scheduleStatistics = this.scheduleState.scheduleCreatedByDay;
-  public attendentStatistics = this.attendentState.statistics
+  public countTotalAttendances = this.attendentState.countTotalAttendances;
 
   // Variables
   public openAside = false;
