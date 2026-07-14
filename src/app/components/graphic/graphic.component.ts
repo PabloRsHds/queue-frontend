@@ -8,6 +8,7 @@ import { ServiceManagementService } from '../../services/states/serviceManagemen
 import { ChartComponent } from 'ng-apexcharts';
 import { CustomerStateService } from '../../services/states/customer/customer-state.service';
 import { ScheduleStateService } from '../../services/states/scheduling/scheduling-state.service';
+import { AttendentStateService } from '../../services/states/attendent/attendent-state.service';
 
 
 export type ChartOptions = {
@@ -47,6 +48,7 @@ export class GraphicComponent {
 
   // Injections
   public userState = inject(UserStateService);
+  public attendentState = inject(AttendentStateService);
   public departmentState = inject(DepartmentStateService);
   public serviceState = inject(ServiceManagementService);
   public customerState = inject(CustomerStateService);
@@ -55,6 +57,9 @@ export class GraphicComponent {
   // States
   public userLogged = this.userState.userLogged;
   public selectValue = signal<string>('day');
+
+  // Attendent statistics
+  public attendentStatistics = this.attendentState.statistics;
 
   // Department statistics
   public totalDepartments = this.departmentState.countTotalDepartment;
