@@ -25,7 +25,7 @@ export class ServiceCounterComponent implements OnInit {
   date: string = '00:00:00';
 
   ngOnInit(): void {
-    this.attendentState.getAttendentsStatistics();
+    this.attendentState.loadStatistics();
     this.attendentState.getTicketsForAttendence();
   }
 

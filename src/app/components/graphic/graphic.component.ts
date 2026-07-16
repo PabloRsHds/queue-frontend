@@ -45,6 +45,9 @@ export class GraphicComponent {
   public chartSchedulingWeekOptions!: ChartOptions;
   public chartSchedulingHourOptions!: ChartOptions;
   public chartSchedulingPriorityOptions!: DonutChartOptions;
+  public chartAttendanceMonthOptions!: ChartOptions;
+  public chartAttendanceWeekOptions!: ChartOptions;
+  public chartAttendanceHourOptions!: ChartOptions;
 
   // Injections
   public userState = inject(UserStateService);
@@ -63,6 +66,12 @@ export class GraphicComponent {
   public avarageWaitingTime = this.attendentState.averageWaitingTime;
   public averageServiceTime = this.attendentState.averageServiceTime;
   public averageAttendanceByUsers = this.attendentState.averageAttendanceByUser;
+  public attendancesCreatedByMonth = this.attendentState.attendancesCreatedByMonth;
+  public attendancesByWeek = this.attendentState.attendancesByWeek;
+  public attendancesByService = this.attendentState.attendancesByService;
+  public attendancesByHour = this.attendentState.attendancesByHour;
+  public attendancesByDepartment = this.attendentState.attendancesByDepartment;
+  public attendancesByCustomer = this.attendentState.attendancesByCustomer;
 
   // Department statistics
   public totalDepartments = this.departmentState.countTotalDepartment;
@@ -107,9 +116,88 @@ export class GraphicComponent {
     this.userState.loadStatistics();
     this.schedulingState.loadStatistics();
     this.customerState.loadStatistics();
+    this.attendentState.loadStatistics();
   }
 
   constructor() {
+
+    effect(() => {
+
+      const data = this.attendancesCreatedByMonth();
+
+      if (!data || data.length === 0) return;
+
+      this.chartAttendanceMonthOptions = {
+        series: [{
+          name: 'Atendimentos',
+          data: data.map(x => x.totalAttendances)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: { show: false }
+        },
+        xaxis: {
+          categories: data.map(x => x.monthName)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+
+    });
+
+    effect(() => {
+
+      const data = this.attendancesByWeek();
+
+      if (!data || data.length === 0) return;
+
+      this.chartAttendanceWeekOptions = {
+        series: [{
+          name: 'Atendimentos',
+          data: data.map(x => x.totalAttendances)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: { show: false }
+        },
+        xaxis: {
+          categories: data.map(x => x.dayName)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+
+    });
+
+    effect(() => {
+
+      const data = this.attendancesByHour();
+
+      if (!data || data.length === 0) return;
+
+      this.chartAttendanceHourOptions = {
+        series: [{
+          name: 'Atendimentos',
+          data: data.map(x => x.totalAttendances)
+        }],
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: { show: false }
+        },
+        xaxis: {
+          categories: data.map(x => `${x.hour.toString().padStart(2, '0')}h`)
+        },
+        dataLabels: {
+          enabled: true
+        }
+      };
+
+    });
 
     effect(() => {
 

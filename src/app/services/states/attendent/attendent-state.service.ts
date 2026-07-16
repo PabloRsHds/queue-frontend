@@ -40,9 +40,12 @@ export class AttendentStateService {
   public currentTimer = signal<string>('00:00:00');
   private intervalId: any;
 
-  getAttendentsStatistics() {
+  loadStatistics() {
     return this.http.getAttendanceStatistics().subscribe({
       next: (response) => {
+
+        console.log(response);
+
         this.countTotalAttendances.set(response.countTotalAttendances);
         this.averageWaitingTime.set(response.averageWaitingTime);
         this.averageServiceTime.set(response.averageServiceTime);

@@ -1,3 +1,3 @@
 export interface ResponseAverageWaitingTimeStatisticsDto {
-    averageWaitingTime: number;
+    averageWaitingTime: string;
 }
