@@ -73,8 +73,12 @@ export class TicketStateService {
   }
 
   getTicketsForAttendence() {
-    return this.http.getTicketsForAttendance(this.page(), this.size).subscribe({
+    console.log("Buscando tickets");
+
+    this.http.getTicketsForAttendance(this.page(), this.size).subscribe({
       next: (response) => {
+        console.log(response.content);
+
         this.ticketsForAttendance.set(response.content);
         this.totalTickets.set(response.totalElements);
       }

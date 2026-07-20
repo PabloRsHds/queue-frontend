@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TicketStateService } from '../../services/states/ticket/ticket-state.service';
 import { UserStateService } from '../../services/states/user/user-state.service';
 import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicketsForAttendanceDto';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-service-counter',
@@ -41,6 +42,8 @@ export class ServiceCounterComponent implements OnInit {
   startTime = new Date();
   date: string = '00:00:00';
 
+  private pollingSubscription?: Subscription;
+
   public ticketSelectedId = signal<string | null>(null);
 
   public ticketSelected = computed(() => {
@@ -65,13 +68,24 @@ export class ServiceCounterComponent implements OnInit {
         this.ticketSelected();
       }
     })
+
+    effect(() => {
+      console.log('Tickets atualizados:', this.ticketsForAttendance());
+    });
   }
 
   ngOnInit(): void {
     this.attendentState.loadStatistics();
-    this.ticketState.getTicketsForAttendence();
     this.ticketState.getHistoryTicketsByAttendant();
     this.userState.getUserByToken();
+
+    this.pollingSubscription = interval(5000).subscribe(() => {
+      this.ticketState.getTicketsForAttendence();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.pollingSubscription?.unsubscribe();
   }
 
   getNamePriority(priority: string):string {
