@@ -28,7 +28,7 @@ import { ResponseScheduleDto } from '../../dtos/schedule/ResponseScheduleDto';
 import { UpdateScheduleDto } from '../../dtos/schedule/UpdateScheduleDto';
 import { CreateTicketDto } from '../../dtos/ticket/CreateTicketDto';
 import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
-import { ResponseTicketsForAttendanceDto } from '../../dtos/attendance/ResponseTicketsForAttendanceDto';
+import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicketsForAttendanceDto';
 import { ResponseTokensDto } from '../../dtos/login/ResponseTokensDto';
 import { LoginDto } from '../../dtos/login/LoginDto';
 import { TokensDto } from '../../dtos/login/TokensDto';
@@ -38,6 +38,9 @@ import { ResponseUserDashBoardDto } from '../../dtos/users/statistics/ResponseUs
 import { ResponseCustomerDashBoardDto } from '../../dtos/customer/statistics/ResponseCustomerDashBoardDto';
 import { ResponseScheduleDashBoardDto } from '../../dtos/schedule/statistics/ResponseScheduleDashBoardDto';
 import { ResponseAttendanceDashboardDto } from '../../dtos/attendance/statistics/ResponseAttendanceDashboardDto';
+import { StartAttendanceDto } from '../../dtos/attendance/StartAttendanceDto';
+import { ResponseAttendanceDto } from '../../dtos/attendance/ResponseAttendanceDto';
+import { FinishAttendanceDto } from '../../dtos/attendance/FinishAttendanceDto';
 
 @Injectable({
   providedIn: 'root'
@@ -215,11 +218,45 @@ export class HttpService {
     return this.http.delete<ResponseTicketDto>(`${this.API_URL}/tickets/`+ ticketId)
   }
 
-  public getTicketsForAttendance(): Observable<ResponseTicketsForAttendanceDto[]> {
-    return this.http.get<ResponseTicketsForAttendanceDto[]>(`${this.API_URL}/tickets/tickets-for-attendance`);
+  public cancelTicket(ticketId: string): Observable<ResponseTicketDto> {
+    return this.http.patch<ResponseTicketDto>(`${this.API_URL}/tickets/status/${ticketId}`, null);
+  }
+
+  public getTicketsForAttendance(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    });
+
+    return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
+      `${this.API_URL}/tickets/tickets-for-attendance?page=${page}&size=${size}`, {headers}
+    );
+  }
+
+  public getHistoryTicketsByAttendant(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    });
+
+    return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
+      `${this.API_URL}/tickets/history?page=${page}&size=${size}`, {headers}
+    );
   }
 
   // Attendance
+  public startAttendance(request: StartAttendanceDto): Observable<ResponseAttendanceDto> {
+
+    const header = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    });
+    return this.http.post<ResponseAttendanceDto>(`${this.API_URL}/attendances`, request, {headers: header});
+  }
+
+  public finishAttendance(request: FinishAttendanceDto): Observable<ResponseAttendanceDto> {
+    return this.http.patch<ResponseAttendanceDto>(`${this.API_URL}/attendances/finish`, request);
+  }
+
   public getAttendanceStatistics(): Observable<ResponseAttendanceDashboardDto> {
     return this.http.get<ResponseAttendanceDashboardDto>(`${this.API_URL}/attendances/statistics`);
   }

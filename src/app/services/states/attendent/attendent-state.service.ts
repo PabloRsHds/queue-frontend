@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { ResponseAttendanceStatisticsDto } from '../../../dtos/statistics/ResponseAttendanceStatisticsDto';
-import { ResponseTicketsForAttendanceDto } from '../../../dtos/attendance/ResponseTicketsForAttendanceDto';
+import { ResponseTicketsForAttendanceDto } from '../../../dtos/ticket/ResponseTicketsForAttendanceDto';
 import { ResponseCountTotalAttendancesStatisticsDto } from '../../../dtos/attendance/statistics/ResponseCountTotalAttendancesStatisticsDto';
 import { ResponseAverageServiceTimeStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageServiceTimeStatisticsDto';
 import { ResponseAttendancesByCustomerStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesByCustomerStatisticsDto';
@@ -12,6 +12,7 @@ import { ResponseAttendancesByWeekStatisticsDto } from '../../../dtos/attendance
 import { ResponseAttendancesCreatedByMonthStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesCreatedByMonthStatisticsDto';
 import { ResponseAverageAttendanceByUserStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageAttendanceByUserStatisticsDto';
 import { ResponseAverageWaitingTimeStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageWaitingTimeStatisticsDto';
+import { TicketStateService } from '../ticket/ticket-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,8 @@ import { ResponseAverageWaitingTimeStatisticsDto } from '../../../dtos/attendanc
 export class AttendentStateService {
 
   // Injections
-  private http = inject(HttpService)
-
-  // Ticket States
-  public tickets = signal<ResponseTicketsForAttendanceDto[] | []>([]);
+  private http = inject(HttpService);
+  private ticketState = inject(TicketStateService);
 
   // Attendance States
   public countTotalAttendances = signal<ResponseCountTotalAttendancesStatisticsDto | null>(null);
@@ -36,16 +35,13 @@ export class AttendentStateService {
   public attendancesByDepartment = signal<ResponseAttendancesByDepartmentStatisticsDto[] | null>(null)
   public attendancesByCustomer = signal<ResponseAttendancesByCustomerStatisticsDto[] | null>(null);
 
-  //variables
+  // Time
   public currentTimer = signal<string>('00:00:00');
   private intervalId: any;
 
   loadStatistics() {
     return this.http.getAttendanceStatistics().subscribe({
       next: (response) => {
-
-        console.log(response);
-
         this.countTotalAttendances.set(response.countTotalAttendances);
         this.averageWaitingTime.set(response.averageWaitingTime);
         this.averageServiceTime.set(response.averageServiceTime);
@@ -60,24 +56,31 @@ export class AttendentStateService {
     });
   }
 
-  getTicketsForAttendence() {
-    return this.http.getTicketsForAttendance().subscribe({
+  startAttendance(ticketId: string) {
+    return this.http.startAttendance({ ticketId }).subscribe({
       next: (response) => {
-        console.log(response);
-        this.tickets.set(response);
-        this.startTimer(response[0]);
+
+        this.startTimer(response.startedAt);
+        this.loadStatistics();
+        this.ticketState.getTicketsForAttendence();
+      }
+    });
+  }
+
+  finishAttendance(ticketId: string, observation: string, resolution: string) {
+    return this.http.finishAttendance({ ticketId, observation, resolution }).subscribe({
+      next: () => {
+        this.stopTimer();
+        this.loadStatistics();
+        this.ticketState.getTicketsForAttendence();
       }
     });
   }
 
   // Timer
-  startTimer(ticket: ResponseTicketsForAttendanceDto): void {
+  startTimer(startedAt: string): void {
 
-    if (!ticket.startAttendance) {
-      return;
-    }
-
-    const startDate = new Date(ticket.startAttendance);
+    const startDate = new Date(startedAt);
 
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -85,9 +88,7 @@ export class AttendentStateService {
 
     this.intervalId = setInterval(() => {
 
-      const diff = Math.floor(
-        (Date.now() - startDate.getTime()) / 1000
-      );
+      const diff = Math.floor((Date.now() - startDate.getTime()) / 1000);
 
       const hours = Math.floor(diff / 3600);
       const minutes = Math.floor((diff % 3600) / 60);
@@ -96,8 +97,19 @@ export class AttendentStateService {
       this.currentTimer.set(
         `${hours.toString().padStart(2, '0')}:` +
         `${minutes.toString().padStart(2, '0')}:` +
-        `${seconds.toString().padStart(2, '0')}`);
+        `${seconds.toString().padStart(2, '0')}`
+      );
 
     }, 1000);
+  }
+
+  stopTimer(): void {
+
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = undefined;
+    }
+
+    this.currentTimer.set('00:00:00');
   }
 }

@@ -603,7 +603,7 @@ export class SchedulingComponent implements OnInit {
         customerId: this.scheduleInfo()?.customerId ?? '',
         serviceManagementId: this.scheduleInfo()?.serviceManagementId ?? '',
         scheduleId: this.scheduleInfo()?.scheduleId ?? '',
-        priority: 'NORMAL'
+        priority: this.scheduleInfo()?.priority ?? ''
       });
   }
 

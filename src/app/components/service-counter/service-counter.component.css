@@ -129,8 +129,8 @@ body {
 }
 
 .stat-card-icon-wrapper {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -158,11 +158,8 @@ body {
 /* ===== MAIN CONTENT GRID ===== */
 .main-content-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
-  flex: 1;
-  min-height: 0;
-  align-items: start;
 }
 
 /* ===== COLUMNS ===== */
@@ -229,7 +226,7 @@ body {
 }
 
 .actions-card {
-  padding: 16px 20px;
+  padding: 65px 20px;
 }
 
 .actions-title {
@@ -251,11 +248,47 @@ body {
   flex-shrink: 0;
 }
 
+/* TABLE TICKETS*/
+
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.tickets-table {
+    width: 100%;
+    min-width: 850px; /* ajuste conforme a quantidade de colunas */
+    border-collapse: collapse;
+}
+
+.tickets-table th {
+  padding: 20px 0px;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #f7f7f794;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e2e8f0;
+  touch-action: manipulation;
+  min-width: 100px;
+}
+
+.tickets-table td {
+  padding: 12px 0px;
+  border-bottom: 1px solid #e2e8f0;
+  touch-action: manipulation;
+  text-align: center;
+  font-size: 14px;
+}
+
 .queue-tabs {
   display: flex;
   gap: 0;
   border-bottom: 1px solid #e2e8f0;
-  margin-bottom: 12px;
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
@@ -300,6 +333,16 @@ body {
 .queue-tab.active .queue-tab-count {
   background: #dbeafe;
   color: #2563eb;
+}
+
+.priority-normal {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.priority-priority {
+  color: #ef4444;
+  font-weight: 600;
 }
 
 /* ===== QUEUE TABLE ===== */
@@ -394,6 +437,28 @@ body {
   font-weight: 600;
   color: #16a34a;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.current-call-card-offline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f5f5, #f1f1f1);
+  border: 1px solid #dadada;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  touch-action: pan-y;
+}
+
+.call-status-offline {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a3a3a3;
+  text-transform: none;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
 }
@@ -819,15 +884,6 @@ body {
 /* ===== RESPONSIVIDADE ===== */
 /* ============================================= */
 
-/* ===== TABLET LARGE ===== */
-@media (max-width: 1259px) {
-  .main-content-grid,
-  .middle-column,
-  .right-column {
-    grid-template-columns: 1fr;
-  }
-}
-
 
 @media (max-width: 1200px) {
   .queue-row {
@@ -904,11 +960,6 @@ body {
 
   .stat-card {
     padding: 14px;
-  }
-
-  .stat-card-icon-wrapper {
-    width: 32px;
-    height: 32px;
   }
 
   .stat-value {

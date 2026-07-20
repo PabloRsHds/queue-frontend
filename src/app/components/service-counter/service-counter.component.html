@@ -73,36 +73,6 @@
 
   <!-- Main Content Grid -->
   <div class="main-content-grid">
-    <!-- Queue Column -->
-    <div class="section-card scroll-card">
-      <div class="card-header">
-        <h3 class="card-title">Fila de espera</h3>
-      </div>
-      <div class="card-tabs-wrapper">
-        <div class="queue-tabs">
-          <div class="queue-tab active" onclick="switchQueueTab(this)">Todos <span class="queue-tab-count">12</span></div>
-          <div class="queue-tab" onclick="switchQueueTab(this)">
-            Prioridade
-            <span class="queue-tab-count">2</span>
-          </div>
-        </div>
-      </div>
-      <div class="scroll-area">
-        <div class="table-header-row">
-          <span>Posição</span>
-          <span>Senha</span>
-          <span>Nome</span>
-          <span>Serviço</span>
-          <span>Chegada</span>
-        </div>
-        <div *ngFor="let item of tickets()">
-          {{ item.code }}
-        </div>
-      </div>
-      <button class="load-more-btn" onclick="loadMoreQueue()">
-        Ver mais na fila
-      </button>
-    </div>
 
     <!-- Middle Column -->
     <div class="middle-column">
@@ -111,151 +81,150 @@
         <div class="card-header">
           <h3 class="card-title">Chamada atual</h3>
         </div>
-        <div class="card-body">
+
+        <div class="card-body" *ngIf="this.ticketSelected() === null">
+          <div class="current-call-card-offline">
+
+            <div style="margin-bottom: 5px;">
+              <svg viewBox="0 0 16 16" width="32px" height="32px" xmlns="http://www.w3.org/2000/svg" fill="none"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill="#adadad"> <path fill-rule="evenodd" d="M6 2a3.5 3.5 0 100 7 3.5 3.5 0 000-7zM4 5.5a2 2 0 114 0 2 2 0 01-4 0z" clip-rule="evenodd"></path> <path d="M4.25 10A3.75 3.75 0 00.5 13.75v.5a.75.75 0 001.5 0v-.5a2.25 2.25 0 012.25-2.25h3.5A2.25 2.25 0 0110 13.75v.5a.75.75 0 001.5 0v-.5A3.75 3.75 0 007.75 10h-3.5zM11.22 5.22a.75.75 0 011.06 0l1.22 1.22 1.22-1.22a.75.75 0 111.06 1.06L14.56 7.5l1.22 1.22a.75.75 0 01-1.06 1.06L13.5 8.56l-1.22 1.22a.75.75 0 11-1.06-1.06l1.22-1.22-1.22-1.22a.75.75 0 010-1.06z"></path> </g> </g>
+              </svg>
+            </div>
+            <div class="call-status-offline">Nenhum cliente foi chamado</div>
+            <div class="call-status-offline">Inicie o atendimento.</div>
+          </div>
+        </div>
+
+        <div class="card-body" *ngIf="this.ticketSelected() !== null">
           <div class="current-call-card pulse-active">
             <div class="call-status">Atendendo</div>
-            <div class="call-senhas">{{ this.tickets()[0]?.code}}</div>
-            <div class="call-guiche">Guichê 01</div>
-            <div class="call-client-name">{{ this.tickets()[0]?.customerName}}</div>
-            <div class="call-client-service">{{ this.tickets()[0]?.serviceManagementName}}</div>
-            <div class="call-timer-wrapper" *ngIf="this.tickets()[0]?.finishAttendance === null">
-              <div class="call-time-label">Tempo de atendimento</div>
+            <div class="call-senhas">{{ this.ticketSelected()?.code}}</div>
+            <div class="call-guiche">Guichê {{ userLogged()?.counterNumber ?? 0 }}</div>
+            <div class="call-client-name">{{ this.ticketSelected()?.customerName}}</div>
+            <div class="call-client-service">{{ this.ticketSelected()?.serviceManagementName}}</div>
+            <div class="call-timer-wrapper" *ngIf="this.ticketSelected()?.finishAttendance === null">
+              <div class="call-time-label">Duração do atendimento</div>
               <div class="call-time-value" id="currentCallTimer">{{ currentTimer() }}</div>
             </div>
-
-            <div class="call-timer-wrapper" *ngIf="this.tickets()[0]?.finishAttendance === null">
-              <div class="call-time-label">Tempo de espera</div>
-              <div class="call-time-value" id="currentCallTimer">{{ this.tickets()[0]?.finishAttendance | date: 'HH:mm:ss'}}</div>
-            </div>
-
-            <div class="call-timer-wrapper" *ngIf="this.tickets()[0]?.finishAttendance !== null">
-              <div class="call-time-label">Tempo de espera</div>
-              <div class="call-time-value" id="currentCallTimer">{{ this.tickets()[0]?.attendanceTime }}</div>
-            </div>
-
           </div>
         </div>
+
       </div>
 
-      <!-- Actions -->
-      <div class="section-card">
-        <div class="card-body actions-card">
-          <h3 class="actions-title">Ações rápidas</h3>
-          <div class="actions-grid">
-            <button class="action-btn-primary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              Finalizar atendimento
-            </button>
-            <button class="action-btn-secondary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-              Chamar próximo
-            </button>
-            <button class="action-btn-danger">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="15" y1="9" x2="9" y2="15"/>
-                <line x1="9" y1="9" x2="15" y2="15"/>
-              </svg>
-              Cancelar atendimento
-            </button>
-          </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="section-card">
+
+      <div class="card-header">
+        <h3 class="card-title">Ações rápidas</h3>
+      </div>
+
+      <div class="card-body actions-card">
+        <div class="actions-grid">
+          <button class="action-btn-primary"
+          *ngIf="this.ticketSelected()?.startAttendance === null && this.ticketSelected() !== null"
+          (click)="startAttendance(this.ticketSelected()!.ticketId)"
+          >
+            Iniciar atendimento
+          </button>
+          <button class="action-btn-primary"
+          *ngIf="this.ticketSelected()?.startAttendance !== null"
+          (click)="finishAttendance(ticketSelected()?.ticketId ?? '')"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Finalizar atendimento
+          </button>
+          <button class="action-btn-secondary" (click)="callNextTicket(this.ticketsForAttendance())">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z" stroke="#1354ec" stroke-width="2" stroke-linejoin="round"></path> </g>
+            </svg>
+            Chamar próximo
+          </button>
+          <button class="action-btn-secondary" *ngIf="this.cont() > 0" (click)="callBeforeTicket(this.ticketsForAttendance())">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z" stroke="#1354ec" stroke-width="2" stroke-linejoin="round"></path> </g>
+            </svg>
+            Chamada anterior
+          </button>
+          <button class="action-btn-danger"
+            *ngIf="this.ticketSelected()?.startAttendance === null && this.ticketSelected() !== null"
+            (click)="cancelTicket(this.ticketSelected()!.ticketId)"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+            Cancelar atendimento
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Right Column -->
-    <div class="right-column">
-      <!-- Next Call -->
-      <div class="section-card">
-        <div class="card-header">
-          <h3 class="card-title">Próxima chamada</h3>
-        </div>
-        <div class="card-body">
-          <div class="next-call-card">
-            <div class="next-label">Próximo da fila</div>
-            <div class="next-senha">{{this.tickets()[1]?.code}}</div>
-            <div class="next-name">{{this.tickets()[1]?.customerName}}</div>
-            <div class="next-dept">{{this.tickets()[1]?.serviceManagementName}}</div>
-            <button class="call-now-btn" >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="5 3 19 12 5 21 5 3"/>
-              </svg>
-              Chamar agora
-            </button>
+    <!-- Queue Column -->
+    <div class="section-card scroll-card">
+      <div class="card-header">
+        <h3 class="card-title">Fila de espera</h3>
+      </div>
+
+      <div class="card-tabs-wrapper">
+        <div class="queue-tabs">
+          <div class="queue-tab active">
+            Todos
+            <span class="queue-tab-count">{{ totalTickets() }}</span>
           </div>
         </div>
       </div>
 
-      <!-- History -->
-      <div class="section-card scroll-card">
-        <div class="card-header history-header">
-          <h3 class="card-title">Histórico de chamadas</h3>
-          <a href="#" class="view-all-link">Ver todos</a>
-        </div>
-        <div class="scroll-area">
-          <div>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-            <p>teste1</p>
-          </div>
+      <div class="table-wrapper">
+        <table class="tickets-table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Senha</th>
+              <th>Nome</th>
+              <th>Serviço</th>
+              <th>Chegada</th>
+              <th>Prioridade</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of ticketsForAttendance(); let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.code }}</td>
+              <td>{{ item.customerName }}</td>
+              <td>{{ item.serviceManagementName }}</td>
+              <td>{{ item.arrivalTime | date : 'HH:mm' }}</td>
+              <td [class.priority-normal]="item.priority === 'NORMAL'"
+                  [class.priority-priority]="item.priority === 'PRIORITY'">
+                {{ getNamePriority(item.priority) }}
+              </td>
+            </tr>
+
+            <tr *ngIf="ticketsForAttendance().length === 0">
+              <td colspan="5" class="empty-table">
+                Nenhum ticket encontrado.
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="section-card scroll-card">
+      <div class="card-header history-header">
+        <h3 class="card-title">Histórico de chamadas</h3>
+        <a href="#" class="view-all-link">Ver todos</a>
+      </div>
+      <div class="scroll-area" >
+        <div *ngFor="let ticket of historyTickets()">
+          <p>{{ ticket.customerName }}</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Bar -->
-  <div class="bottom-bar">
-    <div class="bottom-container">
-      <div class="bottom-item">
-        <div class="status-dot blue"></div>
-        <span class="bottom-label">Guichê 01</span>
-      </div>
-      <div class="bottom-item">
-        <span class="bottom-text">Atendimento ao Cliente</span>
-      </div>
-      <div class="bottom-item">
-        <div class="status-dot green"></div>
-        <span class="status-text">Online</span>
-      </div>
-      <div class="bottom-item vertical">
-        <span class="bottom-sub">Atendente</span>
-        <span class="bottom-value">Admin</span>
-      </div>
-      <div class="bottom-item vertical">
-        <span class="bottom-sub">Início do expediente</span>
-        <span class="bottom-value">08:00</span>
-      </div>
-      <div class="bottom-item vertical">
-        <span class="bottom-sub">Intervalo</span>
-        <span class="bottom-value">12:00 - 13:00</span>
-      </div>
-    </div>
-    <button class="end-shift-btn" onclick="endShift()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10"/>
-        <polyline points="15 9 9 15"/>
-        <polyline points="9 9 15 15"/>
-      </svg>
-      Encerrar expediente
-    </button>
-  </div>
 </div>

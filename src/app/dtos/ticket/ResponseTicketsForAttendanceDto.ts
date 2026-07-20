@@ -2,6 +2,8 @@ export interface ResponseTicketsForAttendanceDto {
 
   ticketId: string;
   code: string;
+  status: string;
+  priority: string;
   customerName: string;
   serviceManagementName: string;
   arrivalTime: string;

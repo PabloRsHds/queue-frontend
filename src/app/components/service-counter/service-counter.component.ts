@@ -1,6 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { AttendentStateService } from '../../services/states/attendent/attendent-state.service';
 import { CommonModule } from '@angular/common';
+import { TicketStateService } from '../../services/states/ticket/ticket-state.service';
+import { UserStateService } from '../../services/states/user/user-state.service';
+import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicketsForAttendanceDto';
 
 @Component({
   selector: 'app-service-counter',
@@ -12,21 +15,122 @@ export class ServiceCounterComponent implements OnInit {
 
   // Injections
   private attendentState = inject(AttendentStateService);
+  private ticketState = inject(TicketStateService);
+  private userState = inject(UserStateService);
 
-  // State
+  // State Attendent
   public countTotalAttendances = this.attendentState.countTotalAttendances;
   public averageServiceTime = this.attendentState.averageServiceTime;
   public avarageWaitingTime = this.attendentState.averageWaitingTime;
-  public tickets = this.attendentState.tickets
-  public currentTimer = this.attendentState.currentTimer
+
+  // State Ticket
+  public ticketsForAttendance = this.ticketState.ticketsForAttendance;
+  public historyTickets = this.ticketState.historyTickets;
+  public totalTickets = this.ticketState.totalTickets;
+
+  // State attendent
+  public currentTimer = this.attendentState.currentTimer;
+
+  // Next ticket
+  public cont = signal(-1);
+
+  // State User
+  public userLogged = this.userState.userLogged;
 
   // Variables
   startTime = new Date();
   date: string = '00:00:00';
 
+  public ticketSelectedId = signal<string | null>(null);
+
+  public ticketSelected = computed(() => {
+    const id = this.ticketSelectedId();
+
+    if (!id) {
+      return null;
+    }
+
+    return (
+      this.ticketsForAttendance().find(
+        ticket => ticket.ticketId === id
+      ) ?? null
+    );
+  });
+
+  constructor() {
+
+    effect(() => {
+
+      if (this.ticketSelected() !== null) {
+        this.ticketSelected();
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.attendentState.loadStatistics();
-    this.attendentState.getTicketsForAttendence();
+    this.ticketState.getTicketsForAttendence();
+    this.ticketState.getHistoryTicketsByAttendant();
+    this.userState.getUserByToken();
+  }
+
+  getNamePriority(priority: string):string {
+    if (priority === 'NORMAL') return 'Normal';
+    else if (priority === 'PRIORITY') return 'Prioridade';
+    return '';
+  }
+
+  // Start attendance
+  startAttendance(ticketId: string) {
+    this.attendentState.startAttendance(ticketId);
+  }
+
+  finishAttendance(ticketId: string) {
+
+    const observation = '';
+    const resolution = '';
+    if (ticketId === '') return;
+    this.attendentState.finishAttendance(ticketId, observation, resolution);
+    this.ticketSelectedId.set(null);
+  }
+
+  cancelTicket(ticketId: string) {
+
+    if (ticketId === '') return;
+    this.ticketState.cancelTicket(ticketId);
+    this.ticketSelectedId.set(null);
+  }
+
+  callNextTicket(tickets: ResponseTicketsForAttendanceDto[]) {
+
+    if (tickets.length === 0) {
+      return;
+    }
+
+    const nextIndex = this.cont() + 1;
+
+    if (nextIndex >= tickets.length) {
+      return;
+    }
+
+    this.cont.set(nextIndex);
+    this.ticketSelectedId.set(tickets[nextIndex].ticketId);
+  }
+
+  callBeforeTicket(tickets: ResponseTicketsForAttendanceDto[]) {
+
+    if (tickets.length === 0) {
+      return;
+    }
+
+    const previousIndex = this.cont() - 1;
+
+    if (previousIndex < 0) {
+      return;
+    }
+
+    this.cont.set(previousIndex);
+    this.ticketSelectedId.set(tickets[previousIndex].ticketId);
   }
 
 }
