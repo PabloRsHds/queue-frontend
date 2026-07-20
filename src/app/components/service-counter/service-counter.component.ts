@@ -80,6 +80,12 @@ export class ServiceCounterComponent implements OnInit {
     return '';
   }
 
+  getNameStatus(status: string):string {
+    if(status === 'FINISHED') return 'Finalizado';
+    else if (status === 'CANCELED') return 'Cancelado';
+    return ''
+  }
+
   // Start attendance
   startAttendance(ticketId: string) {
     this.attendentState.startAttendance(ticketId);

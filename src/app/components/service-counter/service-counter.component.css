@@ -880,6 +880,22 @@ body {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+/** INFO CARD **/
+.info-card {
+  border: 1px solid #367ad46e;
+  border-radius: 8px;
+  background-color: #3b83f629;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+.info-card p {
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  color: #2d3c5d;
+}
+
 /* ============================================= */
 /* ===== RESPONSIVIDADE ===== */
 /* ============================================= */
