@@ -149,7 +149,7 @@
             Chamada anterior
           </button>
           <button class="action-btn-danger"
-            *ngIf="this.ticketSelected()?.startAttendance === null && this.ticketSelected() !== null"
+            *ngIf="this.ticketSelected()?.startAttendance !== null && this.ticketSelected() !== null"
             (click)="openModalCanceled(this.ticketSelected()!.ticketId)"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
