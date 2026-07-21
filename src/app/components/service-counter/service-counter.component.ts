@@ -6,6 +6,7 @@ import { UserStateService } from '../../services/states/user/user-state.service'
 import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicketsForAttendanceDto';
 import { interval, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-service-counter',
@@ -20,6 +21,7 @@ export class ServiceCounterComponent implements OnInit {
   private ticketState = inject(TicketStateService);
   private userState = inject(UserStateService);
   private fb = inject(FormBuilder);
+  private snackBar = inject(MatSnackBar);
 
   // State Attendent
   public countTotalAttendances = this.attendentState.countTotalAttendances;
@@ -93,7 +95,85 @@ export class ServiceCounterComponent implements OnInit {
       if (this.ticketSelected() !== null) {
         this.ticketSelected();
       }
-    })
+    });
+
+    effect(() => {
+
+      if (this.attendentState.startAttendanceStatus() === 'success') {
+
+        this.snackBar.open(this.attendentState.startAttendanceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+
+        this.attendentState.resetStatus();
+
+      }
+
+
+      if (this.attendentState.startAttendanceStatus() === 'error') {
+
+        this.snackBar.open(this.attendentState.startAttendanceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+
+        this.attendentState.resetStatus();
+      }
+    });
+
+    effect(() => {
+
+      if (this.attendentState.finishAttendanceStatus() === 'success') {
+
+        this.snackBar.open(this.attendentState.finishAttendanceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+
+        this.ticketSelectedId.set(null);
+        this.modalFinishAttendance = false;
+        this.attendentState.resetStatus();
+
+      }
+
+      if (this.attendentState.finishAttendanceStatus() === 'error') {
+
+        this.snackBar.open(this.attendentState.finishAttendanceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+
+        this.attendentState.resetStatus();
+      }
+    });
+
+    effect(() => {
+
+      if (this.attendentState.cancelAttendanceStatus() === 'success') {
+
+        this.snackBar.open(this.attendentState.cancelAttendanceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+
+        this.ticketSelectedId.set(null);
+        this.modalCancelAttendance = false;
+        this.attendentState.resetStatus();
+
+      }
+
+      if (this.attendentState.cancelAttendanceStatus() === 'error') {
+
+        this.snackBar.open(this.attendentState.cancelAttendanceMessage(), 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+
+        this.attendentState.resetStatus();
+      }
+    });
+
   }
 
   ngOnInit(): void {
@@ -253,12 +333,10 @@ export class ServiceCounterComponent implements OnInit {
     this.modalCancelAttendance = false;
   }
 
-  cancelTicket(ticketId: string) {
+  cancelAttendance(ticketId: string) {
 
     if (ticketId === '') return;
-    this.ticketState.cancelTicket(ticketId);
-    this.ticketSelectedId.set(null);
-    this.modalCancelAttendance = false;
+    this.attendentState.cancelAttendance(ticketId);
   }
 
   // Modal finish
@@ -275,8 +353,6 @@ export class ServiceCounterComponent implements OnInit {
 
     if (ticketId === '') return;
     this.attendentState.finishAttendance(ticketId, this.finishForm.value.resolution);
-    this.ticketSelectedId.set(null);
-    this.modalFinishAttendance = false;
   }
 
 }

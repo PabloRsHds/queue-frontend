@@ -70,16 +70,6 @@ export class TicketStateService {
     })
   }
 
-  cancelTicket(ticketId: string) {
-
-    this.http.cancelTicket(ticketId).subscribe({
-      next: (response) => {
-        this.getTicketsForAttendence();
-      }
-    })
-
-  }
-
   getTicketsForAttendence() {
     this.http.getTicketsForAttendance(this.pageTickets(), this.size).subscribe({
       next: (response) => {

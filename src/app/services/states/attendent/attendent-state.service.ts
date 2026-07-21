@@ -1,3 +1,4 @@
+import { FinishAttendanceDto } from './../../../dtos/attendance/FinishAttendanceDto';
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { ResponseAttendanceStatisticsDto } from '../../../dtos/statistics/ResponseAttendanceStatisticsDto';
@@ -39,6 +40,17 @@ export class AttendentStateService {
   public currentTimer = signal<string>('00:00:00');
   private intervalId: any;
 
+
+  // Messages
+  public startAttendanceMessage = signal('');
+  public startAttendanceStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public finishAttendanceMessage = signal('');
+  public finishAttendanceStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public cancelAttendanceMessage = signal('');
+  public cancelAttendanceStatus = signal<'success' | 'error' | 'default'>('default');
+
   loadStatistics() {
     return this.http.getAttendanceStatistics().subscribe({
       next: (response) => {
@@ -63,6 +75,13 @@ export class AttendentStateService {
         this.startTimer(response.startedAt);
         this.loadStatistics();
         this.ticketState.getTicketsForAttendence();
+
+        this.startAttendanceMessage.set("Atendimento iniciado com sucesso!");
+        this.startAttendanceStatus.set('success');
+      },
+      error: () => {
+        this.startAttendanceMessage.set("Erro ao iniciar atendimento!");
+        this.startAttendanceStatus.set('error');
       }
     });
   }
@@ -73,8 +92,31 @@ export class AttendentStateService {
         this.stopTimer();
         this.loadStatistics();
         this.ticketState.getTicketsForAttendence();
+
+        this.finishAttendanceMessage.set("Atendimento finalizado com sucesso!");
+        this.finishAttendanceStatus.set('success');
+      },
+      error: () => {
+        this.finishAttendanceMessage.set("Erro ao finalizar atendimento!");
+        this.finishAttendanceStatus.set('error');
       }
     });
+  }
+
+  cancelAttendance(ticketId: string) {
+
+    this.http.cancelTicket(ticketId).subscribe({
+      next: (response) => {
+        this.ticketState.getTicketsForAttendence();
+
+        this.cancelAttendanceMessage.set("Atendimento cancelado com sucesso!");
+        this.cancelAttendanceStatus.set('success');
+      },
+      error: () => {
+        this.cancelAttendanceMessage.set("Erro ao cancelar atendimento!");
+        this.cancelAttendanceStatus.set('error');
+      }
+    })
   }
 
   // Timer
@@ -111,5 +153,14 @@ export class AttendentStateService {
     }
 
     this.currentTimer.set('00:00:00');
+  }
+
+  resetStatus() {
+    this.startAttendanceMessage.set('');
+    this.startAttendanceStatus.set('default');
+    this.finishAttendanceMessage.set('');
+    this.finishAttendanceStatus.set('default');
+    this.cancelAttendanceMessage.set('');
+    this.cancelAttendanceStatus.set('default');
   }
 }

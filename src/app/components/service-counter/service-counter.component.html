@@ -344,7 +344,7 @@
       </svg>
     </div>
 
-    <p style="margin-bottom: 2px;">
+    <p style="margin-bottom: 2px; font-weight: 600">
       Bem-vindo ao Painel de Atendimento.
     </p>
     <p>
@@ -419,7 +419,7 @@
         <button
           type="button"
           class="modal-cancel-confirm"
-          (click)="ticketSelected() && cancelTicket(ticketSelected()!.ticketId)">
+          (click)="ticketSelected() && cancelAttendance(ticketSelected()!.ticketId)">
           Cancelar atendimento
         </button>
         <button type="button" class="button-back" (click)="closeModalCanceled()">Cancelar</button>
