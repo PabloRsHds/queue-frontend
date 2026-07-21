@@ -67,8 +67,8 @@ export class AttendentStateService {
     });
   }
 
-  finishAttendance(ticketId: string, observation: string, resolution: string) {
-    return this.http.finishAttendance({ ticketId, observation, resolution }).subscribe({
+  finishAttendance(ticketId: string, resolution: string) {
+    return this.http.finishAttendance({ ticketId, resolution }).subscribe({
       next: () => {
         this.stopTimer();
         this.loadStatistics();

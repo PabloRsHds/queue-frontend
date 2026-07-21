@@ -41,6 +41,7 @@ import { ResponseAttendanceDashboardDto } from '../../dtos/attendance/statistics
 import { StartAttendanceDto } from '../../dtos/attendance/StartAttendanceDto';
 import { ResponseAttendanceDto } from '../../dtos/attendance/ResponseAttendanceDto';
 import { FinishAttendanceDto } from '../../dtos/attendance/FinishAttendanceDto';
+import { ResponseFinishAttendanceDto } from '../../dtos/attendance/ResponseFinishAttendanceDto';
 
 @Injectable({
   providedIn: 'root'
@@ -253,8 +254,8 @@ export class HttpService {
     return this.http.post<ResponseAttendanceDto>(`${this.API_URL}/attendances`, request, {headers: header});
   }
 
-  public finishAttendance(request: FinishAttendanceDto): Observable<ResponseAttendanceDto> {
-    return this.http.patch<ResponseAttendanceDto>(`${this.API_URL}/attendances/finish`, request);
+  public finishAttendance(request: FinishAttendanceDto): Observable<ResponseFinishAttendanceDto> {
+    return this.http.patch<ResponseFinishAttendanceDto>(`${this.API_URL}/attendances/finish`, request);
   }
 
   public getAttendanceStatistics(): Observable<ResponseAttendanceDashboardDto> {

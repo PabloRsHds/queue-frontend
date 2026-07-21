@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { CreateTicketDto } from '../../../dtos/ticket/CreateTicketDto';
 import { ResponseTicketDto } from '../../../dtos/ticket/ResponseTicketDto';
@@ -26,8 +26,16 @@ export class TicketStateService {
   public historyTickets = signal<ResponseTicketsForAttendanceDto[]>([]);
   public totalTickets = signal(0);
 
-  public page = signal<number>(0);
-  public readonly size = 4;
+  // PAGINATION TICKETS
+  public pageTickets = signal<number>(0);
+  public readonly size = 6;
+  public totalElementsTickets = signal(0);
+  public totalPagesTickets = signal(0);
+
+  // PAGINATION HISTORY
+  public pageHistory = signal<number>(0);
+  public totalElementsHistory = signal(0);
+  public totalPagesHistory = signal(0);
 
 
   createTicket(request: CreateTicketDto) {
@@ -73,25 +81,71 @@ export class TicketStateService {
   }
 
   getTicketsForAttendence() {
-    console.log("Buscando tickets");
-
-    this.http.getTicketsForAttendance(this.page(), this.size).subscribe({
+    this.http.getTicketsForAttendance(this.pageTickets(), this.size).subscribe({
       next: (response) => {
-        console.log(response.content);
-
         this.ticketsForAttendance.set(response.content);
         this.totalTickets.set(response.totalElements);
+        this.totalElementsTickets.set(response.totalElements);
+        this.totalPagesTickets.set(response.totalPages);
       }
     });
   }
 
   getHistoryTicketsByAttendant() {
-    return this.http.getHistoryTicketsByAttendant(this.page(), this.size).subscribe({
+    return this.http.getHistoryTicketsByAttendant(this.pageTickets(), this.size).subscribe({
       next: (response) => {
         this.historyTickets.set(response.content);
         this.totalTickets.set(response.totalElements);
       }
     });
+  }
+
+  // PAGINATION TICKETS
+  nextPageTickets() {
+
+    if (this.pageTickets() + 1 >= this.totalPagesTickets()) return;
+
+    this.pageTickets.update(p => p + 1);
+    this.getTicketsForAttendence();
+  }
+
+  previousPageTickets() {
+
+    if (this.pageTickets() === 0) return;
+    this.pageTickets.update(p => p - 1);
+
+    this.getTicketsForAttendence();
+  }
+
+  goToPageTickets(page: number) {
+
+    if (page < 0 || page >= this.totalPagesTickets()) return;
+    this.pageTickets.set(page);
+    this.getTicketsForAttendence();
+  }
+
+  // PAGINATION HISTORY
+  nextPageHistory() {
+
+    if (this.pageHistory() + 1 >= this.totalPagesHistory()) return;
+
+    this.pageHistory.update(p => p + 1);
+    this.getHistoryTicketsByAttendant();
+  }
+
+  previousPageHistory() {
+
+    if (this.pageHistory() === 0) return;
+    this.pageHistory.update(p => p - 1);
+
+    this.getHistoryTicketsByAttendant();
+  }
+
+  goToPageHistory(page: number) {
+
+    if (page < 0 || page >= this.totalPagesHistory()) return;
+    this.pageHistory.set(page);
+    this.getHistoryTicketsByAttendant();
   }
 
   // RESETS
