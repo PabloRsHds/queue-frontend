@@ -3306,6 +3306,16 @@
   background: #15803D;
 }
 
+@media (max-height: 900px) {
+    .modal-register,
+    .modal-update,
+    .modal-delete,
+    .modal-view {
+        overflow-y: auto;
+        max-height: 95vh;
+    }
+}
+
 @media (max-width: 768px) {
   .btn-group {
 

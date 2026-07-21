@@ -1743,11 +1743,14 @@ body {
   }
 }
 
-@media (max-height: 900px) and (max-width: 768px) {
-  .modal-register {
-    overflow-y: auto;
-    max-height: 100vh;
-  }
+@media (max-height: 900px) {
+    .modal-register,
+    .modal-update,
+    .modal-delete,
+    .modal-view {
+        overflow-y: auto;
+        max-height: 95vh;
+    }
 }
 
 /* Mobile médio */

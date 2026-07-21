@@ -2430,6 +2430,18 @@ body {
   }
 }
 
+@media (max-height: 900px) {
+  .modal-register,
+  .modal-update,
+  .modal-delete,
+  .modal-view,
+  .modal-ticket,
+  .modal-ticket-print {
+      overflow-y: auto;
+      max-height: 95vh;
+  }
+}
+
 
 /* Mobile médio */
 @media (max-width: 900px) {

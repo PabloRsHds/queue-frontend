@@ -1674,6 +1674,14 @@ body {
   }
 }
 
+@media (max-height: 900px) {
+    .modal-cancel,
+    .modal-finish {
+        overflow-y: auto;
+        max-height: 95vh;
+    }
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
   .dept-modal-close {
