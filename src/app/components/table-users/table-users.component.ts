@@ -201,7 +201,7 @@ export class TableUsersComponent implements OnInit {
           })
         });
       }
-    })
+    });
   }
 
   public toggleService(serviceId: string, event: Event): void {

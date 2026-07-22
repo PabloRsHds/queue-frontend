@@ -32,7 +32,7 @@ export class SchedulingComponent implements OnInit {
   // Variables
   dropDown: number | null = null;
   itemsPerPage = 4;
-  table = signal<string>('Scheduling');
+  table = this.schedulingState.table;
   currentDate = new Date();
   searchCustomerInput = '';
   updateCustomerSearch = '';
@@ -45,7 +45,7 @@ export class SchedulingComponent implements OnInit {
   modalSchedulingView = false;
 
   // MODAIS CUSTOMER
-  modalCustomerRegister = false;
+  modalCustomerRegister = this.schedulingState.modalCustomerRegister;
   modalCustomerUpdate = false;
   modalCustomerDelete = false;
   modalCustomerView = false;
@@ -222,7 +222,7 @@ export class SchedulingComponent implements OnInit {
           duration: 3000,
           panelClass: ['snackbar-success']
         });
-        this.modalCustomerRegister = false;
+        this.modalCustomerRegister.set(false);
         this.registerCustomerForm.reset();
         this.customerState.resetStatus();
       }
@@ -389,11 +389,11 @@ export class SchedulingComponent implements OnInit {
 
   // ====== MODALS CUSTOMER =========
   public openCustomerModalRegister() {
-    this.modalCustomerRegister = true;
+    this.modalCustomerRegister.set(true);
   }
 
   public closeCustomerModalRegister() {
-    this.modalCustomerRegister = false;
+    this.modalCustomerRegister.set(false);
   }
 
   public openCustomerModalUpdate(customerId: string) {

@@ -58,6 +58,9 @@ export class ScheduleStateService {
 
   // ======== MODAL ========
   public modalSchedulingRegister = signal<Boolean>(false);
+  public modalCustomerRegister = signal<Boolean>(false);
+
+  public table = signal<string>('Scheduling');
 
   public scheduleTotalPages = computed(() =>
     Math.ceil(this.scheduleTotalElements() / this.scheduleSize)
