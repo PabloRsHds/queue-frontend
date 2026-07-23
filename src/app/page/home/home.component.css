@@ -555,8 +555,9 @@ app-config {
   transition: all 0.2s;
 }
 
-.quick-item-reception {
-
+.brand-logo-icon .image-mobile {
+  width: 38px;
+  height: 30px;
 }
 
 .quick-item:hover {

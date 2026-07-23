@@ -1265,6 +1265,25 @@ body {
   background: #1d4ed8;
 }
 
+.call-btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: #e07c09;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s;
+  touch-action: manipulation;
+}
+
 .action-btn-secondary {
   width: 100%;
   padding: 12px;

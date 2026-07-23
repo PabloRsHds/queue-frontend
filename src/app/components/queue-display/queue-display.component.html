@@ -1,0 +1,61 @@
+<div class="queue-container">
+
+  <div class="video-container">
+    <iframe
+      width="100%"
+      height="100%"
+      [src]="videoUrl"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="ticket-container">
+    <div class="middle-column">
+      <!-- Current Call -->
+      <div class="section-card">
+
+        <div class="card-body" *ngIf="this.ticketForPanel() === null">
+          <div class="current-call-card-offline">
+
+            <div style="margin-bottom: 5px;">
+              <svg viewBox="0 0 24 24" width="35" height="35" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M4 21V18.5C4 15.4624 6.46243 13 9.5 13H14.5C17.5376 13 20 15.4624 20 18.5V21M8 21V18M16 21V18M11 9H7.5C6.67157 9 6 8.32843 6 7.5V6.5C6 5.16725 6.57938 3.96983 7.5 3.14585M18 8.00001V6.50001C18 5.16726 17.4206 3.96983 16.5 3.14585M20 7.5V6M4 7.5V6M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#126bca" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path></g>
+              </svg>
+            </div>
+            <div class="call-status-offline">Nenhum cliente foi chamado,</div>
+            <div class="call-status-offline">inicie o atendimento.</div>
+          </div>
+        </div>
+
+        <div class="card-body" *ngIf="this.ticketForPanel() !== null && this.ticketForPanel()?.startAttendance === null">
+          <div class="current-call-card-call">
+            <div class="call-guiche">Guichê {{ userLogged()?.counterNumber ?? 0 }}</div>
+            <div class="call-senhas">{{ this.ticketForPanel()?.code}}</div>
+            <div class="call-client-name">{{ this.ticketForPanel()?.customerName}}</div>
+            <div class="call-client-service">{{ this.ticketForPanel()?.serviceManagementName}}</div>
+          </div>
+        </div>
+
+        <div class="card-body" *ngIf="this.ticketForPanel() !== null && this.ticketForPanel()?.startAttendance !== null">
+          <div class="current-attendance-card pulse-active">
+            <div class="attendance-status">Atendendo</div>
+            <div class="attendance-senhas">{{ this.ticketForPanel()?.code}}</div>
+            <div class="attendance-guiche">Guichê {{ userLogged()?.counterNumber ?? 0 }}</div>
+            <div class="attendance-client-name">{{ this.ticketForPanel()?.customerName}}</div>
+            <div class="attendance-client-service">{{ this.ticketForPanel()?.serviceManagementName}}</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ticket-list">
+    <h1>213</h1>
+  </div>
+
+
+</div>

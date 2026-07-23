@@ -7,6 +7,7 @@ import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicke
 import { interval, Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { VoiceService } from '../../services/voice/voice.service';
 
 @Component({
   selector: 'app-service-counter',
@@ -92,13 +93,6 @@ export class ServiceCounterComponent implements OnInit {
 
     effect(() => {
 
-      if (this.ticketSelected() !== null) {
-        this.ticketSelected();
-      }
-    });
-
-    effect(() => {
-
       if (this.attendentState.startAttendanceStatus() === 'success') {
 
         this.snackBar.open(this.attendentState.startAttendanceMessage(), 'Fechar', {
@@ -174,11 +168,24 @@ export class ServiceCounterComponent implements OnInit {
       }
     });
 
+    effect(() => {
+
+      const ticket = this.ticketSelected();
+
+      if (ticket) {
+        localStorage.setItem(
+          'ticketForPanel',
+          JSON.stringify(ticket)
+        );
+      }
+    });
+
   }
 
   ngOnInit(): void {
     this.attendentState.loadStatistics();
     this.userState.getUserByToken();
+    localStorage.removeItem('ticketForPanel');
 
     this.pollingSubscription = interval(10000).subscribe(() => {
       this.ticketState.getTicketsForAttendence();
@@ -355,4 +362,7 @@ export class ServiceCounterComponent implements OnInit {
     this.attendentState.finishAttendance(ticketId, this.finishForm.value.resolution);
   }
 
+  callCustomer() {
+    localStorage.setItem('call-customer', 'true');
+  }
 }

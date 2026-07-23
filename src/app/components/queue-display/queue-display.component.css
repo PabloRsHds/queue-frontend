@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing:
+  border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f8fafc;
+}
+
+.queue-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video-container {
+  text-align: center;
+}
+
+.ticket-container {
+  height: 100%;
+  display: flex;
+}
+
+/* ===== CARD BODY ===== */
+
+.middle-column {
+  width: 100%;
+  height: 100%;
+}
+
+.section-card {
+  width: 100%;
+  height: 100%;
+}
+
+.card-body {
+  height: 100%;
+}
+
+.actions-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.actions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ===== CURRENT CALL ===== */
+.current-attendance-card {
+  height: 100%;
+  min-height: 100%;
+
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  border: 1px solid #bbf7d0;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.attendance-status {
+  font-size: 11px;
+  font-weight: 600;
+  color: #16a34a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.call-status {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fcfcfc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.current-call-card-call {
+  height: 100%;
+  min-height: 100%;
+  background: linear-gradient(135deg, #0b2b81, #134ce7);
+  border: 1px solid #134ce7;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.current-call-card-offline {
+  height: 100%;
+  min-height: 100%;
+
+  background: linear-gradient(135deg, #f0f7fd, #ecf5fd);
+  border: 1px solid #bbdcf7;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.call-status-offline {
+  font-size: 12px;
+  font-weight: 500;
+  color: #5a647b;
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.attendance-senhas {
+  font-size: 42px;
+  font-weight: 800;
+  color: #16a34a;
+  letter-spacing: 2px;
+}
+
+.call-senhas {
+  font-size: 50px;
+  font-weight: 800;
+  color: #ff9207;
+  letter-spacing: 2px;
+}
+
+.attendance-guiche {
+  font-size: 14px;
+  color: #16a34a;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.call-guiche {
+  font-size: 32px;
+  color: #fcf9f9;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.attendance-client-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 16px;
+}
+
+.call-client-name {
+  font-size: 22px;
+  font-weight: 500;
+  color: #fcfdfd;
+  margin-top: 10px;
+}
+
+.attendance-client-service {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.call-client-service {
+  font-size: 15px;
+  color: #a1a1a1;
+}
+
+.attendance-timer-wrapper {
+  border-top: 1px solid #bbf7d0;
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.call-timer-wrapper {
+  border-top: 1px solid #c3c4c3;
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.attendance-time-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.call-time-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.attendance-time-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #16a34a;
+  font-variant-numeric: tabular-nums;
+}
+
+.call-time-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #161616;
+  font-variant-numeric: tabular-nums;
+}

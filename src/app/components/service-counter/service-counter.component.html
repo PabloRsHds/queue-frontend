@@ -127,6 +127,12 @@
           >
             Iniciar atendimento
           </button>
+          <button class="call-btn-primary"
+          *ngIf="this.ticketSelected()?.startAttendance === null && this.ticketSelected() !== null"
+          (click)="callCustomer()"
+          >
+            Chamar cliente
+          </button>
           <button class="action-btn-primary"
           *ngIf="this.ticketSelected()?.startAttendance !== null"
           (click)="openModalFinish(ticketSelected()?.ticketId ?? '')"

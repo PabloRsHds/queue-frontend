@@ -16,7 +16,7 @@ import { AttendentStateService } from '../../services/states/attendent/attendent
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ApexAxisChartSeries, ApexChart,ApexXAxis, ApexDataLabels, ApexPlotOptions, ChartComponent} from "ng-apexcharts";
+import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ChartComponent } from "ng-apexcharts";
 import { CustomerStateService } from '../../services/states/customer/customer-state.service';
 
 export type ChartOptions = {
@@ -36,7 +36,6 @@ export type DonutChartOptions = {
   responsive: ApexResponsive[];
 };
 
-
 @Component({
   selector: 'app-home',
   imports: [CommonModule, ChartComponent, TableServicesComponent, TableDepartmentsComponent, TableUsersComponent, SchedulingComponent, GraphicComponent, ConfigComponent, ServiceCounterComponent],
@@ -45,34 +44,24 @@ export type DonutChartOptions = {
 })
 export class HomeComponent {
 
+  // Gráficos usados no HTML
   public chartOptions!: ChartOptions;
-  public chartServiceOptions!: ChartOptions;
-  public chartUserOptions!: ChartOptions;
-  public chartCustomerOptions!: ChartOptions;
-  public chartSchedulingMonthOptions!: ChartOptions;
-  public chartSchedulingWeekOptions!: ChartOptions;
-  public chartSchedulingHourOptions!: ChartOptions;
-  public chartSchedulingPriorityOptions!: DonutChartOptions;
-  public chartAttendanceMonthOptions!: ChartOptions;
   public chartAttendanceWeekOptions!: ChartOptions;
-  public chartAttendanceHourOptions!: ChartOptions;
+  public chartSchedulingPriorityOptions!: DonutChartOptions;
 
   // Injections
   public globalState = inject(GlobalStatesService);
   public departmentState = inject(DepartmentStateService);
-  public ServiceManagementState = inject(ServiceManagementService);
   public userState = inject(UserStateService);
   public scheduleState = inject(ScheduleStateService);
   public attendentState = inject(AttendentStateService);
-  public router = inject(Router);
-  public snackBar = inject(MatSnackBar);
-
-  // Statistics injections
   public serviceState = inject(ServiceManagementService);
   public customerState = inject(CustomerStateService);
   public schedulingState = inject(ScheduleStateService);
+  public router = inject(Router);
+  public snackBar = inject(MatSnackBar);
 
-  // Attendent statistics
+  // Estatísticas usadas no HTML
   public avarageWaitingTime = this.attendentState.averageWaitingTime;
   public averageServiceTime = this.attendentState.averageServiceTime;
   public averageAttendanceByUsers = this.attendentState.averageAttendanceByUser;
@@ -83,96 +72,53 @@ export class HomeComponent {
   public attendancesByDepartment = this.attendentState.attendancesByDepartment;
   public attendancesByCustomer = this.attendentState.attendancesByCustomer;
 
-  // Department statistics
-  public percentageByDepartment = this.departmentState.getPercentagesByDepartment;
-  public countServicesByDepartment = this.departmentState.countServicesByDepartment;
+  // Estatísticas de departamento usadas no HTML
   public departmentsCreatedByMonth = this.departmentState.departmentsCreatedByMonth;
 
-  // Service statistics
-  public percentageServices = this.serviceState.servicePercentagesStatistics;
+  // Estatísticas de serviço usadas no HTML
   public servicesCreatedByMonth = this.serviceState.servicesCreatedByMonth;
-  public servicesByDepartment = this.serviceState.servicesByDepartment;
   public usersByService = this.serviceState.usersByService;
   public schedulesByService = this.serviceState.schedulesByService;
-  public ticketsByService = this.serviceState.ticketsByService;
 
-  // User statistics
-  public percentageUsers = this.userState.userPercentagesStatistics;
-  public countServicesByUsers = this.userState.countServicesByUsers;
-  public countRoleByUsers = this.userState.countRoleByUsers;
+  // Estatísticas de usuário usadas no HTML
   public usersCreatedByMonth = this.userState.usersCreatedByMonthStatistics;
 
-  // Scheduling statistics
+  // Estatísticas de agendamento usadas no HTML
   public totalScheduling = this.schedulingState.countTotalScheduleStatistics;
-  public percentageScheduling = this.schedulingState.schedulePercentagesStatistics;
   public totalSchedulingByMonth = this.schedulingState.schedulesCreatedByMonth;
   public totalSchedulingByWeek = this.schedulingState.schedulesCreatedByWeek;
   public scheduleCreatedByDay = this.schedulingState.scheduleCreatedByDay;
   public schedulesByHour = this.schedulingState.schedulesByHour;
-  public schedulesByDepartment = this.schedulingState.schedulesByDepartment;
-  public schedulesByServices = this.schedulingState.schedulesByService;
   public schedulesByPriority = this.schedulingState.schedulesByPriority;
 
-  // Customer statistics
-  public totalCustomers = this.customerState.totalCustomers;
+  // Estatísticas de cliente usadas no HTML
   public totalCustomersByMonth = this.customerState.totalCustomersByMonth;
 
-  // States
+  // Estados usados no HTML
   public userLogged = this.userState.userLogged;
   public activeSection = this.globalState.activeSection;
-  public activeFunction = this.globalState.activeFunction;
   public totalDepartments = this.departmentState.countTotalDepartment;
-  public totalServices = this.ServiceManagementState.countTotalServicesStatistics;
+  public totalServices = this.serviceState.countTotalServicesStatistics;
   public totalUsers = this.userState.countTotalUsersStatistics;
   public scheduleStatistics = this.scheduleState.scheduleCreatedByDay;
   public countTotalAttendances = this.attendentState.countTotalAttendances;
 
-  // Variables
+  // Variáveis usadas no HTML
   public openAside = false;
-  public userId = localStorage.getItem('accessToken');
   public dialog: boolean = false;
 
-  ngOnInit(){
+  ngOnInit() {
     this.userState.getUserByToken();
     this.departmentState.loadStatistics();
-    this.ServiceManagementState.loadStatistics();
+    this.serviceState.loadStatistics();
     this.userState.loadStatistics();
   }
 
   constructor() {
 
     effect(() => {
-
-      const data = this.attendancesCreatedByMonth();
-
-      if (!data || data.length === 0) return;
-
-      this.chartAttendanceMonthOptions = {
-        series: [{
-          name: 'Atendimentos',
-          data: data.map(x => x.totalAttendances)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: { show: false }
-        },
-        xaxis: {
-          categories: data.map(x => x.monthName)
-        },
-        dataLabels: {
-          enabled: true
-        }
-      };
-
-    });
-
-    effect(() => {
-
       const data = this.attendancesByWeek();
-
       if (!data || data.length === 0) return;
-
       this.chartAttendanceWeekOptions = {
         series: [{
           name: 'Atendimentos',
@@ -190,43 +136,11 @@ export class HomeComponent {
           enabled: true
         }
       };
-
     });
 
     effect(() => {
-
-      const data = this.attendancesByHour();
-
-      if (!data || data.length === 0) return;
-
-      this.chartAttendanceHourOptions = {
-        series: [{
-          name: 'Atendimentos',
-          data: data.map(x => x.totalAttendances)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: { show: false }
-        },
-        xaxis: {
-          categories: data.map(x => `${x.hour.toString().padStart(2, '0')}h`)
-        },
-        dataLabels: {
-          enabled: true
-        }
-      };
-
-    });
-
-    effect(() => {
-
       const data = this.departmentsCreatedByMonth();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
+      if (!data || data.length === 0) return;
       this.chartOptions = {
         series: [{
           name: 'Departamentos',
@@ -235,9 +149,7 @@ export class HomeComponent {
         chart: {
           type: 'bar',
           height: 350,
-          toolbar: {
-            show: false
-          }
+          toolbar: { show: false }
         },
         xaxis: {
           categories: data.map(x => x.monthName)
@@ -249,232 +161,37 @@ export class HomeComponent {
     });
 
     effect(() => {
-
-      const data = this.servicesCreatedByMonth();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
-      this.chartServiceOptions = {
-        series: [{
-          name: 'Serviços',
-          data: data.map(x => x.totalServices)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: {
-            show: false
-          }
-        },
-        xaxis: {
-          categories: data.map(x => x.monthName)
-        },
-        dataLabels: {
-          enabled: true
-        }
-      };
-    });
-
-    effect(() => {
-
-      const data = this.usersCreatedByMonth();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
-      this.chartUserOptions = {
-        series: [{
-          name: 'Usuarios',
-          data: data.map(x => x.totalUsers)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: {
-            show: false
-          }
-        },
-        xaxis: {
-          categories: data.map(x => x.monthName)
-        },
-        dataLabels: {
-          enabled: true
-        }
-      };
-    });
-
-    effect(() => {
-
-      const data = this.totalSchedulingByMonth();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
-      this.chartSchedulingMonthOptions = {
-        series: [{
-          name: 'Agendamentos',
-          data: data.map(x => x.totalSchedules)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: {
-            show: false
-          }
-        },
-        xaxis: {
-          categories: data.map(x => x.monthName)
-        },
-        dataLabels: {
-          enabled: true
-        }
-      };
-    });
-
-    effect(() => {
-
-      const data = this.totalSchedulingByWeek();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
-      this.chartSchedulingWeekOptions = {
-        series: [{
-          name: 'Agendamentos',
-          data: data.map(x => x.totalSchedules)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: {
-            show: false
-          }
-        },
-        xaxis: {
-          categories: data.map(x => x.weekDay)
-        },
-        dataLabels: {
-          enabled: true
-        }
-      };
-    });
-
-    effect(() => {
-
-      const data = this.schedulesByHour();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
-      this.chartSchedulingHourOptions = {
-        series: [{
-          name: 'Agendamentos',
-          data: data.map(x => x.totalSchedules)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: {
-            show: false
-          }
-        },
-        xaxis: {
-          categories: data.map(x => `${x.hour.toString().padStart(2, '0')}h`)
-        },
-        dataLabels: {
-          enabled: true
-        }
-      };
-    });
-
-    effect(() => {
-
       const data = this.schedulesByPriority();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
+      if (!data || data.length === 0) return;
       this.chartSchedulingPriorityOptions = {
         series: data.map(x => x.totalSchedules),
-
         chart: {
           type: 'donut',
           height: 300
         },
-
         labels: data.map(x => x.priority),
-
-        colors: [
-          '#3b82f6', // Azul
-          'tomato', // Verde
-          '#ef4444', // Vermelho
-          '#f59e0b'  // Amarelo (caso tenha uma 4ª prioridade)
-        ],
-
+        colors: ['#3b82f6', 'tomato', '#ef4444', '#f59e0b'],
         legend: {
           position: 'bottom'
         },
-
         dataLabels: {
           enabled: true
         },
-
         responsive: [{
           breakpoint: 768,
           options: {
-            chart: {
-              width: 300
-            },
-            legend: {
-              position: 'bottom'
-            }
+            chart: { width: 300 },
+            legend: { position: 'bottom' }
           }
         }]
-      };
-    })
-
-    effect(() => {
-
-      const data = this.totalCustomersByMonth();
-
-      if (!data || data.length === 0) {
-        return;
-      }
-
-      this.chartCustomerOptions = {
-        series: [{
-          name: 'Clientes',
-          data: data.map(x => x.totalCustomers)
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: {
-            show: false
-          }
-        },
-        xaxis: {
-          categories: data.map(x => x.monthName)
-        },
-        dataLabels: {
-          enabled: true
-        }
       };
     });
   }
 
-  // Methods
+  // Métodos usados no HTML
   setActive(section: string) {
     localStorage.setItem('activeSection', section);
     this.activeSection.set(section);
-
     if (window.innerWidth <= 768) {
       this.openAside = false;
     }
@@ -484,21 +201,18 @@ export class HomeComponent {
     this.activeSection.set(section);
 
     if (section === 'department') {
-
       timer(500).subscribe(() => {
         this.departmentState.modalRegister.set(true);
       });
     }
 
     if (section === 'service') {
-
       timer(500).subscribe(() => {
-        this.ServiceManagementState.modalRegister.set(true);
+        this.serviceState.modalRegister.set(true);
       });
     }
 
     if (section === 'user') {
-
       timer(500).subscribe(() => {
         this.userState.modalRegister.set(true);
       });
@@ -548,5 +262,9 @@ export class HomeComponent {
     this.router.navigate(['/login']);
     this.activeSection.set('inicio');
     localStorage.setItem('activeSection', 'inicio');
+  }
+
+  redirectToQueueDisplay() {
+    window.open('/queue-display', '_blank');
   }
 }
