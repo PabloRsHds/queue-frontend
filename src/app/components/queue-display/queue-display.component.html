@@ -54,7 +54,47 @@
   </div>
 
   <div class="ticket-list">
-    <h1>213</h1>
+    <!-- History -->
+    <div class="section-card scroll-card">
+      <div class="card-header">
+        <h3 class="card-title">Histórico de chamadas</h3>
+      </div>
+
+      <div class="table-wrapper">
+
+        <div class="table-content">
+
+          <table class="tickets-table">
+            <thead>
+              <tr>
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Código</th>
+                <th>Serviço</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let item of finishedTickets(); let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.customerName }}</td>
+                <td>{{ item.code }}</td>
+                <td>{{ item.serviceManagementName }}</td>
+              </tr>
+
+              <tr *ngIf="historyTickets().length === 0">
+                <td colspan="5" style="text-align:center;padding:3rem;color:#9ca3af;">
+                  <p>Nenhum ticket encontrado.</p>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+      </div>
+
+    </div>
   </div>
 
 

@@ -1284,6 +1284,10 @@ body {
   touch-action: manipulation;
 }
 
+.call-btn-primary:hover {
+  background: #ce7005;
+}
+
 .action-btn-secondary {
   width: 100%;
   padding: 12px;

@@ -215,3 +215,15 @@ body {
   color: #161616;
   font-variant-numeric: tabular-nums;
 }
+
+@media (max-width: 768px) {
+  .queue-container {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1000px) {
+  .queue-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}

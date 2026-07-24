@@ -26,6 +26,7 @@ export class QueueDisplayComponent {
   // States
   public userLogged = this.userState.userLogged;
   public ticketForPanel = signal<ResponseTicketsForAttendanceDto | null>(null);
+  public historyTickets = this.ticketState.historyTickets;
 
   private pollingSubscription?: Subscription;
   videoUrl!: SafeResourceUrl;
@@ -36,7 +37,7 @@ export class QueueDisplayComponent {
 
     this.pollingSubscription = interval(5000).subscribe(() => {
       this.loadTicketFromStorage();
-
+      this.ticketState.getHistoryTicketsByAttendant();
     });
 
     this.pollingSubscription = interval(10000).subscribe(() => {
@@ -45,6 +46,10 @@ export class QueueDisplayComponent {
   }
 
   constructor() {};
+
+  public finishedTickets = computed(() =>
+    this.historyTickets().filter(ticket => ticket.status === 'FINISHED')
+  );
 
   private loadTicketFromStorage() {
 
