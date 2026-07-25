@@ -141,6 +141,7 @@ export class UserStateService {
   getUserByToken() {
     this.http.getUserByToken().subscribe({
       next: (response) => {
+        console.log(response);
         this.userLogged.set(response);
       }
     })

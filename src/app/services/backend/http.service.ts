@@ -141,10 +141,12 @@ export class HttpService {
   }
 
   public getUserByToken(): Observable<ResponseUserInfoDto> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    });
-    return this.http.get<ResponseUserInfoDto>(`${this.API_URL}/users/token`, {headers});
+    return this.http.get<ResponseUserInfoDto>(
+      `${this.API_URL}/users/token`,
+      {
+        withCredentials: true
+      }
+    );
   }
 
   public getUserStatistics(): Observable<ResponseUserDashBoardDto> {
@@ -224,33 +226,20 @@ export class HttpService {
 
   public getTicketsForAttendance(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    });
-
     return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
-      `${this.API_URL}/tickets/tickets-for-attendance?page=${page}&size=${size}`, {headers}
-    );
+      `${this.API_URL}/tickets/tickets-for-attendance?page=${page}&size=${size}`, {withCredentials: true});
   }
 
   public getHistoryTicketsByAttendant(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    });
-
     return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
-      `${this.API_URL}/tickets/history?page=${page}&size=${size}`, {headers}
-    );
+      `${this.API_URL}/tickets/history?page=${page}&size=${size}`, {withCredentials: true});
   }
 
   // Attendance
   public startAttendance(request: StartAttendanceDto): Observable<ResponseAttendanceDto> {
 
-    const header = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    });
-    return this.http.post<ResponseAttendanceDto>(`${this.API_URL}/attendances`, request, {headers: header});
+    return this.http.post<ResponseAttendanceDto>(`${this.API_URL}/attendances`, request, {withCredentials: true});
   }
 
   public finishAttendance(request: FinishAttendanceDto): Observable<ResponseFinishAttendanceDto> {
