@@ -48,6 +48,7 @@ export class TableServicesComponent implements OnInit{
   public modalUpdate: boolean = false;
   public modalDelete: boolean = false;
   public modalView: boolean = false;
+  public modalDescription: boolean = false;
   // =========
 
   // Search
@@ -92,7 +93,7 @@ export class TableServicesComponent implements OnInit{
 
         this.snackBar.open(this.serviceState.registerMessage(), 'Fechar', {
           duration: 3000,
-          panelClass: ['snackbar-danger']
+          panelClass: ['snackbar-error']
         });
       }
     });
@@ -117,7 +118,7 @@ export class TableServicesComponent implements OnInit{
 
         this.snackBar.open(this.serviceState.updateMessage(), 'Fechar', {
           duration: 3000,
-          panelClass: ['snackbar-danger']
+          panelClass: ['snackbar-error']
         });
       }
     });
@@ -141,7 +142,7 @@ export class TableServicesComponent implements OnInit{
 
         this.snackBar.open(this.serviceState.deleteMessage(), 'Fechar', {
           duration: 3000,
-          panelClass: ['snackbar-danger']
+          panelClass: ['snackbar-error']
         });
       }
     });
@@ -214,8 +215,6 @@ export class TableServicesComponent implements OnInit{
     this.serviceState.updateServiceManagement(
       { serviceManagementId: this.serviceInfo()?.serviceManagementId, ...this.updateForm.value }
     );
-
-    console.log(this.updateForm.value);
   }
 
   //===========================
@@ -265,11 +264,21 @@ export class TableServicesComponent implements OnInit{
   openModalView(serviceManagementId: string) {
     this.serviceState.getInfoService(serviceManagementId);
     this.modalView = true;
+    this.modalDescription = false;
   }
 
   closeModalView() {
     this.modalView = false;
     this.serviceState.resetInfoService();
+  }
+
+  openModalViewDescription(serviceManagementId: string) {
+    this.modalDescription = true;
+    this.serviceState.getInfoService(serviceManagementId);
+  }
+
+  closeModalViewDescription() {
+    this.modalDescription = false;
   }
 
   // ===================== SEARCH =====================

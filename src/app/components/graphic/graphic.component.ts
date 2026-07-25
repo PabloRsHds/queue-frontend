@@ -177,12 +177,20 @@ export class GraphicComponent {
 
       const data = this.attendancesByHour();
 
-      if (!data || data.length === 0) return;
+      if (!data) return;
+
+      // Mapa para localizar os atendimentos por hora
+      const attendanceMap = new Map(
+        data.map(item => [item.hour, item.totalAttendances])
+      );
+
+      // Horários de 05h até 22h
+      const hours = Array.from({ length: 18 }, (_, i) => i + 5);
 
       this.chartAttendanceHourOptions = {
         series: [{
           name: 'Atendimentos',
-          data: data.map(x => x.totalAttendances)
+          data: hours.map(hour => attendanceMap.get(hour) ?? 0)
         }],
         chart: {
           type: 'bar',
@@ -190,7 +198,7 @@ export class GraphicComponent {
           toolbar: { show: false }
         },
         xaxis: {
-          categories: data.map(x => `${x.hour.toString().padStart(2, '0')}h`)
+          categories: hours.map(hour => `${hour.toString().padStart(2, '0')}h`)
         },
         dataLabels: {
           enabled: true
@@ -348,14 +356,20 @@ export class GraphicComponent {
 
       const data = this.schedulesByHour();
 
-      if (!data || data.length === 0) {
-        return;
-      }
+      if (!data) return;
+
+      // Mapa para localizar os agendamentos por hora
+      const scheduleMap = new Map(
+        data.map(item => [item.hour, item.totalSchedules])
+      );
+
+      // Horários de 05h até 22h
+      const hours = Array.from({ length: 18 }, (_, i) => i + 5);
 
       this.chartSchedulingHourOptions = {
         series: [{
           name: 'Agendamentos',
-          data: data.map(x => x.totalSchedules)
+          data: hours.map(hour => scheduleMap.get(hour) ?? 0)
         }],
         chart: {
           type: 'bar',
@@ -365,12 +379,13 @@ export class GraphicComponent {
           }
         },
         xaxis: {
-          categories: data.map(x => `${x.hour.toString().padStart(2, '0')}h`)
+          categories: hours.map(hour => `${hour.toString().padStart(2, '0')}h`)
         },
         dataLabels: {
           enabled: true
         }
       };
+
     });
 
     effect(() => {

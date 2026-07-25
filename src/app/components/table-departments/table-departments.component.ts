@@ -4,6 +4,7 @@ import { DepartmentStateService } from '../../services/states/department/departm
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-table-departments',
@@ -39,6 +40,7 @@ export class TableDepartmentsComponent implements OnInit {
   public modalUpdate: boolean = false;
   public modalDelete: boolean = false;
   public modalView: boolean = false;
+  public modalDescription: boolean = false;
 
   // States
   isMobile = signal(window.innerWidth < 768);
@@ -108,7 +110,7 @@ export class TableDepartmentsComponent implements OnInit {
 
         this.snackBar.open(this.departmentState.registerMessage(), 'Fechar', {
           duration: 3000,
-          panelClass: ['snackbar-danger']
+          panelClass: ['snackbar-error']
         });
       }
     });
@@ -133,7 +135,7 @@ export class TableDepartmentsComponent implements OnInit {
 
         this.snackBar.open(this.departmentState.updateMessage(), 'Fechar', {
           duration: 3000,
-          panelClass: ['snackbar-danger']
+          panelClass: ['snackbar-error']
         });
       }
     });
@@ -158,7 +160,7 @@ export class TableDepartmentsComponent implements OnInit {
 
         this.snackBar.open(this.departmentState.deleteMessage(), 'Fechar', {
           duration: 3000,
-          panelClass: ['snackbar-danger']
+          panelClass: ['snackbar-error']
         });
       }
     });
@@ -204,6 +206,15 @@ export class TableDepartmentsComponent implements OnInit {
   closeModalView() {
     this.modalView = false;
     this.departmentState.resetDepartmentInfo();
+  }
+
+  openModalViewDescription(departmentId: string) {
+    this.modalDescription = true;
+    this.departmentState.getInfoDepartment(departmentId);
+  }
+
+  closeModalViewDescription() {
+    this.modalDescription = false;
   }
 
   // Register Department

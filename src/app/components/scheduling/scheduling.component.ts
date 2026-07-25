@@ -454,7 +454,6 @@ export class SchedulingComponent implements OnInit {
     if (this.table() === 'Scheduling') {
 
       this.schedulingState.setSearchDate(event.target.value);
-      console.log(event.target.value);
     }
   }
 

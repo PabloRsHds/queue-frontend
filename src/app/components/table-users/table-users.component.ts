@@ -441,7 +441,6 @@ export class TableUsersComponent implements OnInit {
   }
 
   public closeModalUpdate(): void {
-    console.log('fechando')
     this.modalUpdate = false;
     this.currentStep = 1;
     this.userState.resetInfoUser();

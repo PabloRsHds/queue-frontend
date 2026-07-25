@@ -18,7 +18,7 @@
   font-weight: bold;
 }
 
-::ng-deep .snackbar-danger .mdc-snackbar__surface {
+::ng-deep .snackbar-error .mdc-snackbar__surface {
   background-color: #8d0000 !important;
   color: rgb(255, 255, 255) !important;
   padding: 10px;

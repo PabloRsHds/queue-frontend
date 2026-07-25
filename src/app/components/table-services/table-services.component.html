@@ -73,7 +73,7 @@
   <table class="dept-table">
     <thead>
       <tr>
-        <th>Nome</th>
+        <th>Serviço</th>
         <th>Código</th>
         <th>Departamento</th>
         <th>Status</th>
@@ -84,7 +84,7 @@
       <ng-container *ngIf="services().length === 0;">
         <tr>
           <td colspan="5" style="text-align:center;padding:3rem;color:#9ca3af;">
-            <p>Nenhum serviço cadastrado ainda.</p>
+            <p>Nenhum serviço encontrado.</p>
           </td>
         </tr>
       </ng-container>
@@ -568,7 +568,7 @@
           </svg>
           <span class="label">Descrição</span>
         </div>
-        <span class="value">{{serviceInfo()?.description ?? "-"}}</span>
+        <button type="button" class="btn-description" (click)=" $event.stopPropagation();openModalViewDescription(serviceInfo()!.serviceManagementId)">Ver descrição</button>
       </div>
 
       <div class="info-row">
@@ -627,6 +627,55 @@
     <div style="margin: 30px 30px; height: 1px; background-color: #e2e8f0;" ></div>
     <div class="modal-view-footer">
       <button type="button" class="button-back" (click)="closeModalView()">Fechar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL VIEW DESCRIPTION -->
+<div class="modal-view-container" *ngIf="modalDescription" (click)="closeModalViewDescription()">
+  <div class="modal-view" style="width: 540px !important;" onclick="event.stopPropagation()" [ngClass]="{'modal-view-updatedAt': serviceInfo()?.updatedAt != null}">
+
+    <div class="modal-view-top">
+      <div style="display: flex; justify-content: end; padding: 20px 20px 20px 20px;">
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalViewDescription()" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-view-header-container" style="justify-content: center !important; text-align: center !important;">
+        <div class="modal-view-header">
+          <div class="modal-view-header-text">
+            <h2>Descrição do serviço</h2>
+            <span >Vizualize a descrição do serviço.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body" style="padding: 20px 20px 50px 20px;">
+
+      <div class="info-row" style="grid-template-columns: auto;">
+        <span class="value">
+          <strong>Nome do departamento:</strong>
+          {{serviceInfo()?.name || 'N/A'}}
+        </span>
+      </div>
+
+      <div class="info-row" style="border-bottom: none !important; grid-template-columns: auto;">
+        <span class="value">
+          <strong>Descrição:</strong>
+          {{serviceInfo()?.description || 'Sem descrição'}}
+        </span>
+      </div>
+    </div>
+
+    <div class="modal-view-footer" style="padding-bottom: 20px;">
+
     </div>
 
   </div>

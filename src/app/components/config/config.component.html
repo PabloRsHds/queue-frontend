@@ -30,7 +30,7 @@
         </div>
       </li>
 
-      <li class="nav-item" [class.active]="this.navItem === 'integrations'" (click)="navItemChange('integrations')" *ngIf="this.userLogged()?.role !== 'RECEPTION'">
+      <li class="nav-item" [class.active]="this.navItem === 'integrations'" (click)="navItemChange('integrations')" *ngIf="this.userLogged()?.role !== 'RECEPTION' && this.userLogged()?.role !== 'ADMIN' && this.userLogged()?.role !== 'MANAGER'">
         <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
         </svg>
@@ -44,7 +44,7 @@
   </aside>
 
   <!-- Main Content -->
-  <form [formGroup]="profileForm" >
+  <form [formGroup]="profileForm" (ngSubmit)="updateUser()">
 
     <main class="main-content" *ngIf="this.navItem === 'profile'">
       <div class="content-header">
@@ -174,17 +174,17 @@
 
             <div class="form-group">
               <label class="form-label">Senha antiga </label>
-              <input type="password" class="form-input" placeholder="************">
+              <input type="password" class="form-input" formControlName="oldPassword" placeholder="************">
             </div>
 
             <div class="form-group">
               <label class="form-label">Nova senha </label>
-              <input type="password" class="form-input" placeholder="************">
+              <input type="password" class="form-input" formControlName="newPassword" placeholder="************">
             </div>
 
             <div class="form-group">
               <label class="form-label">Confirmar senha </label>
-              <input type="password" class="form-input" placeholder="************">
+              <input type="password" class="form-input" formControlName="confirmPassword" placeholder="************">
             </div>
           </div>
 
@@ -239,12 +239,12 @@
 
         <div style="display: grid; gap: 20px;">
 
-          <div class="review-grid" *ngIf="(userLogged()?.serviceNames?.length ?? 0) > 1">
+          <div class="review-grid" *ngIf="(userLogged()?.serviceNames?.length ?? 0) > 0">
             <div class="review-field full-width">
               <div class="review-field-label">Serviços vinculados</div>
-              <div class="review-tags" *ngIf="(userLogged()?.serviceNames?.length ?? 0) > 1">
-                <span class="review-tag green" *ngFor="let serviceName of userLogged()?.serviceNames">
-                  {{ serviceName || '-' }}
+              <div class="review-tags" *ngIf="(userLogged()?.serviceNames?.length ?? 0) > 0">
+                <span class="review-tag green" *ngFor="let serviceName of userLogged()!.serviceNames">
+                  {{ serviceName }}
                 </span>
               </div>
             </div>

@@ -122,7 +122,6 @@ export class ScheduleStateService {
   loadStatistics() {
     this.http.getScheduleStatistics().subscribe({
       next: response => {
-        console.log(response);
         this.countTotalScheduleStatistics.set(response.countTotalScheduleStatistics);
         this.schedulePercentagesStatistics.set(response.schedulePercentagesStatistics);
         this.schedulesCreatedByMonth.set(response.schedulesCreatedByMonth);
@@ -155,7 +154,6 @@ export class ScheduleStateService {
     this.http.getScheduleById(scheduleId).subscribe({
       next: response => {
         this.scheduleInfo.set(response);
-        console.log(response);
       }
     });
   }

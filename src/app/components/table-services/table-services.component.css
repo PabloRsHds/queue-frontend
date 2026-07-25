@@ -443,6 +443,24 @@ body {
   border-bottom: none;
 }
 
+.btn-description {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: underline;
+  background-color: transparent;
+  color: #3734ee;
+  font-weight: 600;
+  border: none;
+  font-size: 0.8rem;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.btn-description:hover {
+  color: #19179b;
+}
+
 /* Nome com ícone */
 .td-name-container {
   display: flex;

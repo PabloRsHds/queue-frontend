@@ -59,12 +59,12 @@ export class UserStateService {
     this.http.createUser(request).subscribe({
       next: (response) => {
 
-        this.registerMessage.set('User created successfully');
+        this.registerMessage.set('Usuario criado com sucesso!');
         this.registerStatus.set('success');
         this.loadingAllUsers();
       },
       error: () => {
-        this.registerMessage.set('Error creating user');
+        this.registerMessage.set('Erro ao criar usuario');
         this.registerStatus.set('error');
       }
     })
@@ -74,12 +74,12 @@ export class UserStateService {
 
     this.http.updateUser(request).subscribe({
       next: () => {
-        this.updateMessage.set('User updated successfully');
+        this.updateMessage.set('Usuario atualizado com sucesso!');
         this.updateStatus.set('success');
         this.loadingAllUsers();
       },
       error: () => {
-        this.updateMessage.set('Error updating user');
+        this.updateMessage.set('Erro ao atualizar usuario');
         this.updateStatus.set('error');
       }
     })
@@ -92,12 +92,12 @@ export class UserStateService {
 
     this.http.deleteUser(userId).subscribe({
       next: () => {
-        this.deleteMessage.set('User deleted successfully');
+        this.deleteMessage.set('Usuario deletado com sucesso!');
         this.deleteStatus.set('success');
         this.loadingAllUsers();
       },
       error: () => {
-        this.deleteMessage.set('Error deleting user');
+        this.deleteMessage.set('Erro ao deletar usuario');
         this.deleteStatus.set('error');
       }
     })
