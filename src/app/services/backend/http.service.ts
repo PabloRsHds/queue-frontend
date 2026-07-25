@@ -29,9 +29,8 @@ import { UpdateScheduleDto } from '../../dtos/schedule/UpdateScheduleDto';
 import { CreateTicketDto } from '../../dtos/ticket/CreateTicketDto';
 import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
 import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicketsForAttendanceDto';
-import { ResponseTokensDto } from '../../dtos/login/ResponseTokensDto';
+import { ResponseTokenDto } from '../../dtos/login/ResponseTokenDto';
 import { LoginDto } from '../../dtos/login/LoginDto';
-import { RefreshTokenDto } from '../../dtos/login/RefreshTokenDto';
 import { ResponseDepartmentDashBoardDto } from '../../dtos/department/statistics/ResponseDepartmentDashBoardDto';
 import { ResponseServiceDashBoardDto } from '../../dtos/services/statistics/ResponseServiceDashBoardDto';
 import { ResponseUserDashBoardDto } from '../../dtos/users/statistics/ResponseUserDashBoardDto';
@@ -263,12 +262,13 @@ export class HttpService {
   }
 
   // Login
-  public login(request: LoginDto): Observable<ResponseTokensDto> {
-    return this.http.post<ResponseTokensDto>(`${this.API_URL}/login`, request);
+  public login(request: LoginDto): Observable<ResponseTokenDto> {
+    return this.http.post<ResponseTokenDto>(`${this.API_URL}/login`, request);
   }
 
-  public refreshTokens(tokens: RefreshTokenDto): Observable<ResponseTokensDto> {
-    return this.http.post<ResponseTokensDto>(`${this.API_URL}/login/refresh-tokens`, tokens).pipe(
+  public refreshTokens(): Observable<ResponseTokenDto> {
+    return this.http.post<ResponseTokenDto>(`${this.API_URL}/login/refresh-tokens`,{},{ withCredentials: true }
+    ).pipe(
 
       catchError((err: HttpErrorResponse) => {
 
@@ -277,6 +277,7 @@ export class HttpService {
         if (err.error?.message) {
           errorMsg = err.error.message;
         }
+
         return throwError(() => new Error(errorMsg));
       })
     );

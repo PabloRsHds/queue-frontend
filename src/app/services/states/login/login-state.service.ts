@@ -19,25 +19,25 @@ export class LoginStateService {
   login(request: LoginDto) {
 
     this.http.login(request).subscribe({
-
       next: (response) => {
 
+        // Agora salva somente o accessToken
         localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
 
         this.loginMessage.set('Login feito com sucesso');
-        this.loginStatus.set('success')
+        this.loginStatus.set('success');
       },
+
       error: (error) => {
         this.loginMessage.set('Erro ao tentar logar');
-        this.loginStatus.set('error')
+        this.loginStatus.set('error');
       }
-    })
+    });
   }
 
   // Resets
   resetStatus() {
-    this.loginStatus.set('default')
+    this.loginStatus.set('default');
   }
 
 }

@@ -10,26 +10,22 @@ export const authGuard: CanActivateFn = () => {
   }
 
   const accessToken = localStorage.getItem('accessToken');
-  const refreshToken = localStorage.getItem('refreshToken');
 
-  // Não existe sessão
-  if (!refreshToken) {
+  if (!accessToken) {
     router.navigate(['/login']);
     return false;
   }
 
-  // Refresh expirou
-  if (isTokenExpired(refreshToken)) {
+  if (isTokenExpired(accessToken)) {
 
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-
     router.navigate(['/login']);
-
     return false;
   }
+
   return true;
 };
+
 
 function isTokenExpired(token: string): boolean {
 
