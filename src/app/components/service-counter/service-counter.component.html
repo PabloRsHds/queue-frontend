@@ -127,6 +127,14 @@
           >
             Iniciar atendimento
           </button>
+          <button class="action-btn-secondary"
+          (click)="redirectToQueueDisplay()"
+          >
+            <svg fill="#2563eb" version="1.1" width="15px" height="15px" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 97.766 97.767" xml:space="preserve" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M85.948,0H11.733C6.947,0,3.079,3.621,3.079,8.406v57.911c0,4.803,3.868,8.877,8.654,8.877h30.66v9.586H31.009 c-4.358,0-8.108,3.537-8.108,7.881v5.106h51.955V92.66c0-4.344-3.344-7.881-7.689-7.881H55.374v-9.586h30.574 c4.786,0,8.74-4.076,8.74-8.877V8.406C94.688,3.621,90.734,0,85.948,0z M81.689,62.21H15.937V12.989h65.751L81.689,62.21 L81.689,62.21z"></path> <path d="M37.03,49.98h23.709c5.072,0,9.197-4.125,9.197-9.198c0-4.644-3.459-8.495-7.938-9.112 c-0.605-0.083-1.158-0.392-1.548-0.863c-1.728-2.092-4.334-3.366-7.099-3.366c-0.051,0-0.104,0-0.154,0.001 c-0.514,0.009-1.012-0.144-1.432-0.436c-1.717-1.193-3.751-1.836-5.876-1.836c-3.849,0-7.287,2.119-9.063,5.378 c-0.344,0.631-0.948,1.079-1.652,1.223c-4.186,0.86-7.344,4.573-7.344,9.01C27.831,45.855,31.958,49.98,37.03,49.98z"></path> </g> </g>
+            </g>
+            </svg>
+            Abrir painel de chamadas
+          </button>
           <button class="call-btn-primary"
           *ngIf="this.ticketSelected()?.startAttendance === null && this.ticketSelected() !== null"
           (click)="callCustomer()"

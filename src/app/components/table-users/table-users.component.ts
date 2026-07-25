@@ -379,24 +379,22 @@ export class TableUsersComponent implements OnInit {
 
   public permissionsByRole: Record<string, string[]> = {
     MANAGER: [
-      'Painel de Atendimento',
       'Gerenciar departamentos',
       'Gerenciar serviços',
       'Gerenciar usuários',
-      'Gerenciar agendamentos',
       'Visualizar relatórios',
       'Configurações'
     ],
 
     ATTENDANT: [
       'Painel de Atendimento',
-      'Gerenciar agendamentos',
       'Visualizar relatórios',
       'Configurações'
     ],
 
     RECEPTION: [
       'Gerenciar agendamentos',
+      'Visualizar relatórios',
       'Configurações'
     ]
   };

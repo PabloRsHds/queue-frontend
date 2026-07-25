@@ -1,5 +1,6 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserStateService } from '../../services/states/user/user-state.service';
 import { interval, Subscription } from 'rxjs';
@@ -10,7 +11,7 @@ import { AttendentStateService } from '../../services/states/attendent/attendent
 
 @Component({
   selector: 'app-queue-display',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './queue-display.component.html',
   styleUrl: './queue-display.component.css'
 })
@@ -22,6 +23,9 @@ export class QueueDisplayComponent {
   public attendentState = inject(AttendentStateService);
   private sanitizer = inject(DomSanitizer);
   private voiceService = inject(VoiceService);
+
+  insertLink = false;
+  urlInput: string = '';
 
   // States
   public userLogged = this.userState.userLogged;
@@ -82,6 +86,15 @@ export class QueueDisplayComponent {
     );
   }
 
+  confirmLink() {
+    if (this.urlInput && this.urlInput.trim() !== '') {
+      this.loadVideo(this.urlInput.trim());
+    } else {
+      // Se o input estiver vazio, apenas fecha
+      this.insertLink = false;
+    }
+  }
+
   private extractVideoId(url: string): string | null {
     const regex =
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/;
@@ -89,5 +102,11 @@ export class QueueDisplayComponent {
     const match = url.match(regex);
 
     return match ? match[1] : null;
+  }
+
+  onInputBlur() {
+    setTimeout(() => {
+      this.insertLink = false;
+    }, 150);
   }
 }

@@ -365,4 +365,8 @@ export class ServiceCounterComponent implements OnInit {
   callCustomer() {
     localStorage.setItem('call-customer', 'true');
   }
+
+  redirectToQueueDisplay() {
+    window.open('/queue-display', '_blank');
+  }
 }
