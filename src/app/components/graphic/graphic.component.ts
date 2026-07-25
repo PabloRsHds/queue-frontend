@@ -36,80 +36,195 @@ export type DonutChartOptions = {
 })
 export class GraphicComponent {
 
-  // Gráficos
+  // ==================== CONFIGURAÇÕES DOS GRÁFICOS ====================
+
+  /** Configuração do gráfico de departamentos */
   public chartOptions!: ChartOptions;
+
+  /** Configuração do gráfico de serviços */
   public chartServiceOptions!: ChartOptions;
+
+  /** Configuração do gráfico de usuários */
   public chartUserOptions!: ChartOptions;
+
+  /** Configuração do gráfico de clientes */
   public chartCustomerOptions!: ChartOptions;
+
+  /** Configuração do gráfico de agendamentos por mês */
   public chartSchedulingMonthOptions!: ChartOptions;
+
+  /** Configuração do gráfico de agendamentos por semana */
   public chartSchedulingWeekOptions!: ChartOptions;
+
+  /** Configuração do gráfico de agendamentos por hora */
   public chartSchedulingHourOptions!: ChartOptions;
+
+  /** Configuração do gráfico de agendamentos por prioridade (donut) */
   public chartSchedulingPriorityOptions!: DonutChartOptions;
+
+  /** Configuração do gráfico de atendimentos por mês */
   public chartAttendanceMonthOptions!: ChartOptions;
+
+  /** Configuração do gráfico de atendimentos por semana */
   public chartAttendanceWeekOptions!: ChartOptions;
+
+  /** Configuração do gráfico de atendimentos por hora */
   public chartAttendanceHourOptions!: ChartOptions;
 
-  // Injections
+  // ==================== INJEÇÕES DE DEPENDÊNCIA ====================
+
+  /** Service para gerenciar estado do usuário */
   public userState = inject(UserStateService);
+
+  /** Service para gerenciar estado do atendente */
   public attendentState = inject(AttendentStateService);
+
+  /** Service para gerenciar estado do departamento */
   public departmentState = inject(DepartmentStateService);
+
+  /** Service para gerenciar estado do serviço */
   public serviceState = inject(ServiceManagementService);
+
+  /** Service para gerenciar estado do cliente */
   public customerState = inject(CustomerStateService);
+
+  /** Service para gerenciar estado do agendamento */
   public schedulingState = inject(ScheduleStateService);
 
-  // States
+  // ==================== ESTADOS LOCAIS ====================
+
+  /** Usuário atualmente logado */
   public userLogged = this.userState.userLogged;
+
+  /** Valor selecionado para filtro (dia/semana/mês) */
   public selectValue = signal<string>('day');
 
-  // Attendent statistics
+  // ==================== ESTATÍSTICAS DE ATENDENTE ====================
+
+  /** Total de atendimentos realizados */
   public countTotalAttendances = this.attendentState.countTotalAttendances;
+
+  /** Tempo médio de espera */
   public avarageWaitingTime = this.attendentState.averageWaitingTime;
+
+  /** Tempo médio de serviço */
   public averageServiceTime = this.attendentState.averageServiceTime;
+
+  /** Média de atendimentos por usuário */
   public averageAttendanceByUsers = this.attendentState.averageAttendanceByUser;
+
+  /** Atendimentos criados por mês */
   public attendancesCreatedByMonth = this.attendentState.attendancesCreatedByMonth;
+
+  /** Atendimentos por semana */
   public attendancesByWeek = this.attendentState.attendancesByWeek;
+
+  /** Atendimentos por serviço */
   public attendancesByService = this.attendentState.attendancesByService;
+
+  /** Atendimentos por hora */
   public attendancesByHour = this.attendentState.attendancesByHour;
+
+  /** Atendimentos por departamento */
   public attendancesByDepartment = this.attendentState.attendancesByDepartment;
+
+  /** Atendimentos por cliente */
   public attendancesByCustomer = this.attendentState.attendancesByCustomer;
 
-  // Department statistics
+  // ==================== ESTATÍSTICAS DE DEPARTAMENTO ====================
+
+  /** Total de departamentos */
   public totalDepartments = this.departmentState.countTotalDepartment;
+
+  /** Percentual por departamento */
   public percentageByDepartment = this.departmentState.getPercentagesByDepartment;
+
+  /** Quantidade de serviços por departamento */
   public countServicesByDepartment = this.departmentState.countServicesByDepartment;
+
+  /** Departamentos criados por mês */
   public departmentsCreatedByMonth = this.departmentState.departmentsCreatedByMonth;
 
-  // Service statistics
+  // ==================== ESTATÍSTICAS DE SERVIÇO ====================
+
+  /** Total de serviços */
   public totalServices = this.serviceState.countTotalServicesStatistics;
+
+  /** Percentual de serviços */
   public percentageServices = this.serviceState.servicePercentagesStatistics;
+
+  /** Serviços criados por mês */
   public servicesCreatedByMonth = this.serviceState.servicesCreatedByMonth;
+
+  /** Serviços por departamento */
   public servicesByDepartment = this.serviceState.servicesByDepartment;
+
+  /** Usuários por serviço */
   public usersByService = this.serviceState.usersByService;
+
+  /** Agendamentos por serviço */
   public schedulesByService = this.serviceState.schedulesByService;
+
+  /** Chamados/tickets por serviço */
   public ticketsByService = this.serviceState.ticketsByService;
 
-  // User statistics
+  // ==================== ESTATÍSTICAS DE USUÁRIO ====================
+
+  /** Total de usuários */
   public totalUsers = this.userState.countTotalUsersStatistics;
+
+  /** Percentual de usuários */
   public percentageUsers = this.userState.userPercentagesStatistics;
+
+  /** Quantidade de serviços por usuário */
   public countServicesByUsers = this.userState.countServicesByUsers;
+
+  /** Quantidade de usuários por cargo */
   public countRoleByUsers = this.userState.countRoleByUsers;
+
+  /** Usuários criados por mês */
   public usersCreatedByMonth = this.userState.usersCreatedByMonthStatistics;
 
-  // Scheduling statistics
+  // ==================== ESTATÍSTICAS DE AGENDAMENTO ====================
+
+  /** Total de agendamentos */
   public totalScheduling = this.schedulingState.countTotalScheduleStatistics;
+
+  /** Percentual de agendamentos */
   public percentageScheduling = this.schedulingState.schedulePercentagesStatistics;
+
+  /** Total de agendamentos por mês */
   public totalSchedulingByMonth = this.schedulingState.schedulesCreatedByMonth;
+
+  /** Total de agendamentos por semana */
   public totalSchedulingByWeek = this.schedulingState.schedulesCreatedByWeek;
+
+  /** Agendamentos criados por dia */
   public scheduleCreatedByDay = this.schedulingState.scheduleCreatedByDay;
+
+  /** Agendamentos por hora */
   public schedulesByHour = this.schedulingState.schedulesByHour;
+
+  /** Agendamentos por departamento */
   public schedulesByDepartment = this.schedulingState.schedulesByDepartment;
+
+  /** Agendamentos por serviço */
   public schedulesByServices = this.schedulingState.schedulesByService;
+
+  /** Agendamentos por prioridade */
   public schedulesByPriority = this.schedulingState.schedulesByPriority;
 
-  // Customer statistics
+  // ==================== ESTATÍSTICAS DE CLIENTE ====================
+
+  /** Total de clientes */
   public totalCustomers = this.customerState.totalCustomers;
+
+  /** Total de clientes por mês */
   public totalCustomersByMonth = this.customerState.totalCustomersByMonth;
 
+  /**
+   * Inicializa o componente carregando todas as estatísticas
+   */
   ngOnInit(): void {
     this.departmentState.loadStatistics();
     this.serviceState.loadStatistics();
@@ -121,6 +236,10 @@ export class GraphicComponent {
 
   constructor() {
 
+    /**
+     * Efeito: Configura gráfico de atendimentos por mês
+     * Quando dados de atendimentos mensais são carregados, cria gráfico de barras
+     */
     effect(() => {
 
       const data = this.attendancesCreatedByMonth();
@@ -147,6 +266,10 @@ export class GraphicComponent {
 
     });
 
+    /**
+     * Efeito: Configura gráfico de atendimentos por semana
+     * Quando dados de atendimentos semanais são carregados, cria gráfico de barras
+     */
     effect(() => {
 
       const data = this.attendancesByWeek();
@@ -173,6 +296,10 @@ export class GraphicComponent {
 
     });
 
+    /**
+     * Efeito: Configura gráfico de atendimentos por hora
+     * Mapeia atendimentos para horários entre 05h e 22h
+     */
     effect(() => {
 
       const data = this.attendancesByHour();
@@ -207,6 +334,9 @@ export class GraphicComponent {
 
     });
 
+    /**
+     * Efeito: Configura gráfico de departamentos criados por mês
+     */
     effect(() => {
 
       const data = this.departmentsCreatedByMonth();
@@ -236,6 +366,9 @@ export class GraphicComponent {
       };
     });
 
+    /**
+     * Efeito: Configura gráfico de serviços criados por mês
+     */
     effect(() => {
 
       const data = this.servicesCreatedByMonth();
@@ -265,6 +398,9 @@ export class GraphicComponent {
       };
     });
 
+    /**
+     * Efeito: Configura gráfico de usuários criados por mês
+     */
     effect(() => {
 
       const data = this.usersCreatedByMonth();
@@ -294,6 +430,9 @@ export class GraphicComponent {
       };
     });
 
+    /**
+     * Efeito: Configura gráfico de agendamentos por mês
+     */
     effect(() => {
 
       const data = this.totalSchedulingByMonth();
@@ -323,6 +462,9 @@ export class GraphicComponent {
       };
     });
 
+    /**
+     * Efeito: Configura gráfico de agendamentos por semana
+     */
     effect(() => {
 
       const data = this.totalSchedulingByWeek();
@@ -352,6 +494,10 @@ export class GraphicComponent {
       };
     });
 
+    /**
+     * Efeito: Configura gráfico de agendamentos por hora
+     * Mapeia agendamentos para horários entre 05h e 22h
+     */
     effect(() => {
 
       const data = this.schedulesByHour();
@@ -388,6 +534,10 @@ export class GraphicComponent {
 
     });
 
+    /**
+     * Efeito: Configura gráfico de agendamentos por prioridade (donut)
+     * Cores: Azul, Verde, Vermelho, Amarelo
+     */
     effect(() => {
 
       const data = this.schedulesByPriority();
@@ -410,7 +560,7 @@ export class GraphicComponent {
           '#3b82f6', // Azul
           'tomato', // Verde
           '#ef4444', // Vermelho
-          '#f59e0b'  // Amarelo (caso tenha uma 4ª prioridade)
+          '#f59e0b'  // Amarelo
         ],
 
         legend: {
@@ -435,6 +585,9 @@ export class GraphicComponent {
       };
     })
 
+    /**
+     * Efeito: Configura gráfico de clientes por mês
+     */
     effect(() => {
 
       const data = this.totalCustomersByMonth();
@@ -466,12 +619,24 @@ export class GraphicComponent {
 
   };
 
+  // ==================== MÉTODOS PÚBLICOS ====================
+
+  /** Item de navegação ativo (General por padrão) */
   public navItem:string = 'General';
 
+  /**
+   * Altera o item de navegação ativo
+   * @param item - Nome do item de navegação
+   */
   public navItemChange(item: string) {
     this.navItem = item;
   }
 
+  /**
+   * Converte o código do cargo para nome amigável em português
+   * @param role - Código do cargo (MANAGER, ATTENDANT, RECEPTION)
+   * @returns Nome do cargo em português
+   */
   public getRoleDisplayName(role: string): string {
     switch (role) {
       case 'MANAGER': return 'Gerente';
@@ -481,6 +646,10 @@ export class GraphicComponent {
     }
   }
 
+  /**
+   * Atualiza o valor selecionado no filtro
+   * @param value - Valor do filtro (day, week, month)
+   */
   public getSelectValue(value: string) {
     this.selectValue.set(value);
   }

@@ -14,35 +14,67 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ConfigComponent implements OnInit {
 
-  // Injections
+  // ==================== INJEÇÕES DE DEPENDÊNCIA ====================
+
+  /** Service para gerenciar estado do usuário */
   public fb = inject(FormBuilder);
+
+  /** Service para gerenciar estado do usuário */
   public userState = inject(UserStateService);
+
+  /** Service para exibir notificações toast */
   public snackBar = inject(MatSnackBar);
 
+  // ==================== PROPRIEDADES PÚBLICAS ====================
+
+  /** Usuário atualmente logado (signal) */
   public userLogged = this.userState.userLogged;
+
+  /** Item de navegação ativo no menu lateral */
   public navItem:string = 'profile';
+
+  /** Controla visibilidade do campo de senha */
   public showPassword: boolean = false;
 
-  // Form
+  /** Formulário reativo do perfil do usuário */
   public profileForm!: FormGroup;
 
+  // ==================== CICLO DE VIDA ====================
+
+  /**
+   * Inicializa o componente
+   * - Busca dados do usuário pelo token JWT
+   * - Cria a estrutura do formulário
+   */
   ngOnInit(): void {
+    // Busca dados atualizados do usuário autenticado
     this.userState.getUserByToken();
 
+    // Inicializa formulário com campos vazios
     this.profileForm = this.fb.group({
-      name: '',
-      email: '',
-      phone: '',
-      role: '',
-      counterNumber: '',
-      oldPassword: '',
-      newPassword: '',
-      confirmPassword: ''
+      name: '',              // Nome do usuário
+      email: '',             // E-mail do usuário
+      phone: '',             // Telefone do usuário
+      role: '',              // Cargo/função do usuário
+      counterNumber: '',     // Número do balcão/guichê
+      oldPassword: '',       // Senha atual
+      newPassword: '',       // Nova senha
+      confirmPassword: ''    // Confirmação da nova senha
     });
   }
 
+  /**
+   * Construtor do componente
+   * Configura efeitos reativos para:
+   * 1. Preencher formulário quando dados do usuário são carregados
+   * 2. Monitorar status de atualização do usuário
+   */
   constructor() {
 
+    /**
+     * Efeito 1: Atualiza o formulário quando o usuário logado muda
+     * Preenche os campos com os dados mais recentes do usuário
+     */
     effect(() => {
 
       if (this.userLogged() != null) {
@@ -60,6 +92,11 @@ export class ConfigComponent implements OnInit {
       }
     })
 
+    /**
+     * Efeito 2: Monitora o status da atualização do usuário
+     * - Sucesso: exibe mensagem positiva e limpa campos de senha
+     * - Erro: exibe mensagem de erro e limpa campos de senha
+     */
     effect(() => {
 
       if (this.userState.updateStatus() == 'success') {
@@ -69,6 +106,7 @@ export class ConfigComponent implements OnInit {
           panelClass: ['snackbar-success']
         });
 
+        // Limpa campos de senha após atualização bem-sucedida
         this.profileForm.patchValue({
           oldPassword: '',
           newPassword: '',
@@ -84,6 +122,7 @@ export class ConfigComponent implements OnInit {
           panelClass: ['snackbar-error']
         });
 
+        // Limpa campos de senha mesmo em caso de erro
         this.profileForm.patchValue({
           oldPassword: '',
           newPassword: '',
@@ -94,6 +133,13 @@ export class ConfigComponent implements OnInit {
     })
   }
 
+  // ==================== MÉTODOS PÚBLICOS ====================
+
+  /**
+   * Converte o código do cargo para nome amigável em português
+   * @param role - Código do cargo (MANAGER, ATTENDANT, RECEPTION)
+   * @returns Nome do cargo em português
+   */
   public getRoleDisplayName(role: string): string {
     switch (role) {
       case 'MANAGER': return 'Gerente';
@@ -103,23 +149,40 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+  /**
+   * Altera o item de navegação ativo
+   * @param item - Nome do item de navegação
+   */
   public navItemChange(item: string) {
     this.navItem = item;
   }
 
+  /**
+   * Atualiza os dados do usuário
+   * - Verifica se usuário está logado
+   * - Valida se senhas nova e confirmação são iguais
+   * - Chama service para atualizar usuário
+   */
   updateUser() {
 
+    // Verifica se há usuário logado
     if (this.userLogged() == null) return;
 
+    // Valida se as senhas nova e confirmação são iguais
     if (this.profileForm.value.newPassword !== this.profileForm.value.confirmPassword) {
-      this.snackBar.open('Senhas não conferem', 'Fechar', {
+      this.snackBar.open('Senhas não conferem', 'Fechar', {
         duration: 3000,
         panelClass: ['snackbar-error']
       });
       return;
     };
 
-    this.userState.updateUser({phone: this.profileForm.value.phone, password: this.profileForm.value.newPassword, userId: this.userLogged()!.userId});
+    // Atualiza usuário com telefone, nova senha e ID do usuário
+    this.userState.updateUser({
+      phone: this.profileForm.value.phone,
+      password: this.profileForm.value.newPassword,
+      userId: this.userLogged()!.userId
+    });
   }
 
 }

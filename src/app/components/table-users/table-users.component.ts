@@ -12,37 +12,77 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TableUsersComponent implements OnInit {
 
-  // Injections
+  // ==================== INJEÇÕES DE DEPENDÊNCIA ====================
+
+  /** Service para gerenciar estado do usuário */
   private userState = inject(UserStateService);
-  private serviceState = inject(ServiceManagementService)
+
+  /** Service para gerenciar estado do serviço */
+  private serviceState = inject(ServiceManagementService);
+
+  /** Construtor de formulários reativos */
   private fb = inject(FormBuilder);
+
+  /** Service para exibir notificações toast */
   private snackBar = inject(MatSnackBar);
 
-  // States
+  // ==================== ESTADOS ====================
+
+  /** Lista de usuários */
   public users = this.userState.users;
+
+  /** Informações detalhadas de um usuário */
   public userInfo = this.userState.userInfo;
+
+  /** Lista de nomes de serviços e departamentos */
   public serviceNamesAndDepartments = this.serviceState.serviceNamesAndDepartments;
+
+  /** Total de usuários cadastrados */
   public totalUsers = this.userState.countTotalUsersStatistics;
+
+  /** Percentual de usuários por cargo */
   public percentage = this.userState.userPercentagesStatistics;
 
+  /** Página atual da listagem */
   public page = this.userState.page;
+
+  /** Total de páginas */
   public totalPages = this.userState.totalPages;
+
+  /** Total de elementos */
   public totalElements = this.userState.totalElements;
 
-  // Modals
+  // ==================== CONTROLE DE MODAIS ====================
+
+  /** Modal de registro de usuário */
   public modalRegister = this.userState.modalRegister;
+
+  /** Modal de atualização de usuário */
   public modalUpdate: boolean = false;
+
+  /** Modal de exclusão de usuário */
   public modalDelete: boolean = false;
+
+  /** Modal de visualização de usuário */
   public modalView: boolean = false;
+
+  /** Passo atual do formulário de registro (1, 2 ou 3) */
   public currentStep: number = 1;
 
-  // Form
+  // ==================== FORMULÁRIOS ====================
+
+  /** Formulário de registro de usuário */
   public registerForm!: FormGroup;
+
+  /** Formulário de atualização de usuário */
   public updateForm!: FormGroup;
 
-  // Role and Permissions
+  // ==================== CONTROLE DE CARGO E PERMISSÕES ====================
+
+  /** Cargo selecionado no formulário */
   public selectedRole = signal<string>('');
 
+  /** Permissões selecionadas para exibição (filtradas por cargo) */
   public selectedPermissions: string[] = [
     'Gerenciar usuários',
     'Gerenciar departamentos',
@@ -52,6 +92,8 @@ export class TableUsersComponent implements OnInit {
     'Relatórios',
     'Configurações'
   ];
+
+  /** Todas as permissões disponíveis no sistema */
   public allPermissions: string[] = [
     'Gerenciar usuários',
     'Gerenciar departamentos',
@@ -63,23 +105,49 @@ export class TableUsersComponent implements OnInit {
     'Chamadas'
   ];
 
-  // Serviços (substituiu departments)
+  // ==================== CONTROLE DE VISIBILIDADE DE SENHA ====================
+
+  /** Controla visibilidade do campo de senha */
   public showPassword: boolean = false;
+
+  /** Controla visibilidade do campo de confirmação de senha */
   public showConfirmPassword: boolean = false;
+
+  /** Controla visibilidade do campo de revisão de senha */
   public showReviewPassword: boolean = false;
 
-  // Variables
+  // ==================== VARIÁVEIS DE CONTROLE ====================
+
+  /** Índice do dropdown ativo (null quando nenhum está aberto) */
   public dropDown: number | null = null;
+
+  /** Quantidade de itens por página */
   public itemsPerPage = 4;
 
-  // Success Modal
+  // ==================== MODAL DE SUCESSO ====================
+
+  /** Controla exibição do modal de sucesso */
   public showSuccessModal: boolean = false;
+
+  /** Mensagem exibida no modal de sucesso */
   public successMessage: string = 'Usuário criado com sucesso!';
 
-  // ========= Selectd services ==========
+  // ==================== SERVIÇOS SELECIONADOS ====================
+
+  /** IDs dos serviços selecionados para o usuário */
   selectedServices: string[] = [];
+
+  /** Nomes dos serviços selecionados para o usuário */
   selectedServiceNames: string[] = [];
 
+  // ==================== CICLO DE VIDA ====================
+
+  /**
+   * Inicializa o componente
+   * - Carrega lista de usuários
+   * - Carrega estatísticas
+   * - Inicializa formulários
+   */
   ngOnInit(){
     this.userState.loadingAllUsers();
     this.userState.loadStatistics();
@@ -87,8 +155,15 @@ export class TableUsersComponent implements OnInit {
     this.initUpdateForm();
   }
 
+  // ==================== EFEITOS DE REATIVIDADE ====================
+
   constructor() {
 
+    /**
+     * Efeito: Monitora status de registro de usuário
+     * - Sucesso: exibe mensagem positiva, fecha modal e reseta formulário
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.userState.registerStatus() === 'success') {
@@ -111,6 +186,11 @@ export class TableUsersComponent implements OnInit {
       }
     })
 
+    /**
+     * Efeito: Monitora status de atualização de usuário
+     * - Sucesso: exibe mensagem positiva, fecha modal e limpa dados
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.userState.updateStatus() === 'success') {
@@ -133,7 +213,11 @@ export class TableUsersComponent implements OnInit {
       }
     })
 
-
+    /**
+     * Efeito: Monitora status de exclusão de usuário
+     * - Sucesso: exibe mensagem positiva, fecha modal e limpa dados
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.userState.deleteStatus() === 'success') {
@@ -155,6 +239,10 @@ export class TableUsersComponent implements OnInit {
       }
     })
 
+    /**
+     * Efeito: Limpa serviços selecionados quando cargo é RECEPTION
+     * Recepcionistas não possuem serviços associados
+     */
     effect(() => {
 
       if (this.selectedRole() === 'RECEPTION') {
@@ -167,6 +255,10 @@ export class TableUsersComponent implements OnInit {
       }
     })
 
+    /**
+     * Efeito: Preenche formulário de atualização quando usuário é selecionado
+     * Atualiza os campos do formulário com os dados do usuário
+     */
     effect(() => {
 
       if (this.userInfo() != null && this.modalUpdate) {
@@ -187,7 +279,10 @@ export class TableUsersComponent implements OnInit {
       }
     })
 
-
+    /**
+     * Efeito: Preenche serviços selecionados na atualização
+     * Mapeia os serviços do usuário para os IDs correspondentes
+     */
     effect(() => {
 
       if (this.userInfo() != null && this.modalUpdate) {
@@ -204,6 +299,13 @@ export class TableUsersComponent implements OnInit {
     });
   }
 
+  // ==================== GERENCIAMENTO DE SERVIÇOS ====================
+
+  /**
+   * Alterna seleção de um serviço pelo ID
+   * @param serviceId - ID do serviço
+   * @param event - Evento do checkbox
+   */
   public toggleService(serviceId: string, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
 
@@ -218,6 +320,11 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
+  /**
+   * Alterna seleção de um serviço pelo nome
+   * @param serviceName - Nome do serviço
+   * @param event - Evento do checkbox
+   */
   public toggleServiceName(serviceName: string, event: Event): void {
     const checked = (event.target as HTMLInputElement).checked;
 
@@ -232,7 +339,12 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
-  // =========== Form Initialization ===========
+  // ==================== INICIALIZAÇÃO DE FORMULÁRIOS ====================
+
+  /**
+   * Inicializa o formulário de registro de usuário
+   * Campos: dados pessoais, credenciais, cargo e serviços
+   */
   private initRegisterForm() {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
@@ -249,6 +361,10 @@ export class TableUsersComponent implements OnInit {
     );
   }
 
+  /**
+   * Inicializa o formulário de atualização de usuário
+   * Campos similares ao registro, sem validações obrigatórias
+   */
   private initUpdateForm() {
     this.updateForm = this.fb.group({
       userId: [''],
@@ -266,7 +382,9 @@ export class TableUsersComponent implements OnInit {
     });
   }
 
-  // ========== Form Getters ===========
+  // ==================== GETTERS DO FORMULÁRIO ====================
+
+  /** Retorna o nome completo do usuário no formulário */
   get fullName(): string {
     const name = this.registerForm?.get('name')?.value ?? '';
     const surname = this.registerForm?.get('surname')?.value ?? '';
@@ -274,14 +392,17 @@ export class TableUsersComponent implements OnInit {
     return `${name} ${surname}`.trim();
   }
 
+  /** Retorna o nome do usuário ou '-' se vazio */
   get name(): string {
     return this.registerForm?.get('name')?.value ?? '-';
   }
 
+  /** Retorna o sobrenome do usuário ou '-' se vazio */
   get surname(): string {
     return this.registerForm?.get('surname')?.value ?? '-';
   }
 
+  /** Retorna as iniciais do nome e sobrenome */
   get siglas(): string {
     const name = this.registerForm?.get('name')?.value ?? '';
     const surname = this.registerForm?.get('surname')?.value ?? '';
@@ -289,20 +410,27 @@ export class TableUsersComponent implements OnInit {
     return `${name[0]}${surname[0]}`;
   }
 
+  /** Retorna o username ou '-' se vazio */
   get username(): string {
     return this.registerForm?.get('username')?.value ?? '-';
   }
 
+  /** Retorna o email ou '-' se vazio */
   get email(): string {
     return this.registerForm?.get('email')?.value ?? '-';
   }
 
+  /** Retorna o telefone ou '-' se vazio */
   get phone(): string {
     return this.registerForm?.get('phone')?.value ?? '-';
   }
 
-  // =========== Step Navigation ===========
+  // ==================== NAVEGAÇÃO ENTRE PASSOS ====================
 
+  /**
+   * Avança para o próximo passo do formulário
+   * Valida campos do passo atual antes de prosseguir
+   */
   nextStep() {
 
     if (this.modalRegister()) {
@@ -313,10 +441,12 @@ export class TableUsersComponent implements OnInit {
         this.registerForm.get(field)?.valid
       );
 
+      // Verifica se as senhas coincidem e se os campos são válidos
       if (this.registerForm.get('password')?.value === this.registerForm.get('confirmPassword')?.value
         && isStepValid1) {
         this.currentStep ++;
       } else {
+        // Marca campos como tocados para exibir erros
         step1Fields.forEach(field => {
           this.registerForm.get(field)?.markAsTouched();
         });
@@ -329,11 +459,20 @@ export class TableUsersComponent implements OnInit {
 
   }
 
+  /**
+   * Volta para o passo anterior
+   */
   previousStep() {
     this.currentStep--;
   }
 
-  // =========== Role Selection ===========
+  // ==================== SELEÇÃO DE CARGO ====================
+
+  /**
+   * Seleciona um cargo para o usuário
+   * Atualiza formulário e permissões exibidas
+   * @param role - Cargo selecionado
+   */
   public selectRole(role: string): void {
     this.selectedRole.set(role);
 
@@ -348,6 +487,11 @@ export class TableUsersComponent implements OnInit {
     this.selectedPermissions = [...this.permissionsByRole[role]];
   }
 
+  /**
+   * Retorna a classe CSS para o ícone do cargo
+   * @param role - Cargo
+   * @returns Nome da classe CSS
+   */
   public getRoleIcon(role: string): string {
     switch(role) {
       case 'MANAGER': return 'supervisor-bg';
@@ -357,6 +501,11 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
+  /**
+   * Retorna o nome do cargo em português
+   * @param role - Cargo em inglês
+   * @returns Nome em português
+   */
   public getRoleDisplayName(role: string): string {
     switch (role) {
       case 'MANAGER': return 'Gerente';
@@ -366,6 +515,11 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
+  /**
+   * Retorna a descrição do cargo
+   * @param role - Cargo
+   * @returns Descrição das responsabilidades
+   */
   public getRoleDescription(role: string): string {
     switch (role) {
       case 'MANAGER': return 'Gerencia atendentes, recepcionistas e relatórios';
@@ -375,8 +529,9 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
-  // =========== Permission Management ===========
+  // ==================== GERENCIAMENTO DE PERMISSÕES ====================
 
+  /** Mapeamento de cargos para permissões associadas */
   public permissionsByRole: Record<string, string[]> = {
     MANAGER: [
       'Gerenciar departamentos',
@@ -399,7 +554,10 @@ export class TableUsersComponent implements OnInit {
     ]
   };
 
-  // Handle current step with validation
+  /**
+   * Navega para um passo específico com validação
+   * @param step - Número do passo (1, 2 ou 3)
+   */
   handleCurrentStep(step: number) {
 
     const step1Fields = ['name', 'surname', 'email', 'username', 'password', 'confirmPassword'];
@@ -422,24 +580,42 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
-  // =========== Modals ===========
+  // ==================== CONTROLE DE MODAIS ====================
+
+  /**
+   * Abre modal de registro de usuário
+   * Carrega lista de serviços para seleção
+   */
   public openModalRegister(): void {
     this.modalRegister.set(true);
     this.serviceState.loadServiceNamesAndDepartments();
   }
 
+  /**
+   * Fecha modal de registro de usuário
+   * Reseta formulário e passo atual
+   */
   public closeModalRegister(): void {
     this.modalRegister.set(false);
     this.registerForm.reset();
     this.currentStep = 1;
   }
 
+  /**
+   * Abre modal de atualização de usuário
+   * Busca dados do usuário e carrega serviços
+   * @param userId - ID do usuário
+   */
   public openModalUpdate(userId: string) {
     this.userState.getUserById(userId);
     this.serviceState.loadServiceNamesAndDepartments();
     this.modalUpdate = true;
   }
 
+  /**
+   * Fecha modal de atualização de usuário
+   * Reseta dados e limpa seleções
+   */
   public closeModalUpdate(): void {
     this.modalUpdate = false;
     this.currentStep = 1;
@@ -448,28 +624,52 @@ export class TableUsersComponent implements OnInit {
     this.selectedServices = [];
   }
 
+  /**
+   * Abre modal de exclusão de usuário
+   * Busca dados do usuário e fecha dropdown
+   * @param userId - ID do usuário
+   */
   public openModalDelete(userId: string): void {
     this.modalDelete = true;
     this.dropDown = null;
     this.userState.getUserById(userId);
   }
 
+  /**
+   * Fecha modal de exclusão de usuário
+   * Reseta dados do usuário
+   */
   public closeModalDelete(): void {
     this.modalDelete = false;
     this.userState.resetInfoUser();
   }
 
+  /**
+   * Abre modal de visualização de usuário
+   * Busca dados do usuário
+   * @param userId - ID do usuário
+   */
   public openModalView(userId: string) {
     this.userState.getUserById(userId);
     this.modalView = true;
   }
 
+  /**
+   * Fecha modal de visualização de usuário
+   * Reseta dados do usuário
+   */
   public closeModalView() {
     this.modalView = false;
     this.userState.resetInfoUser();
   }
 
-  // =========== DropDown ===========
+  // ==================== CONTROLE DE DROPDOWN ====================
+
+  /**
+   * Fecha dropdown ao clicar fora dele
+   * Listener global de clique no documento
+   * @param event - Evento de clique
+   */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -479,15 +679,28 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
+  /**
+   * Abre ou fecha dropdown de um item específico
+   * @param index - Índice do item
+   */
   openDropDown(index: number): void {
     this.dropDown = this.dropDown === index ? null : index;
   }
 
+  /**
+   * Fecha qualquer dropdown aberto
+   */
   closeDropDown(): void {
     this.dropDown = null;
   }
 
-  // =========== Helper Methods ===========
+  // ==================== MÉTODOS AUXILIARES ====================
+
+  /**
+   * Retorna o nome do cargo em português (versão estendida)
+   * @param role - Cargo em inglês
+   * @returns Nome em português completo
+   */
   getRole(role: string): string {
     switch (role) {
       case 'ADMIN': return 'Administrador';
@@ -498,30 +711,58 @@ export class TableUsersComponent implements OnInit {
     }
   }
 
+  // ==================== BUSCA E PAGINAÇÃO ====================
+
+  /**
+   * Executa busca ao digitar no campo de pesquisa
+   * @param event - Evento do input
+   */
   onSearch(event: any): void {
     this.userState.setSearch(event.target.value);
   }
 
+  /**
+   * Avança para a próxima página
+   */
   nextPage(): void {
     this.userState.nextPage();
   }
 
+  /**
+   * Volta para a página anterior
+   */
   previousPage(): void {
     this.userState.previousPage();
   }
 
+  /**
+   * Navega para uma página específica
+   * @param page - Número da página (base 0)
+   */
   goToPage(page: number): void {
     this.userState.goToPage(page);
   }
 
+  /**
+   * Calcula o índice inicial dos itens exibidos
+   * @returns Índice inicial (base 1)
+   */
   getStartIndex(): number {
     return this.page() * this.itemsPerPage + 1;
   }
 
+  /**
+   * Calcula o índice final dos itens exibidos
+   * @returns Índice final
+   */
   getEndIndex(): number {
     return Math.min((this.page() + 1) * this.itemsPerPage, this.totalElements());
   }
 
+  /**
+   * Gera array de números de páginas visíveis (máximo 4)
+   * @returns Array com números das páginas
+   */
   getPagesArray(): number[] {
     const total = this.totalPages();
     const current = this.page();
@@ -543,19 +784,29 @@ export class TableUsersComponent implements OnInit {
     return Array.from({ length: end - start }, (_, i) => start + i);
   }
 
+  // ==================== CONTROLE DE VISIBILIDADE DE SENHA ====================
+
+  /** Alterna visibilidade do campo de senha */
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
+  /** Alterna visibilidade do campo de confirmação de senha */
   toggleConfirmPassword(): void {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
+  /** Alterna visibilidade do campo de revisão de senha */
   toggleReviewPassword(): void {
     this.showReviewPassword = !this.showReviewPassword;
   }
 
-  // =========== Lifecycle ===========
+  // ==================== CICLO DE VIDA - EVENTOS ====================
+
+  /**
+   * Fecha modais ao pressionar tecla ESC
+   * Listener de teclado global
+   */
   @HostListener('window:keydown.escape', ['$event'])
   onEscapePressed(event: Event): void {
     if (this.modalRegister()) this.closeModalRegister();
@@ -564,18 +815,28 @@ export class TableUsersComponent implements OnInit {
     if (this.modalView) this.closeModalView();
   }
 
-  // Register User
+  // ==================== MÉTODOS DE CRUD ====================
+
+  /**
+   * Registra um novo usuário
+   * Combina dados do formulário com serviços selecionados
+   */
   registerUser() {
     this.userState.registerUser({...this.registerForm.value, serviceIds: this.selectedServices});
   }
 
-  // Update User
+  /**
+   * Atualiza um usuário existente
+   * Valida senhas antes de enviar
+   */
   updateUser() {
     if (this.updateForm.get('password')?.touched && this.updateForm.get('password')?.value !== this.updateForm.get('confirmPassword')?.value) return;
     this.userState.updateUser({...this.updateForm.value, serviceIds: this.selectedServices});
   }
 
-  // Delete User
+  /**
+   * Exclui o usuário atualmente selecionado
+   */
   deleteUser () {
     this.userState.deleteUser();
   }

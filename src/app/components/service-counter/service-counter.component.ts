@@ -17,59 +17,116 @@ import { VoiceService } from '../../services/voice/voice.service';
 })
 export class ServiceCounterComponent implements OnInit {
 
-  // Injections
+  // ==================== INJEÇÕES DE DEPENDÊNCIA ====================
+
+  /** Service para gerenciar estado do atendente */
   private attendentState = inject(AttendentStateService);
+
+  /** Service para gerenciar estado do ticket */
   private ticketState = inject(TicketStateService);
+
+  /** Service para gerenciar estado do usuário */
   private userState = inject(UserStateService);
+
+  /** Construtor de formulários reativos */
   private fb = inject(FormBuilder);
+
+  /** Service para exibir notificações toast */
   private snackBar = inject(MatSnackBar);
 
-  // State Attendent
+  // ==================== ESTADOS - ATENDENTE ====================
+
+  /** Total de atendimentos realizados */
   public countTotalAttendances = this.attendentState.countTotalAttendances;
+
+  /** Tempo médio de serviço */
   public averageServiceTime = this.attendentState.averageServiceTime;
+
+  /** Tempo médio de espera */
   public avarageWaitingTime = this.attendentState.averageWaitingTime;
 
-  // State Ticket
+  // ==================== ESTADOS - TICKET ====================
+
+  /** Lista de tickets aguardando atendimento */
   public ticketsForAttendance = this.ticketState.ticketsForAttendance;
+
+  /** Histórico de tickets do atendente */
   public historyTickets = this.ticketState.historyTickets;
+
+  /** Total de tickets */
   public totalTickets = this.ticketState.totalTickets;
 
-  // State attendent
+  // ==================== ESTADOS - ATENDENTE ====================
+
+  /** Timer atual do atendimento em andamento */
   public currentTimer = this.attendentState.currentTimer;
 
-  // Next ticket
+  // ==================== ESTADOS LOCAIS ====================
+
+  /** Índice do ticket atual na fila */
   public cont = signal(-1);
 
-  // State User
+  // ==================== ESTADOS - USUÁRIO ====================
+
+  /** Usuário atualmente logado */
   public userLogged = this.userState.userLogged;
 
-  // Form
+  // ==================== FORMULÁRIOS ====================
+
+  /** Formulário para finalizar atendimento com resolução */
   public finishForm!: FormGroup;
 
-  // Variables
+  // ==================== VARIÁVEIS DE CONTROLE ====================
+
+  /** Horário de início do atendimento atual */
   startTime = new Date();
+
+  /** Tempo decorrido formatado (HH:MM:SS) */
   date: string = '00:00:00';
 
-  // Modal
+  // ==================== CONTROLE DE MODAIS ====================
+
+  /** Modal de cancelamento de atendimento */
   public modalCancelAttendance = false;
+
+  /** Modal de finalização de atendimento */
   public modalFinishAttendance = false;
 
-  // Pagination tickets
+  // ==================== PAGINAÇÃO - TICKETS ====================
+
+  /** Página atual da lista de tickets */
   public pageTickets = this.ticketState.pageTickets;
+
+  /** Total de páginas de tickets */
   public totalPagesTickets = this.ticketState.totalPagesTickets;
+
+  /** Total de elementos de tickets */
   public totalElementsTickets = this.ticketState.totalElementsTickets;
 
-  // Pagination history
+  // ==================== PAGINAÇÃO - HISTÓRICO ====================
+
+  /** Página atual do histórico */
   public pageHistory = this.ticketState.pageHistory;
+
+  /** Total de páginas do histórico */
   public totalPagesHistory = this.ticketState.totalPagesHistory;
+
+  /** Total de elementos do histórico */
   public totalElementsHistory = this.ticketState.totalElementsHistory;
 
+  /** Quantidade de itens por página */
   public itemsPerPage = 6;
 
+  /** Subscription para o polling de atualizações */
   private pollingSubscription?: Subscription;
 
+  /** ID do ticket atualmente selecionado */
   public ticketSelectedId = signal<string | null>(null);
 
+  /**
+   * Computed property que retorna o ticket selecionado
+   * Busca na lista de tickets pelo ID armazenado
+   */
   public ticketSelected = computed(() => {
     const id = this.ticketSelectedId();
 
@@ -86,11 +143,20 @@ export class ServiceCounterComponent implements OnInit {
 
   constructor() {
 
-    // Inicializando o formulário para finalizar atendimento
+    // ==================== INICIALIZAÇÃO DO FORMULÁRIO ====================
+
+    /** Formulário para finalizar atendimento com campo de resolução */
     this.finishForm = this.fb.group({
       resolution: ['']
     });
 
+    // ==================== EFEITOS DE REATIVIDADE ====================
+
+    /**
+     * Efeito: Monitora status de início de atendimento
+     * - Sucesso: exibe mensagem positiva
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.attendentState.startAttendanceStatus() === 'success') {
@@ -116,6 +182,11 @@ export class ServiceCounterComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Monitora status de finalização de atendimento
+     * - Sucesso: exibe mensagem, limpa seleção e fecha modal
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.attendentState.finishAttendanceStatus() === 'success') {
@@ -142,6 +213,11 @@ export class ServiceCounterComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Monitora status de cancelamento de atendimento
+     * - Sucesso: exibe mensagem, limpa seleção e fecha modal
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.attendentState.cancelAttendanceStatus() === 'success') {
@@ -168,6 +244,10 @@ export class ServiceCounterComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Armazena ticket selecionado no localStorage para exibição no painel
+     * Quando um ticket é selecionado, salva no localStorage para ser consumido pelo QueueDisplayComponent
+     */
     effect(() => {
 
       const ticket = this.ticketSelected();
@@ -182,38 +262,72 @@ export class ServiceCounterComponent implements OnInit {
 
   }
 
+  // ==================== CICLO DE VIDA ====================
+
+  /**
+   * Inicializa o componente
+   * - Carrega estatísticas do atendente
+   * - Busca dados do usuário logado
+   * - Remove ticket do painel anterior
+   * - Inicia polling para atualização automática
+   */
   ngOnInit(): void {
     this.attendentState.loadStatistics();
     this.userState.getUserByToken();
     localStorage.removeItem('ticketForPanel');
 
+    // Polling a cada 10 segundos para atualizar lista de tickets e histórico
     this.pollingSubscription = interval(10000).subscribe(() => {
       this.ticketState.getTicketsForAttendence();
       this.ticketState.getHistoryTicketsByAttendant();
     });
   }
 
+  /**
+   * Destroi o componente e cancela subscription do polling
+   */
   ngOnDestroy(): void {
     this.pollingSubscription?.unsubscribe();
   }
 
+  // ==================== MÉTODOS AUXILIARES ====================
+
+  /**
+   * Retorna o nome da prioridade em português
+   * @param priority - Prioridade em inglês (NORMAL, PRIORITY)
+   * @returns Nome da prioridade em português
+   */
   getNamePriority(priority: string):string {
     if (priority === 'NORMAL') return 'Normal';
     else if (priority === 'PRIORITY') return 'Prioridade';
     return '';
   }
 
+  /**
+   * Retorna o nome do status em português
+   * @param status - Status em inglês (FINISHED, CANCELED)
+   * @returns Nome do status em português
+   */
   getNameStatus(status: string):string {
     if(status === 'FINISHED') return 'Finalizado';
     else if (status === 'CANCELED') return 'Cancelado';
     return ''
   }
 
-  // Start attendance
+  // ==================== MÉTODOS DE ATENDIMENTO ====================
+
+  /**
+   * Inicia o atendimento de um ticket
+   * @param ticketId - ID do ticket a ser atendido
+   */
   startAttendance(ticketId: string) {
     this.attendentState.startAttendance(ticketId);
   }
 
+  /**
+   * Avança para o próximo ticket na fila
+   * @param tickets - Lista de tickets disponíveis
+   */
   callNextTicket(tickets: ResponseTicketsForAttendanceDto[]) {
 
     if (tickets.length === 0) {
@@ -230,6 +344,10 @@ export class ServiceCounterComponent implements OnInit {
     this.ticketSelectedId.set(tickets[nextIndex].ticketId);
   }
 
+  /**
+   * Volta para o ticket anterior na fila
+   * @param tickets - Lista de tickets disponíveis
+   */
   callBeforeTicket(tickets: ResponseTicketsForAttendanceDto[]) {
 
     if (tickets.length === 0) {
@@ -246,27 +364,50 @@ export class ServiceCounterComponent implements OnInit {
     this.ticketSelectedId.set(tickets[previousIndex].ticketId);
   }
 
-  // Pagination tickets
+  // ==================== MÉTODOS DE PAGINAÇÃO - TICKETS ====================
+
+  /**
+   * Avança para próxima página de tickets
+   */
   nextPageTickets(): void {
     this.ticketState.nextPageTickets();
   }
 
+  /**
+   * Volta para página anterior de tickets
+   */
   previousPageTickets(): void {
     this.ticketState.previousPageTickets();
   }
 
+  /**
+   * Navega para página específica de tickets
+   * @param page - Número da página (base 0)
+   */
   goToPageTickets(page: number): void {
     this.ticketState.goToPageTickets(page);
   }
 
+  /**
+   * Calcula índice inicial dos tickets exibidos
+   * @returns Índice inicial (base 1)
+   */
   getStartIndexTickets(): number {
     return this.pageTickets() * this.itemsPerPage + 1;
   }
 
+  /**
+   * Calcula índice final dos tickets exibidos
+   * @returns Índice final
+   */
   getEndIndexTickets(): number {
     return Math.min((this.pageTickets() + 1) * this.itemsPerPage, this.totalElementsTickets());
   }
 
+  /**
+   * Gera array de números de páginas visíveis para tickets (máximo 4)
+   * @returns Array com números das páginas
+   */
   getPagesArrayTickets(): number[] {
     const total = this.totalPagesTickets();
     const current = this.pageTickets();
@@ -288,27 +429,50 @@ export class ServiceCounterComponent implements OnInit {
     return Array.from({ length: end - start }, (_, i) => start + i);
   }
 
-  // Pagination history
+  // ==================== MÉTODOS DE PAGINAÇÃO - HISTÓRICO ====================
+
+  /**
+   * Avança para próxima página do histórico
+   */
   nextPageHistory(): void {
     this.ticketState.nextPageHistory();
   }
 
+  /**
+   * Volta para página anterior do histórico
+   */
   previousPageHistory(): void {
     this.ticketState.previousPageHistory();
   }
 
+  /**
+   * Navega para página específica do histórico
+   * @param page - Número da página (base 0)
+   */
   goToPageHistory(page: number): void {
     this.ticketState.goToPageHistory(page);
   }
 
+  /**
+   * Calcula índice inicial do histórico exibido
+   * @returns Índice inicial (base 1)
+   */
   getStartIndexHistory(): number {
     return this.pageHistory() * this.itemsPerPage + 1;
   }
 
+  /**
+   * Calcula índice final do histórico exibido
+   * @returns Índice final
+   */
   getEndIndexHistory(): number {
     return Math.min((this.pageHistory() + 1) * this.itemsPerPage, this.totalElementsHistory());
   }
 
+  /**
+   * Gera array de números de páginas visíveis para histórico (máximo 4)
+   * @returns Array com números das páginas
+   */
   getPagesArrayHistory(): number[] {
     const total = this.totalPagesHistory();
     const current = this.pageHistory();
@@ -330,42 +494,75 @@ export class ServiceCounterComponent implements OnInit {
     return Array.from({ length: end - start }, (_, i) => start + i);
   }
 
-  // Modal canceled
+  // ==================== MÉTODOS DE MODAL - CANCELAMENTO ====================
+
+  /**
+   * Abre modal de cancelamento de atendimento
+   * @param ticketId - ID do ticket a ser cancelado
+   */
   openModalCanceled(ticketId: string) {
     this.ticketSelectedId.set(ticketId);
     this.modalCancelAttendance = true;
   }
 
+  /**
+   * Fecha modal de cancelamento de atendimento
+   */
   closeModalCanceled() {
     this.modalCancelAttendance = false;
   }
 
+  /**
+   * Cancela o atendimento de um ticket
+   * @param ticketId - ID do ticket
+   */
   cancelAttendance(ticketId: string) {
 
     if (ticketId === '') return;
     this.attendentState.cancelAttendance(ticketId);
   }
 
-  // Modal finish
+  // ==================== MÉTODOS DE MODAL - FINALIZAÇÃO ====================
+
+  /**
+   * Abre modal de finalização de atendimento
+   * @param ticketId - ID do ticket a ser finalizado
+   */
   openModalFinish(ticketId: string) {
     this.ticketSelectedId.set(ticketId);
     this.modalFinishAttendance = true;
   }
 
+  /**
+   * Fecha modal de finalização de atendimento
+   */
   closeModalFinish() {
     this.modalFinishAttendance = false;
   }
 
+  /**
+   * Finaliza o atendimento de um ticket com resolução
+   * @param ticketId - ID do ticket
+   */
   finishAttendance(ticketId: string) {
 
     if (ticketId === '') return;
     this.attendentState.finishAttendance(ticketId, this.finishForm.value.resolution);
   }
 
+  // ==================== MÉTODOS DE INTERAÇÃO COM PAINEL ====================
+
+  /**
+   * Define flag no localStorage para chamar o cliente por voz
+   * A flag é consumida pelo QueueDisplayComponent
+   */
   callCustomer() {
     localStorage.setItem('call-customer', 'true');
   }
 
+  /**
+   * Abre o painel de fila em uma nova janela
+   */
   redirectToQueueDisplay() {
     window.open('/queue-display', '_blank');
   }

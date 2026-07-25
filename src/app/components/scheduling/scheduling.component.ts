@@ -16,124 +16,240 @@ import { ResponseAllCustomersDto } from '../../dtos/customer/ResponseAllCustomer
 })
 export class SchedulingComponent implements OnInit {
 
+  /**
+   * Inicializa o componente carregando dados iniciais
+   * - Carrega lista de clientes
+   * - Carrega lista de agendamentos
+   */
   ngOnInit() {
     this.customerState.loadCustomers();
     this.schedulingState.loadSchedules();
   }
 
-  // ==== Injections ====
+  // ==================== INJEÇÕES DE DEPENDÊNCIA ====================
+
+  /** Service para gerenciar estado do cliente */
   private customerState = inject(CustomerStateService);
+
+  /** Service para gerenciar estado do agendamento */
   private schedulingState = inject(ScheduleStateService);
+
+  /** Service para gerenciar estado do serviço */
   private serviceState = inject(ServiceManagementService);
+
+  /** Service para gerenciar estado do ticket */
   private ticketState = inject(TicketStateService);
+
+  /** Construtor de formulários reativos */
   private fb = inject(FormBuilder);
+
+  /** Service para exibir notificações toast */
   private snackBar = inject(MatSnackBar);
 
-  // Variables
+  // ==================== VARIÁVEIS DE CONTROLE ====================
+
+  /** Índice do dropdown ativo (null quando nenhum está aberto) */
   dropDown: number | null = null;
+
+  /** Quantidade de itens por página na tabela */
   itemsPerPage = 4;
+
+  /** Tabela atualmente exibida (Scheduling ou Customer) */
   table = this.schedulingState.table;
+
+  /** Data atual do sistema */
   currentDate = new Date();
+
+  /** Input de busca por cliente */
   searchCustomerInput = '';
+
+  /** Input de busca para atualização de cliente */
   updateCustomerSearch = '';
+
+  /** Data selecionada para filtro (formato ISO) */
   selectedDate = new Date().toLocaleDateString('en-CA');
 
-  // MODAIS SCHEDULING
+  // ==================== CONTROLE DE MODAIS - AGENDAMENTO ====================
+
+  /** Modal de registro de agendamento */
   modalSchedulingRegister = this.schedulingState.modalSchedulingRegister;
+
+  /** Modal de atualização de agendamento */
   modalSchedulingUpdate = false;
+
+  /** Modal de exclusão de agendamento */
   modalSchedulingDelete = false;
+
+  /** Modal de visualização de agendamento */
   modalSchedulingView = false;
 
-  // MODAIS CUSTOMER
+  // ==================== CONTROLE DE MODAIS - CLIENTE ====================
+
+  /** Modal de registro de cliente */
   modalCustomerRegister = this.schedulingState.modalCustomerRegister;
+
+  /** Modal de atualização de cliente */
   modalCustomerUpdate = false;
+
+  /** Modal de exclusão de cliente */
   modalCustomerDelete = false;
+
+  /** Modal de visualização de cliente */
   modalCustomerView = false;
 
-  // MODAL TICKET
+  // ==================== CONTROLE DE MODAIS - TICKET ====================
+
+  /** Modal de criação de ticket */
   modalTicket = false;
+
+  /** Modal de impressão de ticket */
   modalTicketPrinting = false;
 
-  // Form Customers
+  // ==================== FORMULÁRIOS ====================
+
+  /** Formulário de registro de cliente */
   registerCustomerForm!: FormGroup;
+
+  /** Formulário de atualização de cliente */
   updateCustomerForm!: FormGroup;
 
-  // Form Schedules
+  /** Formulário de registro de agendamento */
   registerScheduleForm!: FormGroup;
+
+  /** Formulário de atualização de agendamento */
   updateScheduleForm!: FormGroup;
 
-  // ==== SERVICES STATES ====
+  // ==================== ESTADOS - SERVIÇOS ====================
+
+  /** Lista de nomes de serviços e departamentos */
   public serviceNamesAndDepartments = this.serviceState.serviceNamesAndDepartments;
 
-  // ==== CUSTOMERS STATES ====
+  // ==================== ESTADOS - CLIENTES ====================
+
+  /** Lista de clientes */
   public customers = this.customerState.customers;
+
+  /** Informações detalhadas de um cliente */
   public customerInfo = this.customerState.customerInfo;
+
+  /** Página atual da listagem de clientes */
   public customerPage = this.customerState.customerPage;
+
+  /** Total de páginas de clientes */
   public customerTotalPages = this.customerState.customerTotalPages;
+
+  /** Total de elementos de clientes */
   public customerTotalElements = this.customerState.customerTotalElements;
+
+  /** Termo de busca de clientes */
   public customerSearch = this.customerState.customerSearch;
+
+  /** Lista de IDs e nomes de clientes */
   public customerIdsAndNames = this.customerState.customerIdsAndNames;
+
+  /** Sugestões de clientes para autocomplete */
   public customerSuggestions = this.customerState.customerSuggestions;
 
-  // ==== SCHEDULES STATES ====
+  // ==================== ESTADOS - AGENDAMENTOS ====================
+
+  /** Lista de agendamentos */
   public schedules = this.schedulingState.schedules;
+
+  /** Informações detalhadas de um agendamento */
   public scheduleInfo = this.schedulingState.scheduleInfo;
+
+  /** Página atual da listagem de agendamentos */
   public schedulePage = this.schedulingState.schedulePage;
+
+  /** Total de páginas de agendamentos */
   public scheduleTotalPages = this.schedulingState.scheduleTotalPages;
+
+  /** Total de elementos de agendamentos */
   public scheduleTotalElements = this.schedulingState.scheduleTotalElements;
+
+  /** Termo de busca de agendamentos */
   public scheduleSearch = this.schedulingState.scheduleSearch;
 
+  /** Agendamentos criados por dia */
   public scheduleCreatedByDay = this.schedulingState.scheduleCreatedByDay;
 
-  // ==== TICKET STATES =====
+  // ==================== ESTADOS - TICKETS ====================
+
+  /** Informações detalhadas de um ticket */
   public ticketInfo = this.ticketState.ticketInfo;
 
-  // ==== STATES ====
+  // ==================== ESTADOS LOCAIS ====================
+
+  /** ID do cliente selecionado */
   public customerId = signal<string>('');
+
+  /** ID do serviço selecionado */
   public serviceManagementId = signal<string>('');
 
   constructor() {
 
+    /**
+     * Efeito: Recarrega agendamentos quando a tabela é alterada para Scheduling
+     */
     effect(() => {
       if (this.table() === 'Scheduling') {
         this.schedulingState.loadSchedules();
       }
     })
 
+    // ==================== INICIALIZAÇÃO DOS FORMULÁRIOS ====================
+
+    /**
+     * Formulário de registro de agendamento
+     */
     this.registerScheduleForm = this.fb.group({
-      customerId: [''],
-      serviceManagementId: [''],
-      priority: [''],
-      scheduledDate: [''],
+      customerId: [''],           // ID do cliente
+      serviceManagementId: [''],  // ID do serviço
+      priority: [''],             // Prioridade (NORMAL, PRIORITY)
+      scheduledDate: [''],        // Data agendada
     });
 
+    /**
+     * Formulário de atualização de agendamento
+     */
     this.updateScheduleForm = this.fb.group({
-      scheduleId: [''],
-      customerId: [''],
-      serviceManagementId: [''],
-      priority: [''],
-      scheduledDate: [''],
-      status: ['']
+      scheduleId: [''],           // ID do agendamento
+      customerId: [''],           // ID do cliente
+      serviceManagementId: [''],  // ID do serviço
+      priority: [''],             // Prioridade
+      scheduledDate: [''],        // Data agendada
+      status: ['']                // Status (SCHEDULED, PRESENT, CANCELED, ABSENT)
     });
 
+    /**
+     * Formulário de registro de cliente
+     */
     this.registerCustomerForm = this.fb.group({
-      name: [''],
-      cpf: [''],
-      rg: [''],
-      email: [''],
-      phone: [''],
+      name: [''],      // Nome do cliente
+      cpf: [''],       // CPF
+      rg: [''],        // RG
+      email: [''],     // E-mail
+      phone: [''],     // Telefone
     });
 
+    /**
+     * Formulário de atualização de cliente
+     */
     this.updateCustomerForm = this.fb.group({
-      customerId: [''],
-      name: [''],
-      cpf: [''],
-      rg: [''],
-      email: [''],
-      phone: [''],
+      customerId: [''], // ID do cliente
+      name: [''],       // Nome
+      cpf: [''],        // CPF
+      rg: [''],         // RG
+      email: [''],      // E-mail
+      phone: [''],      // Telefone
     });
 
+    // ==================== EFEITOS DE REATIVIDADE ====================
 
+    /**
+     * Efeito: Preenche formulário de atualização quando agendamento é selecionado
+     * Também busca o nome do cliente para exibição
+     */
     effect(() => {
 
       const schedule = this.scheduleInfo();
@@ -158,6 +274,9 @@ export class SchedulingComponent implements OnInit {
 
     });
 
+    /**
+     * Efeito: Preenche formulário de atualização quando cliente é selecionado
+     */
     effect(() => {
       if (this.customerInfo() !== null) {
         this.updateCustomerForm.patchValue({
@@ -171,6 +290,11 @@ export class SchedulingComponent implements OnInit {
       }
     })
 
+    /**
+     * Efeito: Monitora status de registro de agendamento
+     * - Sucesso: exibe mensagem, fecha modal e reseta formulário
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.schedulingState.registerStatus() === 'success') {
@@ -192,6 +316,11 @@ export class SchedulingComponent implements OnInit {
       }
     })
 
+    /**
+     * Efeito: Monitora status de atualização de agendamento
+     * - Sucesso: exibe mensagem, fecha modal, reseta formulários e limpa dados
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.schedulingState.updateStatus() === 'success') {
@@ -216,6 +345,11 @@ export class SchedulingComponent implements OnInit {
       }
     })
 
+    /**
+     * Efeito: Monitora status de registro de cliente
+     * - Sucesso: exibe mensagem, fecha modal e reseta formulário
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
       if (this.customerState.registerCustomerStatus() === 'success') {
         this.snackBar.open(this.customerState.registerCustomerMessage(), 'Fechar', {
@@ -236,6 +370,11 @@ export class SchedulingComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Monitora status de atualização de cliente
+     * - Sucesso: exibe mensagem, fecha modal e reseta dados
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
       if (this.customerState.updateCustomerStatus() === 'success') {
         this.snackBar.open(this.customerState.updateCustomerMessage(), 'Fechar', {
@@ -256,6 +395,11 @@ export class SchedulingComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Monitora status de exclusão de agendamento
+     * - Sucesso: exibe mensagem, fecha modal e reseta dados
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
       if (this.schedulingState.deleteStatus() === 'success') {
         this.snackBar.open(this.schedulingState.deleteMessage(), 'Fechar', {
@@ -276,6 +420,11 @@ export class SchedulingComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Monitora status de exclusão de cliente
+     * - Sucesso: exibe mensagem, fecha modal e reseta dados
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
       if (this.customerState.deleteCustomerStatus() === 'success') {
         this.snackBar.open(this.customerState.deleteCustomerMessage(), 'Fechar', {
@@ -296,6 +445,11 @@ export class SchedulingComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Monitora status de criação de ticket
+     * - Sucesso: exibe mensagem, fecha modal e abre impressão
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.ticketState.createStatus() === 'success') {
@@ -318,6 +472,11 @@ export class SchedulingComponent implements OnInit {
       }
     });
 
+    /**
+     * Efeito: Monitora status de exclusão de ticket
+     * - Sucesso: exibe mensagem e fecha modal
+     * - Erro: exibe mensagem de erro
+     */
     effect(() => {
 
       if (this.ticketState.deleteStatus() === 'success') {
@@ -339,17 +498,30 @@ export class SchedulingComponent implements OnInit {
     });
   }
 
-  // ====== MODALS SCHEDULE =========
+  // ==================== MÉTODOS DE CONTROLE DE MODAIS - AGENDAMENTO ====================
+
+  /**
+   * Abre modal de registro de agendamento
+   * Carrega listas de clientes e serviços para seleção
+   */
   public openScheduleModalRegister() {
     this.modalSchedulingRegister.set(true);
     this.customerState.loadCustomerIdsAndNames();
     this.serviceState.loadServiceNamesAndDepartments();
   }
 
+  /**
+   * Fecha modal de registro de agendamento
+   */
   public closeScheduleModalRegister() {
     this.modalSchedulingRegister.set(false);
   }
 
+  /**
+   * Abre modal de atualização de agendamento
+   * Busca dados do agendamento e carrega listas auxiliares
+   * @param scheduleId - ID do agendamento a ser atualizado
+   */
   public openScheduleModalUpdate(scheduleId: string) {
     this.schedulingState.getScheduleById(scheduleId);
     this.customerState.loadCustomerIdsAndNames();
@@ -357,6 +529,10 @@ export class SchedulingComponent implements OnInit {
     this.modalSchedulingUpdate = true;
   }
 
+  /**
+   * Fecha modal de atualização de agendamento
+   * Reseta formulário e limpa dados temporários
+   */
   public closeScheduleModalUpdate() {
     this.modalSchedulingUpdate = false;
     this.updateScheduleForm.reset();
@@ -365,83 +541,148 @@ export class SchedulingComponent implements OnInit {
     this.updateCustomerSearch = '';
   }
 
+  /**
+   * Abre modal de exclusão de agendamento
+   * Busca dados do agendamento e fecha dropdown
+   * @param scheduleId - ID do agendamento a ser excluído
+   */
   public openScheduleModalDelete(scheduleId: string) {
     this.schedulingState.getScheduleById(scheduleId);
     this.modalSchedulingDelete = true;
     this.closeDropDown();
   }
 
+  /**
+   * Fecha modal de exclusão de agendamento
+   */
   public closeScheduleModalDelete() {
     this.modalSchedulingDelete = false;
     this.scheduleInfo.set(null);
   }
 
+  /**
+   * Abre modal de visualização de agendamento
+   * Busca dados do agendamento e do cliente
+   * @param scheduleId - ID do agendamento
+   * @param customerId - ID do cliente
+   */
   public openScheduleModalView(scheduleId: string, customerId: string) {
     this.customerState.getInfoCustomer(customerId);
     this.schedulingState.getScheduleById(scheduleId);
     this.modalSchedulingView = true;
   }
 
+  /**
+   * Fecha modal de visualização de agendamento
+   */
   public closeScheduleModalView() {
     this.modalSchedulingView = false;
     this.scheduleInfo.set(null);
   }
 
-  // ====== MODALS CUSTOMER =========
+  // ==================== MÉTODOS DE CONTROLE DE MODAIS - CLIENTE ====================
+
+  /**
+   * Abre modal de registro de cliente
+   */
   public openCustomerModalRegister() {
     this.modalCustomerRegister.set(true);
   }
 
+  /**
+   * Fecha modal de registro de cliente
+   */
   public closeCustomerModalRegister() {
     this.modalCustomerRegister.set(false);
   }
 
+  /**
+   * Abre modal de atualização de cliente
+   * @param customerId - ID do cliente a ser atualizado
+   */
   public openCustomerModalUpdate(customerId: string) {
     this.customerState.getInfoCustomer(customerId);
     this.modalCustomerUpdate = true;
   }
 
+  /**
+   * Fecha modal de atualização de cliente
+   */
   public closeCustomerModalUpdate() {
     this.modalCustomerUpdate = false;
     this.customerState.resetCustomerInfo();
   }
 
+  /**
+   * Abre modal de exclusão de cliente
+   * Fecha dropdown após abertura
+   * @param customerId - ID do cliente a ser excluído
+   */
   public openCustomerModalDelete(customerId: string) {
     this.modalCustomerDelete = true;
     this.customerState.getInfoCustomer(customerId);
     this.closeDropDown();
   }
 
+  /**
+   * Fecha modal de exclusão de cliente
+   */
   public closeCustomerModalDelete() {
     this.modalCustomerDelete = false;
     this.customerState.resetCustomerInfo();
   }
 
+  /**
+   * Abre modal de visualização de cliente
+   * @param customerId - ID do cliente
+   */
   public openCustomerModalView(customerId: string) {
     this.customerState.getInfoCustomer(customerId);
     this.modalCustomerView = true;
   }
 
+  /**
+   * Fecha modal de visualização de cliente
+   */
   public closeCustomerModalView() {
     this.modalCustomerView = false;
     this.customerState.resetCustomerInfo();
   }
 
+  // ==================== MÉTODOS DE CONTROLE DE MODAIS - TICKET ====================
+
+  /**
+   * Abre modal de criação de ticket para um agendamento
+   * Busca dados do agendamento e fecha dropdown
+   * @param scheduleId - ID do agendamento
+   */
   public openTicketModal(scheduleId: string) {
     this.modalTicket = true;
     this.schedulingState.getScheduleById(scheduleId);
     this.closeDropDown();
   }
 
+  /**
+   * Fecha modal de criação de ticket
+   */
   public closeTicketModal() {
     this.modalTicket = false;
   }
 
+  /**
+   * Fecha modal de impressão de ticket
+   */
   public closeTicketPrintingModal() {
     this.modalTicketPrinting = false;
   }
 
-  // ===================== SEARCH =====================
+  // ==================== MÉTODOS DE BUSCA E FILTRO ====================
+
+  /**
+   * Executa busca ao digitar no campo de pesquisa
+   * Atualiza o termo de busca no service correspondente
+   * @param event - Evento do input
+   */
   onSearch(event: any) {
     if (this.table() === 'Scheduling') {
       this.schedulingState.setSearch(event.target.value);
@@ -450,14 +691,21 @@ export class SchedulingComponent implements OnInit {
     }
   }
 
+  /**
+   * Aplica filtro por data na tabela de agendamentos
+   * @param event - Evento do input date
+   */
   onDateFilter(event: any) {
     if (this.table() === 'Scheduling') {
-
       this.schedulingState.setSearchDate(event.target.value);
     }
   }
 
-  // ===================== PAGINATION =====================
+  // ==================== MÉTODOS DE PAGINAÇÃO ====================
+
+  /**
+   * Avança para a próxima página
+   */
   nextPage() {
     if (this.table() === 'Scheduling') {
       this.schedulingState.nextPage();
@@ -466,6 +714,9 @@ export class SchedulingComponent implements OnInit {
     }
   }
 
+  /**
+   * Volta para a página anterior
+   */
   previousPage() {
     if (this.table() === 'Scheduling') {
       this.schedulingState.previousPage();
@@ -474,6 +725,10 @@ export class SchedulingComponent implements OnInit {
     }
   }
 
+  /**
+   * Navega para uma página específica
+   * @param page - Número da página (base 0)
+   */
   goToPage(page: number) {
     if (this.table() === 'Scheduling') {
       this.schedulingState.goToPage(page);
@@ -482,6 +737,10 @@ export class SchedulingComponent implements OnInit {
     }
   }
 
+  /**
+   * Calcula o índice inicial dos itens exibidos
+   * @returns Índice inicial (base 1)
+   */
   getStartIndex(): number {
     if (this.table() === 'Scheduling') {
       return this.schedulePage() * this.itemsPerPage + 1;
@@ -490,6 +749,10 @@ export class SchedulingComponent implements OnInit {
     }
   }
 
+  /**
+   * Calcula o índice final dos itens exibidos
+   * @returns Índice final
+   */
   getEndIndex(): number {
     if (this.table() === 'Scheduling') {
       return Math.min(
@@ -504,6 +767,10 @@ export class SchedulingComponent implements OnInit {
     }
   }
 
+  /**
+   * Gera array de números de páginas visíveis (máximo 4)
+   * @returns Array com números das páginas
+   */
   getPagesArray(): number[] {
     let total: number;
     let current: number;
@@ -536,7 +803,13 @@ export class SchedulingComponent implements OnInit {
     );
   }
 
-  // DropDown
+  // ==================== MÉTODOS DE CONTROLE DE DROPDOWN ====================
+
+  /**
+   * Fecha dropdown ao clicar fora dele
+   * Listener global de clique no documento
+   * @param event - Evento de clique
+   */
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -548,6 +821,10 @@ export class SchedulingComponent implements OnInit {
     }
   }
 
+  /**
+   * Abre ou fecha dropdown de um item específico
+   * @param index - Índice do item
+   */
   openDropDown(index: number) {
     if (this.dropDown === index) {
       this.dropDown = null;
@@ -556,43 +833,72 @@ export class SchedulingComponent implements OnInit {
     this.dropDown = index;
   }
 
+  /**
+   * Fecha qualquer dropdown aberto
+   */
   closeDropDown() {
     this.dropDown = null;
   }
 
-  // ===================== SCHEDULE =====================
+  // ==================== MÉTODOS DE CRUD - AGENDAMENTO ====================
 
+  /**
+   * Registra um novo agendamento
+   * Verifica validade do formulário antes de enviar
+   */
   registerSchedule() {
     if (this.registerScheduleForm.invalid) return;
     this.schedulingState.registerSchedule(this.registerScheduleForm.value);
   }
 
+  /**
+   * Atualiza um agendamento existente
+   */
   updateSchedule() {
     this.schedulingState.updateSchedule(this.updateScheduleForm.value);
   }
 
+  /**
+   * Exclui um agendamento
+   * @param scheduleId - ID do agendamento
+   */
   deleteSchedule(scheduleId: string) {
     this.schedulingState.deleteSchedule(scheduleId);
   }
 
-  // ===================== CUSTOMER =====================
+  // ==================== MÉTODOS DE CRUD - CLIENTE ====================
 
-  // Register
+  /**
+   * Registra um novo cliente
+   * Verifica validade do formulário antes de enviar
+   */
   registerCustomer() {
     if (this.registerCustomerForm.invalid) return;
     this.customerState.registerCustomer(this.registerCustomerForm.value);
   }
 
+  /**
+   * Atualiza um cliente existente
+   */
   updateCustomer() {
     if (this.updateCustomerForm.invalid) return;
     this.customerState.updateCustomer(this.updateCustomerForm.value);
   }
 
+  /**
+   * Exclui um cliente
+   * @param customerId - ID do cliente
+   */
   deleteCustomer(customerId: string) {
     this.customerState.deleteCustomer(customerId);
   }
 
-  // ================= TICKET ============================
+  // ==================== MÉTODOS DE CRUD - TICKET ====================
+
+  /**
+   * Cria um ticket para o agendamento atual
+   * Utiliza dados do scheduleInfo para preencher os campos
+   */
   createTicket() {
 
     if (this.scheduleInfo() === null) return;
@@ -606,17 +912,31 @@ export class SchedulingComponent implements OnInit {
       });
   }
 
+  /**
+   * Exclui um ticket
+   * @param ticketId - ID do ticket
+   */
   deleteTicket(ticketId: string) {
 
     if (ticketId === '') return;
     this.ticketState.deleteTicket(ticketId);
   }
 
-  // ================= HANDLE ============================
+  // ==================== MÉTODOS AUXILIARES ====================
+
+  /**
+   * Alterna a tabela ativa entre Scheduling e Customer
+   * @param table - Nome da tabela
+   */
   public handleTable(table: string) {
     this.table.set(table);
   }
 
+  /**
+   * Retorna o nome do status do agendamento em português
+   * @param status - Status em inglês (SCHEDULED, PRESENT, CANCELED, ABSENT)
+   * @returns Status em português
+   */
   public getStatusSchedule(status: string) {
     if (status === 'SCHEDULED') return 'Agendado';
     if (status === 'PRESENT') return 'Presente';
@@ -625,6 +945,11 @@ export class SchedulingComponent implements OnInit {
     return '';
   }
 
+  /**
+   * Retorna a classe CSS para o status do agendamento
+   * @param status - Status em inglês
+   * @returns Nome da classe CSS
+   */
   public getStatusClass(status: string): string {
     if (status === 'SCHEDULED') return 'status-scheduled';
     if (status === 'PRESENT') return 'status-present';
@@ -633,18 +958,36 @@ export class SchedulingComponent implements OnInit {
     return '';
   }
 
+  /**
+   * Inicia a impressão do ticket após delay
+   * Utilizado para garantir que o modal seja renderizado
+   */
   public printTicket(): void {
     setTimeout(() => {
       window.print();
     }, 100);
   }
 
+  /**
+   * Retorna o nome da prioridade em português
+   * @param priority - Prioridade em inglês (NORMAL, PRIORITY)
+   * @returns Nome da prioridade em português
+   */
   public getNamePriority(priority: string) {
     if (priority === 'NORMAL') return 'Normal';
     if (priority === 'PRIORITY') return 'Prioridade';
     return '-';
   }
 
+  /**
+   * Retorna o primeiro documento disponível para exibição na tabela
+   * Prioridade: CPF > RG > Telefone > E-mail
+   * @param cpf - CPF do cliente
+   * @param rg - RG do cliente
+   * @param phone - Telefone do cliente
+   * @param email - E-mail do cliente
+   * @returns Documento disponível ou string vazia
+   */
   public getDocumentForTableSchedule(cpf: string, rg: string, phone: string, email: string): string {
 
     if (cpf !== '') return cpf;
@@ -654,7 +997,13 @@ export class SchedulingComponent implements OnInit {
     return '';
   }
 
-  // Método para proucurar usuário pelo input
+  // ==================== MÉTODOS DE AUTOCOMPLETE - CLIENTE ====================
+
+  /**
+   * Busca clientes para autocomplete no registro de agendamento
+   * Atualiza sugestões quando o termo tem 2+ caracteres
+   * @param event - Evento do input
+   */
   onCustomerSearch(event: Event) {
 
     const value = (event.target as HTMLInputElement).value;
@@ -669,6 +1018,11 @@ export class SchedulingComponent implements OnInit {
     this.customerState.searchCustomers(value);
   }
 
+  /**
+   * Seleciona um cliente para o formulário de registro de agendamento
+   * Preenche o input com o nome e o formulário com o ID
+   * @param customer - Cliente selecionado
+   */
   selectCustomer(customer: ResponseAllCustomersDto) {
 
     this.searchCustomerInput = customer.name;
@@ -684,6 +1038,11 @@ export class SchedulingComponent implements OnInit {
     this.customerSuggestions.set([]);
   }
 
+  /**
+   * Busca clientes para autocomplete na atualização de agendamento
+   * Atualiza sugestões quando o termo tem 2+ caracteres
+   * @param event - Evento do input
+   */
   onUpdateCustomerSearch(event: Event) {
 
     const value = (event.target as HTMLInputElement).value;
@@ -698,6 +1057,11 @@ export class SchedulingComponent implements OnInit {
     this.customerState.searchCustomers(value);
   }
 
+  /**
+   * Seleciona um cliente para o formulário de atualização de agendamento
+   * Preenche o input com o nome e o formulário com o ID
+   * @param customer - Cliente selecionado
+   */
   selectUpdateCustomer(customer: ResponseAllCustomersDto) {
 
     this.updateCustomerSearch = customer.name;
