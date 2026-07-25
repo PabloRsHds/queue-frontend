@@ -255,7 +255,6 @@ export class HomeComponent {
 
   logout() {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     this.snackBar.open('Logout realizado com sucesso', 'Fechar',
       { duration: 3000, panelClass: ['snackbar-success'] },
     );
