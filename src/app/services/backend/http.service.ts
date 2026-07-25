@@ -31,7 +31,7 @@ import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
 import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicketsForAttendanceDto';
 import { ResponseTokensDto } from '../../dtos/login/ResponseTokensDto';
 import { LoginDto } from '../../dtos/login/LoginDto';
-import { TokensDto } from '../../dtos/login/TokensDto';
+import { RefreshTokenDto } from '../../dtos/login/RefreshTokenDto';
 import { ResponseDepartmentDashBoardDto } from '../../dtos/department/statistics/ResponseDepartmentDashBoardDto';
 import { ResponseServiceDashBoardDto } from '../../dtos/services/statistics/ResponseServiceDashBoardDto';
 import { ResponseUserDashBoardDto } from '../../dtos/users/statistics/ResponseUserDashBoardDto';
@@ -267,7 +267,7 @@ export class HttpService {
     return this.http.post<ResponseTokensDto>(`${this.API_URL}/login`, request);
   }
 
-  public refreshTokens(tokens: TokensDto): Observable<ResponseTokensDto> {
+  public refreshTokens(tokens: RefreshTokenDto): Observable<ResponseTokensDto> {
     return this.http.post<ResponseTokensDto>(`${this.API_URL}/login/refresh-tokens`, tokens).pipe(
 
       catchError((err: HttpErrorResponse) => {
