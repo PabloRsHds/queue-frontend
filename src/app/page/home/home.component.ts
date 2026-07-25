@@ -202,14 +202,58 @@ export class HomeComponent {
    */
   ngOnInit() {
     this.userState.getUserByToken();
-    this.departmentState.loadStatistics();
-    this.serviceState.loadStatistics();
-    this.userState.loadStatistics();
   }
 
   // ==================== EFEITOS DE REATIVIDADE ====================
 
   constructor() {
+
+    /**
+     * Efeito: Carrega estatísticas baseadas na role do usuário logado
+     * Quando o usuário é carregado, determina quais estatísticas carregar
+     */
+    effect(() => {
+      const user = this.userLogged();
+
+      if (!user) return;
+
+      const role = user.role;
+
+      // Carrega estatísticas comuns a todos os usuários
+      this.userState.loadStatistics();
+
+      // Carrega estatísticas específicas baseadas na role
+      switch (role) {
+        case 'MANAGER':
+        case 'ADMIN':
+          // Gerentes/Admins veem todas as estatísticas
+          this.departmentState.loadStatistics();
+          this.serviceState.loadStatistics();
+          this.scheduleState.loadStatistics();
+          break;
+
+        case 'ATTENDANT':
+          // Atendentes só veem estatísticas de atendimento
+          this.attendentState.loadStatistics();
+          this.scheduleState.loadStatistics();
+          break;
+
+        case 'RECEPTION':
+          // Recepcionistas só veem estatísticas de agendamentos
+          this.scheduleState.loadStatistics();
+          this.customerState.loadStatistics();
+          break;
+
+        default:
+          // Fallback: carrega estatísticas básicas
+          this.departmentState.loadStatistics();
+          this.serviceState.loadStatistics();
+          this.scheduleState.loadStatistics();
+          this.customerState.loadStatistics();
+          this.attendentState.loadStatistics();
+          break;
+      }
+    });
 
     /**
      * Efeito: Configura gráfico de atendimentos por semana
