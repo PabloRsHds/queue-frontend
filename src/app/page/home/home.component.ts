@@ -455,4 +455,12 @@ export class HomeComponent {
   redirectToQueueDisplay() {
     window.open('/queue-display', '_blank');
   }
+
+  /**
+   * Abre o painel de fila em uma nova janela
+   * Utilizado para exibir a fila de atendimento em tela separada
+   */
+  redirectToStart() {
+    this.setActive('inicio');
+  }
 }

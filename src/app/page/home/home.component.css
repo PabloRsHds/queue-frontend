@@ -1235,6 +1235,7 @@ app-config {
   font-size:13px;
   text-decoration:none;
   font-weight:600;
+  cursor: pointer;
 }
 
 .active-section-servico:hover {
