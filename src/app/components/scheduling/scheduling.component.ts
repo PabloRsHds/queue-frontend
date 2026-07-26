@@ -848,7 +848,7 @@ export class SchedulingComponent implements OnInit {
    */
   registerSchedule() {
     if (this.registerScheduleForm.invalid) return;
-    this.schedulingState.registerSchedule(this.registerScheduleForm.value);
+    this.schedulingState.createSchedule(this.registerScheduleForm.value);
   }
 
   /**
@@ -874,7 +874,7 @@ export class SchedulingComponent implements OnInit {
    */
   registerCustomer() {
     if (this.registerCustomerForm.invalid) return;
-    this.customerState.registerCustomer(this.registerCustomerForm.value);
+    this.customerState.createCustomer(this.registerCustomerForm.value);
   }
 
   /**

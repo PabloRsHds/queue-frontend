@@ -99,8 +99,8 @@ export class CustomerStateService {
     })
   }
 
-  registerCustomer(request: CreateCustomerDto) {
-    this.http.registerCustomer(request).subscribe({
+  createCustomer(request: CreateCustomerDto) {
+    this.http.createCustomer(request).subscribe({
       next: () => {
         this.registerCustomerMessage.set('Cliente registrado com sucesso!');
         this.registerCustomerStatus.set('success');

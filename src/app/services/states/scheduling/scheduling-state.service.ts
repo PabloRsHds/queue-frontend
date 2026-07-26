@@ -69,8 +69,8 @@ export class ScheduleStateService {
   // ===== METHODS =====
 
   // Register Schedule
-  registerSchedule(request: CreateScheduleDto) {
-    this.http.registerSchedule(request).subscribe({
+  createSchedule(request: CreateScheduleDto) {
+    this.http.createSchedule(request).subscribe({
       next: () => {
         this.registerMessage.set('Agendamento realizado com sucesso!');
         this.registerStatus.set('success');

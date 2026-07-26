@@ -20,7 +20,7 @@ export const AuthInterceptorService: HttpInterceptorFn = (req, next) => {
 
   // Não intercepta login nem refresh
   const isLogin = req.url.endsWith('/login');
-  const isRefresh = req.url.endsWith('/refresh-tokens');
+  const isRefresh = req.url.endsWith('/login/refresh-tokens');
 
   if (isLogin || isRefresh) {
     return next(req);

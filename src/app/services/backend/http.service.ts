@@ -47,218 +47,34 @@ import { ResponseFinishAttendanceDto } from '../../dtos/attendance/ResponseFinis
 })
 export class HttpService {
 
+  // ============================================================
+  // CONFIGURATION
+  // ============================================================
+
   //private readonly API_URL = 'http://192.168.25.2:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
   private readonly API_URL = 'http://192.168.1.2:8080';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  // Departments
-  public createDepartment(department: CreateDepartmentDto): Observable<ResponseDepartmentDto> {
-    return this.http.post<ResponseDepartmentDto>(`${this.API_URL}/departments`, department);
-  }
+  // ============================================================
+  // AUTHENTICATION
+  // ============================================================
 
-  public updateDepartment(department: UpdateDepartmentDto): Observable<ResponseDepartmentDto> {
-    return this.http.patch<ResponseDepartmentDto>(`${this.API_URL}/departments`, department);
-  }
-
-  public deleteDepartment(departmentId: string): Observable<ResponseDepartmentDto> {
-    return this.http.delete<ResponseDepartmentDto>(`${this.API_URL}/departments/${departmentId}`);
-  }
-
-  public getAllDepartments(page: number, size: number, search?: string): Observable<PageResponse<ResponseDepartmentDto>> {
-    return this.http.get<PageResponse<ResponseDepartmentDto>>(
-      `${this.API_URL}/departments?page=${page}&size=${size}&search=${search ?? ''}`
-    );
-  }
-
-  public getDepartmentById(departmentId: string): Observable<ResponseGetDepartmentDto> {
-    return this.http.get<ResponseGetDepartmentDto>(`${this.API_URL}/departments/${departmentId}`);
-  }
-
-  public getDeparmentNames(): Observable<ResponseGetDepartmentDto[]> {
-    return this.http.get<ResponseGetDepartmentDto[]>(`${this.API_URL}/departments/names`);
-  }
-
-  public getDepartmentStatistics(): Observable<ResponseDepartmentDashBoardDto> {
-    return this.http.get<ResponseDepartmentDashBoardDto>(`${this.API_URL}/departments/statistics`);
-  }
-
-  // Services
-  public createServiceManagement(request: CreateServiceManagementDto): Observable<ResponseServiceManagementDto> {
-    return this.http.post<ResponseServiceManagementDto>(`${this.API_URL}/services`, request);
-  }
-
-  public updateServiceManagement(request: UpdateServiceManagementDto): Observable<ResponseServiceManagementDto> {
-    return this.http.patch<ResponseServiceManagementDto>(`${this.API_URL}/services`, request);
-  }
-
-  public deleteServiceManagement(request: string): Observable<ResponseServiceManagementDto> {
-    return this.http.delete<ResponseServiceManagementDto>(`${this.API_URL}/services/${request}`);
-  }
-
-  public getAllServicesManagement(page: number, size: number, search?: string): Observable<PageResponse<ResponseServiceManagementDto>> {
-    return this.http.get<PageResponse<ResponseServiceManagementDto>>(
-      `${this.API_URL}/services?page=${page}&size=${size}&search=${search ?? ''}`
-    );
-  }
-
-  public getServiceManagementById(request: string): Observable<ResponseGetServiceByIdDto> {
-    return this.http.get<ResponseGetServiceByIdDto>(`${this.API_URL}/services/${request}`);
-  }
-
-  public getServiceNamesAndDepartments(): Observable<ResponseServiceNamesAndDepartments[]> {
-    return this.http.get<ResponseServiceNamesAndDepartments[]>(
-      `${this.API_URL}/services/service-for-created-user`
-    );
-  }
-
-  public getServiceStatistics(): Observable<ResponseServiceDashBoardDto> {
-    return this.http.get<ResponseServiceDashBoardDto>(`${this.API_URL}/services/statistics`);
-  }
-
-  // Users
-  public createUser(user: RequestUserDto): Observable<ResponseUserDto> {
-    return this.http.post<ResponseUserDto>(`${this.API_URL}/users`, user);
-  }
-
-  public updateUser(user: UpdateUserDto): Observable<ResponseUserDto> {
-    return this.http.patch<ResponseUserDto>(`${this.API_URL}/users`, user);
-  }
-
-  public deleteUser(userId: string): Observable<ResponseUserDto> {
-    return this.http.delete<ResponseUserDto>(`${this.API_URL}/users/${userId}`);
-  }
-
-  public getAllUsers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllUsersDto>> {
-    return this.http.get<PageResponse<ResponseAllUsersDto>>(
-      `${this.API_URL}/users?page=${page}&size=${size}&search=${search ?? ''}`
-    );
-  }
-
-  public getUserById(userId: string): Observable<ResponseUserInfoDto> {
-    return this.http.get<ResponseUserInfoDto>(`${this.API_URL}/users/${userId}`);
-  }
-
-  public getUserByToken(): Observable<ResponseUserInfoDto> {
-    return this.http.get<ResponseUserInfoDto>(
-      `${this.API_URL}/users/token`,
-      {
-        withCredentials: true
-      }
-    );
-  }
-
-  public getUserStatistics(): Observable<ResponseUserDashBoardDto> {
-    return this.http.get<ResponseUserDashBoardDto>(`${this.API_URL}/users/statistics`);
-  }
-
-  // CUSTOMERS
-  public registerCustomer(request: CreateCustomerDto): Observable<ResponseCustomerDto> {
-    return this.http.post<ResponseCustomerDto>(`${this.API_URL}/customers`, request);
-  }
-
-  public updateCustomer(request: UpdateCustomerDto): Observable<ResponseCustomerDto> {
-    return this.http.patch<ResponseCustomerDto>(`${this.API_URL}/customers`, request);
-  }
-
-  public deleteCustomer(customerId: string): Observable<ResponseCustomerDto> {
-    return this.http.delete<ResponseCustomerDto>(`${this.API_URL}/customers/${customerId}`);
-  }
-
-  public getCustomerById(customerId: string): Observable<ResponseCustomerInfoDto> {
-    return this.http.get<ResponseCustomerInfoDto>(`${this.API_URL}/customers/${customerId}`);
-  }
-
-  public getCustomerIdsAndNames(): Observable<ResponseCustomerIdsAndNames[]> {
-    return this.http.get<ResponseCustomerIdsAndNames[]>(`${this.API_URL}/customers/ids-and-names`);
-  }
-
-  public getAllCustomers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllCustomersDto>> {
-    return this.http.get<PageResponse<ResponseAllCustomersDto>>(
-      `${this.API_URL}/customers?page=${page}&size=${size}&search=${search ?? ''}`
-    );
-  }
-
-  public getCustomerStatistics(): Observable<ResponseCustomerDashBoardDto> {
-    return this.http.get<ResponseCustomerDashBoardDto>(`${this.API_URL}/customers/statistics`);
-  }
-
-  // Scheduling
-  public registerSchedule(request: CreateScheduleDto): Observable<ResponseScheduleDto> {
-    return this.http.post<ResponseScheduleDto>(`${this.API_URL}/scheduling`, request);
-  }
-
-  public updateSchedule(request: UpdateScheduleDto): Observable<ResponseScheduleDto> {
-    return this.http.patch<ResponseScheduleDto>(`${this.API_URL}/scheduling`, request);
-  }
-
-  public deleteSchedule(scheduleId: string): Observable<ResponseScheduleDto> {
-    return this.http.delete<ResponseScheduleDto>(`${this.API_URL}/scheduling/`+ scheduleId)
-  }
-
-  public getAllScheduling(page: number, size: number, search?: string, scheduleDate?: string | null ): Observable<PageResponse<ResponseAllSchedulesDto>> {
-    return this.http.get<PageResponse<ResponseAllSchedulesDto>>(
-      `${this.API_URL}/scheduling?page=${page}&size=${size}&search=${search ?? ''}&scheduleDate=${scheduleDate ?? ''}`
-    );
-  }
-
-  public getScheduleById(scheduleId: string): Observable<ResponseScheduleDto> {
-    return this.http.get<ResponseScheduleDto>(`${this.API_URL}/scheduling/${scheduleId}`);
-  }
-
-  public getScheduleStatistics(): Observable<ResponseScheduleDashBoardDto> {
-    return this.http.get<ResponseScheduleDashBoardDto>(`${this.API_URL}/scheduling/statistics`);
-  }
-
-  // Ticket
-  public createTicket(request: CreateTicketDto): Observable<ResponseTicketDto> {
-    return this.http.post<ResponseTicketDto>(`${this.API_URL}/tickets`, request);
-  }
-
-  public deleteTicket(ticketId: string): Observable<ResponseTicketDto> {
-    return this.http.delete<ResponseTicketDto>(`${this.API_URL}/tickets/`+ ticketId)
-  }
-
-  public cancelTicket(ticketId: string): Observable<ResponseTicketDto> {
-    return this.http.patch<ResponseTicketDto>(`${this.API_URL}/tickets/status/${ticketId}`, null);
-  }
-
-  public getTicketsForAttendance(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
-
-    return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
-      `${this.API_URL}/tickets/tickets-for-attendance?page=${page}&size=${size}`, {withCredentials: true});
-  }
-
-  public getHistoryTicketsByAttendant(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
-
-    return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
-      `${this.API_URL}/tickets/history?page=${page}&size=${size}`, {withCredentials: true});
-  }
-
-  // Attendance
-  public startAttendance(request: StartAttendanceDto): Observable<ResponseAttendanceDto> {
-
-    return this.http.post<ResponseAttendanceDto>(`${this.API_URL}/attendances`, request, {withCredentials: true});
-  }
-
-  public finishAttendance(request: FinishAttendanceDto): Observable<ResponseFinishAttendanceDto> {
-    return this.http.patch<ResponseFinishAttendanceDto>(`${this.API_URL}/attendances/finish`, request);
-  }
-
-  public getAttendanceStatistics(): Observable<ResponseAttendanceDashboardDto> {
-    return this.http.get<ResponseAttendanceDashboardDto>(`${this.API_URL}/attendances/statistics`);
-  }
-
-  // Login
   public login(request: LoginDto): Observable<ResponseTokenDto> {
-    return this.http.post<ResponseTokenDto>(`${this.API_URL}/login`, request, {withCredentials: true});
+    return this.http.post<ResponseTokenDto>(
+      `${this.API_URL}/login`,
+      request,
+      { withCredentials: true }
+    );
   }
 
   public refreshTokens(): Observable<ResponseTokenDto> {
-    return this.http.post<ResponseTokenDto>(`${this.API_URL}/login/refresh-tokens`,{},{ withCredentials: true }
+    return this.http.post<ResponseTokenDto>(
+      `${this.API_URL}/login/refresh-tokens`,
+      {},
+      { withCredentials: true }
     ).pipe(
-
       catchError((err: HttpErrorResponse) => {
 
         let errorMsg = 'Serviço de refresh tokens está fora do ar';
@@ -269,6 +85,348 @@ export class HttpService {
 
         return throwError(() => new Error(errorMsg));
       })
+    );
+  }
+
+  // ============================================================
+  // UNITS
+  // ============================================================
+
+  // (CRUD da Unit ficará aqui)
+
+  // ============================================================
+  // DEPARTMENTS
+  // ============================================================
+
+  public createDepartment(request: CreateDepartmentDto): Observable<ResponseDepartmentDto> {
+    return this.http.post<ResponseDepartmentDto>(
+      `${this.API_URL}/departments`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public updateDepartment(request: UpdateDepartmentDto): Observable<ResponseDepartmentDto> {
+    return this.http.patch<ResponseDepartmentDto>(
+      `${this.API_URL}/departments`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public deleteDepartment(departmentId: string): Observable<ResponseDepartmentDto> {
+    return this.http.delete<ResponseDepartmentDto>(
+      `${this.API_URL}/departments/${departmentId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getAllDepartments(page: number, size: number, search?: string): Observable<PageResponse<ResponseDepartmentDto>> {
+    return this.http.get<PageResponse<ResponseDepartmentDto>>(
+      `${this.API_URL}/departments?page=${page}&size=${size}&search=${search ?? ''}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getDepartmentById(departmentId: string): Observable<ResponseGetDepartmentDto> {
+    return this.http.get<ResponseGetDepartmentDto>(
+      `${this.API_URL}/departments/${departmentId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getDeparmentNames(): Observable<ResponseGetDepartmentDto[]> {
+    return this.http.get<ResponseGetDepartmentDto[]>(
+      `${this.API_URL}/departments/names`,
+      { withCredentials: true }
+    );
+  }
+
+  public getDepartmentStatistics(): Observable<ResponseDepartmentDashBoardDto> {
+    return this.http.get<ResponseDepartmentDashBoardDto>(
+      `${this.API_URL}/departments/statistics`,
+      { withCredentials: true }
+    );
+  }
+
+  // ============================================================
+  // SERVICES
+  // ============================================================
+
+  public createServiceManagement(request: CreateServiceManagementDto): Observable<ResponseServiceManagementDto> {
+    return this.http.post<ResponseServiceManagementDto>(
+      `${this.API_URL}/services`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public updateServiceManagement(request: UpdateServiceManagementDto): Observable<ResponseServiceManagementDto> {
+    return this.http.patch<ResponseServiceManagementDto>(
+      `${this.API_URL}/services`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public deleteServiceManagement(serviceId: string): Observable<ResponseServiceManagementDto> {
+    return this.http.delete<ResponseServiceManagementDto>(
+      `${this.API_URL}/services/${serviceId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getAllServicesManagement(page: number, size: number, search?: string): Observable<PageResponse<ResponseServiceManagementDto>> {
+    return this.http.get<PageResponse<ResponseServiceManagementDto>>(
+      `${this.API_URL}/services?page=${page}&size=${size}&search=${search ?? ''}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getServiceManagementById(serviceId: string): Observable<ResponseGetServiceByIdDto> {
+    return this.http.get<ResponseGetServiceByIdDto>(
+      `${this.API_URL}/services/${serviceId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getServiceNamesAndDepartments(): Observable<ResponseServiceNamesAndDepartments[]> {
+    return this.http.get<ResponseServiceNamesAndDepartments[]>(
+      `${this.API_URL}/services/service-for-created-user`,
+      { withCredentials: true }
+    );
+  }
+
+  public getServiceStatistics(): Observable<ResponseServiceDashBoardDto> {
+    return this.http.get<ResponseServiceDashBoardDto>(
+      `${this.API_URL}/services/statistics`,
+      { withCredentials: true }
+    );
+  }
+
+  // ============================================================
+  // USERS
+  // ============================================================
+
+  public createUser(user: RequestUserDto): Observable<ResponseUserDto> {
+    return this.http.post<ResponseUserDto>(
+      `${this.API_URL}/users`,
+      user,
+      { withCredentials: true }
+    );
+  }
+
+  public updateUser(user: UpdateUserDto): Observable<ResponseUserDto> {
+    return this.http.patch<ResponseUserDto>(
+      `${this.API_URL}/users`,
+      user,
+      { withCredentials: true }
+    );
+  }
+
+  public deleteUser(userId: string): Observable<ResponseUserDto> {
+    return this.http.delete<ResponseUserDto>(
+      `${this.API_URL}/users/${userId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getAllUsers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllUsersDto>> {
+    return this.http.get<PageResponse<ResponseAllUsersDto>>(
+      `${this.API_URL}/users?page=${page}&size=${size}&search=${search ?? ''}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getUserById(userId: string): Observable<ResponseUserInfoDto> {
+    return this.http.get<ResponseUserInfoDto>(
+      `${this.API_URL}/users/${userId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getUserByToken(): Observable<ResponseUserInfoDto> {
+    return this.http.get<ResponseUserInfoDto>(
+      `${this.API_URL}/users/token`,
+      { withCredentials: true }
+    );
+  }
+
+  public getUserStatistics(): Observable<ResponseUserDashBoardDto> {
+    return this.http.get<ResponseUserDashBoardDto>(
+      `${this.API_URL}/users/statistics`,
+      { withCredentials: true }
+    );
+  }
+
+  // ============================================================
+  // CUSTOMERS
+  // ============================================================
+
+  public createCustomer(request: CreateCustomerDto): Observable<ResponseCustomerDto> {
+    return this.http.post<ResponseCustomerDto>(
+      `${this.API_URL}/customers`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public updateCustomer(request: UpdateCustomerDto): Observable<ResponseCustomerDto> {
+    return this.http.patch<ResponseCustomerDto>(
+      `${this.API_URL}/customers`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public deleteCustomer(customerId: string): Observable<ResponseCustomerDto> {
+    return this.http.delete<ResponseCustomerDto>(
+      `${this.API_URL}/customers/${customerId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getCustomerById(customerId: string): Observable<ResponseCustomerInfoDto> {
+    return this.http.get<ResponseCustomerInfoDto>(
+      `${this.API_URL}/customers/${customerId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getCustomerIdsAndNames(): Observable<ResponseCustomerIdsAndNames[]> {
+    return this.http.get<ResponseCustomerIdsAndNames[]>(
+      `${this.API_URL}/customers/ids-and-names`,
+      { withCredentials: true }
+    );
+  }
+
+  public getAllCustomers(page: number, size: number, search?: string): Observable<PageResponse<ResponseAllCustomersDto>> {
+    return this.http.get<PageResponse<ResponseAllCustomersDto>>(
+      `${this.API_URL}/customers?page=${page}&size=${size}&search=${search ?? ''}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getCustomerStatistics(): Observable<ResponseCustomerDashBoardDto> {
+    return this.http.get<ResponseCustomerDashBoardDto>(
+      `${this.API_URL}/customers/statistics`,
+      { withCredentials: true }
+    );
+  }
+
+  // ============================================================
+  // SCHEDULES
+  // ============================================================
+
+  public createSchedule(request: CreateScheduleDto): Observable<ResponseScheduleDto> {
+    return this.http.post<ResponseScheduleDto>(
+      `${this.API_URL}/scheduling`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public updateSchedule(request: UpdateScheduleDto): Observable<ResponseScheduleDto> {
+    return this.http.patch<ResponseScheduleDto>(
+      `${this.API_URL}/scheduling`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public deleteSchedule(scheduleId: string): Observable<ResponseScheduleDto> {
+    return this.http.delete<ResponseScheduleDto>(
+      `${this.API_URL}/scheduling/${scheduleId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getAllScheduling(page: number, size: number, search?: string, scheduleDate?: string | null): Observable<PageResponse<ResponseAllSchedulesDto>> {
+    return this.http.get<PageResponse<ResponseAllSchedulesDto>>(
+      `${this.API_URL}/scheduling?page=${page}&size=${size}&search=${search ?? ''}&scheduleDate=${scheduleDate ?? ''}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getScheduleById(scheduleId: string): Observable<ResponseScheduleDto> {
+    return this.http.get<ResponseScheduleDto>(
+      `${this.API_URL}/scheduling/${scheduleId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getScheduleStatistics(): Observable<ResponseScheduleDashBoardDto> {
+    return this.http.get<ResponseScheduleDashBoardDto>(
+      `${this.API_URL}/scheduling/statistics`,
+      { withCredentials: true }
+    );
+  }
+
+  // ============================================================
+  // TICKETS
+  // ============================================================
+
+  public createTicket(request: CreateTicketDto): Observable<ResponseTicketDto> {
+    return this.http.post<ResponseTicketDto>(
+      `${this.API_URL}/tickets`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public deleteTicket(ticketId: string): Observable<ResponseTicketDto> {
+    return this.http.delete<ResponseTicketDto>(
+      `${this.API_URL}/tickets/${ticketId}`,
+      { withCredentials: true }
+    );
+  }
+
+  public cancelTicket(ticketId: string): Observable<ResponseTicketDto> {
+    return this.http.patch<ResponseTicketDto>(
+      `${this.API_URL}/tickets/status/${ticketId}`,
+      null,
+      { withCredentials: true }
+    );
+  }
+
+  public getTicketsForAttendance(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
+    return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
+      `${this.API_URL}/tickets/tickets-for-attendance?page=${page}&size=${size}`,
+      { withCredentials: true }
+    );
+  }
+
+  public getHistoryTicketsByAttendant(page: number, size: number): Observable<PageResponse<ResponseTicketsForAttendanceDto>> {
+    return this.http.get<PageResponse<ResponseTicketsForAttendanceDto>>(
+      `${this.API_URL}/tickets/history?page=${page}&size=${size}`,
+      { withCredentials: true }
+    );
+  }
+
+  // ============================================================
+  // ATTENDANCES
+  // ============================================================
+
+  public startAttendance(request: StartAttendanceDto): Observable<ResponseAttendanceDto> {
+    return this.http.post<ResponseAttendanceDto>(
+      `${this.API_URL}/attendances`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public finishAttendance(request: FinishAttendanceDto): Observable<ResponseFinishAttendanceDto> {
+    return this.http.patch<ResponseFinishAttendanceDto>(
+      `${this.API_URL}/attendances/finish`,
+      request,
+      { withCredentials: true }
+    );
+  }
+
+  public getAttendanceStatistics(): Observable<ResponseAttendanceDashboardDto> {
+    return this.http.get<ResponseAttendanceDashboardDto>(
+      `${this.API_URL}/attendances/statistics`,
+      { withCredentials: true }
     );
   }
 }
