@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit{
 
   /* Inicializa as unidades disponíveis */
   ngOnInit(): void {
-    this.unitState.getAllUnits();
+    this.unitState.getAllUnitsForLogin();
   }
 
   // ==================== CONSTRUTOR ====================

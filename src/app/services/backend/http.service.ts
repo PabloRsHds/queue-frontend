@@ -105,31 +105,40 @@ export class HttpService {
 
   public createUnit(request: CreateUnitDto): Observable<ResponseUnitDto> {
     return this.http.post<ResponseUnitDto>(
-          `${this.API_URL}/units`,
-          request,
-          { withCredentials: true }
-      );
+        `${this.API_URL}/units`,
+        request,
+        { withCredentials: true }
+    );
   }
 
   public updateUnit(request: UpdateUnitDto): Observable<ResponseUnitDto> {
-      return this.http.put<ResponseUnitDto>(
-          `${this.API_URL}/units`,
-          request,
-          { withCredentials: true }
-      );
+    return this.http.put<ResponseUnitDto>(
+        `${this.API_URL}/units`,
+        request,
+        { withCredentials: true }
+    );
   }
 
   public deleteUnit(unitId: string): Observable<void> {
-      return this.http.delete<void>(
-          `${this.API_URL}/units/${unitId}`,
-          { withCredentials: true }
-      );
+    return this.http.delete<void>(
+        `${this.API_URL}/units/${unitId}`,
+        { withCredentials: true }
+    );
   }
 
-  public getAllUnits(): Observable<ResponseUnitDto[]> {
-      return this.http.get<ResponseUnitDto[]>(
-          `${this.API_URL}/units`
-      );
+  public getAllUnits(page: number, size: number, search?: string): Observable<PageResponse<ResponseUnitDto>> {
+    return this.http.get<PageResponse<ResponseUnitDto>>(
+        `${this.API_URL}/units?page=${page}&size=${size}&search=${search ?? ''}`,
+        { withCredentials: true }
+    );
+  }
+
+  public getUnitById(unitId: string): Observable<ResponseUnitDto> {
+
+    return this.http.get<ResponseUnitDto>(
+        `${this.API_URL}/units/${unitId}`,
+        { withCredentials: true }
+    );
   }
 
   // ============================================================

@@ -3,6 +3,7 @@ import { ResponseUnitDto } from '../../../dtos/unit/ResponseUnitDto';
 import { CreateUnitDto } from '../../../dtos/unit/CreateUnitDto';
 import { UpdateUnitDto } from '../../../dtos/unit/UpdateUnitDto';
 import { HttpService } from '../../backend/http.service';
+import { PageResponse } from '../../../dtos/page/PageResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,13 @@ export class UnitStateService {
   public loadStatus = signal<'loading' | 'success' | 'error' | 'default'>('default');
   public loadMessage = signal('');
 
+  // PAGINATION
+  public page = signal<number>(0);
+  public size = signal<number>(4);
+  public search = signal<string>('');
+  public totalElements = signal<number>(0);
+  public totalPages = signal<number>(0);
+
   // COMPUTED
   public totalUnits = computed(() => this.units().length);
   public activeUnits = computed(() => this.units().filter(u => u.active).length);
@@ -38,9 +46,14 @@ export class UnitStateService {
   // ============================================================
 
   getAllUnits() {
-    this.http.getAllUnits().subscribe({
-      next: (response) => {
-        this.units.set(response);
+    this.loadStatus.set('loading');
+    this.loadMessage.set('Carregando unidades...');
+
+    this.http.getAllUnits(this.page(), this.size(), this.search()).subscribe({
+      next: (response: PageResponse<ResponseUnitDto>) => {
+        this.units.set(response.content);
+        this.totalElements.set(response.totalElements);
+        this.totalPages.set(response.totalPages);
         this.loadStatus.set('success');
         this.loadMessage.set('Unidades carregadas com sucesso!');
       },
@@ -48,6 +61,52 @@ export class UnitStateService {
         this.loadStatus.set('error');
         this.loadMessage.set('Erro ao carregar unidades');
         console.error('Erro ao carregar unidades:', error);
+      }
+    });
+  }
+
+  // ============================================================
+  // GET ALL UNITS FOR LOGIN (com size grande)
+  // ============================================================
+
+  getAllUnitsForLogin() {
+    this.loadStatus.set('loading');
+    this.loadMessage.set('Carregando unidades...');
+
+    this.http.getAllUnits(0, 999).subscribe({
+      next: (response: PageResponse<ResponseUnitDto>) => {
+        this.units.set(response.content);
+        this.totalElements.set(response.totalElements);
+        this.totalPages.set(response.totalPages);
+        this.loadStatus.set('success');
+        this.loadMessage.set('Unidades carregadas com sucesso!');
+      },
+      error: (error) => {
+        this.loadStatus.set('error');
+        this.loadMessage.set('Erro ao carregar unidades');
+        console.error('Erro ao carregar unidades:', error);
+      }
+    });
+  }
+
+  // ============================================================
+  // GET UNIT BY ID
+  // ============================================================
+
+  getUnitById(unitId: string) {
+    this.loadStatus.set('loading');
+    this.loadMessage.set('Carregando unidade...');
+
+    this.http.getUnitById(unitId).subscribe({
+      next: (response) => {
+        this.selectedUnit.set(response);
+        this.loadStatus.set('success');
+        this.loadMessage.set('Unidade carregada com sucesso!');
+      },
+      error: (error) => {
+        this.loadStatus.set('error');
+        this.loadMessage.set(error.error?.error || 'Erro ao carregar unidade');
+        console.error('Erro ao carregar unidade:', error);
       }
     });
   }
@@ -61,7 +120,7 @@ export class UnitStateService {
       next: (response) => {
         this.createStatus.set('success');
         this.createMessage.set('Unidade criada com sucesso!');
-        this.units.update(units => [...units, response]);
+        this.getAllUnits();
       },
       error: (error) => {
         this.createStatus.set('error');
@@ -80,11 +139,7 @@ export class UnitStateService {
       next: (response) => {
         this.updateStatus.set('success');
         this.updateMessage.set('Unidade atualizada com sucesso!');
-        this.units.update(units =>
-          units.map(unit =>
-            unit.unitId === response.unitId ? response : unit
-          )
-        );
+        this.getAllUnits();
         if (this.selectedUnit()?.unitId === response.unitId) {
           this.selectedUnit.set(response);
         }
@@ -102,14 +157,11 @@ export class UnitStateService {
   // ============================================================
 
   deleteUnit(unitId: string) {
-
     this.http.deleteUnit(unitId).subscribe({
       next: () => {
         this.deleteStatus.set('success');
         this.deleteMessage.set('Unidade excluída com sucesso!');
-        this.units.update(units =>
-          units.filter(unit => unit.unitId !== unitId)
-        );
+        this.getAllUnits();
         if (this.selectedUnit()?.unitId === unitId) {
           this.selectedUnit.set(null);
         }
@@ -130,11 +182,55 @@ export class UnitStateService {
     const unit = this.units().find(u => u.unitId === unitId);
     if (unit) {
       this.selectedUnit.set(unit);
+    } else {
+      this.getUnitById(unitId);
     }
   }
 
   clearSelectedUnit() {
     this.selectedUnit.set(null);
+  }
+
+  // ============================================================
+  // PAGINATION
+  // ============================================================
+
+  setPage(page: number) {
+    this.page.set(page);
+    this.getAllUnits();
+  }
+
+  setSize(size: number) {
+    this.size.set(size);
+    this.page.set(0);
+    this.getAllUnits();
+  }
+
+  setSearch(search: string) {
+    this.search.set(search);
+    this.page.set(0);
+    this.getAllUnits();
+  }
+
+  nextPage() {
+    if (this.page() + 1 < this.totalPages()) {
+      this.page.update(p => p + 1);
+      this.getAllUnits();
+    }
+  }
+
+  previousPage() {
+    if (this.page() > 0) {
+      this.page.update(p => p - 1);
+      this.getAllUnits();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page >= 0 && page < this.totalPages()) {
+      this.page.set(page);
+      this.getAllUnits();
+    }
   }
 
   // ============================================================

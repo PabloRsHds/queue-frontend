@@ -19,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ChartComponent } from "ng-apexcharts";
 import { CustomerStateService } from '../../services/states/customer/customer-state.service';
 import { LoginStateService } from '../../services/states/login/login-state.service';
+import { TableUnitComponent } from "../../components/table-unit/table-unit.component";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -39,7 +40,7 @@ export type DonutChartOptions = {
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, ChartComponent, TableServicesComponent, TableDepartmentsComponent, TableUsersComponent, SchedulingComponent, GraphicComponent, ConfigComponent, ServiceCounterComponent],
+  imports: [CommonModule, ChartComponent, TableServicesComponent, TableDepartmentsComponent, TableUsersComponent, SchedulingComponent, GraphicComponent, ConfigComponent, ServiceCounterComponent, TableUnitComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

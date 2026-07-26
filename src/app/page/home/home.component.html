@@ -46,6 +46,15 @@
                       Painel de Atendimento
                   </a>
                   <a class="nav-link"
+                    [class.active]="activeSection() === 'unit'"
+                    (click)="setActive('unit')"
+                    *ngIf="this.userLogged()?.role === 'ADMIN'"
+                    >
+                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4.70711 12.7071L8 16L11.2929 12.7071L8 9.41421L4.70711 12.7071Z" fill="#ffffff"></path> <path d="M3.29289 11.2929L6.58579 8L3.29289 4.70711L0 8L3.29289 11.2929Z" fill="#ffffff"></path> <path d="M4.70711 3.29289L8 0L11.2929 3.29289L8 6.58579L4.70711 3.29289Z" fill="#ffffff"></path> <path d="M12.7071 4.70711L9.41421 8L12.7071 11.2929L16 8L12.7071 4.70711Z" fill="#ffffff"></path> </g>
+                      </svg>
+                      Unidades
+                  </a>
+                  <a class="nav-link"
                     [class.active]="activeSection() === 'department'"
                     (click)="setActive('department')"
                     *ngIf="
@@ -177,12 +186,12 @@
                       </div>
                     </button>
 
-                    <div *ngIf="this.activeSection() == 'service'">
-                      <h1 style="font-size:18px;font-weight:600;color:#1e293b;">Serviços</h1>
+                    <div *ngIf="this.activeSection() == 'unit'">
+                      <h1 style="font-size:18px;font-weight:600;color:#1e293b;">Unidades</h1>
                       <div style="display:flex;align-items:center;gap:8px; margin-top:5px;">
                         <p (click)="redirectToStart()" class="active-section-servico">Início</p>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="display:inline;vertical-align:middle;"><polyline points="9 18 15 12 9 6"/></svg>
-                        <span style="color:#3a86f2;font-size:13px;font-weight:600;">Serviços</span>
+                        <span style="color:#3a86f2;font-size:13px;font-weight:600;">Unidades</span>
                       </div>
                     </div>
 
@@ -192,6 +201,15 @@
                         <p (click)="redirectToStart()" class="active-section-servico">Início</p>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="display:inline;vertical-align:middle;"><polyline points="9 18 15 12 9 6"/></svg>
                         <span style="color:#3a86f2;font-size:13px;font-weight:600;">Departamentos</span>
+                      </div>
+                    </div>
+
+                    <div *ngIf="this.activeSection() == 'service'">
+                      <h1 style="font-size:18px;font-weight:600;color:#1e293b;">Serviços</h1>
+                      <div style="display:flex;align-items:center;gap:8px; margin-top:5px;">
+                        <p (click)="redirectToStart()" class="active-section-servico">Início</p>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="display:inline;vertical-align:middle;"><polyline points="9 18 15 12 9 6"/></svg>
+                        <span style="color:#3a86f2;font-size:13px;font-weight:600;">Serviços</span>
                       </div>
                     </div>
 
@@ -740,12 +758,16 @@
               </div>
           </div>
 
-          <div class="content" *ngIf="this.activeSection() === 'service'">
-            <app-table-services></app-table-services>
+          <div class="content" *ngIf="this.activeSection() === 'unit'">
+            <app-table-unit></app-table-unit>
           </div>
 
           <div class="content" *ngIf="this.activeSection() === 'department'">
             <app-table-departments></app-table-departments>
+          </div>
+
+          <div class="content" *ngIf="this.activeSection() === 'service'">
+            <app-table-services></app-table-services>
           </div>
 
           <div class="content" *ngIf="this.activeSection() === 'user'">
