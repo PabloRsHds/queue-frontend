@@ -94,8 +94,6 @@ function isTokenExpired(token: string): boolean {
   }
 }
 
-
-
 function logout(router: Router): void {
   localStorage.removeItem('accessToken');
   router.navigate(['/login']);

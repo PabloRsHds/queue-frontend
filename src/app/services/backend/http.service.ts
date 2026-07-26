@@ -252,7 +252,7 @@ export class HttpService {
 
   // Login
   public login(request: LoginDto): Observable<ResponseTokenDto> {
-    return this.http.post<ResponseTokenDto>(`${this.API_URL}/login`, request);
+    return this.http.post<ResponseTokenDto>(`${this.API_URL}/login`, request, {withCredentials: true});
   }
 
   public refreshTokens(): Observable<ResponseTokenDto> {
