@@ -14,6 +14,9 @@ export class LoginStateService {
   public loginMessage = signal('');
   public loginStatus = signal<'success' | 'error' | 'default'>('default');
 
+  public logoutMessage = signal('');
+  public logoutStatus = signal<'success' | 'error' | 'default'>('default');
+
 
   // login
   login(request: LoginDto) {
@@ -35,9 +38,19 @@ export class LoginStateService {
     });
   }
 
+  logout() {
+    this.http.logout().subscribe({
+      next: () => {
+        this.logoutMessage.set('Logout realizado com sucesso');
+        this.logoutStatus.set('success');
+      }
+    });
+  }
+
   // Resets
   resetStatus() {
     this.loginStatus.set('default');
+    this.logoutStatus.set('default');
   }
 
 }

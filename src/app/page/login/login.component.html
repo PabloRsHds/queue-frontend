@@ -103,6 +103,25 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label>Unidade</label>
+          <select
+              formControlName="unitId"
+              [class.loading]="unitState.loadStatus() === 'loading'"
+              [disabled]="unitState.loadStatus() === 'loading' || units().length === 0"
+          >
+              <option value="" disabled [selected]="!loginForm.get('unitId')?.value">
+                  {{ unitState.loadStatus() === 'loading' ? 'Carregando unidades...' : 'Selecione uma unidade' }}
+              </option>
+              <option
+                  *ngFor="let unit of units()"
+                  [value]="unit.unitId"
+              >
+                  {{ unit.name }}
+              </option>
+          </select>
+      </div>
+
         <div class="form-options">
           <label class="remember-me">
             <input type="checkbox" formControlName="rememberMe">

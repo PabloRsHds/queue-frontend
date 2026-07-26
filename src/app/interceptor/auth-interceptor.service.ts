@@ -21,8 +21,9 @@ export const AuthInterceptorService: HttpInterceptorFn = (req, next) => {
   // Não intercepta login nem refresh
   const isLogin = req.url.endsWith('/login');
   const isRefresh = req.url.endsWith('/login/refresh-tokens');
+  const isLogout = req.url.endsWith('/login/logout');
 
-  if (isLogin || isRefresh) {
+  if (isLogin || isRefresh || isLogout) {
     return next(req);
   }
 
@@ -52,6 +53,12 @@ export const AuthInterceptorService: HttpInterceptorFn = (req, next) => {
       if (error.status !== 401) {
         return throwError(() => error);
       }
+
+      if (!accessToken) {
+        logout(router);
+        return throwError(() => error);
+      }
+
       // Access token expirou
       // Solicita novo usando o cookie HttpOnly
       return api.refreshTokens().pipe(

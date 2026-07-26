@@ -41,6 +41,9 @@ import { StartAttendanceDto } from '../../dtos/attendance/StartAttendanceDto';
 import { ResponseAttendanceDto } from '../../dtos/attendance/ResponseAttendanceDto';
 import { FinishAttendanceDto } from '../../dtos/attendance/FinishAttendanceDto';
 import { ResponseFinishAttendanceDto } from '../../dtos/attendance/ResponseFinishAttendanceDto';
+import { ResponseUnitDto } from '../../dtos/unit/ResponseUnitDto';
+import { UpdateUnitDto } from '../../dtos/unit/UpdateUnitDto';
+import { CreateUnitDto } from '../../dtos/unit/CreateUnitDto';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +72,14 @@ export class HttpService {
     );
   }
 
+  logout(): Observable<void> {
+    return this.http.post<void>(
+      `${this.API_URL}/login/logout`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
   public refreshTokens(): Observable<ResponseTokenDto> {
     return this.http.post<ResponseTokenDto>(
       `${this.API_URL}/login/refresh-tokens`,
@@ -92,7 +103,34 @@ export class HttpService {
   // UNITS
   // ============================================================
 
-  // (CRUD da Unit ficará aqui)
+  public createUnit(request: CreateUnitDto): Observable<ResponseUnitDto> {
+    return this.http.post<ResponseUnitDto>(
+          `${this.API_URL}/units`,
+          request,
+          { withCredentials: true }
+      );
+  }
+
+  public updateUnit(request: UpdateUnitDto): Observable<ResponseUnitDto> {
+      return this.http.put<ResponseUnitDto>(
+          `${this.API_URL}/units`,
+          request,
+          { withCredentials: true }
+      );
+  }
+
+  public deleteUnit(unitId: string): Observable<void> {
+      return this.http.delete<void>(
+          `${this.API_URL}/units/${unitId}`,
+          { withCredentials: true }
+      );
+  }
+
+  public getAllUnits(): Observable<ResponseUnitDto[]> {
+      return this.http.get<ResponseUnitDto[]>(
+          `${this.API_URL}/units`
+      );
+  }
 
   // ============================================================
   // DEPARTMENTS

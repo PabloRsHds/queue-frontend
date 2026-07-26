@@ -157,12 +157,31 @@
   transition: all 0.2s;
   background: #f8fafc;
 }
+
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: all 0.2s;
+  background: #f8fafc;
+}
+
 .form-group input:focus {
   border-color: #2563eb;
   background: white;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 .form-group input::placeholder { color: #9ca3af; }
+
+.form-group select:focus {
+  border-color: #2563eb;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
 
 .password-wrapper { position: relative; }
 .password-wrapper input { padding-right: 44px; }

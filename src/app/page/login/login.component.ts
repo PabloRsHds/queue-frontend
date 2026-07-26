@@ -1,10 +1,11 @@
-import { Component, effect, HostListener, inject, signal } from '@angular/core';
+import { Component, computed, effect, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginStateService } from '../../services/states/login/login-state.service';
 import { S } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { UnitStateService } from '../../services/states/unit/unit-state.service';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,16 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   // ==================== INJEÇÕES DE DEPENDÊNCIA ====================
 
   /** Service para gerenciar estado do login */
   public loginState = inject(LoginStateService);
+
+  /** Unidades disponíveis **/
+  public unitState = inject(UnitStateService);
+  public units = this.unitState.units;
 
   /** Construtor de formulários reativos */
   public fb = inject(FormBuilder);
@@ -43,14 +48,19 @@ export class LoginComponent {
   /** Formulário de login com campos de credenciais e remember me */
   loginForm!: FormGroup;
 
+  /* Inicializa as unidades disponíveis */
+  ngOnInit(): void {
+    this.unitState.getAllUnits();
+  }
+
   // ==================== CONSTRUTOR ====================
 
   constructor() {
-
     /**
      * Recupera credenciais salvas no localStorage
      * emailOrUsername, password e rememberMe são persistidos quando usuário marca "Lembrar-me"
      */
+    const unitId = localStorage.getItem('unitId');
     const emailOrUsername = localStorage.getItem('emailOrUsername');
     const password = localStorage.getItem('password');
     const rememberMe = localStorage.getItem('rememberMe');
@@ -60,6 +70,7 @@ export class LoginComponent {
      * Se não houver dados salvos, os campos ficam vazios
      */
     this.loginForm = this.fb.group({
+      unitId: [unitId ??''],
       emailOrUsername: [emailOrUsername ?? ''],
       password: [password ?? ''],
       rememberMe: [rememberMe]
@@ -105,6 +116,7 @@ export class LoginComponent {
    */
   login() {
 
+    const unitId = this.loginForm.value.unitId;
     const emailOrUsername = this.loginForm.value.emailOrUsername;
     const password = this.loginForm.value.password;
     const rememberMe = this.loginForm.value.rememberMe;
@@ -115,6 +127,7 @@ export class LoginComponent {
      * Caso contrário, remove os dados salvos
      */
     if (rememberMe) {
+      localStorage.setItem('unitId', unitId);
       localStorage.setItem('emailOrUsername', emailOrUsername);
       localStorage.setItem('password', password);
       localStorage.setItem('rememberMe', 'true');
@@ -125,7 +138,7 @@ export class LoginComponent {
     }
 
     // Envia credenciais para autenticação
-    this.loginState.login({ emailOrUsername, password });
+    this.loginState.login({ unitId, emailOrUsername, password });
   }
 
   // ==================== MÉTODOS DE RESPONSIVIDADE ====================

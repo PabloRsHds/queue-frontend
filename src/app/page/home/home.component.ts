@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ChartComponent } from "ng-apexcharts";
 import { CustomerStateService } from '../../services/states/customer/customer-state.service';
+import { LoginStateService } from '../../services/states/login/login-state.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -56,6 +57,9 @@ export class HomeComponent {
   public chartSchedulingPriorityOptions!: DonutChartOptions;
 
   // ==================== INJEÇÕES DE DEPENDÊNCIA ====================
+
+  /* Service para gerenciar estado de login */
+  public loginState = inject(LoginStateService);
 
   /** Service para gerenciar estado global da aplicação */
   public globalState = inject(GlobalStatesService);
@@ -207,6 +211,23 @@ export class HomeComponent {
   // ==================== EFEITOS DE REATIVIDADE ====================
 
   constructor() {
+
+    effect(() => {
+
+      if (this.loginState.logoutStatus() === 'success') {
+
+        this.snackBar.open(this.loginState.logoutMessage(), 'Fechar',
+          { duration: 3000, panelClass: ['snackbar-success'] },
+        );
+
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('activeSection');
+        this.router.navigate(['/login']);
+        this.activeSection.set('inicio');
+        localStorage.setItem('activeSection', 'inicio');
+      }
+
+    });
 
     /**
      * Efeito: Carrega estatísticas baseadas na role do usuário logado
@@ -439,13 +460,7 @@ export class HomeComponent {
    * - Reseta seção ativa para 'inicio'
    */
   logout() {
-    localStorage.removeItem('accessToken');
-    this.snackBar.open('Logout realizado com sucesso', 'Fechar',
-      { duration: 3000, panelClass: ['snackbar-success'] },
-    );
-    this.router.navigate(['/login']);
-    this.activeSection.set('inicio');
-    localStorage.setItem('activeSection', 'inicio');
+    this.loginState.logout();
   }
 
   /**
