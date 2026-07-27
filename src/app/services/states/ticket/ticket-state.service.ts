@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
 import { CreateTicketDto } from '../../../dtos/ticket/CreateTicketDto';
 import { ResponseTicketDto } from '../../../dtos/ticket/ResponseTicketDto';
@@ -14,6 +14,8 @@ export class TicketStateService {
 
   // STATES
   public ticketInfo = signal<ResponseTicketDto | null>(null);
+  public ticketForPanel = signal<ResponseTicketDto | null>(null);
+
 
   public createStatus = signal<'success' | 'error' | 'default'>('default');
   public createMessage = signal('');
@@ -68,6 +70,26 @@ export class TicketStateService {
         this.deleteMessage.set('Erro ao deletar ticket');
       }
     })
+  }
+
+  callTicket(ticketId: string) {
+
+    this.http.callTicket(ticketId).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+      }
+    });
+  }
+
+  callCustomer(ticketId: string) {
+
+    this.http.callCustomer(ticketId).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+      }
+    });
   }
 
   getTicketsForAttendence() {
@@ -142,5 +164,16 @@ export class TicketStateService {
   resetStatus() {
     this.createStatus.set('default');
     this.deleteStatus.set('default');
+  }
+
+  // WEBSOCKET
+  addTicketFromWebSocket(ticket: ResponseTicketsForAttendanceDto) {
+
+    this.ticketsForAttendance.update(tickets => [
+      ticket,
+      ...tickets
+    ]);
+
+    this.totalTickets.update(total => total + 1);
   }
 }

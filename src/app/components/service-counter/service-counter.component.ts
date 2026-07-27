@@ -191,6 +191,9 @@ export class ServiceCounterComponent implements OnInit {
 
       if (this.attendentState.finishAttendanceStatus() === 'success') {
 
+        this.ticketState.getTicketsForAttendence();
+        this.ticketState.getHistoryTicketsByAttendant();
+
         this.snackBar.open(this.attendentState.finishAttendanceMessage(), 'Fechar', {
           duration: 3000,
           panelClass: ['snackbar-success']
@@ -221,6 +224,9 @@ export class ServiceCounterComponent implements OnInit {
     effect(() => {
 
       if (this.attendentState.cancelAttendanceStatus() === 'success') {
+
+        this.ticketState.getTicketsForAttendence();
+        this.ticketState.getHistoryTicketsByAttendant();
 
         this.snackBar.open(this.attendentState.cancelAttendanceMessage(), 'Fechar', {
           duration: 3000,
@@ -272,15 +278,11 @@ export class ServiceCounterComponent implements OnInit {
    * - Inicia polling para atualização automática
    */
   ngOnInit(): void {
+    this.ticketState.getTicketsForAttendence();
+    this.ticketState.getHistoryTicketsByAttendant();
     this.attendentState.loadStatistics();
     this.userState.getUserByToken();
     localStorage.removeItem('ticketForPanel');
-
-    // Polling a cada 10 segundos para atualizar lista de tickets e histórico
-    this.pollingSubscription = interval(10000).subscribe(() => {
-      this.ticketState.getTicketsForAttendence();
-      this.ticketState.getHistoryTicketsByAttendant();
-    });
   }
 
   /**
@@ -335,13 +337,15 @@ export class ServiceCounterComponent implements OnInit {
     }
 
     const nextIndex = this.cont() + 1;
-
     if (nextIndex >= tickets.length) {
       return;
     }
 
+    const ticket = tickets[nextIndex];
+
     this.cont.set(nextIndex);
-    this.ticketSelectedId.set(tickets[nextIndex].ticketId);
+    this.ticketSelectedId.set(ticket.ticketId);
+    this.ticketState.callTicket(ticket.ticketId);
   }
 
   /**
@@ -557,7 +561,10 @@ export class ServiceCounterComponent implements OnInit {
    * A flag é consumida pelo QueueDisplayComponent
    */
   callCustomer() {
-    localStorage.setItem('call-customer', 'true');
+
+    const ticket = this.ticketSelected();
+    if (!ticket) return;
+    this.ticketState.callCustomer(ticket.ticketId);
   }
 
   /**

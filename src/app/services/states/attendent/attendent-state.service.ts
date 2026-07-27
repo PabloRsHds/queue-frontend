@@ -1,8 +1,5 @@
-import { FinishAttendanceDto } from './../../../dtos/attendance/FinishAttendanceDto';
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../../backend/http.service';
-import { ResponseAttendanceStatisticsDto } from '../../../dtos/statistics/ResponseAttendanceStatisticsDto';
-import { ResponseTicketsForAttendanceDto } from '../../../dtos/ticket/ResponseTicketsForAttendanceDto';
 import { ResponseCountTotalAttendancesStatisticsDto } from '../../../dtos/attendance/statistics/ResponseCountTotalAttendancesStatisticsDto';
 import { ResponseAverageServiceTimeStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageServiceTimeStatisticsDto';
 import { ResponseAttendancesByCustomerStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAttendancesByCustomerStatisticsDto';
@@ -162,5 +159,19 @@ export class AttendentStateService {
     this.finishAttendanceStatus.set('default');
     this.cancelAttendanceMessage.set('');
     this.cancelAttendanceStatus.set('default');
+  }
+
+  // Increment
+  incrementWaitingAttendances() {
+    this.countTotalAttendances.update(state => {
+
+      if (!state) return state;
+
+      return {
+        ...state,
+        countAttendancesWaiting: state.countAttendancesWaiting + 1
+      };
+
+    });
   }
 }

@@ -56,7 +56,7 @@ export class HttpService {
 
   //private readonly API_URL = 'http://192.168.25.2:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
-  private readonly API_URL = 'http://192.168.1.2:8080';
+  private readonly API_URL = 'http://192.168.1.7:8080';
 
   constructor(private http: HttpClient) {}
 
@@ -431,6 +431,22 @@ export class HttpService {
   public cancelTicket(ticketId: string): Observable<ResponseTicketDto> {
     return this.http.patch<ResponseTicketDto>(
       `${this.API_URL}/tickets/status/${ticketId}`,
+      null,
+      { withCredentials: true }
+    );
+  }
+
+  public callTicket(ticketId: string): Observable<ResponseTicketDto> {
+    return this.http.patch<ResponseTicketDto>(
+      `${this.API_URL}/tickets/call/${ticketId}`,
+      null,
+      { withCredentials: true }
+    );
+  }
+
+  public callCustomer(ticketId: string): Observable<ResponseTicketDto> {
+    return this.http.patch<ResponseTicketDto>(
+      `${this.API_URL}/tickets/call/customer/${ticketId}`,
       null,
       { withCredentials: true }
     );

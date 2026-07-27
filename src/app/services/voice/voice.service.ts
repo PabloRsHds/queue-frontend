@@ -6,7 +6,7 @@ import { Injectable, inject } from '@angular/core';
 export class VoiceService {
   private synth = window.speechSynthesis;
   private utterance: SpeechSynthesisUtterance | null = null;
-  private chime = new Audio('freesound_community-ding-dong-81717.mp3');
+  private chime = new Audio('/freesound_community-ding-dong-81717.mp3');
 
   // Configurações de voz
   private config = {

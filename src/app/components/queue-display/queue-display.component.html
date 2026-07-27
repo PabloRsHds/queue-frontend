@@ -48,7 +48,7 @@
           </div>
         </div>
 
-        <div class="card-body" *ngIf="this.ticketForPanel() !== null && this.ticketForPanel()?.startAttendance === null">
+        <div class="card-body" *ngIf="this.ticketForPanel() !== null && this.ticketForPanel()?.startedAt === null">
           <div class="current-call-card-call">
             <div class="call-guiche">Guichê {{ userLogged()?.counterNumber ?? 0 }}</div>
             <div class="call-senhas">{{ this.ticketForPanel()?.code}}</div>
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <div class="card-body" *ngIf="this.ticketForPanel() !== null && this.ticketForPanel()?.startAttendance !== null">
+        <div class="card-body" *ngIf="this.ticketForPanel() !== null && this.ticketForPanel()?.startedAt !== null">
           <div class="current-attendance-card pulse-active">
             <div class="attendance-status">Atendendo</div>
             <div class="attendance-senhas">{{ this.ticketForPanel()?.code}}</div>
