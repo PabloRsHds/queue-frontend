@@ -364,8 +364,11 @@ export class ServiceCounterComponent implements OnInit {
       return;
     }
 
+    const ticket = tickets[previousIndex];
+
     this.cont.set(previousIndex);
     this.ticketSelectedId.set(tickets[previousIndex].ticketId);
+    this.ticketState.callTicket(ticket.ticketId);
   }
 
   // ==================== MÉTODOS DE PAGINAÇÃO - TICKETS ====================

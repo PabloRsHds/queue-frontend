@@ -22,12 +22,12 @@ export class WebSocketService {
   connect() {
 
     this.client = new Client({
-    webSocketFactory: () => new SockJS('http://192.168.1.7:8080/ws'),
+    webSocketFactory: () => new SockJS('http://192.168.25.2:8080/ws'),
 
     reconnectDelay: 5000,
 
     onConnect: () => {
-      console.log('✅ WebSocket conectado');
+      console.log('WebSocket conectado');
 
       this.client.subscribe('/topic/tickets', message => {
 

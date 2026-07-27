@@ -365,7 +365,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label">Telefone <span class="optional">(Opcional)</span></label>
-                    <input type="number" class="form-input" placeholder="(00) 00000-0000" formControlName="phone">
+                    <input type="text" class="form-input" placeholder="(00) 00000-0000" formControlName="phone" mask="(00) 00000-0000">
                   </div>
                   <div class="section-divider">
                     <h3 style="margin-bottom: 15px;">Credenciais de acesso</h3></div>
@@ -606,10 +606,9 @@
             <button type="button" class="btn-cancel" (click)="closeModalRegister()">Cancelar</button>
 
             <div class="btn-group">
-              <button type="button" class="btn-cancel" *ngIf="currentStep > 1" (click)="previousStep()">Voltar</button>
-              <button type="button" class="btn-primary" *ngIf="currentStep < 4 && selectedRole() !== 'RECEPTION'" (click)="nextStep()">Próximo</button>
-              <button type="button" class="btn-primary" *ngIf="currentStep < 3 && selectedRole() === 'RECEPTION'" (click)="nextStep()">Próximo</button>
-              <button type="submit" class="btn-success" *ngIf="currentStep === 4 || (currentStep === 3 && selectedRole() === 'RECEPTION')">
+              <button type="button" class="btn-cancel" *ngIf="showBackButton()" (click)="previousStep()">Voltar</button>
+              <button type="button" class="btn-primary" *ngIf="showNextButton()" (click)="nextStep()">Próximo</button>
+              <button type="submit" class="btn-success" *ngIf="showCreateButton()">
                   <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle; margin-right: 6px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                   Criar usuário
               </button>

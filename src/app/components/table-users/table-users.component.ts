@@ -4,9 +4,11 @@ import { UserStateService } from '../../services/states/user/user-state.service'
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxMaskDirective } from 'ngx-mask';
+
 @Component({
   selector: 'app-table-users',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './table-users.component.html',
   styleUrl: './table-users.component.css'
 })
@@ -450,6 +452,11 @@ export class TableUsersComponent implements OnInit {
         step1Fields.forEach(field => {
           this.registerForm.get(field)?.markAsTouched();
         });
+
+        this.snackBar.open('As senhas não coincidem', 'Fechar', {
+          duration: 3000,
+          panelClass: ['snackbar-error'],
+        });
       }
     }
 
@@ -464,6 +471,38 @@ export class TableUsersComponent implements OnInit {
    */
   previousStep() {
     this.currentStep--;
+  }
+
+  /**
+   * Função para os botões na tela de registro
+   */
+  showNextButton(): boolean {
+    const role = this.selectedRole();
+
+    return (
+      this.currentStep < 4 &&
+      role !== 'RECEPTION' &&
+      role !== 'MANAGER'
+    ) || (
+      this.currentStep < 3 &&
+      (role === 'RECEPTION' || role === 'MANAGER')
+    );
+  }
+
+  showCreateButton(): boolean {
+    const role = this.selectedRole();
+
+    return (
+      this.currentStep === 4 ||
+      (
+        this.currentStep === 3 &&
+        (role === 'RECEPTION' || role === 'MANAGER')
+      )
+    );
+  }
+
+  showBackButton(): boolean {
+    return this.currentStep > 1;
   }
 
   // ==================== SELEÇÃO DE CARGO ====================
