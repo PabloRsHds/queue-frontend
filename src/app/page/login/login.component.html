@@ -129,9 +129,14 @@
           </label>
         </div>
 
-        <button type="submit" class="login-btn" id="loginBtn">
+        <button type="submit" class="login-btn" [disabled]="this.loginState.loginLoading()" id="loginBtn">
           <span class="spinner" id="spinner"></span>
-          <span id="btnText">Entrar</span>
+          @if (this.loginState.loginLoading()) {
+            <span class="spinner"></span>
+            <span>Entrando...</span>
+          } @else {
+            <span>Entrar</span>
+          }
         </button>
       </form>
 

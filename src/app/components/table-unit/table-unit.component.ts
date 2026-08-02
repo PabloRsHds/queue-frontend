@@ -27,6 +27,9 @@ export class TableUnitComponent {
   public activeUnits = this.unitState.activeUnits;
   public inactiveUnits = this.unitState.inactiveUnits;
 
+  public updateLoading = this.unitState.updateLoading;
+  public deleteLoading = this.unitState.deleteLoading;
+
   // ==================== ESTADOS DE PAGINACAO ====================
 
   public page = this.unitState.page;

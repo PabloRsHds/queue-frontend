@@ -4,6 +4,7 @@ import { CreateUnitDto } from '../../../dtos/unit/CreateUnitDto';
 import { UpdateUnitDto } from '../../../dtos/unit/UpdateUnitDto';
 import { HttpService } from '../../backend/http.service';
 import { PageResponse } from '../../../dtos/page/PageResponse';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,11 @@ export class UnitStateService {
   public loadStatus = signal<'loading' | 'success' | 'error' | 'default'>('default');
   public loadMessage = signal('');
 
+
+  // Loading
+  public updateLoading = signal(false);
+  public deleteLoading = signal(false);
+
   // PAGINATION
   public page = signal<number>(0);
   public size = signal<number>(4);
@@ -46,9 +52,6 @@ export class UnitStateService {
   // ============================================================
 
   getAllUnits() {
-    this.loadStatus.set('loading');
-    this.loadMessage.set('Carregando unidades...');
-
     this.http.getAllUnits(this.page(), this.size(), this.search()).subscribe({
       next: (response: PageResponse<ResponseUnitDto>) => {
         this.units.set(response.content);
@@ -57,9 +60,9 @@ export class UnitStateService {
         this.loadStatus.set('success');
         this.loadMessage.set('Unidades carregadas com sucesso!');
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.loadStatus.set('error');
-        this.loadMessage.set('Erro ao carregar unidades');
+        this.loadMessage.set(error.error?.message || 'Erro ao carregar unidades');
         console.error('Erro ao carregar unidades:', error);
       }
     });
@@ -81,9 +84,9 @@ export class UnitStateService {
         this.loadStatus.set('success');
         this.loadMessage.set('Unidades carregadas com sucesso!');
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.loadStatus.set('error');
-        this.loadMessage.set('Erro ao carregar unidades');
+        this.loadMessage.set(error.error?.message || 'Erro ao carregar unidades');
         console.error('Erro ao carregar unidades:', error);
       }
     });
@@ -103,9 +106,9 @@ export class UnitStateService {
         this.loadStatus.set('success');
         this.loadMessage.set('Unidade carregada com sucesso!');
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.loadStatus.set('error');
-        this.loadMessage.set(error.error?.error || 'Erro ao carregar unidade');
+        this.loadMessage.set(error.error?.message || 'Erro ao carregar unidade');
         console.error('Erro ao carregar unidade:', error);
       }
     });
@@ -122,9 +125,9 @@ export class UnitStateService {
         this.createMessage.set('Unidade criada com sucesso!');
         this.getAllUnits();
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.createStatus.set('error');
-        this.createMessage.set(error.error?.error || 'Erro ao criar unidade');
+        this.createMessage.set(error.error?.message || 'Erro ao criar unidade');
         console.error('Erro ao criar unidade:', error);
       }
     });
@@ -135,6 +138,9 @@ export class UnitStateService {
   // ============================================================
 
   updateUnit(request: UpdateUnitDto) {
+
+    this.updateLoading.set(true);
+
     this.http.updateUnit(request).subscribe({
       next: (response) => {
         this.updateStatus.set('success');
@@ -143,11 +149,12 @@ export class UnitStateService {
         if (this.selectedUnit()?.unitId === response.unitId) {
           this.selectedUnit.set(response);
         }
+        this.updateLoading.set(false);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.updateStatus.set('error');
-        this.updateMessage.set(error.error?.error || 'Erro ao atualizar unidade');
-        console.error('Erro ao atualizar unidade:', error);
+        this.updateMessage.set(error.error?.message || 'Erro ao atualizar unidade');
+        this.updateLoading.set(false);
       }
     });
   }
@@ -157,6 +164,9 @@ export class UnitStateService {
   // ============================================================
 
   deleteUnit(unitId: string) {
+
+    this.deleteLoading.set(true);
+
     this.http.deleteUnit(unitId).subscribe({
       next: () => {
         this.deleteStatus.set('success');
@@ -165,11 +175,13 @@ export class UnitStateService {
         if (this.selectedUnit()?.unitId === unitId) {
           this.selectedUnit.set(null);
         }
+        this.deleteLoading.set(false);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.deleteStatus.set('error');
-        this.deleteMessage.set(error.error?.error || 'Erro ao excluir unidade');
+        this.deleteMessage.set(error.error?.message || 'Erro ao excluir unidade');
         console.error('Erro ao excluir unidade:', error);
+        this.deleteLoading.set(false);
       }
     });
   }

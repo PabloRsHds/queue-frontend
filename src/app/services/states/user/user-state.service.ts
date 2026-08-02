@@ -9,6 +9,7 @@ import { ResponseUserPercentagesStatisticsDto } from '../../../dtos/users/statis
 import { ResponseUsersCreatedByMonthStatisticsDto } from '../../../dtos/users/statistics/ResponseUsersCreatedByMonthStatisticsDto';
 import { ResponseServicesByUserStatisticsDto } from '../../../dtos/users/statistics/ResponseServicesByUserStatisticsDto';
 import { ResponseUsersByRoleStatisticsDto } from '../../../dtos/users/statistics/ResponseUsersByRoleStatisticsDto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,9 @@ export class UserStateService {
   public updateStatus = signal<'success' | 'error' | 'default'>('default');
   public deleteMessage = signal('');
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
+
+  // Loads
+  public loadUserByToken = signal<boolean>(false);
 
   // Metricas
   public countTotalUsersStatistics = signal<ResponseCountTotalUsersStatisticsDto | null>(null);
@@ -63,8 +67,8 @@ export class UserStateService {
         this.registerStatus.set('success');
         this.loadingAllUsers();
       },
-      error: () => {
-        this.registerMessage.set('Erro ao criar usuario');
+      error: (error: HttpErrorResponse) => {
+        this.registerMessage.set(error.error?.message || 'Erro ao criar usuario');
         this.registerStatus.set('error');
       }
     })
@@ -78,8 +82,8 @@ export class UserStateService {
         this.updateStatus.set('success');
         this.loadingAllUsers();
       },
-      error: () => {
-        this.updateMessage.set('Erro ao atualizar usuario');
+      error: (error: HttpErrorResponse) => {
+        this.updateMessage.set(error.error?.message || 'Erro ao atualizar usuario');
         this.updateStatus.set('error');
       }
     })
@@ -96,8 +100,8 @@ export class UserStateService {
         this.deleteStatus.set('success');
         this.loadingAllUsers();
       },
-      error: () => {
-        this.deleteMessage.set('Erro ao deletar usuario');
+      error: (error: HttpErrorResponse) => {
+        this.deleteMessage.set(error.error?.message || 'Erro ao deletar usuario');
         this.deleteStatus.set('error');
       }
     })
@@ -139,9 +143,13 @@ export class UserStateService {
 
   // Get user by token
   getUserByToken() {
+
+    this.loadUserByToken.set(true);
+
     this.http.getUserByToken().subscribe({
       next: (response) => {
         this.userLogged.set(response);
+        this.loadUserByToken.set(false);
       }
     })
   }

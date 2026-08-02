@@ -7,6 +7,7 @@ import { CreateCustomerDto } from "../../../dtos/customer/CreateCustomerDto";
 import { UpdateCustomerDto } from "../../../dtos/customer/UpdateCustomerDto";
 import { ResponseCountTotalCustomersStatisticsDto } from "../../../dtos/customer/statistics/ResponseCountTotalCustomersStatisticsDto";
 import { ResponseCustomersCreatedByMonthStatisticsDto } from "../../../dtos/customer/statistics/ResponseCustomersCreatedByMonthStatisticsDto";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,9 @@ export class CustomerStateService {
       next: response => {
         this.customers.set(response.content);
         this.customerTotalElements.set(response.totalElements);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar clientes:', error);
       }
     });
   }
@@ -67,24 +71,34 @@ export class CustomerStateService {
     this.http.getCustomerIdsAndNames().subscribe({
       next: response => {
         this.customerIdsAndNames.set(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.customerIdsAndNames.set([]);
+        console.error('Erro ao carregar IDs e nomes dos clientes:', error);
       }
     });
   }
 
   searchCustomers(search: string) {
-
     this.http.getAllCustomers(0, 5, search).subscribe({
       next: response => {
         this.customerSuggestions.set(response.content);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.customerSuggestions.set([]);
+        console.error('Erro ao buscar sugestões de clientes:', error);
       }
     });
-
   }
 
   getInfoCustomer(customerId: string) {
     this.http.getCustomerById(customerId).subscribe({
       next: response => {
         this.customerInfo.set(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.customerInfo.set(null);
+        console.error('Erro ao buscar informações do cliente:', error);
       }
     });
   }
@@ -95,6 +109,9 @@ export class CustomerStateService {
       next: (response) => {
         this.totalCustomers.set(response.countTotalCustomersStatistics);
         this.totalCustomersByMonth.set(response.customersCreatedByMonthStatistics);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar estatísticas de clientes:', error);
       }
     })
   }
@@ -105,6 +122,11 @@ export class CustomerStateService {
         this.registerCustomerMessage.set('Cliente registrado com sucesso!');
         this.registerCustomerStatus.set('success');
         this.loadCustomers();
+        this.loadStatistics();
+      },
+      error: (error: HttpErrorResponse) => {
+        this.registerCustomerMessage.set(error.error?.message || 'Erro ao registrar cliente');
+        this.registerCustomerStatus.set('error');
       }
     });
   }
@@ -115,6 +137,16 @@ export class CustomerStateService {
         this.updateCustomerMessage.set('Cliente atualizado com sucesso!');
         this.updateCustomerStatus.set('success');
         this.loadCustomers();
+        this.loadStatistics();
+
+        // Atualiza o detalhe se estiver aberto
+        if (this.customerInfo() && this.customerInfo()?.customerId === request.customerId) {
+          this.getInfoCustomer(request.customerId);
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.updateCustomerMessage.set(error.error?.message || 'Erro ao atualizar cliente');
+        this.updateCustomerStatus.set('error');
       }
     });
   }
@@ -122,9 +154,20 @@ export class CustomerStateService {
   deleteCustomer(customerId: string) {
     this.http.deleteCustomer(customerId).subscribe({
       next: () => {
+        // Se deletou o último item da página, volta uma página
+        if (this.customers().length === 1 && this.customerPage() > 0) {
+          this.customerPage.update(p => p - 1);
+        }
+
         this.deleteCustomerMessage.set('Cliente deletado com sucesso!');
         this.deleteCustomerStatus.set('success');
         this.loadCustomers();
+        this.loadStatistics();
+        this.customerInfo.set(null);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.deleteCustomerMessage.set(error.error?.message || 'Erro ao deletar cliente');
+        this.deleteCustomerStatus.set('error');
       }
     });
   }
@@ -144,6 +187,8 @@ export class CustomerStateService {
   }
 
   goToPage(page: number) {
+    if (page < 0 || page >= this.customerTotalPages()) return;
+
     this.customerPage.set(page);
     this.loadCustomers();
   }

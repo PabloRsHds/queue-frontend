@@ -12,6 +12,7 @@ import { ResponseServicesByDepartmentStatisticsDto } from '../../../dtos/service
 import { ResponseServicesCreatedByMonthStatisticsDto } from '../../../dtos/services/statistics/ResponseServicesCreatedByMonthStatisticsDto';
 import { ResponseTicketsByServiceStatisticsDto } from '../../../dtos/services/statistics/ResponseTicketsByServiceStatisticsDto';
 import { ResponseUsersByServiceStatisticsDto } from '../../../dtos/services/statistics/ResponseUsersByServiceStatisticsDto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -71,9 +72,8 @@ export class ServiceManagementService {
 
         this.loadStatistics();
       },
-      error: () => {
-
-        this.registerMessage.set('Erro ao cadastrar serviço.');
+      error: (error: HttpErrorResponse) => {
+        this.registerMessage.set(error.error?.message || 'Erro ao cadastrar serviço.');
         this.registerStatus.set('error');
       }
     })
@@ -93,9 +93,8 @@ export class ServiceManagementService {
 
         this.loadStatistics();
       },
-      error: () => {
-
-        this.updateMessage.set('Erro ao atualizar serviço.');
+      error: (error: HttpErrorResponse) => {
+        this.updateMessage.set(error.error?.message || 'Erro ao atualizar serviço.');
         this.updateStatus.set('error');
       }
     })
@@ -114,9 +113,8 @@ export class ServiceManagementService {
 
         this.loadStatistics();
       },
-      error: () => {
-
-        this.deleteMessage.set('Erro ao excluir serviço.');
+      error: (error: HttpErrorResponse) => {
+        this.deleteMessage.set(error.error?.message || 'Erro ao excluir serviço.');
         this.deleteStatus.set('error');
       }
     })
@@ -131,6 +129,10 @@ export class ServiceManagementService {
         this.services.set(response.content);
         this.loadStatistics();
         this.totalElements.set(response.totalElements);
+      },
+      error: (error: HttpErrorResponse) => {
+        // Tratamento de erro silencioso ou você pode adicionar um signal de erro
+        console.error('Erro ao carregar serviços:', error);
       }
     });
   }
@@ -140,6 +142,9 @@ export class ServiceManagementService {
     this.http.getServiceNamesAndDepartments().subscribe({
       next: (response) => {
         this.serviceNamesAndDepartments.set(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar nomes e departamentos:', error);
       }
     })
   }
@@ -157,6 +162,9 @@ export class ServiceManagementService {
         this.usersByService.set(response.usersByService);
         this.schedulesByService.set(response.schedulesByService);
         this.ticketsByService.set(response.ticketsByService);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar estatísticas:', error);
       }
     })
   }
@@ -167,6 +175,10 @@ export class ServiceManagementService {
     this.http.getServiceManagementById(serviceManagementId).subscribe({
       next: (response) => {
         this.serviceInfo.set(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.serviceInfo.set(null);
+        console.error('Erro ao buscar serviço:', error);
       }
     })
   }

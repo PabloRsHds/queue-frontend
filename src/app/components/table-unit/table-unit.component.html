@@ -292,7 +292,7 @@
 
     <div class="modal-update-top">
       <div style="display: flex; justify-content: end; padding: 20px 20px 20px 20px;">
-        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalUpdate()" >
+        <button class="dept-modal-close" aria-label="Fechar" (click)="closeModalUpdate()">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -316,7 +316,20 @@
       </div>
     </div>
 
-    <form [formGroup]="updateForm" (ngSubmit)="updateUnit()">
+    <div class="update-loading-container" *ngIf="updateLoading()">
+      <div class="dot-spinner">
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+        <div class="dot-spinner__dot"></div>
+      </div>
+    </div>
+
+    <form [formGroup]="updateForm" (ngSubmit)="updateUnit()" *ngIf="!updateLoading()">
 
       <div class="form-group-name-status">
 
@@ -428,7 +441,20 @@
           </div>
         </div>
 
-        <div class="modal-delete-info">
+        <div class="update-loading-container" *ngIf="deleteLoading()">
+          <div class="dot-spinner" [ngClass]="{'delete': deleteLoading()}">
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+          </div>
+        </div>
+
+        <div class="modal-delete-info" *ngIf="!deleteLoading()">
           <div class="modal-delete-info-name">
             <strong>Nome:</strong> <p>{{ this.unitInfo()?.name ?? '-' }}</p>
           </div>

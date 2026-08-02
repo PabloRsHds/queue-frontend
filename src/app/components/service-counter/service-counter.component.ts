@@ -281,7 +281,6 @@ export class ServiceCounterComponent implements OnInit {
     this.ticketState.getTicketsForAttendence();
     this.ticketState.getHistoryTicketsByAttendant();
     this.attendentState.loadStatistics();
-    this.userState.getUserByToken();
     localStorage.removeItem('ticketForPanel');
   }
 

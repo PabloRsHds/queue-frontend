@@ -70,6 +70,7 @@ export class HomeComponent {
 
   /** Service para gerenciar estado do usuário */
   public userState = inject(UserStateService);
+  public loadUserByToken = this.userState.loadUserByToken;
 
   /** Service para gerenciar estado do agendamento */
   public scheduleState = inject(ScheduleStateService);

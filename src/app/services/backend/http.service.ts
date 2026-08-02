@@ -54,9 +54,9 @@ export class HttpService {
   // CONFIGURATION
   // ============================================================
 
-  private readonly API_URL = 'http://192.168.25.2:8080';
+  //private readonly API_URL = 'http://192.168.25.2:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
-  //private readonly API_URL = 'http://192.168.1.7:8080';
+  private readonly API_URL = 'http://192.168.1.12:8080';
 
   constructor(private http: HttpClient) {}
 

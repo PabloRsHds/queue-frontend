@@ -11,6 +11,7 @@ import { ResponseCountTotalDepartmentsStatisticsDto } from '../../../dtos/depart
 import { ResponseCountServicesByDepartmentsStatisticsDto } from '../../../dtos/department/statistics/ResponseCountServicesByDepartmentsStatisticsDto';
 import { ResponseDepartmentPercentagesStatisticsDto } from '../../../dtos/department/statistics/ResponseDepartmentPercentagesStatisticsDto';
 import { ResponseDepartmentsCreatedByMonthStatisticsDto } from '../../../dtos/department/statistics/ResponseDepartmentsCreatedByMonthStatisticsDto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -82,10 +83,11 @@ export class DepartmentStateService {
         this.loading.set(false);
       },
 
-      error: (error) => {
-
+      error: (error: HttpErrorResponse) => {
         console.error('Erro ao carregar departamentos', error);
         this.loading.set(false);
+        // Opcional: adicionar signal de erro para exibir na UI
+        // this.errorMessage.set(error.error?.error || 'Erro ao carregar departamentos');
       }
     });
   }
@@ -99,6 +101,9 @@ export class DepartmentStateService {
         this.countTotalDepartment.set(response.countTotalDepartmentsStatistics);
         this.getPercentagesByDepartment.set(response.departmentPercentagesStatistics);
         this.departmentsCreatedByMonth.set(response.departmentsCreatedByMonthStatistics);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar estatísticas', error);
       }
     })
   }
@@ -121,11 +126,8 @@ export class DepartmentStateService {
         this.registerStatus.set('success');
       },
 
-      error: (error) => {
-
-        console.error(error);
-
-        this.registerMessage.set('Erro ao criar departamento');
+      error: (error: HttpErrorResponse) => {
+        this.registerMessage.set(error.error?.message || 'Erro ao criar departamento');
         this.registerStatus.set('error');
       }
     });
@@ -153,11 +155,8 @@ export class DepartmentStateService {
         this.updateStatus.set('success');
       },
 
-      error: (error) => {
-
-        console.error(error);
-
-        this.updateMessage.set('Erro ao atualizar departamento');
+      error: (error: HttpErrorResponse) => {
+        this.updateMessage.set(error.error?.message || 'Erro ao atualizar departamento');
         this.updateStatus.set('error');
       }
     });
@@ -189,11 +188,8 @@ export class DepartmentStateService {
         this.deleteStatus.set('success');
       },
 
-      error: (error) => {
-
-        console.error(error);
-
-        this.deleteMessage.set('Erro ao excluir departamento');
+      error: (error: HttpErrorResponse) => {
+        this.deleteMessage.set(error.error?.message || 'Erro ao excluir departamento');
         this.deleteStatus.set('error');
       }
     });
@@ -209,12 +205,9 @@ export class DepartmentStateService {
         this.departmentInfo.set(response);
       },
 
-      error: (error) => {
-
-        console.error(
-          'Erro ao carregar departamento',
-          error
-        );
+      error: (error: HttpErrorResponse) => {
+        this.departmentInfo.set(null);
+        console.error('Erro ao carregar departamento', error);
       }
     });
   }
@@ -226,6 +219,10 @@ export class DepartmentStateService {
     this.http.getDeparmentNames().subscribe({
       next: (response) => {
         this.departmentNames.set(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.departmentNames.set(null);
+        console.error('Erro ao carregar nomes dos departamentos', error);
       }
     })
   }

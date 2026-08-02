@@ -14,6 +14,7 @@ import { ResponseSchedulesCreatedByDayStatisticsDto } from '../../../dtos/schedu
 import { ResponseSchedulesCreatedByMonthStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesCreatedByMonthStatisticsDto';
 import { ResponseSchedulesCreatedByWeekStatisticsDto } from '../../../dtos/schedule/statistics/ResponseSchedulesCreatedByWeekStatisticsDto';
 import { ResponseSchedulesByServiceStatisticsDto } from '../../../dtos/services/statistics/ResponseSchedulesByServiceStatisticsDto';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -77,8 +78,8 @@ export class ScheduleStateService {
         this.loadSchedules();
         this.loadStatistics();
       },
-      error: () => {
-        this.registerMessage.set('Erro ao realizar agendamento');
+      error: (error: HttpErrorResponse) => {
+        this.registerMessage.set(error.error?.message || 'Erro ao realizar agendamento');
         this.registerStatus.set('error');
       }
     });
@@ -93,8 +94,8 @@ export class ScheduleStateService {
         this.loadSchedules();
         this.loadStatistics();
       },
-      error: () => {
-        this.updateMessage.set('Erro ao atualizar agendamento');
+      error: (error: HttpErrorResponse) => {
+        this.updateMessage.set(error.error?.message || 'Erro ao atualizar agendamento');
         this.updateStatus.set('error');
       }
     });
@@ -103,16 +104,14 @@ export class ScheduleStateService {
   // Delete Schedule
   deleteSchedule(scheduleId: string) {
     this.http.deleteSchedule(scheduleId).subscribe({
-
-      next: (response) => {
+      next: () => {
         this.deleteMessage.set('Agendamento deletado com sucesso!');
         this.deleteStatus.set('success');
         this.loadSchedules();
         this.loadStatistics();
       },
-
-      error: (error) => {
-        this.deleteMessage.set('Erro ao deletar agendamento');
+      error: (error: HttpErrorResponse) => {
+        this.deleteMessage.set(error.error?.message || 'Erro ao deletar agendamento');
         this.deleteStatus.set('error');
       }
     })
@@ -131,6 +130,9 @@ export class ScheduleStateService {
         this.schedulesByService.set(response.schedulesByService);
         this.schedulesByPriority.set(response.schedulesByPriority);
         this.schedulesByHour.set(response.schedulesByHour);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar estatísticas:', error);
       }
     });
   }
@@ -146,6 +148,9 @@ export class ScheduleStateService {
       next: response => {
         this.schedules.set(response.content);
         this.scheduleTotalElements.set(response.totalElements);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar agendamentos:', error);
       }
     });
   }
@@ -154,6 +159,10 @@ export class ScheduleStateService {
     this.http.getScheduleById(scheduleId).subscribe({
       next: response => {
         this.scheduleInfo.set(response);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.scheduleInfo.set(null);
+        console.error('Erro ao buscar agendamento:', error);
       }
     });
   }
@@ -173,6 +182,8 @@ export class ScheduleStateService {
   }
 
   goToPage(page: number) {
+    if (page < 0 || page >= this.scheduleTotalPages()) return;
+
     this.schedulePage.set(page);
     this.loadSchedules();
   }

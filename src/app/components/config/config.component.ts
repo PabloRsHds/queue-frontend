@@ -47,9 +47,6 @@ export class ConfigComponent implements OnInit {
    * - Cria a estrutura do formulário
    */
   ngOnInit(): void {
-    // Busca dados atualizados do usuário autenticado
-    this.userState.getUserByToken();
-
     // Inicializa formulário com campos vazios
     this.profileForm = this.fb.group({
       name: '',              // Nome do usuário

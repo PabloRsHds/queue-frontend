@@ -11,6 +11,7 @@ import { ResponseAttendancesCreatedByMonthStatisticsDto } from '../../../dtos/at
 import { ResponseAverageAttendanceByUserStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageAttendanceByUserStatisticsDto';
 import { ResponseAverageWaitingTimeStatisticsDto } from '../../../dtos/attendance/statistics/ResponseAverageWaitingTimeStatisticsDto';
 import { TicketStateService } from '../ticket/ticket-state.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +62,9 @@ export class AttendentStateService {
         this.attendancesByHour.set(response.attendancesByHour);
         this.attendancesByDepartment.set(response.attendancesByDepartment);
         this.attendancesByCustomer.set(response.attendancesByCustomer);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Erro ao carregar estatísticas de atendimento:', error);
       }
     });
   }
@@ -76,8 +80,8 @@ export class AttendentStateService {
         this.startAttendanceMessage.set("Atendimento iniciado com sucesso!");
         this.startAttendanceStatus.set('success');
       },
-      error: () => {
-        this.startAttendanceMessage.set("Erro ao iniciar atendimento!");
+      error: (error: HttpErrorResponse) => {
+        this.startAttendanceMessage.set(error.error?.message || "Erro ao iniciar atendimento!");
         this.startAttendanceStatus.set('error');
       }
     });
@@ -93,8 +97,8 @@ export class AttendentStateService {
         this.finishAttendanceMessage.set("Atendimento finalizado com sucesso!");
         this.finishAttendanceStatus.set('success');
       },
-      error: () => {
-        this.finishAttendanceMessage.set("Erro ao finalizar atendimento!");
+      error: (error: HttpErrorResponse) => {
+        this.finishAttendanceMessage.set(error.error?.message || "Erro ao finalizar atendimento!");
         this.finishAttendanceStatus.set('error');
       }
     });
@@ -103,14 +107,14 @@ export class AttendentStateService {
   cancelAttendance(ticketId: string) {
 
     this.http.cancelTicket(ticketId).subscribe({
-      next: (response) => {
+      next: () => {
         this.ticketState.getTicketsForAttendence();
 
         this.cancelAttendanceMessage.set("Atendimento cancelado com sucesso!");
         this.cancelAttendanceStatus.set('success');
       },
-      error: () => {
-        this.cancelAttendanceMessage.set("Erro ao cancelar atendimento!");
+      error: (error: HttpErrorResponse) => {
+        this.cancelAttendanceMessage.set(error.error?.message || "Erro ao cancelar atendimento!");
         this.cancelAttendanceStatus.set('error');
       }
     })
