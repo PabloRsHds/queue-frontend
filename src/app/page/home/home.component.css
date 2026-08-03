@@ -556,11 +556,6 @@ app-config {
   transition: all 0.2s;
 }
 
-.brand-logo-icon .image-mobile {
-  width: 38px;
-  height: 30px;
-}
-
 .quick-item:hover {
   border-color: #bfdbfe;
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
@@ -1354,7 +1349,7 @@ app-config {
 
 /* LOGO LOADING */
 
-.brand-logo-icon svg { width: 130px; height: 110px; color: white;}
+.brand-logo-icon svg { width: 40px; height: 32px; color: white;}
 .brand-logo-text { font-size: 38px; font-weight: 700; color: rgba(248, 251, 255, 0.932); }
 .brand-logo-sub { font-size: 18px; text-align: center; color: #94a3b8; margin-top: 2px; }
 .loading-footer {
