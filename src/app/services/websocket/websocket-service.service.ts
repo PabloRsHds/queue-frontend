@@ -22,7 +22,7 @@ export class WebSocketService {
   connect() {
 
     this.client = new Client({
-    webSocketFactory: () => new SockJS('http://192.168.1.12:8080/ws'),
+    webSocketFactory: () => new SockJS('http://192.168.1.8:8080/ws'),
 
     reconnectDelay: 5000,
 

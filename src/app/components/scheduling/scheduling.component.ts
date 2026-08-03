@@ -7,10 +7,11 @@ import { ScheduleStateService } from '../../services/states/scheduling/schedulin
 import { ServiceManagementService } from '../../services/states/serviceManagement/service-management.service';
 import { TicketStateService } from '../../services/states/ticket/ticket-state.service';
 import { ResponseAllCustomersDto } from '../../dtos/customer/ResponseAllCustomersDto';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-scheduling',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './scheduling.component.html',
   styleUrl: './scheduling.component.css'
 })
