@@ -278,8 +278,8 @@
           <option value="">
             Selecione um departamento
           </option>
-          <option *ngFor="let dept of departmentNames()">
-            {{ dept.name }}
+          <option *ngFor="let name of departmentNames()">
+            {{ name }}
           </option>
         </select>
       </div>
@@ -385,8 +385,8 @@
           <div class="form-group">
             <label class="form-label">Departamento</label>
             <select class="form-select" formControlName="departmentName" required>
-              <option *ngFor="let department of departmentNames()">
-                {{ department.name }}
+              <option *ngFor="let name of departmentNames()">
+                {{ name }}
               </option>
             </select>
           </div>

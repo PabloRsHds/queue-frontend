@@ -331,7 +331,7 @@ export class TableServicesComponent implements OnInit{
    */
   openModalRegister() {
     this.initializeRegisterForm();
-    this.deparmentState.loadDepartmentNames();
+    this.deparmentState.loadNamesOfDepartments();
     this.modalRegister.set(true);
   }
 
@@ -353,7 +353,7 @@ export class TableServicesComponent implements OnInit{
     this.initializeUpdateForm();
     this.serviceState.getInfoService(serviceManagementId);
     this.modalUpdate = true;
-    this.deparmentState.loadDepartmentNames();
+    this.deparmentState.loadNamesOfDepartments();
   }
 
   /**
