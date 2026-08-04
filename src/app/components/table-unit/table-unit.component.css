@@ -2103,7 +2103,7 @@ body {
 
 /** LOADING **/
 
-.update-loading-container {
+.loading-container {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -2114,19 +2114,7 @@ body {
 .dot-spinner {
   --uib-size: 3.8rem;
   --uib-speed: .9s;
-  --uib-color: #e6a122;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: var(--uib-size);
-  width: var(--uib-size);
-}
-
-.dot-spinner.delete {
-  --uib-size: 3.8rem;
-  --uib-speed: .9s;
-  --uib-color: #a82b2b;
+  --uib-color: #255aaab9;
   position: relative;
   display: flex;
   align-items: center;

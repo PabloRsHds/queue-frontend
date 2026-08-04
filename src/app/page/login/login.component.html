@@ -217,12 +217,8 @@
 
         <button type="submit" class="login-btn" [disabled]="this.loginState.loginLoading()" id="loginBtn">
           <span class="spinner" id="spinner"></span>
-          @if (this.loginState.loginLoading()) {
-            <span class="spinner"></span>
-            <span>Entrando...</span>
-          } @else {
-            <span>Entrar</span>
-          }
+          <span class="spinner"></span>
+          <span>{{ this.loginState.loginLoading() ? 'Entrando...' : 'Entrar'}}</span>
         </button>
       </form>
 

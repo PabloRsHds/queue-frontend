@@ -22,13 +22,15 @@ export class TableUnitComponent {
   // ==================== ESTADOS - UNIDADE ====================
 
   public units = this.unitState.units;
-  public unitInfo = this.unitState.selectedUnit;
+  public unitById = this.unitState.unitById;
   public totalUnits = this.unitState.totalUnits;
   public activeUnits = this.unitState.activeUnits;
   public inactiveUnits = this.unitState.inactiveUnits;
 
+  public createLoading = this.unitState.createLoading;
   public updateLoading = this.unitState.updateLoading;
   public deleteLoading = this.unitState.deleteLoading;
+  public allUnitsLoading = this.unitState.allUnitsLoading;
 
   // ==================== ESTADOS DE PAGINACAO ====================
 
@@ -87,7 +89,7 @@ export class TableUnitComponent {
   constructor() {
 
     effect(() => {
-      const unit = this.unitInfo();
+      const unit = this.unitById();
       if (this.modalUpdate && unit !== null) {
         this.updateForm.patchValue({
           name: unit?.name,
@@ -179,34 +181,34 @@ export class TableUnitComponent {
 
   openModalUpdate(unitId: string) {
     this.initializeUpdateForm();
-    this.unitState.selectUnit(unitId);
+    this.unitState.getUnitById(unitId);
     this.modalUpdate = true;
   }
 
   closeModalUpdate() {
     this.modalUpdate = false;
-    this.unitState.clearSelectedUnit();
+    this.unitState.resetUnitById();
   }
 
   openModalDelete(unitId: string) {
-    this.unitState.selectUnit(unitId);
+    this.unitState.getUnitById(unitId);
     this.dropDown = null;
     this.modalDelete = true;
   }
 
   closeModalDelete() {
     this.modalDelete = false;
-    this.unitState.clearSelectedUnit();
+    this.unitState.resetUnitById();
   }
 
   openModalView(unitId: string) {
-    this.unitState.selectUnit(unitId);
+    this.unitState.getUnitById(unitId);
     this.modalView = true;
   }
 
   closeModalView() {
     this.modalView = false;
-    this.unitState.clearSelectedUnit();
+    this.unitState.resetUnitById();
   }
 
   // ==================== METODOS DE CRUD ====================
@@ -219,7 +221,7 @@ export class TableUnitComponent {
   updateUnit() {
     if (this.updateForm.invalid) return;
     this.unitState.updateUnit({
-      unitId: this.unitInfo()?.unitId,
+      unitId: this.unitById()?.unitId,
       ...this.updateForm.value
     });
   }
