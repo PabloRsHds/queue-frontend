@@ -47,11 +47,9 @@ export class QueueDisplayComponent {
   constructor() {
 
     effect(() => {
-      const ticket = this.ticketForPanel();
-
-      if(ticket) {
+      if(this.ticketForPanel()) {
         this.voiceService.speak(
-          `${ticket.customerName}, dirija-se ao guichê ${this.userLogged()?.counterNumber}`
+          `${this.ticketForPanel()?.customerName}, dirija-se ao setor de ${this.ticketForPanel()?.departmentName}`
         );
       }
     });

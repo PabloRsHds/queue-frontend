@@ -6,6 +6,7 @@ export interface ResponseTicketDto {
   customerName: string;
   serviceManagementId: string;
   serviceManagementName: string;
+  departmentName: string;
   priority: string;
   status: string;
   createdAt: string;

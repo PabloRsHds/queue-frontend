@@ -2,11 +2,9 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 
 import { HttpService } from '../../backend/http.service';
 
-import { ResponseGetDepartmentDto } from '../../../dtos/department/ResponseGetDepartment';
 import { ResponseDepartmentDto } from '../../../dtos/department/ResponseDepartmentDto';
 import { CreateDepartmentDto } from '../../../dtos/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../../../dtos/department/UpdateDepartmentDto';
-import { ResponseDepartmentNamesDto } from '../../../dtos/department/ResponseDepartmentNamesDto';
 import { ResponseCountTotalDepartmentsStatisticsDto } from '../../../dtos/department/statistics/ResponseCountTotalDepartmentsStatisticsDto';
 import { ResponseCountServicesByDepartmentsStatisticsDto } from '../../../dtos/department/statistics/ResponseCountServicesByDepartmentsStatisticsDto';
 import { ResponseDepartmentPercentagesStatisticsDto } from '../../../dtos/department/statistics/ResponseDepartmentPercentagesStatisticsDto';
@@ -25,8 +23,8 @@ export class DepartmentStateService {
   // ===================== DATA =====================
 
   public departments = signal<ResponseDepartmentDto[]>([]);
-  public departmentInfo = signal<ResponseGetDepartmentDto | null>(null);
-  public departmentNames = signal<ResponseDepartmentNamesDto[] | null>(null);
+  public departmentInfo = signal<ResponseDepartmentDto | null>(null);
+  public departmentNames = signal<string[] | null>([]);
 
   // Statistics
   public countServicesByDepartment  = signal<ResponseCountServicesByDepartmentsStatisticsDto[] | null>([]);
@@ -86,8 +84,6 @@ export class DepartmentStateService {
       error: (error: HttpErrorResponse) => {
         console.error('Erro ao carregar departamentos', error);
         this.loading.set(false);
-        // Opcional: adicionar signal de erro para exibir na UI
-        // this.errorMessage.set(error.error?.error || 'Erro ao carregar departamentos');
       }
     });
   }
@@ -113,13 +109,19 @@ export class DepartmentStateService {
   createDepartment(create: CreateDepartmentDto) {
 
     this.http.createDepartment(create).subscribe({
-      next: () => {
+      next: (response) => {
 
         // volta pra primeira página
         this.page.set(0);
 
         // backend recalcula paginação
-        this.loadDepartments();
+        this.departments.update(
+          departments => {
+            this.totalElements.update(total => total + 1);
+            return [response, ...departments];
+          } 
+        );
+        
         this.loadStatistics();
 
         this.registerMessage.set('Departamento criado com sucesso!');
@@ -139,17 +141,19 @@ export class DepartmentStateService {
 
     this.http.updateDepartment(department).subscribe({
 
-      next: () => {
+      next: (response) => {
 
         // sincroniza com backend
-        this.loadDepartments();
+        this.departments.update( departments => 
+          departments.map(
+            department => 
+              department.departmentId === response.departmentId
+              ? response : department     
+          )
+        );
+        
         this.loadStatistics();
-
-        // atualiza detalhe aberto
-        if (this.departmentInfo() && this.departmentInfo()?.departmentId === department.departmentId) {
-
-          this.getInfoDepartment(department.departmentId);
-        }
+        this.getInfoDepartment(response.departmentId);
 
         this.updateMessage.set('Departamento atualizado com sucesso!');
         this.updateStatus.set('success');
@@ -178,7 +182,12 @@ export class DepartmentStateService {
         }
 
         // backend recalcula tudo
-        this.loadDepartments();
+        this.departments.update(departments =>
+          departments.filter(department => {
+            this.totalElements.update(total => total - 1);
+            return department.departmentId !== departmentId;
+          })
+        );
         this.loadStatistics();
 
         // limpa detalhe
@@ -199,32 +208,23 @@ export class DepartmentStateService {
 
   getInfoDepartment(departmentId: string) {
 
-    this.http.getDepartmentById(departmentId).subscribe({
-      next: (response) => {
+    const department = this.departments().find(department => department.departmentId === departmentId);
 
-        this.departmentInfo.set(response);
-      },
-
-      error: (error: HttpErrorResponse) => {
-        this.departmentInfo.set(null);
-        console.error('Erro ao carregar departamento', error);
-      }
-    });
+    if (department) {
+      this.departmentInfo.set(department);
+      return;
+    }
   }
 
   // ================= GET DEPARTMENT NAMES =================
 
-  loadDepartmentNames() {
+  loadNamesOfDepartments() {
+    const names = this.departments().map(department => department.name);
 
-    this.http.getDeparmentNames().subscribe({
-      next: (response) => {
-        this.departmentNames.set(response);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.departmentNames.set(null);
-        console.error('Erro ao carregar nomes dos departamentos', error);
-      }
-    })
+    if (names) {
+      this.departmentNames.set(names)
+      return;
+    }
   }
 
   // ===================== PAGINATION =====================
@@ -282,6 +282,6 @@ export class DepartmentStateService {
   }
 
   resetDepartmentNames() {
-    this.departmentNames.set(null);
+    this.departmentNames.set([]);
   }
 }

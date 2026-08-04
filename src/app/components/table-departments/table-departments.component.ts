@@ -4,7 +4,6 @@ import { DepartmentStateService } from '../../services/states/department/departm
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-table-departments',

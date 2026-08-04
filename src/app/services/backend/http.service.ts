@@ -6,7 +6,6 @@ import { ResponseServiceManagementDto } from '../../dtos/services/ResponseServic
 import { ResponseDepartmentDto } from '../../dtos/department/ResponseDepartmentDto';
 import { CreateDepartmentDto } from '../../dtos/department/CreateDepartmentDto';
 import { CreateServiceManagementDto } from '../../dtos/services/CreateServiceManagementDto';
-import { ResponseGetDepartmentDto } from '../../dtos/department/ResponseGetDepartment';
 import { UpdateDepartmentDto } from '../../dtos/department/UpdateDepartmentDto';
 import { UpdateServiceManagementDto } from '../../dtos/services/UpdateServiceManagementDto';
 import { ResponseGetServiceByIdDto } from '../../dtos/services/ResponseGetServiceByIdDto';
@@ -54,9 +53,9 @@ export class HttpService {
   // CONFIGURATION
   // ============================================================
 
-  //private readonly API_URL = 'http://192.168.25.2:8080';
+  private readonly API_URL = 'http://192.168.25.2:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
-  private readonly API_URL = 'http://192.168.1.8:8080';
+  //private readonly API_URL = 'http://192.168.1.8:8080';
 
   constructor(private http: HttpClient) {}
 
@@ -171,20 +170,6 @@ export class HttpService {
   public getAllDepartments(page: number, size: number, search?: string): Observable<PageResponse<ResponseDepartmentDto>> {
     return this.http.get<PageResponse<ResponseDepartmentDto>>(
       `${this.API_URL}/departments?page=${page}&size=${size}&search=${search ?? ''}`,
-      { withCredentials: true }
-    );
-  }
-
-  public getDepartmentById(departmentId: string): Observable<ResponseGetDepartmentDto> {
-    return this.http.get<ResponseGetDepartmentDto>(
-      `${this.API_URL}/departments/${departmentId}`,
-      { withCredentials: true }
-    );
-  }
-
-  public getDeparmentNames(): Observable<ResponseGetDepartmentDto[]> {
-    return this.http.get<ResponseGetDepartmentDto[]>(
-      `${this.API_URL}/departments/names`,
       { withCredentials: true }
     );
   }
