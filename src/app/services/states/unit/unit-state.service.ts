@@ -49,8 +49,6 @@ export class UnitStateService {
   public inactiveUnits = computed(() => this.units().filter(u => !u.active).length);
 
   public unitById = signal<ResponseUnitDto | null>(null);
-  public findUnitById = (unitId: string) => this.units().find(unit => unit.unitId === unitId);
-
 
   // ============================================================
   // GET ALL UNITS
@@ -61,7 +59,7 @@ export class UnitStateService {
     this.allUnitsLoading.set(true);
 
     this.http.getAllUnits(this.page(), this.size(), this.search()).subscribe({
-      next: (response: PageResponse<ResponseUnitDto>) => {
+      next: (response) => {
         this.units.set(response.content);
         this.totalElements.set(response.totalElements);
         this.totalPages.set(response.totalPages);
@@ -113,14 +111,7 @@ export class UnitStateService {
       return;
     }
 
-    this.http.getUnitById(unitId).subscribe({
-      next: (response) => {
-        this.unitById.set(response);
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error(error.error?.message || 'Erro ao carregar unidade');
-      }
-    });
+    console.warn(`Unit ${unitId} não encontrada no state.`);
   }
 
   resetUnitById() {
@@ -139,7 +130,10 @@ export class UnitStateService {
       next: (response) => {
         this.createStatus.set('success');
         this.createMessage.set('Unidade criada com sucesso!');
-        this.units.update(units => [response, ...units]);
+        this.units.update(units => {
+          this.totalElements.update(total => total + 1);
+          return [response, ...units];
+        });
         this.createLoading.set(false);
       },
       error: (error: HttpErrorResponse) => {
@@ -187,7 +181,10 @@ export class UnitStateService {
       next: () => {
         this.deleteStatus.set('success');
         this.deleteMessage.set('Unidade excluída com sucesso!');
-        this.units.update(units => units.filter(unit => unit.unitId !== unitId));
+        this.units.update(units => {
+          this.totalElements.update(total => total - 1);
+          return units.filter(unit => unit.unitId !== unitId);
+        });
         this.deleteLoading.set(false);
       },
       error: (error: HttpErrorResponse) => {
