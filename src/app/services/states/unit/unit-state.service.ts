@@ -185,6 +185,7 @@ export class UnitStateService {
           this.totalElements.update(total => total - 1);
           return units.filter(unit => unit.unitId !== unitId);
         });
+        this.unitById.set(null);
         this.deleteLoading.set(false);
       },
       error: (error: HttpErrorResponse) => {
