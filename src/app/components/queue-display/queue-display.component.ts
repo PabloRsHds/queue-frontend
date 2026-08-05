@@ -40,6 +40,7 @@ export class QueueDisplayComponent {
     this.loadVideo(
       'https://www.youtube.com/watch?v=ofUOATVjKF0'
     );
+    this.userState.getUserByToken();
     this.ticketState.getTicketsForAttendence();
     this.ticketState.getHistoryTicketsByAttendant();
   }
