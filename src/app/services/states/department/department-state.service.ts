@@ -51,6 +51,13 @@ export class DepartmentStateService {
   public deleteMessage = signal('');
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
+  // ====================== LOADING ===========================
+  
+  public allDepartmentsLoading = signal(false);
+  public registerLoading = signal(false);
+  public updateLoading = signal(false);
+  public deleteLoading = signal(false);
+
   // ===================== PAGINATION =====================
 
   public page = signal(0);
@@ -69,7 +76,7 @@ export class DepartmentStateService {
 
   loadDepartments() {
 
-    this.loading.set(true);
+    this.allDepartmentsLoading.set(true);
 
     this.http.getAllDepartments(this.page(), this.size, this.search()).subscribe({
 
@@ -78,12 +85,12 @@ export class DepartmentStateService {
         this.loadStatistics();
         this.totalElements.set(response.totalElements);
 
-        this.loading.set(false);
+        this.allDepartmentsLoading.set(false);
       },
 
       error: (error: HttpErrorResponse) => {
-        console.error('Erro ao carregar departamentos', error);
-        this.loading.set(false);
+        console.error('Erro ao carregar departamentos', error.error?.message || error.message || 'Erro desconhecido');
+        this.allDepartmentsLoading.set(false);
       }
     });
   }
@@ -99,7 +106,7 @@ export class DepartmentStateService {
         this.departmentsCreatedByMonth.set(response.departmentsCreatedByMonthStatistics);
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Erro ao carregar estatísticas', error);
+        console.error('Erro ao carregar estatísticas', error.error?.message || error.message || 'Erro desconhecido');
       }
     })
   }
@@ -107,6 +114,7 @@ export class DepartmentStateService {
   // ===================== CREATE =====================
 
   createDepartment(create: CreateDepartmentDto) {
+    this.registerLoading.set(true);
 
     this.http.createDepartment(create).subscribe({
       next: (response) => {
@@ -126,11 +134,13 @@ export class DepartmentStateService {
 
         this.registerMessage.set('Departamento criado com sucesso!');
         this.registerStatus.set('success');
+        this.registerLoading.set(false);
       },
 
       error: (error: HttpErrorResponse) => {
         this.registerMessage.set(error.error?.message || 'Erro ao criar departamento');
         this.registerStatus.set('error');
+        this.registerLoading.set(false);
       }
     });
   }
@@ -138,6 +148,7 @@ export class DepartmentStateService {
   // ===================== UPDATE =====================
 
   updateDepartment(department: UpdateDepartmentDto) {
+    this.updateLoading.set(true);
 
     this.http.updateDepartment(department).subscribe({
 
@@ -157,11 +168,13 @@ export class DepartmentStateService {
 
         this.updateMessage.set('Departamento atualizado com sucesso!');
         this.updateStatus.set('success');
+        this.updateLoading.set(false);
       },
 
       error: (error: HttpErrorResponse) => {
         this.updateMessage.set(error.error?.message || 'Erro ao atualizar departamento');
         this.updateStatus.set('error');
+        this.updateLoading.set(false);
       }
     });
   }
@@ -169,6 +182,7 @@ export class DepartmentStateService {
   // ===================== DELETE =====================
 
   deleteDepartment(departmentId: string) {
+    this.deleteLoading.set(true);
 
     this.http.deleteDepartment(departmentId).subscribe({
 
@@ -195,11 +209,13 @@ export class DepartmentStateService {
 
         this.deleteMessage.set('Departamento excluído com sucesso!');
         this.deleteStatus.set('success');
+        this.deleteLoading.set(false);
       },
 
       error: (error: HttpErrorResponse) => {
         this.deleteMessage.set(error.error?.message || 'Erro ao excluir departamento');
         this.deleteStatus.set('error');
+        this.deleteLoading.set(false);
       }
     });
   }

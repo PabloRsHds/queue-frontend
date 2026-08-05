@@ -47,6 +47,12 @@ export class TableDepartmentsComponent implements OnInit {
   /** Total de elementos */
   public totalElements = this.departmentState.totalElements;
 
+  // Loads
+  public allDepartmentsLoading = this.departmentState.allDepartmentsLoading;
+  public registerLoading = this.departmentState.registerLoading;
+  public updateLoading = this.departmentState.updateLoading;
+  public deleteLoading = this.departmentState.deleteLoading;
+
   // ==================== VARIÁVEIS DE CONTROLE ====================
 
   /** Quantidade de itens por página */

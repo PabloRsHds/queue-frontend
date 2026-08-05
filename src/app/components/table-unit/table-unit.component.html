@@ -287,7 +287,9 @@
       <div class="separator"></div>
 
       <div class="modal-register-footer">
-        <button type="submit" class="button-submit">{{ this.createLoading() ? 'Criando...' : 'Criar'}}</button>
+        <button type="submit" class="button-submit" [disabled]="registerForm.invalid || createLoading()">
+          {{ createLoading() ? 'Criando...' : 'Criar' }}
+        </button>
         <button type="button" class="button-back" (click)="closeModalRegister()">Voltar</button>
       </div>
     </form>
@@ -383,7 +385,9 @@
       <div class="separator"></div>
 
       <div class="modal-update-footer">
-        <button type="submit" class="button-update">{{ this.updateLoading() ? 'Salvando...' : 'Salvar Alterações'}}</button>
+        <button type="submit" class="button-update" [disabled]="updateForm.invalid || updateLoading()">
+          {{ updateLoading() ? 'Salvando...' : 'Salvar Alterações' }}
+        </button>
         <button type="button" class="button-back" (click)="closeModalUpdate()">Voltar</button>
       </div>
     </form>
@@ -464,7 +468,9 @@
 
       <div class="separator"></div>
       <div class="modal-delete-footer">
-        <button type="button" class="button-delete" (click)="deleteUnit(this.unitById()!.unitId)">{{ this.deleteLoading() ? 'Deletando...' : 'Deletar' }}</button>
+        <button type="button" class="button-delete" (click)="deleteUnit(this.unitById()!.unitId)" [disabled]="deleteLoading()">
+          {{ deleteLoading() ? 'Deletando...' : 'Deletar' }}
+        </button>
         <button type="button" class="button-back" (click)="closeModalDelete()">Cancelar</button>
       </div>
     </div>

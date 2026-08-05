@@ -87,15 +87,37 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngIf="departments().length === 0;">
+
+      @if (this.allDepartmentsLoading()) {
         <tr>
-          <td colspan="5" style="text-align:center;padding:3rem;color:#9ca3af;">
-            <p>Nenhum departamento encontrado.</p>
+          <td colspan="5">
+            <div class="loading-container">
+              <div class="dot-spinner">
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+                <div class="dot-spinner__dot"></div>
+              </div>
+            </div>
           </td>
         </tr>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="departments().length > 0">
+      @else if (departments().length === 0) {
+        <ng-container>
+          <tr>
+            <td colspan="5" style="text-align:center;padding:3rem;color:#9ca3af;">
+              <p>Nenhum departamento encontrado.</p>
+            </td>
+          </tr>
+        </ng-container>
+      }
+
+      <ng-container *ngIf="departments().length > 0 && !this.allDepartmentsLoading()">
         <tr *ngFor="let department of departments(), let i = index">
           <td class="td-name" (click)="openModalView(department.departmentId)">
             <div class="td-name-container">
@@ -273,7 +295,9 @@
       <div class="separator"></div>
 
       <div class="modal-register-footer">
-        <button type="submit" class="button-submit">Salvar</button>
+        <button type="submit" class="button-submit" [disabled]="registerForm.invalid || registerLoading()">
+          {{ registerLoading() ? 'Salvando...' : 'Salvar' }}
+        </button>
         <button type="button" class="button-back" (click)="closeModalRegister()">Voltar</button>
       </div>
     </form>
@@ -369,7 +393,9 @@
       <div class="separator"></div>
 
       <div class="modal-update-footer">
-        <button type="submit" class="button-update">Salvar Alterações</button>
+        <button type="submit" class="button-update" [disabled]="updateForm.invalid || updateLoading()">
+          {{ updateLoading() ? 'Salvando...' : 'Salvar Alterações' }}
+        </button>
         <button type="button" class="button-back" (click)="closeModalUpdate()">Voltar</button>
       </div>
     </form>
@@ -450,7 +476,9 @@
 
       <div class="separator"></div>
       <div class="modal-delete-footer">
-        <button type="button" class="button-delete" (click)="deleteDepartment(this.departmentInfo()?.departmentId ?? '')">Excluir</button>
+        <button type="button" class="button-delete" (click)="deleteDepartment(this.departmentInfo()?.departmentId ?? '')" [disabled]="deleteLoading()">
+          {{ deleteLoading() ? 'Deletando...' : 'Excluir' }}
+        </button>
         <button type="button" class="button-back" (click)="closeModalDelete()">Cancelar</button>
       </div>
     </div>
