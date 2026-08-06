@@ -29,6 +29,7 @@ export class ConfigComponent implements OnInit {
 
   /** Usuário atualmente logado (signal) */
   public userLogged = this.userState.userLogged;
+  public userPhoto = this.userState.userPhoto;
 
   /** Item de navegação ativo no menu lateral */
   public navItem:string = 'profile';
@@ -38,6 +39,9 @@ export class ConfigComponent implements OnInit {
 
   /** Formulário reativo do perfil do usuário */
   public profileForm!: FormGroup;
+
+  // Photo
+  public photoPreview: string | null = null;
 
   // ==================== CICLO DE VIDA ====================
 
@@ -180,6 +184,28 @@ export class ConfigComponent implements OnInit {
       password: this.profileForm.value.newPassword,
       userId: this.userLogged()!.userId
     });
+  }
+
+  onPhotoSelected(event: Event){
+
+    const input = event.target as HTMLInputElement;
+
+    if(!input.files || input.files.length === 0){
+      return;
+    }
+
+    const file = input.files[0];
+    // preview instantâneo
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.photoPreview = reader.result as string;
+    };
+
+    reader.readAsDataURL(file);
+
+    // envia para o backend
+    this.userState.updatePhoto(file);
   }
 
 }

@@ -173,6 +173,8 @@ export class HomeComponent {
   /** Usuário atualmente logado */
   public userLogged = this.userState.userLogged;
 
+  public userPhoto = this.userState.userPhoto;
+
   /** Seção ativa do menu lateral */
   public activeSection = this.globalState.activeSection;
 

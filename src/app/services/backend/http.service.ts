@@ -53,9 +53,9 @@ export class HttpService {
   // CONFIGURATION
   // ============================================================
 
-  private readonly API_URL = 'http://192.168.25.2:8080';
+  //private readonly API_URL = 'http://192.168.25.2:8080';
   //private readonly API_URL = 'http://100.113.25.102:8080';
-  //private readonly API_URL = 'http://192.168.1.8:8080';
+  private readonly API_URL = 'http://192.168.1.8:8080';
 
   constructor(private http: HttpClient) {}
 
@@ -476,5 +476,25 @@ export class HttpService {
       `${this.API_URL}/attendances/statistics`,
       { withCredentials: true }
     );
+  }
+
+  // ============================================================
+  // PHOTO
+  // ============================================================
+  updatePhoto(photo: File): Observable<void> {
+    const formData = new FormData();
+
+    formData.append('photo', photo);
+
+    return this.http.put<void>(`${this.API_URL}/users/photo`, formData,
+      { withCredentials: true }
+    );
+  }
+
+  getUserPhoto() {
+    return this.http.get(`${this.API_URL}/users/photo`, {
+      responseType: 'blob',
+      withCredentials: true
+    });
   }
 }

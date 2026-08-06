@@ -361,6 +361,14 @@ app-config {
   flex-shrink: 0;
 }
 
+.user-avatar-photo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
 .user-info {
   display: flex;
   flex-direction: column;

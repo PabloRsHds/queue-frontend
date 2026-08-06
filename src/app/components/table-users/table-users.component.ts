@@ -41,6 +41,7 @@ export class TableUsersComponent implements OnInit {
 
   /** Total de usuários cadastrados */
   public totalUsers = this.userState.countTotalUsersStatistics;
+  public countTotalAdmin = this.userState.countTotalAdmin;
 
   /** Percentual de usuários por cargo */
   public percentage = this.userState.userPercentagesStatistics;

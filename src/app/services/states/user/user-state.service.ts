@@ -32,6 +32,11 @@ export class UserStateService {
   public deleteMessage = signal('');
   public deleteStatus = signal<'success' | 'error' | 'default'>('default');
 
+  public photoMessage = signal('');
+  public photoStatus = signal<'success' | 'error' | 'default'>('default');
+
+  public userPhoto = signal<string | null>(null);
+
   // Loads
   public loadUserByToken = signal<boolean>(false);
 
@@ -41,6 +46,8 @@ export class UserStateService {
   public usersCreatedByMonthStatistics = signal<ResponseUsersCreatedByMonthStatisticsDto[] | null>([]);
   public countServicesByUsers = signal<ResponseServicesByUserStatisticsDto[] | null>([]);
   public countRoleByUsers = signal<ResponseUsersByRoleStatisticsDto[] | null>([]);
+
+  public countTotalAdmin = computed(() => this.countRoleByUsers()?.find(u => u.role === 'ROLE_ADMIN')?.totalUsers || 0);
 
   // ===================== PAGINATION =====================
 
@@ -148,10 +155,20 @@ export class UserStateService {
 
     this.http.getUserByToken().subscribe({
       next: (response) => {
+
         this.userLogged.set(response);
+
+        if (response.hasPhoto) {
+          this.loadUserPhoto();
+        } else {
+          this.userPhoto.set(null);
+          this.loadUserByToken.set(false);
+        }
+      },
+      error: () => {
         this.loadUserByToken.set(false);
       }
-    })
+    });
   }
 
   // ===================== PAGINATION =====================
@@ -206,5 +223,46 @@ export class UserStateService {
 
   resetInfoUser() {
     this.userInfo.set(null);
+  }
+
+  updatePhoto(photo: File) {
+
+    this.http.updatePhoto(photo).subscribe({
+      next: () => {
+
+        this.photoMessage.set('Foto atualizada com sucesso!');
+        this.photoStatus.set('success');
+        this.loadUserPhoto();
+      },
+
+      error: (error: HttpErrorResponse) => {
+
+        this.photoMessage.set(
+          error.error?.message || 'Erro ao atualizar foto'
+        );
+
+        this.photoStatus.set('error');
+      }
+    });
+  }
+
+  loadUserPhoto() {
+    this.http.getUserPhoto().subscribe({
+      next: (blob) => {
+
+        // libera a URL antiga
+        const oldUrl = this.userPhoto();
+        if (oldUrl) {
+          URL.revokeObjectURL(oldUrl);
+        }
+
+        const imageUrl = URL.createObjectURL(blob);
+        this.userPhoto.set(imageUrl);
+        this.loadUserByToken.set(false);
+      },
+      error: () => {
+        this.loadUserByToken.set(false);
+      }
+    });
   }
 }

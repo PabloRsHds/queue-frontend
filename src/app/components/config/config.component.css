@@ -35,9 +35,7 @@ body {
 
 .profile-header {
   text-align: center;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e2e8f0;
-  margin-bottom: 20px;
+
 }
 
 .avatar-wrapper {
@@ -63,11 +61,13 @@ body {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
+  margin-top: 15px;
 }
 
 .profile-role {
   font-size: 14px;
   color: #64748b;
+  margin-bottom: 30px;
 }
 
 .nav-menu {
@@ -751,4 +751,47 @@ body {
   padding: 30px 15px;
   background: aliceblue;
   border-radius: 10px;
+}
+
+/** PHOTO **/
+.profile-photo {
+  position: relative;
+  width: 90px;
+  height: 90px;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 3px solid #e5e7eb;
+}
+
+
+.upload-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  background: #214594a4;
+  color: white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition: .2s;
+}
+
+
+.upload-button:hover {
+  background: #214594af;
 }
