@@ -352,12 +352,12 @@ export class TableUsersComponent implements OnInit {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      email: ['', Validators.required],
+      email: [''],
       username: ['', Validators.required],
       phone: [null],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      counterNumber: [null, Validators.required],
+      counterNumber: [null],
       role: ['', Validators.required],
       serviceIds: [[]],
       active: [true]}
