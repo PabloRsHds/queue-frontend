@@ -574,7 +574,6 @@ export class TableUsersComponent implements OnInit {
   /** Mapeamento de cargos para permissões associadas */
   public permissionsByRole: Record<string, string[]> = {
     MANAGER: [
-      'Gerenciar departamentos',
       'Gerenciar serviços',
       'Gerenciar usuários',
       'Visualizar relatórios',
