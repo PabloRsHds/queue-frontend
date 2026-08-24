@@ -5,11 +5,14 @@ import { ResponseTicketsForAttendanceDto } from '../../dtos/ticket/ResponseTicke
 import { TicketStateService } from '../states/ticket/ticket-state.service';
 import { AttendentStateService } from '../states/attendent/attendent-state.service';
 import { ResponseTicketDto } from '../../dtos/ticket/ResponseTicketDto';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
+
+  private readonly API_URL = environment.API_URL;
 
   // Inject
   private ticketState = inject(TicketStateService);
@@ -22,7 +25,7 @@ export class WebSocketService {
   connect() {
 
     this.client = new Client({
-    webSocketFactory: () => new SockJS('http://192.168.25.2:8080/ws'),
+    webSocketFactory: () => new SockJS(`${this.API_URL}/ws`),
 
     reconnectDelay: 5000,
 

@@ -43,6 +43,7 @@ import { ResponseFinishAttendanceDto } from '../../dtos/attendance/ResponseFinis
 import { ResponseUnitDto } from '../../dtos/unit/ResponseUnitDto';
 import { UpdateUnitDto } from '../../dtos/unit/UpdateUnitDto';
 import { CreateUnitDto } from '../../dtos/unit/CreateUnitDto';
+import { environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -53,9 +54,7 @@ export class HttpService {
   // CONFIGURATION
   // ============================================================
 
-  private readonly API_URL = 'http://192.168.25.2:8080';
-  //private readonly API_URL = 'http://100.113.25.102:8080';
-  //private readonly API_URL = 'http://192.168.1.8:8080';
+  private readonly API_URL = environment.API_URL;
 
   constructor(private http: HttpClient) {}
 
